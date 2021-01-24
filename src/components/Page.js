@@ -47,6 +47,7 @@ const Page = ({
 };
 
 Page.propTypes = {
+
   tag: PropTypes.component,
   title: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   className: PropTypes.string,
