@@ -26,19 +26,19 @@
       "density": "1.5"
     },
     {
-      "src": "86.png",
+      "src": "/86.png",
       "sizes": "96x96",
       "type": "image/png",
       "density": "2.0"
     },
     {
-      "src": "144.png",
+      "src": "/144.png",
       "sizes": "144x144",
       "type": "image/png",
       "density": "3.0"
     },
     {
-      "src": "196.png",
+      "src": "/196.png",
       "sizes": "192x192",
       "type": "image/png",
       "density": "4.0"
