@@ -1,9 +1,8 @@
 import SearchInput from 'components/SearchInput';
+import FetchPoolList from 'components/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-
-const tableTypes = ['', 'bordered', 'striped', 'hover'];
 
 class DashboardPage extends React.Component {
   componentDidMount() {
@@ -21,6 +20,8 @@ class DashboardPage extends React.Component {
 
       <SearchInput />
 
+      <FetchPoolList />
+
       <Row>
           <Col>
             <Card className="mb-3">
@@ -37,7 +38,7 @@ class DashboardPage extends React.Component {
                           </tr>
                           <tr>
                             <th scope="row">Website</th>
-                            <td><a href="https://shamrock-pool.com/" target="_blank">https://shamrock-pool.com/</a></td>
+                            <td><a href="https://shamrock-pool.com/" target="_blank" rel="noreferrer">https://shamrock-pool.com/</a></td>
                           </tr>
                           <tr>
                             <th scope="row">Produced Blocks</th>
@@ -58,10 +59,10 @@ class DashboardPage extends React.Component {
                 </Row>
               </CardBody>
             </Card>
+
+           
           </Col>
         </Row>
-
-
       </Page>
     );
   }
