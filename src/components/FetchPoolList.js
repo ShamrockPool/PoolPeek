@@ -4,16 +4,16 @@ import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 export default class FetchPoolList extends React.Component {
     state = {
         loading: true,
-        pools: null
+        pools: null,
+        searchText: this.props.searchText
     }
 
     async componentDidMount() {
+        console.log("search text" + this.state.searchText)
         const url = "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&page=1";
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data.poolpeek);
         this.setState({ pools: data.poolpeek.pools, loading: false })
-
     }
 
     render() {
@@ -39,8 +39,13 @@ export default class FetchPoolList extends React.Component {
                                             <Row>
                                                 <Col>
                                                     <Card body>
+                                                    <p>{item.description}</p>
                                                         <Table>
                                                             <tbody>
+                                                                <tr>
+                                                                    <th scope="row">Ticker</th>
+                                                                    <td>{item.ticker}</td>
+                                                                </tr>
                                                                 <tr>
                                                                     <th scope="row">Pool Id</th>
                                                                     <td>{item.pool_id}</td>
@@ -73,7 +78,6 @@ export default class FetchPoolList extends React.Component {
                         })}
                     </Col>
                 </Row>
-
             </div>
         );
     }

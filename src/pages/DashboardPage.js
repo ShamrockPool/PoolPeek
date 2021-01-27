@@ -1,12 +1,19 @@
 import SearchInput from 'components/SearchInput';
+import SearchBar from 'components/SearchBar';
 import FetchPoolList from 'components/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
 
 class DashboardPage extends React.Component {
+  state = { searchText: "" }
+  
   componentDidMount() {
-    // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+  }
+
+  getSearchText = async(text) => {
+    console.log(text);
+    this.state.searchText = text;
   }
 
   render() {
@@ -17,8 +24,8 @@ class DashboardPage extends React.Component {
         // breadcrumbs={[{ name: 'Home', active: true }]}
       >
 
-      <SearchInput />
-      <FetchPoolList />
+      <SearchBar getSearchText = {this.getSearchText}/>
+      <FetchPoolList searchText = {this.state.searchText}/>
       </Page>
     );
   }

@@ -10,9 +10,10 @@ const SearchInput = () => {
         className="cr-search-form__icon-search text-secondary"
       />
       <Input
-        type="search"
+        type="text"
         className="cr-search-form__input"
         placeholder="Search..."
+        onChange={this.props.onChangeValue}
       />
     </Form>
   );
