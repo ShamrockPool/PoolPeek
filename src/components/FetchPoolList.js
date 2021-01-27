@@ -12,72 +12,69 @@ export default class FetchPoolList extends React.Component {
         const response = await fetch(url);
         const data = await response.json();
         console.log(data.poolpeek);
-        this.setState({ pools: data.poolpeek, loading: false })
-        
+        this.setState({ pools: data.poolpeek.pools, loading: false })
+
     }
 
-
     render() {
-            if(this.state.loading){
-                return <div>loading...</div>
-            }
+        if (this.state.loading) {
+            return <div>loading...</div>
+        }
 
-            if(!this.state.pools){
-                return <div>Pools not found...</div>
-            }
+        if (!this.state.pools) {
+            return <div>Pools not found...</div>
+        }
 
-            const renderPools = this.state.pools.map(pool => (
-            <li key={pool.pool_id}>
-                {pool.ticker}
-            </li>
-            ));
+        return (
+            <div className="container-fluid">
+                <div>Displaying {this.state.pools.length} pools.</div>
+                <Row>
+                    <Col>
+                        {this.state.pools.map(function (item, key) {
+                            return (
+                                <div>
+                                    <Card className="mb-3">
+                                        <CardHeader>{item.name}</CardHeader>
+                                        <CardBody>
+                                            <Row>
+                                                <Col>
+                                                    <Card body>
+                                                        <Table>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <th scope="row">Pool Id</th>
+                                                                    <td>{item.pool_id}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Website</th>
+                                                                    <td><a href={item.homepage} target="_blank" rel="noreferrer">{item.homepage}</a></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Produced Blocks</th>
+                                                                    <td>{item.blocks}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Pool Info</th>
+                                                                    <td>Pool margin: {item.margin_pct}%    Pledge: {item.pledge} ₳     Cost per epoch: {item.cost_per_epoch} ₳</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <th scope="row">Stake</th>
+                                                                    <td>Active Stake: {item.active_stake} ₳     Delegators: {item.active_stake_delegator_count}</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </Table>
+                                                    </Card>
+                                                </Col>
+                                            </Row>
+                                        </CardBody>
+                                    </Card>
+                                </div>
+                            )
+                        })}
+                    </Col>
+                </Row>
 
-            return (
-
-            <ul>
-                renderPools
-            </ul>
-
-                // <div>{
-                // for(var i=0; i < this.state.pools.poolpeek.pools.length; i++)
-                // {
-                //     //CREATE THE TABLE 
-                //     <Card className="mb-3">
-                //         <CardHeader>{this.state.pools.poolpeek.pools[i].name}</CardHeader>
-                //         <CardBody>
-                //         <Row>
-                //             <Col>
-                //             <Card body>
-                //                 <Table>
-                //                 <tbody>
-                //                     <tr>
-                //                     <th scope="row">Pool Id</th>
-                //                     <td>be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6</td>
-                //                     </tr>
-                //                     <tr>
-                //                     <th scope="row">Website</th>
-                //                     <td><a href="https://shamrock-pool.com/" target="_blank" rel="noreferrer">https://shamrock-pool.com/</a></td>
-                //                     </tr>
-                //                     <tr>
-                //                     <th scope="row">Produced Blocks</th>
-                //                     <td>7</td>
-                //                     </tr>
-                //                     <tr>
-                //                     <th scope="row">Pool Info</th>
-                //                     <td>Pool margin: 0%    Pledge: 30,003 ₳     Cost per epoch: 340 ₳</td>
-                //                     </tr>
-                //                     <tr>
-                //                     <th scope="row">Stake</th>
-                //                     <td>Active Stake: 3,190,455.24 ₳     Delegators: 14</td>
-                //                     </tr>
-                //                 </tbody>
-                //                 </Table>
-                //             </Card>
-                //             </Col>
-                //         </Row>
-                //         </CardBody>
-                //     </Card>
-                // }}</div>
-            )
+            </div>
+        );
     }
 }
