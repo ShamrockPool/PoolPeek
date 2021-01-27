@@ -2,19 +2,26 @@ import React from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 export default class FetchPoolList extends React.Component {
+
     state = {
         loading: true,
-        pools: null,
-        searchText: this.props.searchText
+        pools: null
     }
 
     async componentDidMount() {
-        console.log("search text" + this.state.searchText)
+        this.getPoolList();
+    }
+
+    async componentDidUpdate() {
+      console.log("search text" + this.props.searchText)
+    } 
+      
+    async getPoolList() {
         const url = "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&page=1";
         const response = await fetch(url);
         const data = await response.json();
-        this.setState({ pools: data.poolpeek.pools, loading: false })
-    }
+        this.setState({ pools: data.poolpeek.pools, loading: false }) 
+      }
 
     render() {
         if (this.state.loading) {

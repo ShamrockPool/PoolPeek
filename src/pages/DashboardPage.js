@@ -12,7 +12,7 @@ class DashboardPage extends React.Component {
   }
 
   getSearchText = async(text) => {
-    console.log(text);
+    console.log("Dashboard:" + text);
     this.state.searchText = text;
   }
 
