@@ -3,9 +3,13 @@ import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 
 export default class FetchPoolList extends React.Component {
 
-    state = {
-        loading: true,
-        pools: null
+    constructor(props) {
+        super(props);
+        this.state = {
+            searchText: null,
+            loading: true,
+            pools: null
+        };    
     }
 
     async componentDidMount() {
@@ -15,6 +19,12 @@ export default class FetchPoolList extends React.Component {
     async componentDidUpdate() {
       console.log("search text" + this.props.searchText)
     } 
+
+    async componentDidUpdate(prevProps, prevState) {
+        if (prevState.pokemons !== this.state.pokemons) {
+          console.log('pokemons state has changed.')
+        }
+      }
       
     async getPoolList() {
         const url = "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&page=1";
