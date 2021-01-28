@@ -33,6 +33,8 @@ class Header extends React.Component {
         </Nav>
         <Nav navbar>
           <p>Pool Peek - A different kind of Cardano stake pool explorer.</p>
+          {/* <p>PoolPeek.com is a "light-weight" Cardano stake pool explorer that analyzes the publicly available registration data and other data elements such as number of produced blocks.</p>
+          <p>If you would like to support our development efforts, please consider delegating to the LOCO Pool or Shamrock Pool</p> */}
         </Nav>
       </Navbar>
     );

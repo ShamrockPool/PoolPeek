@@ -3,7 +3,7 @@ import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import PooltoolImage from 'assets/img/pooltool.png_thumb';
 import PoolPmImage from 'assets/img/poolpm.png_thumb';
 import AdaPoolImage from 'assets/img/adapools.png_thumb';
-
+import Pool from 'components/Pool';
 let queryParams = {
     "poolid": "",
     "ticker": "",
@@ -55,72 +55,7 @@ export default class FetchPoolListQuickQuery extends React.Component {
                 <h3>Results:</h3><p> Displaying {this.state.pools.length} pools.</p>
                 <Row>
                     <Col>
-                        {this.state.pools.map(function (item, key) {
-                            return (
-                                <div key={key}>
-                                    <Card className="mb-3">
-                                        <CardHeader>{item.name}</CardHeader>
-                                        <CardBody>
-                                            <Row>
-                                                <Col>
-                                                    <Card body>
-                                                        <p>{item.description}</p>
-                                                        <Table>
-                                                            <tbody>
-                                                                <tr>
-                                                                    <th scope="row">Ticker</th>
-                                                                    <td>{item.ticker}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Pool Id</th>
-                                                                    <td>{item.pool_id}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Website</th>
-                                                                    <td><a href={item.homepage} target="_blank" rel="noreferrer">{item.homepage}</a></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Produced Blocks</th>
-                                                                    <td>{item.blocks}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Pool Info</th>
-                                                                    <td>Pool margin: {item.margin_pct}%    Pledge: {item.pledge} ₳     Cost per epoch: {item.cost_per_epoch} ₳</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">Stake</th>
-                                                                    <td>Active Stake: {item.active_stake} ₳     Delegators: {item.active_stake_delegator_count}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th scope="row">External Sites</th>
-                                                                    
-                                                                    <td><a href={"https://pool.pm/" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
-                                                                        src={PoolPmImage}
-                                                                        className="pr-2"
-                                                                        alt=""
-                                                                    /></a>
-                                                                    <a href={"https://adapools.org/pool/" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
-                                                                        src={AdaPoolImage}
-                                                                        className="pr-2"
-                                                                        alt=""
-                                                                    /></a>
-                                                                   <a href={"https://pooltool.io/pool" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
-                                                                        src={PooltoolImage}
-                                                                        className="pr-2"
-                                                                        alt=""
-                                                                    /></a></td>
-                                                                </tr>
-
-                                                            </tbody>
-                                                        </Table>
-                                                    </Card>
-                                                </Col>
-                                            </Row>
-                                        </CardBody>
-                                    </Card>
-                                </div>
-                            )
-                        })}
+                        <Pool pools={this.state.pools} /> 
                     </Col>
                 </Row>
             </div>

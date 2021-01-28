@@ -3,13 +3,10 @@ import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
 import {
-  MdBorderAll,
   MdDashboard,
   MdExtension,
   MdKeyboardArrowDown,
   MdRadioButtonChecked,
-  MdSend,
-
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -32,6 +29,8 @@ const navComponents = [
   { to: '/baremetalpools', name: 'Bare Metal Pools', exact: false, Icon: MdRadioButtonChecked },
   { to: '/educationpools', name: 'Education Pools', exact: false, Icon: MdRadioButtonChecked },
   { to: '/charitypools', name: 'Charity Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/womeninblockchainpools', name: "Women In Blockchain Pools", exact: false, Icon: MdRadioButtonChecked },
+  { to: '/zeroblockpools', name: 'Zero Block Pools', exact: false, Icon: MdRadioButtonChecked },
 ];
 
 
