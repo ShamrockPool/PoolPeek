@@ -29,12 +29,11 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/buttons', name: 'Bare Metal Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/baremetalpools', name: 'Bare Metal Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/educationpools', name: 'Education Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/charitypools', name: 'Charity Pools', exact: false, Icon: MdRadioButtonChecked },
 ];
 
-const navContents = [
-  { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
-];
 
 const navItems = [
   { to: '/', name: 'HOME', exact: true, Icon: MdDashboard }
