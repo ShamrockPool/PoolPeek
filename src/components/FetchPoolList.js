@@ -2,6 +2,12 @@ import React from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { Form, Input } from 'reactstrap';
 
+let queryParams = {
+    "poolid": "",
+    "ticker": "",
+    "name": ""
+  };
+
 export default class FetchPoolList extends React.Component {
 
     constructor(props) {
@@ -10,14 +16,32 @@ export default class FetchPoolList extends React.Component {
             searchText: null,
             loading: true,
             pools: null,
-            searchQuery: "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17"
+            baseUrl: "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17",
+            searchQuery: ""
         };
     }
-
+//be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
     handleChange = (query) => (e) => {
-        console.log("query>>>", query);
-        console.log("value>>>", e.target.value);
-        this.state.searchQuery = "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17" + query + e.target.value;
+
+        if(query === "&poolid=")
+        queryParams.poolid = query+e.target.value;
+
+        if(query === "&ticker=")
+        queryParams.ticker = query+e.target.value;
+
+        if(query === "&name=")
+        queryParams.name = query+e.target.value;
+
+        console.log("queryParams>>>", queryParams);
+        this.state.searchQuery ="";
+
+        var allQueryParams="";
+        this.mapObject(queryParams, function (key, value) {
+            if(value!==""){
+                allQueryParams+=value; 
+            }
+        })
+        this.state.searchQuery = allQueryParams;
         this.getPoolList(this.state.searchQuery);
     }
 
@@ -27,11 +51,16 @@ export default class FetchPoolList extends React.Component {
 
     async getPoolList() {
         console.log("query:" + this.state.searchQuery)
-        const url = this.state.searchQuery;
-        const response = await fetch(url);
+        const response = await fetch(this.state.baseUrl+this.state.searchQuery);
         const data = await response.json();
         this.setState({ pools: data.poolpeek.pools, loading: false })
     }
+
+    mapObject(object, callback) {
+        return Object.keys(object).map(function (key) {
+          return callback(key, object[key]);
+        });
+      }
 
     render() {
         if (this.state.loading) {
