@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+import { Form, Input } from 'reactstrap';
 
 export default class FetchPoolList extends React.Component {
 
@@ -8,30 +9,29 @@ export default class FetchPoolList extends React.Component {
         this.state = {
             searchText: null,
             loading: true,
-            pools: null
-        };    
+            pools: null,
+            searchQuery: "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17"
+        };
+    }
+
+    handleChange = (query) => (e) => {
+        console.log("query>>>", query);
+        console.log("value>>>", e.target.value);
+        this.state.searchQuery = "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17" + query + e.target.value;
+        this.getPoolList(this.state.searchQuery);
     }
 
     async componentDidMount() {
         this.getPoolList();
     }
 
-    async componentDidUpdate() {
-      console.log("search text" + this.props.searchText)
-    } 
-
-    async componentDidUpdate(prevProps, prevState) {
-        if (prevState.pokemons !== this.state.pokemons) {
-          console.log('pokemons state has changed.')
-        }
-      }
-      
     async getPoolList() {
-        const url = "http://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&page=1";
+        console.log("query:" + this.state.searchQuery)
+        const url = this.state.searchQuery;
         const response = await fetch(url);
         const data = await response.json();
-        this.setState({ pools: data.poolpeek.pools, loading: false }) 
-      }
+        this.setState({ pools: data.poolpeek.pools, loading: false })
+    }
 
     render() {
         if (this.state.loading) {
@@ -43,20 +43,53 @@ export default class FetchPoolList extends React.Component {
         }
 
         return (
+
+
             <div className="container-fluid">
+
+                <Form inline className="cr-search-form">
+                    <Input
+                        type="text"
+                        className="cr-search-form__input"
+                        placeholder="PoolID...."
+                        onChange={this.handleChange("&poolid=")}
+                        value={this.state.poolId}
+                    />
+                </Form>
+
+                <Form inline className="cr-search-form">
+                    <Input
+                        type="text"
+                        className="cr-search-form__input"
+                        placeholder="Ticker...."
+                        onChange={this.handleChange("&ticker=")}
+                        value={this.state.poolTicker}
+                    />
+                </Form>
+
+                <Form inline className="cr-search-form">
+                    <Input
+                        type="text"
+                        className="cr-search-form__input"
+                        placeholder="Name...."
+                        onChange={this.handleChange("&name=")}
+                        value={this.state.poolName}
+                    />
+                </Form>
+
                 <div>Displaying {this.state.pools.length} pools.</div>
                 <Row>
                     <Col>
                         {this.state.pools.map(function (item, key) {
                             return (
-                                <div>
+                                <div key={key}>
                                     <Card className="mb-3">
                                         <CardHeader>{item.name}</CardHeader>
                                         <CardBody>
                                             <Row>
                                                 <Col>
                                                     <Card body>
-                                                    <p>{item.description}</p>
+                                                        <p>{item.description}</p>
                                                         <Table>
                                                             <tbody>
                                                                 <tr>

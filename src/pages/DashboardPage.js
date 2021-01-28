@@ -1,5 +1,3 @@
-import SearchInput from 'components/SearchInput';
-import SearchBar from 'components/SearchBar';
 import FetchPoolList from 'components/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
@@ -23,9 +21,10 @@ class DashboardPage extends React.Component {
         title="Home"
         // breadcrumbs={[{ name: 'Home', active: true }]}
       >
-
-      <SearchBar getSearchText = {this.getSearchText}/>
-      <FetchPoolList searchText = {this.state.searchText}/>
+{/* 
+      <SearchBar getSearchText = {this.getSearchText}/> */}
+      {/* <FetchPoolList searchText = {this.state.searchText}/> */}
+      <FetchPoolList/>
       </Page>
     );
   }
