@@ -1,17 +1,17 @@
+import baremetalquery from './assets/queries/baremetalquery';
+import educationquery from './assets/queries/educationquery';
+import charityquery from './assets/queries/charityquery';
+
 import GAListener from 'components/GAListener';
 import { MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-// import './styles/reduction.scss';
-// import style from './styles/reduction.scss'
-
 require('./styles/reduction.scss');
 
-const ButtonPage = React.lazy(() => import('pages/ButtonPage'));
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
-const TablePage = React.lazy(() => import('pages/TablePage'));
+const QuickQueriesPage = React.lazy(() => import('pages/QuickQueriesPage'));
 
 
 const getBasename = () => {
@@ -27,8 +27,15 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={DashboardPage} />
-                <Route exact path="/buttons" component={ButtonPage} />
-                <Route exact path="/tables" component={TablePage} />
+                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} title="Bare Metal Pools" query={baremetalquery} />}/>
+                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} title="Education Pools" query={educationquery}/>}/>
+                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} title="Charity Pools" query={charityquery}/>}/>
+
+
+                {/* <Route exact path='/FileUpload' render={
+                  (props) => <FileUpload {...props} acc={this.state.account} ethAdd={this.state.ethAddress} />
+                } /> */}
+                {/* <Route exact path="/tables" component={TablePage} /> */}
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />

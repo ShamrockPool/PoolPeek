@@ -29,12 +29,11 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/buttons', name: 'Bare Metal Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/baremetalpools', name: 'Bare Metal Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/educationpools', name: 'Education Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/charitypools', name: 'Charity Pools', exact: false, Icon: MdRadioButtonChecked },
 ];
 
-const navContents = [
-  { to: '/tables', name: 'tables', exact: false, Icon: MdBorderAll },
-];
 
 const navItems = [
   { to: '/', name: 'HOME', exact: true, Icon: MdDashboard }
@@ -71,11 +70,8 @@ class Sidebar extends React.Component {
                 width="100"
                 height="100"
                 className="pr-2"
-                alt=""
+                alt="centered image"
               />
-              <span className="text-white">
-                Pool Peek
-              </span>
             </SourceLink>
           </Navbar>
           <Nav vertical>
@@ -135,45 +131,6 @@ class Sidebar extends React.Component {
               ))}
             </Collapse>
 
-            <NavItem
-              className={bem.e('nav-item')}
-              onClick={this.handleClick('Contents')}
-            >
-              <BSNavLink className={bem.e('nav-item-collapse')}>
-                <div className="d-flex">
-                  <MdSend className={bem.e('nav-item-icon')} />
-                  <span className="">Contents</span>
-                </div>
-                <MdKeyboardArrowDown
-                  className={bem.e('nav-item-icon')}
-                  style={{
-                    padding: 0,
-                    transform: this.state.isOpenContents
-                      ? 'rotate(0deg)'
-                      : 'rotate(-90deg)',
-                    transitionDuration: '0.3s',
-                    transitionProperty: 'transform',
-                  }}
-                />
-              </BSNavLink>
-            </NavItem>
-            <Collapse isOpen={this.state.isOpenContents}>
-              {navContents.map(({ to, name, exact, Icon }, index) => (
-                <NavItem key={index} className={bem.e('nav-item')}>
-                  <BSNavLink
-                    id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
-                    tag={NavLink}
-                    to={to}
-                    activeClassName="active"
-                    exact={exact}
-                  >
-                    <Icon className={bem.e('nav-item-icon')} />
-                    <span className="">{name}</span>
-                  </BSNavLink>
-                </NavItem>
-              ))}
-            </Collapse>
 
           </Nav>
         </div>
