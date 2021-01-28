@@ -16,6 +16,8 @@ class DashboardPage extends React.Component {
     this.state.searchText = text;
   }
 
+  //pools are now passed from the app via props, app owns the pools and passes them around as needed
+    
   render() {
     return (
       <Page
@@ -25,7 +27,8 @@ class DashboardPage extends React.Component {
       >
 
       <SearchBar getSearchText = {this.getSearchText}/>
-      <FetchPoolList searchText = {this.state.searchText}/>
+
+      <FetchPoolList appPools={this.props.appPools} loading={this.props.loading}/>
       </Page>
     );
   }
