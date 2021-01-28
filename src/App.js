@@ -4,9 +4,6 @@ import PageSpinner from 'components/PageSpinner';
 import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-// import './styles/reduction.scss';
-// import style from './styles/reduction.scss'
-
 require('./styles/reduction.scss');
 
 const ButtonPage = React.lazy(() => import('pages/ButtonPage'));
@@ -27,8 +24,8 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={DashboardPage} />
-                <Route exact path="/buttons" component={ButtonPage} />
-                <Route exact path="/tables" component={TablePage} />
+                {/* <Route exact path="/buttons" component={ButtonPage} />
+                <Route exact path="/tables" component={TablePage} /> */}
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />

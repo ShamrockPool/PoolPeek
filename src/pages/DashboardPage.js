@@ -18,7 +18,7 @@ class DashboardPage extends React.Component {
     return (
       <Page
         className="DashboardPage"
-        title="Home"
+        title="Pool Search"
         // breadcrumbs={[{ name: 'Home', active: true }]}
       >
 {/* 
