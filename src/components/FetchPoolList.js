@@ -51,6 +51,10 @@ export default class FetchPoolList extends React.Component {
         this.getPoolList();
     }
 
+    componentDidUpdate(){
+        this.render();
+    }
+
     async getPoolList() {
         console.log(this.props.query);
 

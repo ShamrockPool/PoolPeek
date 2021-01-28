@@ -10,14 +10,11 @@ export default class Pool extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            pools: props.pools
-        };
     }
 
     render() {
         return (
-            this.state.pools.map(function (item, key) {
+            this.props.pools.map(function (item, key) {
                 return (
                     <div key={key}>
                         <Card className="mb-3">
