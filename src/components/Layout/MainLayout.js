@@ -2,6 +2,11 @@ import { Content, Footer, Header, Sidebar } from 'components/Layout';
 import React from 'react';
 import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
+import {
+  MdImportantDevices,
+  // MdCardGiftcard,
+  MdLoyalty,
+} from 'react-icons/md';
 
 class MainLayout extends React.Component {
   static isSidebarOpen() {
@@ -18,6 +23,19 @@ class MainLayout extends React.Component {
 
   componentDidMount() {
     this.checkBreakpoint(this.props.breakpoint);
+
+    setTimeout(() => {
+      if (!this.notificationSystem) {
+        return;
+      }
+
+      this.notificationSystem.addNotification({
+        title: <MdLoyalty />,
+        message:
+          'Brought to you by LOCO and Shamrock Pool, consider staking with us.',
+        level: 'info',
+      });
+    }, 1500);
   }
 
   // close sidebar when

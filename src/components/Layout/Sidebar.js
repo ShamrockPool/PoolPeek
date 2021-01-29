@@ -61,9 +61,9 @@ class Sidebar extends React.Component {
     return (
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} style={sidebarBackground} />
-        <div className={bem.e('content')}>
+        <div className={bem.e('content')} style={{alignItems: "center" }}>
           <Navbar>
-            <SourceLink className="navbar-brand d-flex">
+            <SourceLink className="navbar-brand d-flex" >
               <img
                 src={logo200Image}
                 width="100"
@@ -129,8 +129,6 @@ class Sidebar extends React.Component {
                 </NavItem>
               ))}
             </Collapse>
-
-
           </Nav>
         </div>
       </aside>
