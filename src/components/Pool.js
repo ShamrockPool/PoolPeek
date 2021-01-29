@@ -17,7 +17,7 @@ export default class Pool extends React.Component {
             this.props.pools.map(function (item, key) {
                 return (
                     <div key={key} style={{ alignItems: "center" }}>
-                        <Card style={{ width: "60%", margin: "20px", alignItems: "center" }}>
+                        <Card style={{ width: "60%", margin: "20px"}}>
                             <CardHeader >                            
                             <img
                                 src={CardanoImage}
