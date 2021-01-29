@@ -1,6 +1,9 @@
 import baremetalquery from './assets/queries/baremetalquery';
 import educationquery from './assets/queries/educationquery';
 import charityquery from './assets/queries/charityquery';
+import womeninblockchainquery from './assets/queries/womeninblockchainquery';
+import zeroblockpoolsquery from './assets/queries/zeroblockpoolsquery';
+
 
 import GAListener from 'components/GAListener';
 import { MainLayout } from 'components/Layout';
@@ -30,12 +33,8 @@ class App extends React.Component {
                 <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} title="Bare Metal Pools" query={baremetalquery} />}/>
                 <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} title="Education Pools" query={educationquery}/>}/>
                 <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} title="Charity Pools" query={charityquery}/>}/>
-
-
-                {/* <Route exact path='/FileUpload' render={
-                  (props) => <FileUpload {...props} acc={this.state.account} ethAdd={this.state.ethAddress} />
-                } /> */}
-                {/* <Route exact path="/tables" component={TablePage} /> */}
+                <Route exact path="/womeninblockchainpools" render={(props) => <QuickQueriesPage {...props} title="Women In Blockchain Pools" query={womeninblockchainquery}/>}/>
+                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} title="Zero Block Pools" query={zeroblockpoolsquery}/>}/>
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />

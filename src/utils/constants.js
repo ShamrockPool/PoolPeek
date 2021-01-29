@@ -32,10 +32,11 @@ export const NOTIFICATION_SYSTEM_STYLE = {
       MozBoxShadow: 0,
       boxShadow: 0,
     },
-
+    // "primary": #0d0d0e,
+    // "secondary": #45b649,
     info: {
       borderTop: 0,
-      background: 'linear-gradient(to right, #6a82fb, #fc5c7d)',
+      background: 'linear-gradient(to right, #0d0d0e, #45b649)',
       WebkitBoxShadow: 0,
       MozBoxShadow: 0,
       boxShadow: 0,
