@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/PoolPeek.github.io/precache-manifest.0b993c86f434e588032ccc75568f1428.js"
+  "https://shamrockpool.github.io/PoolPeek.github.io/precache-manifest.899738a1fbe487b2664c90f5d815702a.js"
 );
 
 workbox.clientsClaim();
@@ -28,7 +28,7 @@ self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
 
-workbox.routing.registerNavigationRoute("/PoolPeek.github.io/index.html", {
+workbox.routing.registerNavigationRoute("https://shamrockpool.github.io/PoolPeek.github.io/index.html", {
   
   blacklist: [/^\/_/,/\/[^/]+\.[^/]+$/],
 });
