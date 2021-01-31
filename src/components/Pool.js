@@ -5,6 +5,7 @@ import PooltoolImage from 'assets/img/pooltool.png_thumb';
 import PoolPmImage from 'assets/img/poolpm.png_thumb';
 import AdaPoolImage from 'assets/img/adapools.png_thumb';
 import CardanoImage from 'assets/img/cardanoIcon.png';
+import "../styles/components/Table.css";
 
 export default class Pool extends React.Component {
 
@@ -17,7 +18,7 @@ export default class Pool extends React.Component {
             this.props.pools.map(function (item, key) {
                 return (
                     <div key={key} style={{ alignItems: "center" }}>
-                        <Card style={{ width: "60%", margin: "20px"}}>
+                        <Card style={{ width: "100%"}}>
                             <CardHeader >                            
                             <img
                                 src={CardanoImage}
@@ -38,8 +39,9 @@ export default class Pool extends React.Component {
                                                             title="The pool ticker"
                                                             placement="left"
                                                         >
-                                                            <th scope="row">Ticker</th></Tooltip>
-                                                        <td>{item.ticker}</td>
+                                                            <th scope="row">Ticker</th>
+                                                            </Tooltip>
+                                                        <td scope="row" >{item.ticker}</td>
                                                     </tr>
                                                     <tr>
                                                         <Tooltip
