@@ -5,12 +5,14 @@ import _ from 'lodash';
 import Scroll from '../components/Scroll'
 import Pool from 'components/Pool';
 
+const WAIT_INTERVAL = 1000
 let queryParams = {
     "poolid": "",
     "ticker": "",
     "name": ""
 };
 
+const sid = Math.floor(Math.random() * 100) + Date.now()
 
 
 export default class FetchPoolList extends React.Component {
@@ -21,24 +23,33 @@ export default class FetchPoolList extends React.Component {
             loading: true,
             pools: null,
             query: null,
-            baseUrl: "https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17",
+            baseUrl: "https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&sid=" + sid,
             searchQuery: "",
             currentPage: 0,
-            pageCount: 0
+            pageCount: 0,
+            poolid: "",
+            ticker: "",
+            name: ""
+
         };
     }
     //be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
     handleChange = (query) => (e) => {
 
-        if (query === "&poolid=")
+        if (query === "&poolid=") {
             queryParams.poolid = query + e.target.value;
+            this.setState({ poolid: e.target.value });
+        }
 
-        if (query === "&ticker=")
+        if (query === "&ticker=") {
             queryParams.ticker = query + e.target.value;
+            this.setState({ ticker: e.target.value });
+        }
 
-        if (query === "&name=")
+        if (query === "&name=") {
             queryParams.name = query + e.target.value;
-        this.state.searchQuery = "";
+            this.setState({ name: e.target.value });
+        }
 
         var allQueryParams = "";
         this.mapObject(queryParams, function (key, value) {
@@ -47,29 +58,24 @@ export default class FetchPoolList extends React.Component {
             }
         })
         this.state.searchQuery = allQueryParams;
-        this.getPoolList(this.state.searchQuery);
+        this.getPoolList(this.state.baseUrl + this.state.searchQuery);
     }
 
     handlePageClick(e, index) {
-
         e.preventDefault();
-
         this.setState({
             currentPage: index
         });
-        this.getPoolList(this.state.searchQuery + "&page=" + index);
+        this.getPoolList(this.state.baseUrl + this.state.searchQuery + "&page=" + index);
     }
 
     async componentDidMount() {
-        this.getPoolList();
+        this.getPoolList(this.state.baseUrl);
     }
 
-    // componentDidUpdate() {
-    //     this.render();
-    // }
-
-    async getPoolList() {
-        const response = await fetch(this.state.baseUrl + this.state.searchQuery);
+    async getPoolList(query) {
+        var response = await fetch(query);
+        // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
         const data = await response.json();
         this.setState({ pools: data.poolpeek.pools, loading: true })
         this.setState({ query: data.poolpeek.query, loading: true })
@@ -92,6 +98,7 @@ export default class FetchPoolList extends React.Component {
         if (!this.state.pools) {
             return <div>Pools not found...</div>
         }
+
         return (
 
             <div className="container-fluid" style={{ align: "left", width: "99%" }}>
@@ -103,28 +110,28 @@ export default class FetchPoolList extends React.Component {
                         type="text"
                         className="cr-search-form__input"
                         placeholder="PoolID...."
+                        // onChange={this.handleChange("&poolid=")}
                         onChange={this.handleChange("&poolid=")}
-                        value={this.state.poolId}
+                        value={this.state.poolid}
                     />
                 </Form>
-
                 <Form inline className="cr-search-form">
                     <Input
                         type="text"
                         className="cr-search-form__input"
                         placeholder="Ticker...."
                         onChange={this.handleChange("&ticker=")}
-                        value={this.state.poolTicker}
+                        osOnChangeTimerDelay="8000"
+                        value={this.state.ticker}
                     />
                 </Form>
-
                 <Form inline className="cr-search-form">
                     <Input
                         type="text"
                         className="cr-search-form__input"
                         placeholder="Name...."
                         onChange={this.handleChange("&name=")}
-                        value={this.state.poolName}
+                        value={this.state.name}
                     />
                 </Form>
                 <br />
