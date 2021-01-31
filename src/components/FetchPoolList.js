@@ -1,17 +1,15 @@
 import React from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-import { Form, Input } from 'reactstrap';
-import Tooltip from "@material-ui/core/Tooltip";
-import PooltoolImage from 'assets/img/pooltool.png_thumb';
-import PoolPmImage from 'assets/img/poolpm.png_thumb';
-import AdaPoolImage from 'assets/img/adapools.png_thumb';
-import CardanoImage from 'assets/img/cardanoIcon.png';
+import { Col, Row, Form, Input, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
+import _ from 'lodash';
+
 import Pool from 'components/Pool';
 let queryParams = {
     "poolid": "",
     "ticker": "",
     "name": ""
 };
+
+
 
 export default class FetchPoolList extends React.Component {
     constructor(props) {
@@ -20,8 +18,11 @@ export default class FetchPoolList extends React.Component {
             searchText: null,
             loading: true,
             pools: null,
+            query: null,
             baseUrl: "https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17",
-            searchQuery: ""
+            searchQuery: "",
+            currentPage: 0,
+            pageCount: 0
         };
     }
     //be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
@@ -47,20 +48,31 @@ export default class FetchPoolList extends React.Component {
         this.getPoolList(this.state.searchQuery);
     }
 
+    handlePageClick(e, index) {
+
+        e.preventDefault();
+
+        this.setState({
+            currentPage: index
+        });
+        //&page=9999
+        this.getPoolList(this.state.searchQuery + "&page=" + index);
+    }
+
     async componentDidMount() {
         this.getPoolList();
     }
 
-    componentDidUpdate(){
+    componentDidUpdate() {
         this.render();
     }
 
     async getPoolList() {
-        console.log(this.props.query);
-
         const response = await fetch(this.state.baseUrl + this.state.searchQuery);
         const data = await response.json();
-        this.setState({ pools: data.poolpeek.pools, loading: false })
+        this.setState({ pools: data.poolpeek.pools, loading: true })
+        this.setState({ query: data.poolpeek.query, loading: true })
+        this.setState({ pageCount: data.poolpeek.query.pageCount, loading: false })
     }
 
     mapObject(object, callback) {
@@ -70,6 +82,8 @@ export default class FetchPoolList extends React.Component {
     }
 
     render() {
+        const { currentPage, pageCount } = this.state;
+
         if (this.state.loading) {
             return <div>loading...</div>
         }
@@ -110,9 +124,37 @@ export default class FetchPoolList extends React.Component {
                 </Form>
                 <br />
                 <h3>Results:</h3><p> Displaying {this.state.pools.length} pools.</p>
+
+
+                <Pagination>
+                    <PaginationItem disabled={currentPage <= 0}>
+                        <PaginationLink
+                            onClick={e => this.handlePageClick(e, currentPage - 1)}
+                            previous
+                            href="#"
+                        />
+                    </PaginationItem>
+
+                    {_.times(pageCount, (i) => 
+                        <PaginationItem active={i === currentPage} key={i}>
+                            <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
+                                {i + 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )}
+
+                    <PaginationItem disabled={currentPage >= pageCount - 1}>
+                        <PaginationLink
+                            onClick={e => this.handlePageClick(e, currentPage + 1)}
+                            next
+                            href="#"
+                        />
+                    </PaginationItem>
+                </Pagination>
+
                 <Row>
                     <Col>
-                        <Pool pools={this.state.pools} /> 
+                        <Pool pools={this.state.pools} />
                     </Col>
                 </Row>
             </div>
