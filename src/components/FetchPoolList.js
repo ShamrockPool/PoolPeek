@@ -121,7 +121,6 @@ export default class FetchPoolList extends React.Component {
                         className="cr-search-form__input"
                         placeholder="Ticker...."
                         onChange={this.handleChange("&ticker=")}
-                        osOnChangeTimerDelay="8000"
                         value={this.state.ticker}
                     />
                 </Form>
