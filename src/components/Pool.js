@@ -49,7 +49,7 @@ export default class Pool extends React.Component {
                                                             placement="left"
                                                         >
                                                             <th scope="row">Pool Id</th></Tooltip>
-                                                        {/* <td>{item.pool_id}</td> */}
+                                                        <td>{item.pool_id}</td>
                                                     </tr>
                                                     <tr>
                                                         <Tooltip
