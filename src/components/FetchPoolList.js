@@ -139,7 +139,7 @@ export default class FetchPoolList extends React.Component {
                 <p> Displaying {this.state.pools.length} pools per pags.</p>
 
 
-                <Pagination>
+                <Pagination style={{ align: "left", width: "90%" }}>
                     <PaginationItem disabled={currentPage <= 0}>
                         <PaginationLink
                             onClick={e => this.handlePageClick(e, currentPage - 1)}
