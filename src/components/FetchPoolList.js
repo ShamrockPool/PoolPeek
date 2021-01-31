@@ -66,7 +66,9 @@ export default class FetchPoolList extends React.Component {
         this.setState({
             currentPage: index
         });
-        this.getPoolList(this.state.baseUrl + this.state.searchQuery + "&page=" + index);
+
+        var u = this.state.baseUrl + this.state.searchQuery + "&page=" + parseInt(index + 1);
+        this.getPoolList(u);
     }
 
     async componentDidMount() {
@@ -136,7 +138,7 @@ export default class FetchPoolList extends React.Component {
                 <br />
                 <h2>Results:</h2>
                 <p> Total pools: {this.state.query.count}.</p>
-                <p> Displaying {this.state.pools.length} pools per pags.</p>
+                <p> Displaying {this.state.pools.length} pools per page.</p>
 
 
                 <Pagination style={{ align: "left", width: "70%" }}>
