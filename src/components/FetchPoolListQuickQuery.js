@@ -1,14 +1,6 @@
 import React from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
-import PooltoolImage from 'assets/img/pooltool.png_thumb';
-import PoolPmImage from 'assets/img/poolpm.png_thumb';
-import AdaPoolImage from 'assets/img/adapools.png_thumb';
 import Pool from 'components/Pool';
-let queryParams = {
-    "poolid": "",
-    "ticker": "",
-    "name": ""
-};
 
 export default class FetchPoolListQuickQuery extends React.Component {
     constructor(props) {
