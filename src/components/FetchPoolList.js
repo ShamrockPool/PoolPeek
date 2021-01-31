@@ -2,7 +2,9 @@ import React from 'react';
 import { Col, Row, Form, Input, Pagination, PaginationItem, PaginationLink } from 'reactstrap';
 import _ from 'lodash';
 
+import Scroll from '../components/Scroll'
 import Pool from 'components/Pool';
+
 let queryParams = {
     "poolid": "",
     "ticker": "",
@@ -55,7 +57,6 @@ export default class FetchPoolList extends React.Component {
         this.setState({
             currentPage: index
         });
-        //&page=9999
         this.getPoolList(this.state.searchQuery + "&page=" + index);
     }
 
@@ -63,9 +64,9 @@ export default class FetchPoolList extends React.Component {
         this.getPoolList();
     }
 
-    componentDidUpdate() {
-        this.render();
-    }
+    // componentDidUpdate() {
+    //     this.render();
+    // }
 
     async getPoolList() {
         const response = await fetch(this.state.baseUrl + this.state.searchQuery);
@@ -92,7 +93,11 @@ export default class FetchPoolList extends React.Component {
             return <div>Pools not found...</div>
         }
         return (
-            <div className="container-fluid">
+
+            <div className="container-fluid" style={{ align: "left", width: "99%" }}>
+
+                <Scroll showBelow={250} />
+
                 <Form inline className="cr-search-form">
                     <Input
                         type="text"
@@ -123,7 +128,9 @@ export default class FetchPoolList extends React.Component {
                     />
                 </Form>
                 <br />
-                <h3>Results:</h3><p> Displaying {this.state.pools.length} pools.</p>
+                <h2>Results:</h2>
+                <p> Total pools: {this.state.query.count}.</p>
+                <p> Displaying {this.state.pools.length} pools per pags.</p>
 
 
                 <Pagination>
@@ -135,7 +142,7 @@ export default class FetchPoolList extends React.Component {
                         />
                     </PaginationItem>
 
-                    {_.times(pageCount, (i) => 
+                    {_.times(pageCount, (i) =>
                         <PaginationItem active={i === currentPage} key={i}>
                             <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
                                 {i + 1}
@@ -157,6 +164,7 @@ export default class FetchPoolList extends React.Component {
                         <Pool pools={this.state.pools} />
                     </Col>
                 </Row>
+
             </div>
         );
     }

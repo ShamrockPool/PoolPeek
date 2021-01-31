@@ -21,9 +21,6 @@ class DashboardPage extends React.Component {
         title="Pool Search"
         // breadcrumbs={[{ name: 'Home', active: true }]}
       >
-{/* 
-      <SearchBar getSearchText = {this.getSearchText}/> */}
-      {/* <FetchPoolList searchText = {this.state.searchText}/> */}
       <FetchPoolList/>
       </Page>
     );

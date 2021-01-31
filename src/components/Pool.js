@@ -18,7 +18,7 @@ export default class Pool extends React.Component {
             this.props.pools.map(function (item, key) {
                 return (
                     <div key={key} style={{ alignItems: "center" }}>
-                        <Card style={{ width: "100%", margin: "20px"}}>
+                        <Card style={{ width: "100%"}}>
                             <CardHeader >                            
                             <img
                                 src={CardanoImage}
@@ -39,9 +39,9 @@ export default class Pool extends React.Component {
                                                             title="The pool ticker"
                                                             placement="left"
                                                         >
-                                                            <th style={{ width: "10px", margin: "20px"}}>Ticker</th>
+                                                            <th scope="row">Ticker</th>
                                                             </Tooltip>
-                                                        <td>{item.ticker}</td>
+                                                        <td scope="row" >{item.ticker}</td>
                                                     </tr>
                                                     <tr>
                                                         <Tooltip
@@ -49,7 +49,7 @@ export default class Pool extends React.Component {
                                                             placement="left"
                                                         >
                                                             <th scope="row">Pool Id</th></Tooltip>
-                                                        <td>{item.pool_id}</td>
+                                                        {/* <td>{item.pool_id}</td> */}
                                                     </tr>
                                                     <tr>
                                                         <Tooltip
