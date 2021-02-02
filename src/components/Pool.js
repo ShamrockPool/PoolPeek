@@ -6,6 +6,11 @@ import PoolPmImage from 'assets/img/poolpm.png_thumb';
 import AdaPoolImage from 'assets/img/adapools.png_thumb';
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import "../styles/components/Table.css";
+import ReactHtmlParser from 'react-html-parser';
+
+var linkify = require('linkifyjs');
+require('linkifyjs/plugins/hashtag')(linkify); // optional
+var linkifyHtml = require('linkifyjs/html');
 
 export default class Pool extends React.Component {
 
@@ -14,24 +19,32 @@ export default class Pool extends React.Component {
     }
 
     render() {
+
+
+
         return (
             this.props.pools.map(function (item, key) {
+
+                var description = linkifyHtml(item.description, {
+                    defaultProtocol: 'https'
+                });
+
                 return (
                     <div key={key} style={{ alignItems: "center" }}>
-                        <Card style={{ width: "100%"}}>
-                            <CardHeader >                            
-                            <img
-                                src={CardanoImage}
-                                className="pr-2"
-                                alt=""
-                                width="25"
-                                height="25"
-                            />{item.name}</CardHeader>
+                        <Card style={{ width: "100%" }}>
+                            <CardHeader >
+                                <img
+                                    src={CardanoImage}
+                                    className="pr-2"
+                                    alt=""
+                                    width="25"
+                                    height="25"
+                                />{ReactHtmlParser(item.name)}</CardHeader>
                             <CardBody>
                                 <Row>
                                     <Col>
                                         <Card body>
-                                            <p>{item.description}</p>
+                                            <p>{ReactHtmlParser(description)}</p>
                                             <Table {...{ ['striped']: true }}>
                                                 <tbody>
                                                     <tr>
@@ -40,8 +53,8 @@ export default class Pool extends React.Component {
                                                             placement="left"
                                                         >
                                                             <th scope="row">Ticker</th>
-                                                            </Tooltip>
-                                                        <td scope="row" >{item.ticker}</td>
+                                                        </Tooltip>
+                                                        <td scope="row">{ReactHtmlParser(item.ticker)}</td>
                                                     </tr>
                                                     <tr>
                                                         <Tooltip
