@@ -5,7 +5,7 @@ import _ from 'lodash';
 import Scroll from '../components/Scroll'
 import Pool from 'components/Pool';
 
-const WAIT_INTERVAL = 1000
+const WAIT_INTERVAL = 800
 let queryParams = {
     "poolid": "",
     "ticker": "",
@@ -51,14 +51,21 @@ export default class FetchPoolList extends React.Component {
             this.setState({ name: e.target.value });
         }
 
-        var allQueryParams = "";
-        this.mapObject(queryParams, function (key, value) {
-            if (value !== "") {
-                allQueryParams += value;
+        clearTimeout(this.inputTimer);
+        this.inputTimer = setTimeout((e) => {
+
+            var allQueryParams = "";
+            this.mapObject(queryParams, function (key, value) {
+                if (value !== "") {
+                    allQueryParams += value;
+                }
+            })
+
+            if (allQueryParams) {
+                this.state.searchQuery = allQueryParams;
+                this.getPoolList(this.state.baseUrl + this.state.searchQuery);
             }
-        })
-        this.state.searchQuery = allQueryParams;
-        this.getPoolList(this.state.baseUrl + this.state.searchQuery);
+        }, WAIT_INTERVAL);
     }
 
     handlePageClick(e, index) {
