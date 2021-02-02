@@ -1,10 +1,4 @@
-import baremetalquery from './assets/queries/baremetalquery';
-import educationquery from './assets/queries/educationquery';
-import charityquery from './assets/queries/charityquery';
-import womeninblockchainquery from './assets/queries/womeninblockchainquery';
-import zeroblockpoolsquery from './assets/queries/zeroblockpoolsquery';
-
-
+import * as queries from  './assets/queries/quickqueries';
 import GAListener from 'components/GAListener';
 import { MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
@@ -30,11 +24,11 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={DashboardPage} />
-                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} title="Bare Metal Pools" query={baremetalquery} />}/>
-                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} title="Education Pools" query={educationquery}/>}/>
-                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} title="Charity Pools" query={charityquery}/>}/>
-                <Route exact path="/womeninblockchainpools" render={(props) => <QuickQueriesPage {...props} title="Women In Blockchain Pools" query={womeninblockchainquery}/>}/>
-                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} title="Zero Block Pools" query={zeroblockpoolsquery}/>}/>
+                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} title="Bare Metal Pools" query={queries.baremetalquery} />}/>
+                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} title="Education Pools" query={queries.educationquery}/>}/>
+                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} title="Charity Pools" query={queries.charityquery}/>}/>
+                <Route exact path="/womeninblockchainpools" render={(props) => <QuickQueriesPage {...props} title="Women In Blockchain Pools" query={queries.womeninblockchainquery}/>}/>
+                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} title="Zero Block Pools" query={queries.zeroblockpoolsquery}/>}/>
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />

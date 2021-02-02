@@ -24,6 +24,7 @@ export default class FetchPoolList extends React.Component {
             pools: null,
             query: null,
             baseUrl: "https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&sid=" + sid,
+            baseQuery: props.query,
             searchQuery: "",
             currentPage: 0,
             pageCount: 0,
@@ -63,7 +64,7 @@ export default class FetchPoolList extends React.Component {
 
             if (allQueryParams) {
                 this.state.searchQuery = allQueryParams;
-                this.getPoolList(this.state.baseUrl + this.state.searchQuery);
+                this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
             }
         }, WAIT_INTERVAL);
     }
@@ -74,12 +75,12 @@ export default class FetchPoolList extends React.Component {
             currentPage: index
         });
 
-        var u = this.state.baseUrl + this.state.searchQuery + "&page=" + parseInt(index + 1);
+        var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(index + 1);
         this.getPoolList(u);
     }
 
     async componentDidMount() {
-        this.getPoolList(this.state.baseUrl);
+        this.getPoolList(this.state.baseUrl + this.state.baseQuery);
     }
 
     async getPoolList(query) {

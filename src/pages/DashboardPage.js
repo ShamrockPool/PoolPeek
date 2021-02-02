@@ -9,11 +9,6 @@ class DashboardPage extends React.Component {
     window.scrollTo(0, 0);
   }
 
-  getSearchText = async(text) => {
-    console.log("Dashboard:" + text);
-    this.state.searchText = text;
-  }
-
   render() {
     return (
       <Page

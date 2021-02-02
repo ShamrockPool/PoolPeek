@@ -1,4 +1,4 @@
-import FetchPoolListQuickQuery from 'components/FetchPoolListQuickQuery';
+import FetchPoolList from 'components/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
 
@@ -20,7 +20,7 @@ class QuickQueriesPage extends React.Component {
         className="QuickQueriesPage"
         title={this.props.title}
       >
-      <FetchPoolListQuickQuery query={this.props.query}/>
+      <FetchPoolList query={this.props.query}/>
       </Page>
     );
   }
