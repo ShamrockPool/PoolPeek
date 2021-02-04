@@ -45,7 +45,7 @@ class Sidebar extends React.Component {
     isOpenComponents: true,
     isOpenContents: true,
     isOpenPages: true,
-    navAdaFolio: null,
+    navAdaFolio: [],
   };
 
   //get adafolio groups and map to nav options
@@ -144,6 +144,49 @@ class Sidebar extends React.Component {
                 </NavItem>
               ))}
             </Collapse>
+          
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Components')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdExtension className={bem.e('nav-item-icon')} />
+                  <span className=" align-self-start">adafolio Portfolios</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenComponents
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenComponents}>
+              {this.state.navAdaFolio.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+          
+
+
           </Nav>
         </div>
       </aside>
