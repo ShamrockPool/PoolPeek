@@ -232,15 +232,6 @@ export default class FetchPoolList extends React.Component {
                 <Table >
                     <tbody>
                         <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                <Input
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="PoolID...."
-                                    onChange={this.handleChange("&poolid=")}
-                                    value={this.state.poolid}
-                                />
-                            </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
                                     type="text"
@@ -250,6 +241,15 @@ export default class FetchPoolList extends React.Component {
                                     value={this.state.ticker}
                                 />
                             </td>
+                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                <Input
+                                    type="text"
+                                    className="cr-search-form__input"
+                                    placeholder="PoolID...."
+                                    onChange={this.handleChange("&poolid=")}
+                                    value={this.state.poolid}
+                                />
+                            </th>
                         </tr>
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
