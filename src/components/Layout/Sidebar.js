@@ -1,4 +1,12 @@
+import Container from 'react-bootstrap/Container'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+
+
 import logo200Image from 'assets/img/logo/logopp_200.png';
+import logo100_75Image from 'assets/img/logo/logo_100_75.png';
+import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
+
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
@@ -78,17 +86,25 @@ class Sidebar extends React.Component {
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} style={sidebarBackground} />
         <div className={bem.e('content')} style={{alignItems: "center" }}>
-          <Navbar>
-            <SourceLink className="navbar-brand d-flex" >
-              <img
-                src={logo200Image}
-                width="87"
-                height="72"
-                className="pr-2"
-                alt="centered image"
-              />
-            </SourceLink>
-          </Navbar>
+      
+        <Container>
+          <Row className="justify-content-md-center">
+            <Col  style={{backgroundColor: 'black', width:'115px', padding:'0px'}}>
+              <img src={logo115_91Image}
+                            width="115"
+                            height="91"
+                            className="pr-2"
+                            title="Welcome to PoolPeek.com"/>
+            </Col>
+            <Col style={{backgroundColor:'black', padding:'0px'}}>
+              
+              A different kind of Cardano Stake Pool Explorer
+             
+            </Col>
+          </Row>
+        </Container>
+
+         
           <Nav vertical>
             {navItems.map(({ to, name, exact, Icon }, index) => (
               <NavItem key={index} className={bem.e('nav-item')}>
