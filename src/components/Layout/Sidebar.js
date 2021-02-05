@@ -45,6 +45,7 @@ class Sidebar extends React.Component {
     isOpenComponents: true,
     isOpenContents: true,
     isOpenPages: true,
+    isOpenAdafolio: false,
     navAdaFolio: [],
   };
 
@@ -73,7 +74,7 @@ class Sidebar extends React.Component {
   };
 
   render() {
-    return (
+    return (  
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} style={sidebarBackground} />
         <div className={bem.e('content')} style={{alignItems: "center" }}>
@@ -81,8 +82,8 @@ class Sidebar extends React.Component {
             <SourceLink className="navbar-brand d-flex" >
               <img
                 src={logo200Image}
-                width="100"
-                height="100"
+                width="87"
+                height="72"
                 className="pr-2"
                 alt="centered image"
               />
@@ -147,7 +148,7 @@ class Sidebar extends React.Component {
           
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Components')}
+              onClick={this.handleClick('Adafolio')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
@@ -158,7 +159,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenComponents
+                    transform: this.state.isOpenAdafolio
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -167,7 +168,7 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenComponents}>
+            <Collapse isOpen={this.state.isOpenAdafolio}>
               {this.state.navAdaFolio.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink
