@@ -5,6 +5,8 @@ import _ from 'lodash';
 import Scroll from '../components/Scroll'
 import Pool from 'components/Pool';
 
+import { Collapse } from 'react-collapse';
+import { FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 const WAIT_INTERVAL = 500
 let queryParams = {
     "poolid": "",
@@ -18,7 +20,7 @@ let queryParams = {
     "pledgefrom": "",
     "pledgeto": "",
     "costfrom": "",
-    "costto":"",
+    "costto": "",
     "activestakefrom": "",
     "activestaketo": ""
 };
@@ -53,8 +55,9 @@ export default class FetchPoolList extends React.Component {
             costfrom: "",
             costto: "",
             activestakefrom: "",
-            activestaketo: ""
-
+            activestaketo: "",
+            //end search params
+            advancedSearchFiltersShow: false
 
         };
     }
@@ -155,7 +158,7 @@ export default class FetchPoolList extends React.Component {
 
     componentDidMount() {
 
-        if(this.props.query){
+        if (this.props.query) {
             this.state.baseQuery = this.props.query;
         }
 
@@ -206,11 +209,20 @@ export default class FetchPoolList extends React.Component {
             "pledgefrom": "",
             "pledgeto": "",
             "costfrom": "",
-            "costto":"",
+            "costto": "",
             "activestakefrom": "",
             "activestaketo": ""
         }
-      };
+    };
+
+    handleAdvancedClick() {
+        if (this.state.advancedSearchFiltersShow) {
+            this.setState({ advancedSearchFiltersShow: false });
+        }
+        else {
+            this.setState({ advancedSearchFiltersShow: true });
+        }
+    }
 
     render() {
         const { currentPage, pageCount } = this.state;
@@ -234,7 +246,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
-                                    style={{fontSize:12}}
+                                    style={{ fontSize: 12 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Ticker...."
@@ -244,7 +256,7 @@ export default class FetchPoolList extends React.Component {
                             </td>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
-                                style={{fontSize:12}}
+                                    style={{ fontSize: 12 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="PoolID...."
@@ -256,7 +268,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
-                                style={{fontSize:12}}
+                                    style={{ fontSize: 12 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Name...."
@@ -266,7 +278,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
-                                style={{fontSize:12}}
+                                    style={{ fontSize: 12 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Description...."
@@ -275,132 +287,142 @@ export default class FetchPoolList extends React.Component {
                                 />
                             </td>
                         </tr>
-
-                        <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                            <h3>Advanced:</h3>
-                            </th>
-                            <td scope="row" style={{ width: "30%" }}>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Produced Blocks From...."
-                                    onChange={this.handleChange("&blockfrom=")}
-                                    value={this.state.blockfrom}
-                                />
-                            </th>
-                            <td scope="row" style={{ width: "30%" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Produced Blocks To...."
-                                    onChange={this.handleChange("&blockto=")}
-                                    value={this.state.blockto}
-                                />
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Pool Margin % From...."
-                                    onChange={this.handleChange("&marginfrom=")}
-                                    value={this.state.marginfrom}
-                                />
-                            </th>
-                            <td scope="row" style={{ width: "30%" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Pool Margin % To...."
-                                    onChange={this.handleChange("&marginto=")}
-                                    value={this.state.marginto}
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Pledge From...."
-                                    onChange={this.handleChange("&pledgefrom=")}
-                                    value={this.state.pledgefrom}
-                                />
-                            </th>
-                            <td scope="row" style={{ width: "30%" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Pledge To...."
-                                    onChange={this.handleChange("&pledgeto=")}
-                                    value={this.state.pledgeto}
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Cost From...."
-                                    onChange={this.handleChange("&costfrom=")}
-                                    value={this.state.costfrom}
-                                />
-                            </th>
-                            <td scope="row" style={{ width: "30%" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Cost To...."
-                                    onChange={this.handleChange("&costto=")}
-                                    value={this.state.costto}
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Active Stake From...."
-                                    onChange={this.handleChange("&activestakefrom=")}
-                                    value={this.state.activestakefrom}
-                                />
-                            </th>
-                            <td scope="row" style={{ width: "30%" }}>
-                                <Input
-                                style={{fontSize:12}}
-                                    type="text"
-                                    className="cr-search-form__input"
-                                    placeholder="Active Stake To...."
-                                    onChange={this.handleChange("&activestaketo=")}
-                                    value={this.state.activestaketo}
-                                />
-                            </td>
-                        </tr>
-
                     </tbody>
                 </Table>
+                {/* <tr>
+                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                <h3>Advanced:</h3>
+                            </th>
+                            <td scope="row" style={{ width: "30%" }}>
+                            </td>
+                        </tr> */}
+                <FormGroup>
+                    <h3>Advanced:</h3>
+                    <FormControlLabel
+                        control={<Switch size="Normal" checked={this.state.advancedSearchFiltersShow} color="black" onChange={e => this.handleAdvancedClick()} />}
+                    />
+                </FormGroup>
+                <Collapse isOpened={this.state.advancedSearchFiltersShow}>
+                    <Table >
+                        <tbody>
 
+                            <tr>
+                                <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Produced Blocks From...."
+                                        onChange={this.handleChange("&blockfrom=")}
+                                        value={this.state.blockfrom}
+                                    />
+                                </th>
+                                <td scope="row" style={{ width: "30%" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Produced Blocks To...."
+                                        onChange={this.handleChange("&blockto=")}
+                                        value={this.state.blockto}
+                                    />
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Pool Margin % From...."
+                                        onChange={this.handleChange("&marginfrom=")}
+                                        value={this.state.marginfrom}
+                                    />
+                                </th>
+                                <td scope="row" style={{ width: "30%" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Pool Margin % To...."
+                                        onChange={this.handleChange("&marginto=")}
+                                        value={this.state.marginto}
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Pledge From...."
+                                        onChange={this.handleChange("&pledgefrom=")}
+                                        value={this.state.pledgefrom}
+                                    />
+                                </th>
+                                <td scope="row" style={{ width: "30%" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Pledge To...."
+                                        onChange={this.handleChange("&pledgeto=")}
+                                        value={this.state.pledgeto}
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Cost From...."
+                                        onChange={this.handleChange("&costfrom=")}
+                                        value={this.state.costfrom}
+                                    />
+                                </th>
+                                <td scope="row" style={{ width: "30%" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Cost To...."
+                                        onChange={this.handleChange("&costto=")}
+                                        value={this.state.costto}
+                                    />
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Active Stake From...."
+                                        onChange={this.handleChange("&activestakefrom=")}
+                                        value={this.state.activestakefrom}
+                                    />
+                                </th>
+                                <td scope="row" style={{ width: "30%" }}>
+                                    <Input
+                                        style={{ fontSize: 12 }}
+                                        type="text"
+                                        className="cr-search-form__input"
+                                        placeholder="Active Stake To...."
+                                        onChange={this.handleChange("&activestaketo=")}
+                                        value={this.state.activestaketo}
+                                    />
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </Table>
+                </Collapse>
                 <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
 
                 <br />
