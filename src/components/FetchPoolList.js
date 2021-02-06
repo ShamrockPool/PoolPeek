@@ -292,9 +292,21 @@ export default class FetchPoolList extends React.Component {
         if (orderByList != "") {
             this.orderBy = "&order=" + orderByList;
             console.log(this.orderBy);
-            this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.orderBy);
+
+            if (this.state.searchQuery !== "") {
+                this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + this.orderBy);
+            }
+            else
+                this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.orderBy);
         } else {
+            this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
             this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+
+            if (this.state.searchQuery !== "") {
+                this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
+            }
+            else
+                this.getPoolList(this.state.baseUrl + this.state.baseQuery);
         }
     }
 
@@ -492,9 +504,9 @@ export default class FetchPoolList extends React.Component {
                     </Table>
                 </Collapse>
                 <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
-                
+
                 <FormGroup>
-                <br></br>
+                    <br></br>
                     <h3>Orderby:</h3>
                     <label>
                         <Checkbox
