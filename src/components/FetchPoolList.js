@@ -6,7 +6,7 @@ import Scroll from '../components/Scroll'
 import Pool from 'components/Pool';
 
 import { Collapse } from 'react-collapse';
-import { FormGroup, FormControlLabel, Switch } from '@material-ui/core';
+import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 const WAIT_INTERVAL = 500
 let queryParams = {
     "poolid": "",
@@ -24,6 +24,8 @@ let queryParams = {
     "activestakefrom": "",
     "activestaketo": ""
 };
+
+let orderBy;
 
 const sid = Math.floor(Math.random() * 100) + Date.now()
 
@@ -57,7 +59,15 @@ export default class FetchPoolList extends React.Component {
             activestakefrom: "",
             activestaketo: "",
             //end search params
-            advancedSearchFiltersShow: false
+            advancedSearchFiltersShow: false,
+            //order by types
+            tickerOrder: false,
+            pledgeOrder: false,
+            activeStakeOrder: false,
+            blocksOrder: false,
+            marginOrder: false
+            //end order by types
+
 
         };
     }
@@ -224,6 +234,70 @@ export default class FetchPoolList extends React.Component {
         }
     }
 
+    handleOrderByClick(orderByType) {
+        console.log("I was clicked" + orderByType);
+        if (orderByType == "tickerOrder") {
+            if (this.state.tickerOrder == false) {
+                this.state.tickerOrder = true;
+                this.setState({ tickerOrder: true });
+            } else {
+                this.state.tickerOrder = false;
+                this.setState({ tickerOrder: false });
+            }
+        }
+        else if (orderByType == "pledgeOrder") {
+            if (this.state.pledgeOrder == false) {
+                this.state.pledgeOrder = true;
+                this.setState({ tickerOrder: true });
+            } else {
+                this.state.pledgeOrder = false;
+                this.setState({ pledgeOrder: false });
+            }
+        }
+        else if (orderByType == "blocksOrder") {
+            if (this.state.blocksOrder == false) {
+                this.state.blocksOrder = true;
+                this.setState({ blocksOrder: true });
+            } else {
+                this.state.blocksOrder = false;
+                this.setState({ blocksOrder: false });
+            }
+        }
+        else if (orderByType == "activeStakeOrder") {
+            if (this.state.activeStakeOrder == false) {
+                this.state.activeStakeOrder = true;
+                this.setState({ activeStakeOrder: true });
+            } else {
+                this.state.activeStakeOrder = false;
+                this.setState({ activeStakeOrder: false });
+            }
+        }
+        else if (orderByType == "marginOrder") {
+            if (this.state.marginOrder == false) {
+                this.state.marginOrder = true;
+                this.setState({ marginOrder: true });
+            } else {
+                this.state.marginOrder = false;
+                this.setState({ marginOrder: false });
+            }
+        }
+
+        var orderByList = "";
+        if (this.state.tickerOrder == true) { orderByList += "Ticker,"; }
+        if (this.state.pledgeOrder == true) { orderByList += "Pledge,"; }
+        if (this.state.blocksOrder == true) { orderByList += "Blocks,"; }
+        if (this.state.activeStakeOrder == true) { orderByList += "ActiveStake,"; }
+        if (this.state.marginOrder == true) { orderByList += "Margin,"; }
+
+        if (orderByList != "") {
+            this.orderBy = "&order=" + orderByList;
+            console.log(this.orderBy);
+            this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.orderBy);
+        } else {
+            this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+        }
+    }
+
     render() {
         const { currentPage, pageCount } = this.state;
 
@@ -295,6 +369,7 @@ export default class FetchPoolList extends React.Component {
                         control={<Switch size="Normal" checked={this.state.advancedSearchFiltersShow} color="black" onChange={e => this.handleAdvancedClick()} />}
                     />
                 </FormGroup>
+
                 <Collapse isOpened={this.state.advancedSearchFiltersShow}>
                     <Table >
                         <tbody>
@@ -417,6 +492,33 @@ export default class FetchPoolList extends React.Component {
                     </Table>
                 </Collapse>
                 <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
+                <br></br>
+                <FormGroup>
+                    <h3>Orderby:</h3>
+                    <label>
+                        <Checkbox
+                            checked={this.state.tickerOrder}
+                            onChange={e => this.handleOrderByClick("tickerOrder")}
+                        />
+                        <span>Ticker</span>
+                        <Checkbox
+                            checked={this.state.pledgeOrder}
+                            onChange={e => this.handleOrderByClick("pledgeOrder")} />
+                        <span>Pledge</span>
+                        <Checkbox
+                            checked={this.state.activeStakeOrder}
+                            onChange={e => this.handleOrderByClick("activeStakeOrder")} />
+                        <span>Active Stake</span>
+                        <Checkbox
+                            checked={this.state.blocksOrder}
+                            onChange={e => this.handleOrderByClick("blocksOrder")} />
+                        <span>Blocks</span>
+                        <Checkbox
+                            checked={this.state.marginOrder}
+                            onChange={e => this.handleOrderByClick("marginOrder")} />
+                        <span>Margin</span>
+                    </label>
+                </FormGroup>
 
                 <br />
                 <p> Total pools: {this.state.query.count}, Displaying {this.state.pools.length}</p>
