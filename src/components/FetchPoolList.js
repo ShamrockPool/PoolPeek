@@ -234,6 +234,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
+                                    style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Ticker...."
@@ -243,6 +244,7 @@ export default class FetchPoolList extends React.Component {
                             </td>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="PoolID...."
@@ -254,6 +256,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Name...."
@@ -263,6 +266,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Description...."
@@ -283,6 +287,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Produced Blocks From...."
@@ -292,6 +297,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Produced Blocks To...."
@@ -303,6 +309,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Pool Margin % From...."
@@ -312,6 +319,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Pool Margin % To...."
@@ -324,6 +332,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Pledge From...."
@@ -333,6 +342,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Pledge To...."
@@ -345,6 +355,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Cost From...."
@@ -354,6 +365,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Cost To...."
@@ -366,6 +378,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Active Stake From...."
@@ -375,6 +388,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
+                                style={{fontSize:12}}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Active Stake To...."

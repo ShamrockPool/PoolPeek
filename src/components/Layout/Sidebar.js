@@ -33,11 +33,11 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/baremetalpools', name: 'Bare Metal Pools', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/educationpools', name: 'Education Pools', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/charitypools', name: 'Charity Pools', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/womeninblockchainpools', name: "Women In Blockchain Pools", exact: false, Icon: MdRadioButtonChecked },
-  { to: '/zeroblockpools', name: 'Zero Block Pools', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/educationpools', name: 'Education', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/charitypools', name: 'Charity', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/womeninblockchainpools', name: "Women In Blockchain", exact: false, Icon: MdRadioButtonChecked },
+  { to: '/zeroblockpools', name: 'Zero Block', exact: false, Icon: MdRadioButtonChecked },
 ];
 
 
@@ -128,7 +128,7 @@ class Sidebar extends React.Component {
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
                   <MdExtension className={bem.e('nav-item-icon')} />
-                  <span className=" align-self-start">Quick Queries</span>
+                  <span className=" align-self-start">Pool Queries</span>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
