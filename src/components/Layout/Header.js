@@ -44,7 +44,7 @@ class Header extends React.Component {
   async getCurrentAdaBTCPrice() {
     var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADABTC';
     let price = await this.fetchFromBinance(url);
-    this.setState({ adaEuroPrice: "ADA EURO Price: " +price });
+    this.setState({ adaBtcPrice: "ADA BTC Price: " +price });
   }
 
 
