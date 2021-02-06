@@ -492,8 +492,9 @@ export default class FetchPoolList extends React.Component {
                     </Table>
                 </Collapse>
                 <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
-                <br></br>
+                
                 <FormGroup>
+                <br></br>
                     <h3>Orderby:</h3>
                     <label>
                         <Checkbox
