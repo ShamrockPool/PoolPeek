@@ -25,11 +25,11 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={DashboardPage} />
-                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} title="Bare Metal Pools" query={queries.baremetalquery} />}/>
-                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} title="Education Pools" query={queries.educationquery}/>}/>
-                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} title="Charity Pools" query={queries.charityquery}/>}/>
-                <Route exact path="/womeninblockchainpools" render={(props) => <QuickQueriesPage {...props} title="Women In Blockchain Pools" query={queries.womeninblockchainquery}/>}/>
-                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} title="Zero Block Pools" query={queries.zeroblockpoolsquery}/>}/>
+                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} title="Bare Metal" query={queries.baremetalquery} />}/>
+                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} title="Education" query={queries.educationquery}/>}/>
+                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} title="Charity" query={queries.charityquery}/>}/>
+                <Route exact path="/womeninblockchainpools" render={(props) => <QuickQueriesPage {...props} title="Women In Blockchain" query={queries.womeninblockchainquery}/>}/>
+                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} title="Zero Block" query={queries.zeroblockpoolsquery}/>}/>
                 <Route exact path="/adafolio" render={(props) => <AdaFoliosPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="adafolio Portfolio" query=""/>}/>
               </React.Suspense>
             </MainLayout>
