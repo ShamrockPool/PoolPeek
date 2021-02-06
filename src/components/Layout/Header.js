@@ -41,6 +41,12 @@ class Header extends React.Component {
     this.setState({ adaEuroPrice: "ADA EURO Price: " +price });
   }
 
+  async getCurrentAdaBTCPrice() {
+    var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADABTC';
+    let price = await this.fetchFromBinance(url);
+    this.setState({ adaEuroPrice: "ADA EURO Price: " +price });
+  }
+
 
   async fetchFromBinance(url) {
 
@@ -56,10 +62,12 @@ class Header extends React.Component {
 
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
+    this.getCurrentAdaBTCPrice();
     console.log(this.state.adaUsdPrice);
 
     this.interval = setInterval(() => this.getCurrentAdaUSDPrice(), 15000);
     this.interval = setInterval(() => this.getCurrentAdaEuroPrice(), 15000);
+    this.interval = setInterval(() => this.getCurrentAdaBTCPrice(), 15000);
 
   }
 
@@ -76,6 +84,7 @@ class Header extends React.Component {
           <div>
             <p>{this.state.adaUsdPrice}</p>
             <p>{this.state.adaEuroPrice}</p>
+            <p>{this.state.adaBtcPrice}</p>
           </div>
           {/* <p>PoolPeek.com is a "light-weight" Cardano stake pool explorer that analyzes the publicly available registration data and other data elements such as number of produced blocks.</p>
           <p>If you would like to support our development efforts, please consider delegating to the LOCO Pool or Shamrock Pool</p> */}
