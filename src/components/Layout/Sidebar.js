@@ -2,7 +2,6 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-
 import logo200Image from 'assets/img/logo/logopp_200.png';
 import logo100_75Image from 'assets/img/logo/logo_100_75.png';
 import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
@@ -62,7 +61,7 @@ class Sidebar extends React.Component {
     const response = await fetch('https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&op=afgroups');
     const data = await response.json();
     var dataMap = data.poolpeek.adafolioGroups.map((rec, index) => (
-      {to:'TODO_ROUTE_USING_ID', name:rec.name, exact:false, Icon: MdRadioButtonChecked}  
+      {to:'adafolio?adafolioid=' + rec.id, name:rec.name, exact:false, Icon: MdRadioButtonChecked}  
     ));
     this.setState({ navAdaFolio: dataMap});
   }
