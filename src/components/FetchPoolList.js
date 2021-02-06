@@ -289,13 +289,6 @@ export default class FetchPoolList extends React.Component {
                         </tr>
                     </tbody>
                 </Table>
-                {/* <tr>
-                            <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                <h3>Advanced:</h3>
-                            </th>
-                            <td scope="row" style={{ width: "30%" }}>
-                            </td>
-                        </tr> */}
                 <FormGroup>
                     <h3>Advanced:</h3>
                     <FormControlLabel
@@ -309,7 +302,7 @@ export default class FetchPoolList extends React.Component {
                             <tr>
                                 <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                     <Input
-                                        style={{ fontSize: 12 }}
+                                        style={{ fontSize: 13 }}
                                         type="text"
                                         className="cr-search-form__input"
                                         placeholder="Produced Blocks From...."
@@ -319,7 +312,7 @@ export default class FetchPoolList extends React.Component {
                                 </th>
                                 <td scope="row" style={{ width: "30%" }}>
                                     <Input
-                                        style={{ fontSize: 12 }}
+                                        style={{ fontSize: 13 }}
                                         type="text"
                                         className="cr-search-form__input"
                                         placeholder="Produced Blocks To...."
@@ -426,7 +419,6 @@ export default class FetchPoolList extends React.Component {
                 <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
 
                 <br />
-                <h3>Results:</h3>
                 <p> Total pools: {this.state.query.count}, Displaying {this.state.pools.length}</p>
 
                 <Pagination style={{ align: "left", width: "82%" }}>
