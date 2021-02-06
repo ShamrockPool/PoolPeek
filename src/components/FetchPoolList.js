@@ -248,7 +248,7 @@ export default class FetchPoolList extends React.Component {
         else if (orderByType == "pledgeOrder") {
             if (this.state.pledgeOrder == false) {
                 this.state.pledgeOrder = true;
-                this.setState({ tickerOrder: true });
+                this.setState({ pledgeOrder: true });
             } else {
                 this.state.pledgeOrder = false;
                 this.setState({ pledgeOrder: false });
