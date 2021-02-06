@@ -246,7 +246,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
-                                    style={{ fontSize: 12 }}
+                                    style={{ fontSize: 14 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Ticker...."
@@ -256,7 +256,7 @@ export default class FetchPoolList extends React.Component {
                             </td>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
-                                    style={{ fontSize: 12 }}
+                                    style={{ fontSize: 14 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="PoolID...."
@@ -268,7 +268,7 @@ export default class FetchPoolList extends React.Component {
                         <tr>
                             <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                 <Input
-                                    style={{ fontSize: 12 }}
+                                    style={{ fontSize: 14 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Name...."
@@ -278,7 +278,7 @@ export default class FetchPoolList extends React.Component {
                             </th>
                             <td scope="row" style={{ width: "30%" }}>
                                 <Input
-                                    style={{ fontSize: 12 }}
+                                    style={{ fontSize: 14 }}
                                     type="text"
                                     className="cr-search-form__input"
                                     placeholder="Description...."
