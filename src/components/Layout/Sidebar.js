@@ -9,6 +9,7 @@ import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import SourceLink from 'components/SourceLink';
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 import {
   MdDashboard,
   MdExtension,
@@ -63,7 +64,7 @@ class Sidebar extends React.Component {
     const response = await fetch('https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&op=afgroups');
     const data = await response.json();
     var dataMap = data.poolpeek.adafolioGroups.map((rec, index) => (
-      {to:'adafolio?adafolioid=' + rec.id, name:rec.name, exact:false, Icon: MdRadioButtonChecked}  
+      {to:'adafolio?adafolioid=' + rec.id + "&qname=" + encodeURIComponent(rec.name), name:ReactHtmlParser(rec.name), exact:false, Icon: MdRadioButtonChecked}  
     ));
     this.setState({ navAdaFolio: dataMap});
   }

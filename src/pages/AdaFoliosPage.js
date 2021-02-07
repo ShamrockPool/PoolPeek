@@ -1,6 +1,7 @@
 import FetchPoolList from 'components/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
+import ReactHtmlParser from 'react-html-parser';
 
 class AdaFoliosPage extends React.Component {
 
@@ -15,12 +16,14 @@ class AdaFoliosPage extends React.Component {
   render() {
 
     var query = this.props.location.search.replace("?","&");
+    var pos = query.indexOf("&qname=");
+    var title = "adafolio.com - " + ReactHtmlParser(decodeURIComponent(query.substring(pos+7)));
 
     return (
 
       <Page
         className="AdaFoliosPage"
-        title={this.props.title}
+        title={title}
       >
       <FetchPoolList query={query}/>
       </Page>

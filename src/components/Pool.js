@@ -66,14 +66,6 @@ export default class Pool extends React.Component {
                                                 )}
                                                 <tr>
                                                     <Tooltip
-                                                        title="The ID of the pool."
-                                                        placement="left"
-                                                    >
-                                                        <th scope="row" style={{width: '20%'}}>Pool Id</th></Tooltip>
-                                                    <td><p>{item.pool_id.split('', 10).reduce((o, c) => o.length === 9 ? `${o}${c}...` : `${o}${c}` , '')}</p></td>
-                                                </tr>
-                                                <tr>
-                                                    <Tooltip
                                                         title="The website of the pool."
                                                         placement="left"
                                                     >
@@ -103,6 +95,24 @@ export default class Pool extends React.Component {
                                                     <th scope="row" style={{width: '20%'}}>Stake</th></Tooltip>
                                                     <td><p>Active Stake: {item.active_stake} ₳</p>     <p>Delegators: {item.active_stake_delegator_count}</p></td>
                                                 </tr>
+                                                <tr>
+                                                    <Tooltip
+                                                        title="The meta data website of the pool."
+                                                        placement="left"
+                                                    >
+                                                        <th scope="row" style={{width: '20%'}}>Meta Data</th></Tooltip>
+                                                    <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.metadata_url}</p></a></td>
+                                                </tr>
+                                                {item.metadata_extended_url.length > 0 && (
+                                                <tr>
+                                                    <Tooltip
+                                                        title="The extended meta data website of the pool."
+                                                        placement="left"
+                                                    >
+                                                        <th scope="row" style={{width: '20%'}}>Extended Meta Data</th></Tooltip>
+                                                    <td><a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.metadata_extended_url}</p></a></td>
+                                                </tr>
+                                                )}
                                                 <tr>
                                                     <Tooltip
                                                         title="Sites containing more information on the pool."
