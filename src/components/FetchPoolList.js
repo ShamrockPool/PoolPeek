@@ -65,7 +65,8 @@ export default class FetchPoolList extends React.Component {
             pledgeOrder: false,
             activeStakeOrder: false,
             blocksOrder: false,
-            marginOrder: false
+            marginOrder: false,
+            ascendingOrder: true
             //end order by types
 
 
@@ -282,12 +283,31 @@ export default class FetchPoolList extends React.Component {
             }
         }
 
+        if (orderByType == "ascendingOrder") {
+            if (this.state.ascendingOrder == false) {
+                this.state.ascendingOrder = true;
+                this.setState({ ascendingOrder: true });
+            } else {
+                this.state.ascendingOrder = false;
+                this.setState({ ascendingOrder: false });
+            }
+        }
+
         var orderByList = "";
-        if (this.state.tickerOrder == true) { orderByList += "Ticker,"; }
-        if (this.state.pledgeOrder == true) { orderByList += "Pledge,"; }
-        if (this.state.blocksOrder == true) { orderByList += "Blocks,"; }
-        if (this.state.activeStakeOrder == true) { orderByList += "ActiveStake,"; }
-        if (this.state.marginOrder == true) { orderByList += "Margin,"; }
+        if (this.state.ascendingOrder == true) {
+            if (this.state.tickerOrder == true) { orderByList += "Ticker,"; }
+            if (this.state.pledgeOrder == true) { orderByList += "Pledge,"; }
+            if (this.state.blocksOrder == true) { orderByList += "Blocks,"; }
+            if (this.state.activeStakeOrder == true) { orderByList += "ActiveStake,"; }
+            if (this.state.marginOrder == true) { orderByList += "Margin,"; }
+        }
+        else{
+            if (this.state.tickerOrder == true) { orderByList += "TiTicker(z-a),"; }
+            if (this.state.pledgeOrder == true) { orderByList += "Pledge(z-a),"; }
+            if (this.state.blocksOrder == true) { orderByList += "Blocks(z-a),"; }
+            if (this.state.activeStakeOrder == true) { orderByList += "ActiveStake(z-a),"; }
+            if (this.state.marginOrder == true) { orderByList += "Margin(z-a),"; }
+        }
 
         if (orderByList != "") {
             this.orderBy = "&order=" + orderByList;
@@ -530,6 +550,15 @@ export default class FetchPoolList extends React.Component {
                             checked={this.state.marginOrder}
                             onChange={e => this.handleOrderByClick("marginOrder")} />
                         <span>Margin</span>
+                    </label>
+                </FormGroup>
+                <FormGroup>
+                    <label>
+                        <Checkbox
+                            checked={this.state.ascendingOrder}
+                            onChange={e => this.handleOrderByClick("ascendingOrder")}
+                        />
+                        <span>Ascending Order</span>
                     </label>
                 </FormGroup>
 
