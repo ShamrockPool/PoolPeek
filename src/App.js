@@ -25,11 +25,13 @@ class App extends React.Component {
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" component={DashboardPage} />
-                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} title="Bare Metal" query={queries.baremetalquery} />}/>
-                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} title="Education" query={queries.educationquery}/>}/>
-                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} title="Charity" query={queries.charityquery}/>}/>
-                <Route exact path="/womeninblockchainpools" render={(props) => <QuickQueriesPage {...props} title="Women In Blockchain" query={queries.womeninblockchainquery}/>}/>
-                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} title="Zero Block" query={queries.zeroblockpoolsquery}/>}/>
+                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} />}/>
+                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Education" query={queries.educationquery}/>}/>
+                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Charity" query={queries.charityquery}/>}/>
+                <Route exact path="/womeninblockchainpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Women In Blockchain" query={queries.womeninblockchainquery}/>}/>
+                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Zero Block" query={queries.zeroblockpoolsquery}/>}/>
+                <Route exact path="/retiringpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Soon Retiring" query={queries.retiringpoolsquery}/>}/>
+                <Route exact path="/retiredpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Retired" query={queries.retiredpoolsquery}/>}/>
                 <Route exact path="/adafolio" render={(props) => <AdaFoliosPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="adafolio Portfolio" query=""/>}/>
               </React.Suspense>
             </MainLayout>

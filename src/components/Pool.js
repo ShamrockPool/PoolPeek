@@ -53,6 +53,17 @@ export default class Pool extends React.Component {
                                                     </Tooltip>
                                                     <td scope="row"><p>{ReactHtmlParser(item.ticker)}</p></td>
                                                 </tr>
+                                                {item.retirement_epoch.length > 0 && (
+                                                <tr>
+                                                    <Tooltip
+                                                        title="Retirement Epoch"
+                                                        placement="left"
+                                                    >
+                                                        <th scope="row" style={{width: '20%'}}>Retirement Epoch</th>
+                                                    </Tooltip>
+                                                    <td scope="row"><p>{ReactHtmlParser(item.retirement_epoch)}</p></td>
+                                                </tr>
+                                                )}
                                                 <tr>
                                                     <Tooltip
                                                         title="The ID of the pool."
@@ -108,7 +119,7 @@ export default class Pool extends React.Component {
                                                             className="pr-2"
                                                             alt=""
                                                         /></a>
-                                                        <a href={"https://pooltool.io/pool" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
+                                                        <a href={"https://pooltool.io/pool/" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
                                                             src={PooltoolImage}
                                                             className="pr-2"
                                                             alt=""
