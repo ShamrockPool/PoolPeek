@@ -46,6 +46,7 @@ const navComponents = [
 const navFunQueries = [
   { to: '/funtickers', name: 'Tickers', exact: false, Icon: MdRadioButtonChecked },
   { to: '/funnames', name: 'Names', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/fundescriptions', name: 'Descriptions', exact: false, Icon: MdRadioButtonChecked },
 ];
 
 const navItems = [

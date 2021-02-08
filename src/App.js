@@ -36,7 +36,8 @@ class App extends React.Component {
 
                 <Route exact path="/funtickers" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fun Tickers" query={queries.funtickersquery}/>}/>
                 <Route exact path="/funnames" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fun Names" query={queries.funnamesquery}/>}/>
-                
+                <Route exact path="/fundescriptions" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fun Descriptions" query={queries.fundescriptionsquery}/>}/>
+          
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />

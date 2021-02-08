@@ -10,3 +10,4 @@ export const retiredpoolsquery = "&qryname=Retired+Pools&onlyretired=1";
 
 export const funtickersquery = "&op=fundumps&qryname=Fun+Tickers&dumptype=ticker";
 export const funnamesquery = "&op=fundumps&qryname=Fun+Names&dumptype=name";
+export const fundescriptionsquery = "&op=fundumps&qryname=Fun+Names&dumptype=description";

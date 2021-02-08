@@ -10,7 +10,8 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 
 class FunDumpPage extends React.Component {
   state = {
-    funDumps: []
+    funDumps: [],
+    loading: true
   };
 
   constructor(props) {
@@ -34,7 +35,7 @@ class FunDumpPage extends React.Component {
     const data = await response.json();
 
     console.log(data);
-    this.setState({ funDumps: data.poolpeek.funDumps});
+    this.setState({ funDumps: data.poolpeek.funDumps, loading: false});
   }
 
   async componentDidMount() {
@@ -43,6 +44,11 @@ class FunDumpPage extends React.Component {
   };
 
   render() {
+      
+    if (this.state.loading) {
+      return <div>loading...</div>
+    }
+
 
     return (
 
