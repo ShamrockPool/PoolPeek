@@ -34,6 +34,7 @@ const sidebarBackground = {
 };
 
 const navComponents = [
+  { to: '/poolpeek', name: 'The Dynamic Duo [PoolPeek]', exact: false, Icon: MdRadioButtonChecked },
   { to: '/charitypools', name: 'Charity', exact: false, Icon: MdRadioButtonChecked },
   { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdRadioButtonChecked },
   { to: '/educationpools', name: 'Education', exact: false, Icon: MdRadioButtonChecked },
