@@ -10,7 +10,7 @@ require('./styles/reduction.scss');
 const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
 const QuickQueriesPage = React.lazy(() => import('pages/QuickQueriesPage'));
 const AdaFoliosPage = React.lazy(() => import('pages/AdaFoliosPage'));
-
+const FunDumpPage = React.lazy(() => import('pages/FunDumpPage'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -33,6 +33,10 @@ class App extends React.Component {
                 <Route exact path="/retiringpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Soon Retiring" query={queries.retiringpoolsquery}/>}/>
                 <Route exact path="/retiredpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Retired" query={queries.retiredpoolsquery}/>}/>
                 <Route exact path="/adafolio" render={(props) => <AdaFoliosPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="adafolio Portfolio" query=""/>}/>
+
+                <Route exact path="/funtickers" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fun Tickers" query={queries.funtickersquery}/>}/>
+                <Route exact path="/funnames" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fun Names" query={queries.funnamesquery}/>}/>
+                
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />

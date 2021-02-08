@@ -5,3 +5,6 @@ export const womeninblockchainquery = "&qryname=Women+In+Blockchain&nameordescri
 export const zeroblockpoolsquery = "&qryname=Help+0+Block+Pools&blockfrom=0&blockto=0&excluderetired=1";
 export const retiringpoolsquery = "&qryname=Retiring+Pool&onlyretiring=1";
 export const retiredpoolsquery = "&qryname=Retired+Pools&onlyretired=1";
+
+export const funtickersquery = "&op=fundumps&qryname=Fun+Tickers&dumptype=ticker";
+export const funnamesquery = "&op=fundumps&qryname=Fun+Names&dumptype=name";

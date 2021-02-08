@@ -43,6 +43,10 @@ const navComponents = [
   { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdRadioButtonChecked }
 ];
 
+const navFunQueries = [
+  { to: '/funtickers', name: 'Tickers', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/funnames', name: 'Names', exact: false, Icon: MdRadioButtonChecked },
+];
 
 const navItems = [
   { to: '/', name: 'HOME', exact: true, Icon: MdDashboard }
@@ -56,6 +60,7 @@ class Sidebar extends React.Component {
     isOpenContents: true,
     isOpenPages: true,
     isOpenAdafolio: false,
+    isOpenFunQuery: false,
     navAdaFolio: [],
   };
 
@@ -164,6 +169,51 @@ class Sidebar extends React.Component {
               ))}
             </Collapse>
           
+
+
+
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('FunQuery')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdExtension className={bem.e('nav-item-icon')} />
+                  <span className=" align-self-start">Fun Queries</span>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenFunQuery
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenFunQuery}>
+              {navFunQueries.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+          
+
             <NavItem
               className={bem.e('nav-item')}
               onClick={this.handleClick('Adafolio')}
