@@ -34,10 +34,9 @@ const sidebarBackground = {
 };
 
 const navComponents = [
+  { to: '/charitypools', name: 'Charity', exact: false, Icon: MdRadioButtonChecked },
   { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdRadioButtonChecked },
   { to: '/educationpools', name: 'Education', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/charitypools', name: 'Charity', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/womeninblockchainpools', name: "Women In Blockchain", exact: false, Icon: MdRadioButtonChecked },
   { to: '/zeroblockpools', name: 'Zero Block', exact: false, Icon: MdRadioButtonChecked },
   { to: '/retiringpools', name: 'Soon Retiring', exact: false, Icon: MdRadioButtonChecked },
   { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdRadioButtonChecked }
