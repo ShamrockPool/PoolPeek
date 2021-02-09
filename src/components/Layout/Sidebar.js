@@ -15,6 +15,9 @@ import {
   MdExtension,
   MdKeyboardArrowDown,
   MdRadioButtonChecked,
+  MdMood,
+  MdPool,
+  MdSearch
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -34,23 +37,24 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/poolpeek', name: 'The Dynamic Duo [PoolPeek]', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/charitypools', name: 'Charity', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/educationpools', name: 'Education', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/zeroblockpools', name: 'Zero Block', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/retiringpools', name: 'Soon Retiring', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdRadioButtonChecked }
+  { to: '/poolpeek', name: 'The Dynamic Duo', exact: false, Icon: MdPool },
+  { to: '/charitypools', name: 'Charity', exact: false, Icon: MdPool },
+  { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdPool },
+  { to: '/educationpools', name: 'Education', exact: false, Icon: MdPool },
+  { to: '/zeroblockpools', name: 'Zero Block', exact: false, Icon: MdPool },
+  { to: '/retiringpools', name: 'Soon Retiring', exact: false, Icon: MdPool },
+  { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdPool }
 ];
 
 const navFunQueries = [
-  { to: '/funtickers', name: 'Tickers', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/funnames', name: 'Names', exact: false, Icon: MdRadioButtonChecked },
-  { to: '/fundescriptions', name: 'Descriptions', exact: false, Icon: MdRadioButtonChecked },
+  { to: '/funtickers', name: 'Tickers', exact: false, Icon: MdSearch },
+  { to: '/funnames', name: 'Names', exact: false, Icon: MdSearch },
+  { to: '/fundescriptions', name: 'Descriptions', exact: false, Icon: MdSearch },
 ];
 
 const navItems = [
-  { to: '/', name: 'HOME', exact: true, Icon: MdDashboard }
+  { to: '/', name: 'HOME', exact: true, Icon: MdDashboard },
+  { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 ];
 
 const bem = bn.create('sidebar');

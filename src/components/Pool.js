@@ -97,20 +97,20 @@ export default class Pool extends React.Component {
                                                 </tr>
                                                 <tr>
                                                     <Tooltip
-                                                        title="The meta data website of the pool."
+                                                        title="The meta data url of the pool."
                                                         placement="left"
                                                     >
                                                         <th scope="row" style={{width: '20%'}}>Meta Data</th></Tooltip>
-                                                    <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.metadata_url}</p></a></td>
+                                                    <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a></td>
                                                 </tr>
                                                 {item.metadata_extended_url.length > 0 && (
                                                 <tr>
                                                     <Tooltip
-                                                        title="The extended meta data website of the pool."
+                                                        title="The extended meta data url of the pool."
                                                         placement="left"
                                                     >
                                                         <th scope="row" style={{width: '20%'}}>Extended Meta Data</th></Tooltip>
-                                                    <td><a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.metadata_extended_url}</p></a></td>
+                                                    <td><a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a></td>
                                                 </tr>
                                                 )}
                                                 <tr>
