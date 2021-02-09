@@ -17,7 +17,8 @@ import {
   MdRadioButtonChecked,
   MdMood,
   MdPool,
-  MdSearch
+  MdSearch,
+  MdFormatListBulleted
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -47,9 +48,9 @@ const navComponents = [
 ];
 
 const navFunQueries = [
-  { to: '/funtickers', name: 'Tickers', exact: false, Icon: MdSearch },
-  { to: '/funnames', name: 'Names', exact: false, Icon: MdSearch },
-  { to: '/fundescriptions', name: 'Descriptions', exact: false, Icon: MdSearch },
+  { to: '/funtickers', name: 'Tickers', exact: false, Icon: MdFormatListBulleted },
+  { to: '/funnames', name: 'Names', exact: false, Icon: MdFormatListBulleted },
+  { to: '/fundescriptions', name: 'Descriptions', exact: false, Icon: MdFormatListBulleted },
 ];
 
 const navItems = [
