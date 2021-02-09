@@ -39,7 +39,7 @@ export default class Pool extends React.Component {
                                     alt=""
                                     width="28"
                                     height="25"
-                                />{ReactHtmlParser(item.name)}<p>{item.pool_id}</p></CardHeader>
+                                />{ReactHtmlParser(item.name)}<p><small>{item.pool_id}</small></p></CardHeader>
                                     <Card body>
                                         <p>{ReactHtmlParser(description)}</p>
                                         <Table {...{ ['striped']: true }}>

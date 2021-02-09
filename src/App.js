@@ -25,7 +25,7 @@ class App extends React.Component {
           <Switch>
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" component={DashboardPage} />
+                <Route exact path="/" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} />} />
                 <Route exact path="/aboutus" component={AboutUsPage} />
                 
                 <Route exact path="/poolpeek" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="The Dynamic Duo [PoolPeek]" query={queries.poolpeekquery} />}/>
