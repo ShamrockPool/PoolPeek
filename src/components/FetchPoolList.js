@@ -66,17 +66,15 @@ export default class FetchPoolList extends React.Component {
             activeStakeOrder: false,
             blocksOrder: false,
             marginOrder: false,
-
-            ascendingOrder: true,
-
             tickerOrderDescending: false,
             pledgeOrderDescending: false,
             activeStakeOrderDescending: false,
             blocksOrderDescending: false,
             marginOrderDescending: false,
-            ascendingOrderDescending: true
+            ascendingOrderDescending: true,
             //end order by types
-
+            showFilters: true,
+            filtersWhereRemoved: false
 
         };
     }
@@ -175,19 +173,27 @@ export default class FetchPoolList extends React.Component {
         this.getPoolList(u);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
 
         if (this.props.query) {
             this.state.baseQuery = this.props.query;
         }
 
-        this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+
+
+        await this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+
+
+        if (this.state.filtersWhereRemoved == false) {
+            this.showFilters(this.state.pools.length);
+        }
     }
 
     async getPoolList(query) {
         var response = await fetch(query);
         // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
         const data = await response.json();
+        this.state.pools = data.poolpeek.pools;
         this.setState({ pools: data.poolpeek.pools, loading: true })
         this.setState({ query: data.poolpeek.query, loading: true })
         this.setState({ pageCount: data.poolpeek.query.pageCount, loading: false })
@@ -412,15 +418,14 @@ export default class FetchPoolList extends React.Component {
         }
     }
 
-    showFilters()
-    {
-        console.log(this.props.query)
-       if (this.state.pools.length < 5 && this.props.query !== undefined){
-           return false;
-       }
-       else{
-           return true;
-       }
+    showFilters(poolsize) {
+        console.log(poolsize)
+        if (poolsize < 5 && this.props.query !== undefined) {
+            this.state.showFilters = false;
+            this.setState({ showFilters: false });
+
+            this.state.filtersWhereRemoved = true;
+        }
     }
 
     render() {
@@ -439,7 +444,7 @@ export default class FetchPoolList extends React.Component {
             <div className="container-fluid" style={{ align: "left", width: "99%" }}>
 
                 <Scroll showBelow={250} />
-                {this.showFilters() &&
+                {this.state.showFilters &&
                     <div>
                         <h3><b>Filters:</b></h3>
                         <Table >
