@@ -32,7 +32,7 @@ class AboutUsPage extends React.Component {
       >
      <div>
 
-Overview
+<b>Overview</b>
 <br/><br/>
 
 PoolPeek.com is a "light-weight" Cardano stake pool explorer that analyzes the publicly available registration data and other data 
@@ -41,14 +41,17 @@ pools and then drill deeper on specific pools using our external links feature. 
 eye on their competiton. We offer a range or filters on blocks, margin, pledge, cost and active stake.
 <br/><br/>
 
-The Developers
+<b>The Developers</b>
 <br/><br/>
 
 PoolPeek.com is developed and maintained by small pool owners SHA and LOCO...
-TODO
+<br></br>
+You can reach us on 
+<br></br>
+<b>Twitter: </b><a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">https://twitter.com/CardanoPoolPeek</a>
+<br></br>
+<b>Telegram group chat: </b><a href="https://t.me/poolpeek" target="_blank" rel="noreferrer">https://t.me/poolpeek</a>
 
-
-Randomness
 <br/><br/>
 
 PoolPeek was built by small stake pool owners who believe all small pools should have a fighting chance. 
@@ -59,7 +62,7 @@ to be unique so it would make no sense to  order them randomly.
 <br/><br/>
 
 
-HOME
+<b>HOME</b>
 <br/><br/>
 
 HOME will randomly display all pools in our system that are not retiring or retired.
@@ -68,7 +71,7 @@ refine the query using the basic or advanced filters and sorting
 <br/><br/>
 
 
-Pool Queries
+<b>Pool Queries</b>
 <br/><br/>
 
 Our text based queries look for keywords in the pool's meta data, the search is not exact and user is left to decide if the pool meets the actual criteria. This gives us the flexibility to filter pools in ways other sites can't.
@@ -77,7 +80,7 @@ If you have an idea for a new 'Pool Query' send us an email with the details.
 <br/><br/>
 
 
-Fun Queries
+<b>Fun Queries</b>
 <br/><br/>
 
 Allows the user to display pools randomly by ticker, name or description.
@@ -85,7 +88,7 @@ Just a fun way for a potential delegator to maybe see something of interest and 
 <br/><br/>
 
 
-adafolio Porfolios
+<b>adafolio Porfolios</b>
 <br/><br/>
 
 We worked with the Viper team to integrate adafolio.com portfolios into pool peek.

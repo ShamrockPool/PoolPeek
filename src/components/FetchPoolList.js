@@ -66,7 +66,15 @@ export default class FetchPoolList extends React.Component {
             activeStakeOrder: false,
             blocksOrder: false,
             marginOrder: false,
-            ascendingOrder: true
+
+            ascendingOrder: true,
+
+            tickerOrderDescending: false,
+            pledgeOrderDescending: false,
+            activeStakeOrderDescending: false,
+            blocksOrderDescending: false,
+            marginOrderDescending: false,
+            ascendingOrderDescending: true
             //end order by types
 
 
@@ -237,77 +245,151 @@ export default class FetchPoolList extends React.Component {
 
     handleOrderByClick(orderByType) {
         console.log("I was clicked" + orderByType);
-        if (orderByType == "tickerOrder") {
-            if (this.state.tickerOrder == false) {
-                this.state.tickerOrder = true;
-                this.setState({ tickerOrder: true });
-            } else {
-                this.state.tickerOrder = false;
-                this.setState({ tickerOrder: false });
+        if (orderByType == "tickerOrder" || orderByType == "tickerOrderDescending") {
+            if (orderByType == "tickerOrder") {
+                if (this.state.tickerOrder == false) {
+                    this.state.tickerOrder = true;
+                    this.setState({ tickerOrder: true });
+
+                    this.state.tickerOrderDescending = false;
+                    this.setState({ tickerOrderDescending: false });
+                } else {
+                    this.state.tickerOrder = false;
+                    this.setState({ tickerOrder: false });
+                }
             }
-        }
-        else if (orderByType == "pledgeOrder") {
-            if (this.state.pledgeOrder == false) {
-                this.state.pledgeOrder = true;
-                this.setState({ pledgeOrder: true });
-            } else {
-                this.state.pledgeOrder = false;
-                this.setState({ pledgeOrder: false });
-            }
-        }
-        else if (orderByType == "blocksOrder") {
-            if (this.state.blocksOrder == false) {
-                this.state.blocksOrder = true;
-                this.setState({ blocksOrder: true });
-            } else {
-                this.state.blocksOrder = false;
-                this.setState({ blocksOrder: false });
-            }
-        }
-        else if (orderByType == "activeStakeOrder") {
-            if (this.state.activeStakeOrder == false) {
-                this.state.activeStakeOrder = true;
-                this.setState({ activeStakeOrder: true });
-            } else {
-                this.state.activeStakeOrder = false;
-                this.setState({ activeStakeOrder: false });
-            }
-        }
-        else if (orderByType == "marginOrder") {
-            if (this.state.marginOrder == false) {
-                this.state.marginOrder = true;
-                this.setState({ marginOrder: true });
-            } else {
-                this.state.marginOrder = false;
-                this.setState({ marginOrder: false });
+            else {
+                if (this.state.tickerOrderDescending == false) {
+                    this.state.tickerOrderDescending = true;
+                    this.setState({ tickerOrderDescending: true });
+
+                    this.state.tickerOrder = false;
+                    this.setState({ tickerOrder: false });
+                } else {
+                    this.state.tickerOrderDescending = false;
+                    this.setState({ tickerOrderDescending: false });
+                }
             }
         }
 
-        if (orderByType == "ascendingOrder") {
-            if (this.state.ascendingOrder == false) {
-                this.state.ascendingOrder = true;
-                this.setState({ ascendingOrder: true });
-            } else {
-                this.state.ascendingOrder = false;
-                this.setState({ ascendingOrder: false });
+        else if (orderByType == "pledgeOrder" || orderByType == "pledgeOrderDescending") {
+            if (orderByType == "pledgeOrder") {
+                if (this.state.pledgeOrder == false) {
+                    this.state.pledgeOrder = true;
+                    this.setState({ pledgeOrder: true });
+
+                    this.state.pledgeOrderDescending = false;
+                    this.setState({ pledgeOrderDescending: false });
+                } else {
+                    this.state.pledgeOrder = false;
+                    this.setState({ pledgeOrder: false });
+                }
+            }
+            else {
+                if (this.state.pledgeOrderDescending == false) {
+                    this.state.pledgeOrderDescending = true;
+                    this.setState({ pledgeOrderDescending: true });
+
+                    this.state.pledgeOrder = false;
+                    this.setState({ pledgeOrder: false });
+                } else {
+                    this.state.pledgeOrderDescending = false;
+                    this.setState({ pledgeOrderDescending: false });
+                }
             }
         }
+        else if (orderByType == "blocksOrder" || orderByType == "blocksOrderDescending") {
+            if (orderByType == "blocksOrder") {
+                if (this.state.blocksOrder == false) {
+                    this.state.blocksOrder = true;
+                    this.setState({ blocksOrder: true });
+
+                    this.state.blocksOrderDescending = false;
+                    this.setState({ blocksOrderDescending: false });
+                } else {
+                    this.state.blocksOrder = false;
+                    this.setState({ blocksOrder: false });
+                }
+            } else {
+                if (this.state.blocksOrderDescending == false) {
+                    this.state.blocksOrderDescending = true;
+                    this.setState({ blocksOrderDescending: true });
+
+                    this.state.blocksOrder = false;
+                    this.setState({ blocksOrder: false });
+                } else {
+                    this.state.blocksOrderDescending = false;
+                    this.setState({ blocksOrderDescending: false });
+                }
+            }
+        }
+
+        else if (orderByType == "activeStakeOrder" || orderByType == "activeStakeOrderDescending") {
+            if (orderByType == "activeStakeOrder") {
+                if (this.state.activeStakeOrder == false) {
+                    this.state.activeStakeOrder = true;
+                    this.setState({ activeStakeOrder: true });
+
+                    this.state.activeStakeOrderDescending = false;
+                    this.setState({ activeStakeOrderDescending: false });
+                } else {
+                    this.state.activeStakeOrder = false;
+                    this.setState({ activeStakeOrder: false });
+                }
+            }
+            else {
+                if (this.state.activeStakeOrderDescending == false) {
+                    this.state.activeStakeOrderDescending = true;
+                    this.setState({ activeStakeOrderDescending: true });
+
+                    this.state.activeStakeOrder = false;
+                    this.setState({ activeStakeOrder: false });
+                } else {
+                    this.state.activeStakeOrderDescending = false;
+                    this.setState({ activeStakeOrderDescending: false });
+                }
+            }
+        }
+        else if (orderByType == "marginOrder" || orderByType == "marginOrderDescending") {
+            if (orderByType == "marginOrder") {
+                if (this.state.marginOrder == false) {
+                    this.state.marginOrder = true;
+                    this.setState({ marginOrder: true });
+
+                    this.state.marginOrderDescending = false;
+                    this.setState({ marginOrderDescending: false });
+                } else {
+                    this.state.marginOrder = false;
+                    this.setState({ marginOrder: false });
+                }
+            } else {
+                if (this.state.marginOrderDescending == false) {
+                    this.state.marginOrderDescending = true;
+                    this.setState({ marginOrderDescending: true });
+
+                    this.state.marginOrder = false;
+                    this.setState({ marginOrder: false });
+                } else {
+                    this.state.marginOrderDescending = false;
+                    this.setState({ marginOrderDescending: false });
+                }
+            }
+
+        }
+
 
         var orderByList = "";
-        if (this.state.ascendingOrder == true) {
-            if (this.state.tickerOrder == true) { orderByList += "Ticker,"; }
-            if (this.state.pledgeOrder == true) { orderByList += "Pledge,"; }
-            if (this.state.blocksOrder == true) { orderByList += "Blocks,"; }
-            if (this.state.activeStakeOrder == true) { orderByList += "ActiveStake,"; }
-            if (this.state.marginOrder == true) { orderByList += "Margin,"; }
-        }
-        else{
-            if (this.state.tickerOrder == true) { orderByList += "TiTicker(z-a),"; }
-            if (this.state.pledgeOrder == true) { orderByList += "Pledge(z-a),"; }
-            if (this.state.blocksOrder == true) { orderByList += "Blocks(z-a),"; }
-            if (this.state.activeStakeOrder == true) { orderByList += "ActiveStake(z-a),"; }
-            if (this.state.marginOrder == true) { orderByList += "Margin(z-a),"; }
-        }
+        if (this.state.tickerOrder == true) { orderByList += "Ticker,"; }
+        if (this.state.pledgeOrder == true) { orderByList += "Pledge,"; }
+        if (this.state.blocksOrder == true) { orderByList += "Blocks,"; }
+        if (this.state.activeStakeOrder == true) { orderByList += "ActiveStake,"; }
+        if (this.state.marginOrder == true) { orderByList += "Margin,"; }
+        if (this.state.tickerOrderDescending == true) { orderByList += "Ticker(z-a),"; }
+        if (this.state.pledgeOrderDescending == true) { orderByList += "Pledge(z-a),"; }
+        if (this.state.blocksOrderDescending == true) { orderByList += "Blocks(z-a),"; }
+        if (this.state.activeStakeOrderDescending == true) { orderByList += "ActiveStake(z-a),"; }
+        if (this.state.marginOrderDescending == true) { orderByList += "Margin(z-a),"; }
+
 
         if (orderByList != "") {
             this.orderBy = "&order=" + orderByList;
@@ -346,7 +428,7 @@ export default class FetchPoolList extends React.Component {
             <div className="container-fluid" style={{ align: "left", width: "99%" }}>
 
                 <Scroll showBelow={250} />
-                <h3>Filters:</h3>
+                <h3><b>Filters:</b></h3>
                 <Table >
                     <tbody>
                         <tr>
@@ -396,7 +478,7 @@ export default class FetchPoolList extends React.Component {
                     </tbody>
                 </Table>
                 <FormGroup>
-                    <h3>Advanced:</h3>
+                    <h3><b>Advanced:</b></h3>
                     <FormControlLabel
                         control={<Switch size="Normal" checked={this.state.advancedSearchFiltersShow} color="black" onChange={e => this.handleAdvancedClick()} />}
                     />
@@ -527,8 +609,9 @@ export default class FetchPoolList extends React.Component {
 
                 <FormGroup>
                     <br></br>
-                    <h3>Orderby:</h3>
+                    <h3><b>Orderby:</b></h3>
                     <label>
+                        <span><b>Ascending:</b></span>
                         <Checkbox
                             checked={this.state.tickerOrder}
                             onChange={e => this.handleOrderByClick("tickerOrder")}
@@ -554,11 +637,28 @@ export default class FetchPoolList extends React.Component {
                 </FormGroup>
                 <FormGroup>
                     <label>
+                        <span><b>Descending:</b></span>
                         <Checkbox
-                            checked={this.state.ascendingOrder}
-                            onChange={e => this.handleOrderByClick("ascendingOrder")}
+                            checked={this.state.tickerOrderDescending}
+                            onChange={e => this.handleOrderByClick("tickerOrderDescending")}
                         />
-                        <span>Ascending Order</span>
+                        <span>Ticker</span>
+                        <Checkbox
+                            checked={this.state.pledgeOrderDescending}
+                            onChange={e => this.handleOrderByClick("pledgeOrderDescending")} />
+                        <span>Pledge</span>
+                        <Checkbox
+                            checked={this.state.activeStakeOrderDescending}
+                            onChange={e => this.handleOrderByClick("activeStakeOrderDescending")} />
+                        <span>Active Stake</span>
+                        <Checkbox
+                            checked={this.state.blocksOrderDescending}
+                            onChange={e => this.handleOrderByClick("blocksOrderDescending")} />
+                        <span>Blocks</span>
+                        <Checkbox
+                            checked={this.state.marginOrderDescending}
+                            onChange={e => this.handleOrderByClick("marginOrderDescending")} />
+                        <span>Margin</span>
                     </label>
                 </FormGroup>
 
