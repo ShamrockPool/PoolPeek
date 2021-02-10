@@ -680,9 +680,6 @@ export default class FetchPoolList extends React.Component {
                             </label>
                         </FormGroup>
 
-                        <br />
-                        <p> Total pools: {this.state.query.count}, Displaying {this.state.pools.length}</p>
-
                         <Pagination style={{ align: "left", width: "82%" }}>
                             <PaginationItem disabled={currentPage <= 0}>
                                 <PaginationLink
@@ -709,6 +706,8 @@ export default class FetchPoolList extends React.Component {
                             </PaginationItem>
                         </Pagination>
                     </div>}
+                    <br />
+                        <p> Total pools: {this.state.query.count}, Displaying {this.state.pools.length}</p>
                 <Row>
                     <Col>
                         <Pool pools={this.state.pools} />
