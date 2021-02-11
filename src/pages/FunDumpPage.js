@@ -18,29 +18,17 @@ class FunDumpPage extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
  async getFunDumps(){
-    //var query = this.props.location.search.replace("?","&");
-    //var pos = query.indexOf("&dumptype=");
-    //var dumptype =  ReactHtmlParser(decodeURIComponent(query.substring(pos+10)));
-
-    //alert(this.props.query);
-
     var u = 'https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17' + this.props.query;
-    //alert(u);
     const response = await fetch(u);
     const data = await response.json();
-
-    console.log(data);
+ 	//console.log(data);
     this.setState({ funDumps: data.poolpeek.funDumps, loading: false});
   }
 
   async componentDidMount() {
-    this.getFunDumps();
     window.scrollTo(0, 0);    
+    this.getFunDumps();
   };
 
   render() {

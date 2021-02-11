@@ -85,16 +85,18 @@ If you believe a pool is missing from one of our Pool Queries or you have an ide
 <b>Fun Queries</b>
 <br/><br/>
 
-Fun queries allow the user to display pools in a fun way randomly by ticker, name or description.
-Just a fun way for a potential delegator to maybe see something of interest and then click the pools website link or pool.pm link to find out more.
+Fun queries allow you to display pools in a fun random way by ticker, name or description.
+Just an interesting way for a potential delegator to maybe see something of interest and 
+then click the pools website link or pool.pm link to find out more.
 <br/><br/>
 
 
-<b>adafolio Porfolios</b>
+<a href="https://adafolio.com/" target="_blank"><b>adafolio.com</b></a> <b>Porfolios</b>
 <br/><br/>
 
 We worked with the Viper stake pool team to integrate adafolio.com portfolios into PoolPeek.com.
-The list of protfolois and pools display in a random order.
+The list of portfolios and pools display in a random order and allow you browse and research the pools 
+just as you would using a PoolPeek.com query.
 <br/><br/>
 
 
