@@ -8,9 +8,13 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import "../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
 
+import Chart from '../components/Chart';
+
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
+
+
 
 export default class Pool extends React.Component {
 
@@ -19,9 +23,6 @@ export default class Pool extends React.Component {
     }
 
     render() {
-
-
-
         return (
             this.props.pools.map(function (item, key) {
 
@@ -93,7 +94,10 @@ export default class Pool extends React.Component {
                                             placement="left"
                                         >
                                             <th scope="row" style={{ width: '20%' }}>Stake</th></Tooltip>
-                                            <td><p>Active Stake: {item.active_stake} ₳</p>     <p>Delegators: {item.active_stake_delegator_count}</p></td>
+                                            <td><p>Active Stake: {item.active_stake} ₳</p>
+
+                                                <Chart data={item.active_stake_history} />
+                                                <p>Delegators: {item.active_stake_delegator_count}</p></td>
                                         </tr>
                                         <tr>
                                             <Tooltip
@@ -111,9 +115,9 @@ export default class Pool extends React.Component {
                                             >
                                                 <th scope="row" style={{ width: '20%' }}>Pool Meta Data Urls</th></Tooltip>
                                             <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
-                                            {item.metadata_extended_url.length > 0 && (
-                                                <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
-                                             )}
+                                                {item.metadata_extended_url.length > 0 && (
+                                                    <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
+                                                )}
                                             </td>
                                         </tr>
                                         <tr>
@@ -144,7 +148,7 @@ export default class Pool extends React.Component {
 
                         </Card>
                         <br></br>
-                    </div>
+                    </div >
                 )
             })
         )

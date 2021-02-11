@@ -2,8 +2,9 @@ import React from 'react';
 import { Col, Row, Form, Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
 import _ from 'lodash';
 
-import Scroll from '../components/Scroll'
+import Scroll from '../components/Scroll';
 import Pool from 'components/Pool';
+
 
 import { Collapse } from 'react-collapse';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
