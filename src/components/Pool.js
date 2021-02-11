@@ -104,17 +104,18 @@ export default class Pool extends React.Component {
                                             <td><p>{Number(item.pct_saturated).toFixed(3)}%</p>
                                             </td>
                                         </tr>
-                                        {item.metadata_extended_url.length > 0 && (
-                                            <tr>
-                                                <Tooltip
-                                                    title="The meta data urls of the pool."
-                                                    placement="left"
-                                                >
-                                                    <th scope="row" style={{ width: '20%' }}>Pool Meta Data Urls</th></Tooltip>
-                                                <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
-                                                    <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a></td>
-                                            </tr>
-                                        )}
+                                        <tr>
+                                            <Tooltip
+                                                title="The meta data urls of the pool."
+                                                placement="left"
+                                            >
+                                                <th scope="row" style={{ width: '20%' }}>Pool Meta Data Urls</th></Tooltip>
+                                            <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
+                                            {item.metadata_extended_url.length > 0 && (
+                                                <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
+                                             )}
+                                            </td>
+                                        </tr>
                                         <tr>
                                             <Tooltip
                                                 title="Sites containing more information on the pool."

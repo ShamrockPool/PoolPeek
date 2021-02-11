@@ -38,35 +38,37 @@ class AboutUsPage extends React.Component {
 PoolPeek.com is a "light-weight" Cardano stake pool explorer that analyzes the publicly available registration data and other data 
 elements such as number of produced blocks and active stake. Delegators can use our powerful query features to narrow down lists of 
 pools and then drill deeper on specific pools using our external links feature. Stake pool operators can use PoolPeek.com to keep an 
-eye on their competiton. We offer a range or filters on blocks, margin, pledge, cost and active stake.
+eye on their competiton. We offer a range or filters on ticker, name, descritpion, blocks, margin, pledge, cost and active stake.
+<br/><br/>
+
+PoolPeek.com was created by small stake pool owners who believe all pools should have a fighting chance. 
+A random sort order is default for most lists at PoolPeek.com. The idea is that all pools get a random chance to be at 
+the top of the list. An exception to this is the 'ticker' sort. Tickers sort alphabetically as you type. Tickers are meant 
+to be unique and so it would make no sense to order them randomly. There are many great small pools out 
+there that don't get a chance to showcase their pool because of some silly ranking algorithm. As we move forward we plan to write 
+ tools that will help small pools advertise.
 <br/><br/>
 
 <b>The Developers</b>
 <br/><br/>
 
-PoolPeek.com is developed and maintained by small pool owners SHA and LOCO...
-<br></br>
+PoolPeek.com is developed and maintained by small stake pool owners <a href="https://shamrock-pool.com/" target="_blank">SHA</a> and <a href="http://locoada.com" target="_blank">LOCO</a>
+<br/><br/>
+
 You can reach us on 
-<br></br>
+<br/><br/>
+
 <b>Twitter: </b><a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">https://twitter.com/CardanoPoolPeek</a>
 <br></br>
 <b>Telegram group chat: </b><a href="https://t.me/poolpeek" target="_blank" rel="noreferrer">https://t.me/poolpeek</a>
 
 <br/><br/>
 
-PoolPeek was built by small stake pool owners who believe all small pools should have a fighting chance. 
-The default sort on most lists at PoolPeek.com is random. The idea is that a pool or group gets a random chance to be at 
-the top of a list. There are many great small pools out there that don't get a chance to showcase their pool because of some 
-silly ranking algorithm. The one exception to this is the 'ticker' sort. Tickers sort alphabetically as you type. Tickers are meant 
-to be unique so it would make no sense to  order them randomly.
-<br/><br/>
-
-
 <b>HOME</b>
 <br/><br/>
 
 HOME will randomly display all pools in our system that are not retiring or retired.
-Click 'HOME' again to randomly re-order the results. After the pools display you can
+Click 'HOME' again anytime to randomly sort the results. After the pools display you can
 refine the query using the basic or advanced filters and sorting
 <br/><br/>
 
@@ -74,16 +76,16 @@ refine the query using the basic or advanced filters and sorting
 <b>Pool Queries</b>
 <br/><br/>
 
-Our text based queries look for keywords in the pool's meta data, the search is not exact and user is left to decide if the pool meets the actual criteria. This gives us the flexibility to filter pools in ways other sites can't.
-If you believe a pool is missing from one of our Pool Queries, send us an email with the details and we will manually include it.
-If you have an idea for a new 'Pool Query' send us an email with the details.
+Our text based pool queries look for keywords in the pool's meta data, the search is not exact and user is left to decide if 
+the pool meets the actual criteria. This gives us the flexibility to filter pools in ways other sites can't.
+If you believe a pool is missing from one of our Pool Queries or you have an idea for a new Pool Query, send us an email with the details.
 <br/><br/>
 
 
 <b>Fun Queries</b>
 <br/><br/>
 
-Allows the user to display pools randomly by ticker, name or description.
+Fun queries allow the user to display pools in a fun way randomly by ticker, name or description.
 Just a fun way for a potential delegator to maybe see something of interest and then click the pools website link or pool.pm link to find out more.
 <br/><br/>
 
@@ -91,12 +93,12 @@ Just a fun way for a potential delegator to maybe see something of interest and 
 <b>adafolio Porfolios</b>
 <br/><br/>
 
-We worked with the Viper team to integrate adafolio.com portfolios into pool peek.
-The list of protfolois loads in random order and then each pool in the list...
+We worked with the Viper stake pool team to integrate adafolio.com portfolios into PoolPeek.com.
+The list of protfolois and pools display in a random order.
 <br/><br/>
 
 
-THANK YOU
+<b>THANK YOU</b>
 <br/><br/>
 
 PoolPeek.com would like to thank the following sites for supplying us tools to make our site even better:
