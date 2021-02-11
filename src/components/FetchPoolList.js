@@ -250,7 +250,30 @@ export default class FetchPoolList extends React.Component {
     }
 
     handleOrderByClick(orderByType) {
-        console.log("I was clicked" + orderByType);
+
+        //console.log("I was clicked" + orderByType);
+        //for this release we are only allowing 1 order by at a time
+        this.state.tickerOrder = false;
+        this.state.pledgeOrder = false;
+        this.state.blocksOrder = false;
+        this.state.activeStakeOrder = false;
+        this.state.marginOrder = false;
+        this.state.tickerOrderDescending = false;
+        this.state.pledgeOrderDescending = false;
+        this.state.blocksOrderDescending = false;
+        this.state.activeStakeOrderDescending = false;
+        this.state.marginOrderDescending = false;
+        this.setState({ tickerOrder: false });
+        this.setState({ tickerOrderDescending: false });
+        this.setState({ pledgeOrder: false });
+        this.setState({ pledgeOrderDescending: false });
+        this.setState({ blocksOrder: false });
+        this.setState({ blocksOrderDescending: false });
+        this.setState({ activeStakeOrder: false });
+        this.setState({ activeStakeOrderDescending: false });
+        this.setState({ marginOrder: false });
+        this.setState({ marginOrderDescending: false });
+
         if (orderByType == "tickerOrder" || orderByType == "tickerOrderDescending") {
             if (orderByType == "tickerOrder") {
                 if (this.state.tickerOrder == false) {
@@ -627,9 +650,9 @@ export default class FetchPoolList extends React.Component {
 
                         <FormGroup>
                             <br></br>
-                            <h3><b>Orderby:</b></h3>
+                            <h3><b>Order by:</b></h3>
                             <label>
-                                <span><b>Ascending:</b></span>
+                                <span><b>&nbsp;&nbsp;&nbsp;Ascending:</b></span>
                                 <Checkbox
                                     checked={this.state.tickerOrder}
                                     onChange={e => this.handleOrderByClick("tickerOrder")}
