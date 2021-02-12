@@ -98,6 +98,7 @@ export default class Pool extends React.Component {
                                             <td>
                                                 {/* <p>Active Stake: {item.active_stake} ₳</p>
                                             <p>Delegators: {item.active_stake_delegator_count}</p> */}
+                                                <p>Active Stake: {item.active_stake} ₳</p>
                                                 <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
                                             </td>
                                         </tr>

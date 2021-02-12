@@ -58,7 +58,8 @@ export default class Chart extends React.Component {
                     backgroundColor: getColor('secondary'),
                     borderColor: getColor('secondary'),
                     borderWidth: 1,
-                    data: this.getActiveStakeHistory()
+                    data: this.getActiveStakeHistory(),
+                    fill: 'start',
                 },
             ],
         };
@@ -67,14 +68,13 @@ export default class Chart extends React.Component {
     render() {
         return (
             <div className="container-fluid" style={{ align: "left", width: "99%" }}>
-                <Col xl={6} lg={12} md={12}>
-                    <Card>
-                        <CardHeader>Active Stake: {this.props.currentActiveStake} ₳</CardHeader>
-                        <CardBody>
-                            <Line data={this.genLineData()} />
-                        </CardBody>
-                    </Card>
-                </Col>
+                {/* <Col xl={6} lg={12} md={12}> */}
+                {/* <Card> */}
+                {/* <CardBody> */}
+                    <Line data={this.genLineData()} />
+                {/* </CardBody> */}
+                {/* </Card> */}
+                {/* </Col> */}
             </div >
         );
     }
