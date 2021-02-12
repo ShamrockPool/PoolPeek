@@ -22,7 +22,6 @@ class FunDumpPage extends React.Component {
     var u = 'https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17' + this.props.query;
     const response = await fetch(u);
     const data = await response.json();
- 	//console.log(data);
     this.setState({ funDumps: data.poolpeek.funDumps, loading: false});
   }
 

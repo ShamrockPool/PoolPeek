@@ -250,11 +250,7 @@ export default class FetchPoolList extends React.Component {
         }
     }
 
-    clearOrderChecks(orderByType){
-
-        //console.log("I was clicked" + orderByType);
-        //for this release we are only allowing 1 order by at a time
-        
+    clearOrderChecks(orderByType){        
         if(orderByType != "tickerOrder"){
             this.state.tickerOrder = false;
             this.setState({ tickerOrder: false });
@@ -460,7 +456,6 @@ export default class FetchPoolList extends React.Component {
 
         if (orderByList != "") {
             this.orderBy = "&order=" + orderByList;
-            console.log(this.orderBy);
 
             if (this.state.searchQuery !== "") {
                 this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + this.orderBy);
@@ -480,7 +475,6 @@ export default class FetchPoolList extends React.Component {
     }
 
     showFilters(poolsize) {
-        console.log(poolsize)
         if (poolsize < 5 && this.props.query !== undefined) {
             this.state.showFilters = false;
             this.setState({ showFilters: false });

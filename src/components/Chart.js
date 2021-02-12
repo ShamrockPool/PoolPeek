@@ -17,7 +17,6 @@ export default class Chart extends React.Component {
     }
 
     getActiveStakeHistory() {
-        console.log("getActiveStakeHistory");
         var active_stake_history = this.props.data;
         var chartData = [];
         if (active_stake_history != 0 && active_stake_history != null && active_stake_history != undefined && active_stake_history.length > 0) {
@@ -31,13 +30,11 @@ export default class Chart extends React.Component {
         }
         chartData = chartData.reverse();
         chartData.push(parseFloat(this.props.currentActiveStake.replace(/,/g, '')));
-        console.log(chartData);
         return chartData;
     }
 
 
     getGraphLabels() {
-        console.log("getGraphLabels");
         var active_stake_history = this.props.data;
         var labels = [];
         var i;
@@ -46,7 +43,6 @@ export default class Chart extends React.Component {
         }
         labels = labels.reverse();
         labels.push(this.props.currentEpoch);
-        console.log(labels);
         return labels;
     }
 
@@ -54,7 +50,6 @@ export default class Chart extends React.Component {
     }
 
     genLineData() {
-        console.log()
         return {
             labels: this.getGraphLabels(),
             datasets: [

@@ -63,8 +63,6 @@ class Header extends React.Component {
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
     this.getCurrentAdaBTCPrice();
-    console.log(this.state.adaUsdPrice);
-
     this.interval = setInterval(() => this.getCurrentAdaUSDPrice(), 15000);
     this.interval = setInterval(() => this.getCurrentAdaEuroPrice(), 15000);
     this.interval = setInterval(() => this.getCurrentAdaBTCPrice(), 15000);
