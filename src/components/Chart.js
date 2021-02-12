@@ -1,0 +1,86 @@
+import React from 'react';
+import _ from 'lodash';
+
+import { getColor } from 'utils/colors';
+import { randomNum } from 'utils/demos';
+
+import { Col, Card, CardHeader, CardBody } from 'reactstrap';
+
+import { Line } from 'react-chartjs-2';
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+export default class Chart extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        };
+    }
+
+    getActiveStakeHistory() {
+        console.log("getActiveStakeHistory");
+        var active_stake_history = this.props.data;
+        var chartData = [];
+        if (active_stake_history != 0 && active_stake_history != null && active_stake_history != undefined && active_stake_history.length > 0) {
+
+            var i;
+            for (i = 0; i < active_stake_history.length; i++) {
+
+                var activeStakeNumber = parseFloat(active_stake_history[i].active_stake.replace(/,/g, ''));
+                chartData.push(activeStakeNumber);
+            }
+        }
+        chartData = chartData.reverse();
+        chartData.push(parseFloat(this.props.currentActiveStake.replace(/,/g, '')));
+        console.log(chartData);
+        return chartData;
+    }
+
+
+    getGraphLabels() {
+        console.log("getGraphLabels");
+        var active_stake_history = this.props.data;
+        var labels = [];
+        var i;
+        for (i = 0; i < active_stake_history.length; i++) {
+            labels.push(active_stake_history[i].active_stake_epoch);
+        }
+        labels = labels.reverse();
+        labels.push(this.props.currentEpoch);
+        console.log(labels);
+        return labels;
+    }
+
+    async componentDidMount() {
+    }
+
+    genLineData() {
+        console.log()
+        return {
+            labels: this.getGraphLabels(),
+            datasets: [
+                {
+                    label: 'Active Stake',
+                    backgroundColor: getColor('secondary'),
+                    borderColor: getColor('secondary'),
+                    borderWidth: 1,
+                    data: this.getActiveStakeHistory()
+                },
+            ],
+        };
+    };
+
+    render() {
+        return (
+            <div className="container-fluid" style={{ align: "left", width: "99%" }}>
+                <Col xl={6} lg={12} md={12}>
+                    <Card>
+                        <CardHeader>Active Stake: {this.props.currentActiveStake} ₳</CardHeader>
+                        <CardBody>
+                            <Line data={this.genLineData()} />
+                        </CardBody>
+                    </Card>
+                </Col>
+            </div >
+        );
+    }
+}

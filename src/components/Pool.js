@@ -8,9 +8,13 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import "../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
 
+import Chart from '../components/Chart';
+
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
+
+
 
 export default class Pool extends React.Component {
 
@@ -19,9 +23,6 @@ export default class Pool extends React.Component {
     }
 
     render() {
-
-
-
         return (
             this.props.pools.map(function (item, key) {
 
@@ -86,7 +87,8 @@ export default class Pool extends React.Component {
                                                 placement="left"
                                             >
                                                 <th scope="row" style={{ width: '20%' }}>Pool Info</th></Tooltip>
-                                            <td><p>Pool margin: {item.margin_pct}%</p>    <p>Pledge: {item.pledge} ₳</p>     <p>Cost per epoch: {item.cost_per_epoch} ₳</p></td>
+                                            <td><p>Pool margin: {item.margin_pct}%</p>    <p>Pledge: {item.pledge} ₳</p>     <p>Cost per epoch: {item.cost_per_epoch} ₳</p>
+                                                <p>Delegators: {item.active_stake_delegator_count}</p></td>
                                         </tr>
                                         <tr><Tooltip
                                             title="Stake is the amount of ADA delegated to the pool."
@@ -94,11 +96,18 @@ export default class Pool extends React.Component {
                                         >
                                             <th scope="row" style={{ width: '20%' }}>Stake</th></Tooltip>
                                             <td>
+<<<<<<< HEAD
+                                                {/* <p>Active Stake: {item.active_stake} ₳</p>
+                                            <p>Delegators: {item.active_stake_delegator_count}</p> */}
+                                                <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
+                                            </td>
+=======
                                             {item.live_stake.length > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
                                             <p>Live Stake: {item.live_stake} ₳</p> 
                                             )} 
                                             <p>Active Stake: {item.active_stake} ₳</p>     
                                             <p>Active Delegators: {item.active_stake_delegator_count}</p></td>
+>>>>>>> af7c3856a4d710cbe2b1ba0c1df191ce61c436ff
                                         </tr>
                                         <tr>
                                             <Tooltip
@@ -116,9 +125,9 @@ export default class Pool extends React.Component {
                                             >
                                                 <th scope="row" style={{ width: '20%' }}>Pool Meta Data Urls</th></Tooltip>
                                             <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
-                                            {item.metadata_extended_url.length > 0 && (
-                                                <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
-                                             )}
+                                                {item.metadata_extended_url.length > 0 && (
+                                                    <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
+                                                )}
                                             </td>
                                         </tr>
                                         <tr>
@@ -149,7 +158,7 @@ export default class Pool extends React.Component {
 
                         </Card>
                         <br></br>
-                    </div>
+                    </div >
                 )
             })
         )
