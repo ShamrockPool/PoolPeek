@@ -96,10 +96,18 @@ export default class Pool extends React.Component {
                                         >
                                             <th scope="row" style={{ width: '20%' }}>Stake</th></Tooltip>
                                             <td>
+<<<<<<< HEAD
                                                 {/* <p>Active Stake: {item.active_stake} ₳</p>
                                             <p>Delegators: {item.active_stake_delegator_count}</p> */}
                                                 <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
                                             </td>
+=======
+                                            {item.live_stake.length > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
+                                            <p>Live Stake: {item.live_stake} ₳</p> 
+                                            )} 
+                                            <p>Active Stake: {item.active_stake} ₳</p>     
+                                            <p>Active Delegators: {item.active_stake_delegator_count}</p></td>
+>>>>>>> af7c3856a4d710cbe2b1ba0c1df191ce61c436ff
                                         </tr>
                                         <tr>
                                             <Tooltip

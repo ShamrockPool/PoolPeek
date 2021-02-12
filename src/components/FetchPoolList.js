@@ -250,8 +250,68 @@ export default class FetchPoolList extends React.Component {
         }
     }
 
+    clearOrderChecks(orderByType){
+
+        //console.log("I was clicked" + orderByType);
+        //for this release we are only allowing 1 order by at a time
+        
+        if(orderByType != "tickerOrder"){
+            this.state.tickerOrder = false;
+            this.setState({ tickerOrder: false });
+        }
+
+        if(orderByType != "pledgeOrder"){
+            this.state.pledgeOrder = false;
+            this.setState({ pledgeOrder: false });
+        }
+            
+        if(orderByType != "blocksOrder"){
+            this.state.blocksOrder = false;
+            this.setState({ blocksOrder: false });
+        }
+            
+        if(orderByType != "activeStakeOrder"){
+            this.state.activeStakeOrder = false;
+            this.setState({ activeStakeOrder: false });
+        }
+            
+        if(orderByType != "marginOrder"){
+            this.state.marginOrder = false;
+            this.setState({ marginOrder: false });
+        }
+            
+        if(orderByType != "tickerOrderDescending"){
+            this.state.tickerOrderDescending = false;
+            this.setState({ tickerOrderDescending: false });
+        }
+            
+        if(orderByType != "pledgeOrderDescending"){
+            this.state.pledgeOrderDescending = false;
+            this.setState({ pledgeOrderDescending: false });
+        }
+            
+        if(orderByType != "blocksOrderDescending"){
+            this.state.blocksOrderDescending = false;
+            this.setState({ blocksOrderDescending: false });
+        }
+            
+        if(orderByType != "activeStakeOrderDescending"){
+            this.state.activeStakeOrderDescending = false;
+            this.setState({ activeStakeOrderDescending: false });
+        }
+            
+        if(orderByType != "marginOrderDescending"){
+            this.state.marginOrderDescending = false;
+            this.setState({ marginOrderDescending: false });
+        }
+
+        //alert(orderByType);
+    }
+
     handleOrderByClick(orderByType) {
-        console.log("I was clicked" + orderByType);
+
+        this.clearOrderChecks(orderByType);
+
         if (orderByType == "tickerOrder" || orderByType == "tickerOrderDescending") {
             if (orderByType == "tickerOrder") {
                 if (this.state.tickerOrder == false) {
@@ -628,9 +688,9 @@ export default class FetchPoolList extends React.Component {
 
                         <FormGroup>
                             <br></br>
-                            <h3><b>Orderby:</b></h3>
+                            <h3><b>Order by:</b></h3>
                             <label>
-                                <span><b>Ascending:</b></span>
+                                <span><b>&nbsp;&nbsp;&nbsp;Ascending:</b></span>
                                 <Checkbox
                                     checked={this.state.tickerOrder}
                                     onChange={e => this.handleOrderByClick("tickerOrder")}

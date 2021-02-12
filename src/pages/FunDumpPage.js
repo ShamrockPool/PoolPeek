@@ -18,29 +18,17 @@ class FunDumpPage extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
  async getFunDumps(){
-    //var query = this.props.location.search.replace("?","&");
-    //var pos = query.indexOf("&dumptype=");
-    //var dumptype =  ReactHtmlParser(decodeURIComponent(query.substring(pos+10)));
-
-    //alert(this.props.query);
-
     var u = 'https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17' + this.props.query;
-    //alert(u);
     const response = await fetch(u);
     const data = await response.json();
-
-    console.log(data);
+ 	//console.log(data);
     this.setState({ funDumps: data.poolpeek.funDumps, loading: false});
   }
 
   async componentDidMount() {
-    this.getFunDumps();
     window.scrollTo(0, 0);    
+    this.getFunDumps();
   };
 
   render() {
@@ -58,12 +46,18 @@ class FunDumpPage extends React.Component {
         title={this.props.title}
       >
 
+<div> 500 random small pools with less than 100 blocks and less than 10 million in active stake.<br/>
+Click the navigation option again to pull a different set of 500 random pools.<br/>
+We support the true decentralization of the Cardano network and believe small pools are a vital part of it.<br/><br/>
+</div>
+
 
         {this.state.funDumps.map(function (item, key) { 
 
           return <div>
 
-          <a target="_blank" href={item.homepage}>{ReactHtmlParser(item.dump_text)}</a>
+         <img src={CardanoImage} className="pr-2"  alt=""  width="28" height="25" />
+         <a target="_blank" href={item.homepage}>{ReactHtmlParser(item.dump_text)}</a>
           
 
                       <a href={"https://pool.pm/" + item.pool_id} target="_blank" rel="noreferrer">  
@@ -86,7 +80,7 @@ class FunDumpPage extends React.Component {
         })}
 
     
-
+<br/><br/>
       </Page>
     );
   }
