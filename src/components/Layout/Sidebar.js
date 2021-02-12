@@ -48,9 +48,9 @@ const navComponents = [
 ];
 
 const navFunQueries = [
-  { to: '/funtickers', name: 'Tickers', exact: false, Icon: MdFormatListBulleted },
-  { to: '/funnames', name: 'Names', exact: false, Icon: MdFormatListBulleted },
-  { to: '/fundescriptions', name: 'Descriptions', exact: false, Icon: MdFormatListBulleted },
+  { to: '/fabuloustickers', name: 'Tickers', exact: false, Icon: MdFormatListBulleted },
+  { to: '/fabulousnames', name: 'Names', exact: false, Icon: MdFormatListBulleted },
+  { to: '/fabulousdescriptions', name: 'Descriptions', exact: false, Icon: MdFormatListBulleted },
 ];
 
 const navItems = [
@@ -186,7 +186,7 @@ class Sidebar extends React.Component {
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
                   <MdExtension className={bem.e('nav-item-icon')} />
-                  <span className=" align-self-start">Fun Queries</span>
+                  <span className=" align-self-start">Fabulous 500</span>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}

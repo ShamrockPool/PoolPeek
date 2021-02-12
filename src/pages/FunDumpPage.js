@@ -46,12 +46,18 @@ class FunDumpPage extends React.Component {
         title={this.props.title}
       >
 
+<div> 500 random small pools with less than 100 blocks and less than 10 million in active stake.<br/>
+Click the navigation option again to pull a different set of 500 random pools.<br/>
+We support the true decentralization of the Cardano network and believe small pools are a vital part of it.<br/><br/>
+</div>
+
 
         {this.state.funDumps.map(function (item, key) { 
 
           return <div>
 
-          <a target="_blank" href={item.homepage}>{ReactHtmlParser(item.dump_text)}</a>
+         <img src={CardanoImage} className="pr-2"  alt=""  width="28" height="25" />
+         <a target="_blank" href={item.homepage}>{ReactHtmlParser(item.dump_text)}</a>
           
 
                       <a href={"https://pool.pm/" + item.pool_id} target="_blank" rel="noreferrer">  
@@ -74,7 +80,7 @@ class FunDumpPage extends React.Component {
         })}
 
     
-
+<br/><br/>
       </Page>
     );
   }

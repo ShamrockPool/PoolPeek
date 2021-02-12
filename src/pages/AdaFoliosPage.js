@@ -17,7 +17,7 @@ class AdaFoliosPage extends React.Component {
 
     var query = this.props.location.search.replace("?","&");
     var pos = query.indexOf("&qname=");
-    var title = "adafolio.com - " + ReactHtmlParser(decodeURIComponent(query.substring(pos+7)));
+    var title = "" + ReactHtmlParser(decodeURIComponent(query.substring(pos+7)));
 
     return (
 
@@ -25,6 +25,12 @@ class AdaFoliosPage extends React.Component {
         className="AdaFoliosPage"
         title={title}
       >
+
+      <div>
+      <a href="https://adafolio.com" target="_blank">adafolio.com</a> is proudly made for the Cardano Community by the team at Viper Staking!<br/>
+      Further the decentralization of Cardano by spreading out your delegation to multiple stake pools.<br/>
+      </div>
+
       <FetchPoolList query={query}/>
       </Page>
     );
