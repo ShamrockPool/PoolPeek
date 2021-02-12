@@ -250,53 +250,53 @@ export default class FetchPoolList extends React.Component {
         }
     }
 
-    clearOrderChecks(orderByType){        
-        if(orderByType != "tickerOrder"){
+    clearOrderChecks(orderByType) {
+        if (orderByType != "tickerOrder") {
             this.state.tickerOrder = false;
             this.setState({ tickerOrder: false });
         }
 
-        if(orderByType != "pledgeOrder"){
+        if (orderByType != "pledgeOrder") {
             this.state.pledgeOrder = false;
             this.setState({ pledgeOrder: false });
         }
-            
-        if(orderByType != "blocksOrder"){
+
+        if (orderByType != "blocksOrder") {
             this.state.blocksOrder = false;
             this.setState({ blocksOrder: false });
         }
-            
-        if(orderByType != "activeStakeOrder"){
+
+        if (orderByType != "activeStakeOrder") {
             this.state.activeStakeOrder = false;
             this.setState({ activeStakeOrder: false });
         }
-            
-        if(orderByType != "marginOrder"){
+
+        if (orderByType != "marginOrder") {
             this.state.marginOrder = false;
             this.setState({ marginOrder: false });
         }
-            
-        if(orderByType != "tickerOrderDescending"){
+
+        if (orderByType != "tickerOrderDescending") {
             this.state.tickerOrderDescending = false;
             this.setState({ tickerOrderDescending: false });
         }
-            
-        if(orderByType != "pledgeOrderDescending"){
+
+        if (orderByType != "pledgeOrderDescending") {
             this.state.pledgeOrderDescending = false;
             this.setState({ pledgeOrderDescending: false });
         }
-            
-        if(orderByType != "blocksOrderDescending"){
+
+        if (orderByType != "blocksOrderDescending") {
             this.state.blocksOrderDescending = false;
             this.setState({ blocksOrderDescending: false });
         }
-            
-        if(orderByType != "activeStakeOrderDescending"){
+
+        if (orderByType != "activeStakeOrderDescending") {
             this.state.activeStakeOrderDescending = false;
             this.setState({ activeStakeOrderDescending: false });
         }
-            
-        if(orderByType != "marginOrderDescending"){
+
+        if (orderByType != "marginOrderDescending") {
             this.state.marginOrderDescending = false;
             this.setState({ marginOrderDescending: false });
         }
@@ -761,8 +761,7 @@ export default class FetchPoolList extends React.Component {
                             </PaginationItem>
                         </Pagination>
                     </div>}
-                    <br />
-                        <p> Total pools: {this.state.query.count}, Displaying {this.state.pools.length}</p>
+                <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
                 <Row>
                     <Col>
                         <Pool pools={this.state.pools} />
