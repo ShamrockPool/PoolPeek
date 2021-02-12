@@ -68,7 +68,7 @@ self.__precacheManifest = [
     "url": "https://shamrockpool.github.io/PoolPeek.github.io/static/media/adapools.5d6576d8.png_thumb"
   },
   {
-    "revision": "63d8ef7e316620717baab8231dd2eead",
+    "revision": "65e930cf30f1cee7a65fa24b8805d0ce",
     "url": "https://shamrockpool.github.io/PoolPeek.github.io/index.html"
   }
 ];
