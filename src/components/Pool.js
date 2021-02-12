@@ -14,6 +14,7 @@ var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
 
+const width = window.innerWidth;
 
 
 export default class Pool extends React.Component {
@@ -41,7 +42,7 @@ export default class Pool extends React.Component {
                                     width="28"
                                     height="25"
                                 /><b>{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
-                                </CardHeader>
+                            </CardHeader>
                             <Card body>
                                 <p>{ReactHtmlParser(description)}</p>
                                 <Table {...{ ['striped']: true }}>
@@ -103,7 +104,8 @@ export default class Pool extends React.Component {
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
                                                 <p>Active Stake: {item.active_stake} ₳</p>
-                                                <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
+                                                {width > 600 &&
+                                                    (<Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />)}
                                             </td>
                                         </tr>
                                         <tr>
