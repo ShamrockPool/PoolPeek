@@ -32,19 +32,19 @@ class Header extends React.Component {
   async getCurrentAdaUSDPrice() {
     var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADAUSDT';
     let price = await this.fetchFromBinance(url);
-    this.setState({ adaUsdPrice: "ADA USD Price: " +price });
+    this.setState({ adaUsdPrice: "   USD: $" +price });
   }
 
   async getCurrentAdaEuroPrice() {
     var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADAEUR';
     let price = await this.fetchFromBinance(url);
-    this.setState({ adaEuroPrice: "ADA EURO Price: " +price });
+    this.setState({ adaEuroPrice: "  EURO: €" +price });
   }
 
   async getCurrentAdaBTCPrice() {
     var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADABTC';
     let price = await this.fetchFromBinance(url);
-    this.setState({ adaBtcPrice: "ADA BTC Price: " +price });
+    this.setState({ adaBtcPrice: "  BTC: " +price });
   }
 
 
@@ -80,9 +80,9 @@ class Header extends React.Component {
         </Nav>
         <Nav navbar>
           <div>
-            <p>{this.state.adaUsdPrice}</p>
-            <p>{this.state.adaEuroPrice}</p>
-            <p>{this.state.adaBtcPrice}</p>
+            <p><b>ADA Prices:</b>    {this.state.adaUsdPrice}  {this.state.adaEuroPrice}  {this.state.adaBtcPrice}</p>
+            <p></p>
+            <p></p>
           </div>
           {/* <p>PoolPeek.com is a "light-weight" Cardano stake pool explorer that analyzes the publicly available registration data and other data elements such as number of produced blocks.</p>
           <p>If you would like to support our development efforts, please consider delegating to the LOCO Pool or Shamrock Pool</p> */}
