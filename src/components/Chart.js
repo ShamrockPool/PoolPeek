@@ -16,25 +16,37 @@ export default class Chart extends React.Component {
         };
     }
 
-    getActiveStakeHistory(active_stake_history) {
+    getActiveStakeHistory() {
+        console.log("getActiveStakeHistory");
+        var active_stake_history = this.props.data;
         var chartData = [];
         if (active_stake_history != 0 && active_stake_history != null && active_stake_history != undefined && active_stake_history.length > 0) {
 
             var i;
             for (i = 0; i < active_stake_history.length; i++) {
-                chartData.push(active_stake_history[i].active_stake);
+
+                var activeStakeNumber = parseFloat(active_stake_history[i].active_stake.replace(/,/g, ''));
+                chartData.push(activeStakeNumber);
             }
         }
+        chartData = chartData.reverse();
+        chartData.push(parseFloat(this.props.currentActiveStake.replace(/,/g, '')));
+        console.log(chartData);
         return chartData;
     }
 
 
-    getGraphLabels(active_stake_history) {
+    getGraphLabels() {
+        console.log("getGraphLabels");
+        var active_stake_history = this.props.data;
         var labels = [];
         var i;
         for (i = 0; i < active_stake_history.length; i++) {
             labels.push(active_stake_history[i].active_stake_epoch);
         }
+        labels = labels.reverse();
+        labels.push(this.props.currentEpoch);
+        console.log(labels);
         return labels;
     }
 
@@ -42,15 +54,16 @@ export default class Chart extends React.Component {
     }
 
     genLineData() {
+        console.log()
         return {
-            labels: this.getGraphLabels(this.props.data),
+            labels: this.getGraphLabels(),
             datasets: [
                 {
                     label: 'Active Stake',
-                    backgroundColor: getColor('primary'),
-                    borderColor: getColor('primary'),
+                    backgroundColor: getColor('secondary'),
+                    borderColor: getColor('secondary'),
                     borderWidth: 1,
-                    data: this.getActiveStakeHistory(this.props.data)
+                    data: this.getActiveStakeHistory()
                 },
             ],
         };
@@ -61,7 +74,7 @@ export default class Chart extends React.Component {
             <div className="container-fluid" style={{ align: "left", width: "99%" }}>
                 <Col xl={6} lg={12} md={12}>
                     <Card>
-                        <CardHeader>Line</CardHeader>
+                        <CardHeader>Active Stake: {this.props.currentActiveStake} ₳</CardHeader>
                         <CardBody>
                             <Line data={this.genLineData()} />
                         </CardBody>

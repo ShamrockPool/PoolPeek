@@ -87,17 +87,19 @@ export default class Pool extends React.Component {
                                                 placement="left"
                                             >
                                                 <th scope="row" style={{ width: '20%' }}>Pool Info</th></Tooltip>
-                                            <td><p>Pool margin: {item.margin_pct}%</p>    <p>Pledge: {item.pledge} ₳</p>     <p>Cost per epoch: {item.cost_per_epoch} ₳</p></td>
+                                            <td><p>Pool margin: {item.margin_pct}%</p>    <p>Pledge: {item.pledge} ₳</p>     <p>Cost per epoch: {item.cost_per_epoch} ₳</p>
+                                                <p>Delegators: {item.active_stake_delegator_count}</p></td>
                                         </tr>
                                         <tr><Tooltip
                                             title="Stake is the amount of ADA delegated to the pool."
                                             placement="left"
                                         >
                                             <th scope="row" style={{ width: '20%' }}>Stake</th></Tooltip>
-                                            <td><p>Active Stake: {item.active_stake} ₳</p>
-
-                                                <Chart data={item.active_stake_history} />
-                                                <p>Delegators: {item.active_stake_delegator_count}</p></td>
+                                            <td>
+                                                {/* <p>Active Stake: {item.active_stake} ₳</p>
+                                            <p>Delegators: {item.active_stake_delegator_count}</p> */}
+                                                <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
+                                            </td>
                                         </tr>
                                         <tr>
                                             <Tooltip
