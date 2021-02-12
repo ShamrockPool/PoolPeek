@@ -67,7 +67,7 @@ export default class Chart extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid" style={{ align: "left", width: "99%" }}>
+            <div className="container-fluid" style={{ align: "left", width: "70%" }}>
                 {/* <Col xl={6} lg={12} md={12}> */}
                 {/* <Card> */}
                 {/* <CardBody> */}
