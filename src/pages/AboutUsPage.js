@@ -60,7 +60,18 @@ You can reach us on
 <b>Twitter: </b><a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">https://twitter.com/CardanoPoolPeek</a>
 <br></br>
 <b>Telegram group chat: </b><a href="https://t.me/poolpeek" target="_blank" rel="noreferrer">https://t.me/poolpeek</a>
+<br/><br/>
 
+We have devoted many hours developing and maintaining PoolPeek.com, If you like what you see and want to support our efforts, 
+please consider tipping us:
+<br/><br/>
+
+LOCO:<br/>
+addr1q9z0fjsenn4ne6zjswl3r3k98uuehe7ve7e8649kjsy5yg33myr8mpq6wk3nmqw2hg8v5a6kmlpmk889ye20qussqekslteph6
+<br/><br/>
+
+SHA:<br/>
+addr1q8ds9zyklmzphd6us528kqlcjmhq874ase5tk8qfc7a7p5fxh64unn46g3scmqzdym6epgkmmzv9uzvymqgdndtwh2psmwddeg
 <br/><br/>
 
 <b>HOME</b>
