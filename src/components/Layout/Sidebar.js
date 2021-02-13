@@ -259,10 +259,8 @@ class Sidebar extends React.Component {
                 </NavItem>
               ))}
             </Collapse>
-          
-
-
           </Nav>
+
         </div>
       </aside>
     );

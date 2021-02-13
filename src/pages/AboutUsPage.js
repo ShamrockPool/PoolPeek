@@ -3,9 +3,9 @@ import Page from 'components/Page';
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import Tooltip from "@material-ui/core/Tooltip";
-import PooltoolImage from 'assets/img/pooltool.png_thumb';
-import PoolPmImage from 'assets/img/poolpm.png_thumb';
-import AdaPoolImage from 'assets/img/adapools.png_thumb';
+import PooltoolImage from 'assets/img/pooltool.png';
+import PoolPmImage from 'assets/img/poolpm.png';
+import AdaPoolImage from 'assets/img/adapools.png';
 import CardanoImage from 'assets/img/cardanoIcon.png';
 
 class AboutUsPage extends React.Component {
@@ -32,21 +32,20 @@ class AboutUsPage extends React.Component {
       >
      <div>
 
-<b>Overview</b>
+<b>A different kind of Cardano Stake Pool Explorer</b>
 <br/><br/>
 
-PoolPeek.com is a "light-weight" Cardano stake pool explorer that analyzes the publicly available registration data and other data 
+PoolPeek.com is a Cardano stake pool explorer that analyzes the publicly available registration data and other data 
 elements such as number of produced blocks and active stake. Delegators can use our powerful query features to narrow down lists of 
-pools and then drill deeper on specific pools using our external links feature. Stake pool operators can use PoolPeek.com to keep an 
+pools and then drill deeper using our external links feature. Stake pool operators can use PoolPeek.com to keep an 
 eye on their competiton. We offer a range or filters on ticker, name, descritpion, blocks, margin, pledge, cost and active stake.
 <br/><br/>
 
 PoolPeek.com was created by small stake pool owners who believe all pools should have a fighting chance. 
 A random sort order is default for most lists at PoolPeek.com. The idea is that all pools get a random chance to be at 
-the top of the list. An exception to this is the 'ticker' sort. Tickers sort alphabetically as you type. Tickers are meant 
-to be unique and so it would make no sense to order them randomly. There are many great small pools out 
-there that don't get a chance to showcase their pool because of some silly ranking algorithm. As we move forward we plan to write 
- tools that will help small pools advertise.
+the top of the list. An exception to this is the 'ticker' sort. Tickers sort alphabetically as you type. 
+There are many great small pools out there that don't get a chance to showcase their pool because of some silly ranking algorithm. 
+As we move forward we plan to write tools that will help small pools advertise.
 <br/><br/>
 
 <b>The Developers</b>
@@ -67,18 +66,18 @@ You can reach us on
 <b>HOME</b>
 <br/><br/>
 
-HOME will randomly display all pools in our system that are not retiring or retired.
-Click 'HOME' again anytime to randomly sort the results. After the pools display you can
-refine the query using the basic or advanced filters and sorting
+HOME randomly displays all pools in our system that are not retiring or retired.
+You can click the 'HOME' option again anytime to re-order the list. 
+After the pools display you can page through the results and refine the query using the basic or advanced filters and sorting.
 <br/><br/>
 
 
 <b>Pool Queries</b>
 <br/><br/>
 
-Our text based pool queries look for keywords in the pool's meta data, the search is not exact and user is left to decide if 
+Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if 
 the pool meets the actual criteria. This gives us the flexibility to filter pools in ways other sites can't.
-If you believe a pool is missing from one of our Pool Queries or you have an idea for a new Pool Query, send us an email with the details.
+If you believe a pool is missing from one of our Pool Queries or you have an idea for a new Pool Query, please contact us.
 <br/><br/>
 
 
@@ -98,18 +97,29 @@ then click the pools website link or pool.pm link to find out more.
 <br/><br/>
 
 adafolio.com is proudly made for the Cardano Community by the team at Viper Staking!<br/>
-We worked with the Viper stake pool team to integrate adafolio.com portfolios into PoolPeek.com.<br/>
+We worked with the Viper team to integrate adafolio.com portfolios into PoolPeek.com.<br/>
 The list of portfolios and pools display in a random order and allow you browse and research the pools 
 just as you would using any other PoolPeek.com query.<br/>
  Further the decentralization of Cardano by spreading out your delegation to multiple stake pools.
+<br/><br/>
 
+
+<b>The Old Site</b>
+<br/><br/>
+
+You can still access the "classic" version of PoolPeek.com using the link below:
+<br/><br/>
+
+<a target="_blank" href="https://PoolPeek.com/PoolPeekClassic.asp">Pool Peek Classic</a>
+<br/>
+https://PoolPeek.com/PoolPeekClassic.asp
 <br/><br/>
 
 
 <b>THANK YOU</b>
 <br/><br/>
 
-PoolPeek.com would like to thank the following sites for supplying us tools to make our site even better:
+PoolPeek.com would like to thank the following sites for supplying us tools that make our site even better:
 <br/>
 <ul>
 <li><a href="Pool.pm" target="_blank">Pool.pm</a></li>

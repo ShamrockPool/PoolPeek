@@ -28,7 +28,7 @@ class AdaFoliosPage extends React.Component {
 
       <div>
       <a href="https://adafolio.com" target="_blank">adafolio.com</a> is proudly made for the Cardano Community by the team at Viper Staking!<br/>
-      Further the decentralization of Cardano by spreading out your delegation to multiple stake pools.<br/>
+      Further the decentralization of Cardano by spreading out your delegation to multiple stake pools.<br/><br/>
       </div>
 
       <FetchPoolList query={query}/>

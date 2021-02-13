@@ -684,7 +684,7 @@ export default class FetchPoolList extends React.Component {
                             <br></br>
                             <h3><b>Order by:</b></h3>
                             <label>
-                                <span><b>Ascending:</b></span>
+                                <span><b>&nbsp;&nbsp;&nbsp;Ascending:</b></span>
                                 <Checkbox
                                     checked={this.state.tickerOrder}
                                     onChange={e => this.handleOrderByClick("tickerOrder")}
