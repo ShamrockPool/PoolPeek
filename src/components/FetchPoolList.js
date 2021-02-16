@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 import Scroll from '../components/Scroll';
 import Pool from 'components/Pool';
-
+import CustomInput from "components/CustomInput.js";
 
 import { Collapse } from 'react-collapse';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
