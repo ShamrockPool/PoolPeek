@@ -13,7 +13,7 @@ class DashboardPage extends React.Component {
     return (
       <Page
         className="DashboardPage"
-        title="Pool Search"
+        // title="Pool Search"
         // breadcrumbs={[{ name: 'Home', active: true }]}
       >
       <FetchPoolList query={this.props.query}/>

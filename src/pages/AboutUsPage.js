@@ -74,11 +74,11 @@ SHA:<br/>
 addr1q8ds9zyklmzphd6us528kqlcjmhq874ase5tk8qfc7a7p5fxh64unn46g3scmqzdym6epgkmmzv9uzvymqgdndtwh2psmwddeg
 <br/><br/>
 
-<b>HOME</b>
+<b>Pool Search</b>
 <br/><br/>
 
-HOME randomly displays all pools in our system that are not retiring or retired.
-You can click the 'HOME' option again anytime to re-order the list. 
+Pool Search randomly displays all pools in our system that are not retiring or retired.
+You can click the 'Pool Search' option again anytime to re-order the list. 
 After the pools display you can page through the results and refine the query using the basic or advanced filters and sorting.
 <br/><br/>
 

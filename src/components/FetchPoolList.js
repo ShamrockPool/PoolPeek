@@ -687,98 +687,97 @@ export default class FetchPoolList extends React.Component {
 
                                 </tbody>
                             </Table>
-                        </Collapse>
-                        <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
-                        <br></br>
-                        <br></br>
-                        <Pagination style={{ align: "left", width: "82%" }}>
-                            <PaginationItem disabled={currentPage <= 0}>
-                                <PaginationLink
-                                    onClick={e => this.handlePageClick(e, currentPage - 1)}
-                                    previous
-                                    href="#"
-                                />
-                            </PaginationItem>
 
-                            {_.times(pageCount, (i) =>
-                                <PaginationItem active={i === currentPage} key={i}>
-                                    <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
-                                        {i + 1}
-                                    </PaginationLink>
-                                </PaginationItem>
-                            )}
+                            <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
 
-                            <PaginationItem disabled={currentPage >= pageCount - 1}>
-                                <PaginationLink
-                                    onClick={e => this.handlePageClick(e, currentPage + 1)}
-                                    next
-                                    href="#"
-                                />
-                            </PaginationItem>
-                        </Pagination>
-
-
-                    </div>}
-                {/* <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
+                            {/* <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
                  */}
-                <h3><b>Order by:</b></h3>
-                <FormControlLabel
-                    control={<Switch size="Normal" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
-                />
-                <Collapse isOpened={this.state.orderByFiltersShow}>
-                    <FormGroup>
-                        <label>
-                            <span><b>Ascending:</b></span>
-                            <Checkbox
-                                checked={this.state.tickerOrder}
-                                onChange={e => this.handleOrderByClick("tickerOrder")}
+                            <h3><b>Order by:</b></h3>
+                            <FormControlLabel
+                                control={<Switch size="Normal" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
                             />
-                            <span>Ticker</span>
-                            <Checkbox
-                                checked={this.state.pledgeOrder}
-                                onChange={e => this.handleOrderByClick("pledgeOrder")} />
-                            <span>Pledge</span>
-                            <Checkbox
-                                checked={this.state.activeStakeOrder}
-                                onChange={e => this.handleOrderByClick("activeStakeOrder")} />
-                            <span>Active Stake</span>
-                            <Checkbox
-                                checked={this.state.blocksOrder}
-                                onChange={e => this.handleOrderByClick("blocksOrder")} />
-                            <span>Blocks</span>
-                            <Checkbox
-                                checked={this.state.marginOrder}
-                                onChange={e => this.handleOrderByClick("marginOrder")} />
-                            <span>Margin</span>
-                        </label>
-                    </FormGroup>
-                    <FormGroup>
-                        <label>
-                            <span><b>Descending:</b></span>
-                            <Checkbox
-                                checked={this.state.tickerOrderDescending}
-                                onChange={e => this.handleOrderByClick("tickerOrderDescending")}
-                            />
-                            <span>Ticker</span>
-                            <Checkbox
-                                checked={this.state.pledgeOrderDescending}
-                                onChange={e => this.handleOrderByClick("pledgeOrderDescending")} />
-                            <span>Pledge</span>
-                            <Checkbox
-                                checked={this.state.activeStakeOrderDescending}
-                                onChange={e => this.handleOrderByClick("activeStakeOrderDescending")} />
-                            <span>Active Stake</span>
-                            <Checkbox
-                                checked={this.state.blocksOrderDescending}
-                                onChange={e => this.handleOrderByClick("blocksOrderDescending")} />
-                            <span>Blocks</span>
-                            <Checkbox
-                                checked={this.state.marginOrderDescending}
-                                onChange={e => this.handleOrderByClick("marginOrderDescending")} />
-                            <span>Margin</span>
-                        </label>
-                    </FormGroup>
-                </Collapse>
+                            <Collapse isOpened={this.state.orderByFiltersShow}>
+                                <FormGroup>
+                                    <label>
+                                        <span><b>Ascending:</b></span>
+                                        <Checkbox
+                                            checked={this.state.tickerOrder}
+                                            onChange={e => this.handleOrderByClick("tickerOrder")}
+                                        />
+                                        <span>Ticker</span>
+                                        <Checkbox
+                                            checked={this.state.pledgeOrder}
+                                            onChange={e => this.handleOrderByClick("pledgeOrder")} />
+                                        <span>Pledge</span>
+                                        <Checkbox
+                                            checked={this.state.activeStakeOrder}
+                                            onChange={e => this.handleOrderByClick("activeStakeOrder")} />
+                                        <span>Active Stake</span>
+                                        <Checkbox
+                                            checked={this.state.blocksOrder}
+                                            onChange={e => this.handleOrderByClick("blocksOrder")} />
+                                        <span>Blocks</span>
+                                        <Checkbox
+                                            checked={this.state.marginOrder}
+                                            onChange={e => this.handleOrderByClick("marginOrder")} />
+                                        <span>Margin</span>
+                                    </label>
+                                </FormGroup>
+                                <FormGroup>
+                                    <label>
+                                        <span><b>Descending:</b></span>
+                                        <Checkbox
+                                            checked={this.state.tickerOrderDescending}
+                                            onChange={e => this.handleOrderByClick("tickerOrderDescending")}
+                                        />
+                                        <span>Ticker</span>
+                                        <Checkbox
+                                            checked={this.state.pledgeOrderDescending}
+                                            onChange={e => this.handleOrderByClick("pledgeOrderDescending")} />
+                                        <span>Pledge</span>
+                                        <Checkbox
+                                            checked={this.state.activeStakeOrderDescending}
+                                            onChange={e => this.handleOrderByClick("activeStakeOrderDescending")} />
+                                        <span>Active Stake</span>
+                                        <Checkbox
+                                            checked={this.state.blocksOrderDescending}
+                                            onChange={e => this.handleOrderByClick("blocksOrderDescending")} />
+                                        <span>Blocks</span>
+                                        <Checkbox
+                                            checked={this.state.marginOrderDescending}
+                                            onChange={e => this.handleOrderByClick("marginOrderDescending")} />
+                                        <span>Margin</span>
+                                    </label>
+                                </FormGroup>
+                            </Collapse>
+                        </Collapse>
+                    </div>}
+
+                <Pagination style={{ align: "left", width: "82%" }}>
+                    <PaginationItem disabled={currentPage <= 0}>
+                        <PaginationLink
+                            onClick={e => this.handlePageClick(e, currentPage - 1)}
+                            previous
+                            href="#"
+                        />
+                    </PaginationItem>
+
+                    {_.times(pageCount, (i) =>
+                        <PaginationItem active={i === currentPage} key={i}>
+                            <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
+                                {i + 1}
+                            </PaginationLink>
+                        </PaginationItem>
+                    )}
+
+                    <PaginationItem disabled={currentPage >= pageCount - 1}>
+                        <PaginationLink
+                            onClick={e => this.handlePageClick(e, currentPage + 1)}
+                            next
+                            href="#"
+                        />
+                    </PaginationItem>
+                </Pagination>
 
                 <Row>
                     <Col>

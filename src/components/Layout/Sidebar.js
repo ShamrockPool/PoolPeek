@@ -54,7 +54,7 @@ const navFunQueries = [
 ];
 
 const navItems = [
-  { to: '/', name: 'HOME', exact: true, Icon: MdDashboard },
+  { to: '/', name: 'Pool Search', exact: true, Icon: MdDashboard },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 ];
 
@@ -130,7 +130,7 @@ class Sidebar extends React.Component {
                   exact={exact}
                 >
                   <Icon className={bem.e('nav-item-icon')} />
-                  <span className="">{name}</span>
+                  <b><span className="">{name}</span></b>
                 </BSNavLink>
               </NavItem>
             ))}
@@ -142,7 +142,7 @@ class Sidebar extends React.Component {
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
                   <MdExtension className={bem.e('nav-item-icon')} />
-                  <span className=" align-self-start">Pool Queries</span>
+                  <b><span className=" align-self-start">Pool Queries</span></b>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
@@ -186,7 +186,7 @@ class Sidebar extends React.Component {
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
                   <MdExtension className={bem.e('nav-item-icon')} />
-                  <span className=" align-self-start">Fabulous 500</span>
+                  <b><span className=" align-self-start">Fabulous 500</span></b>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
@@ -227,7 +227,7 @@ class Sidebar extends React.Component {
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
                   <MdExtension className={bem.e('nav-item-icon')} />
-                  <span className=" align-self-start">adafolio Portfolios</span>
+                  <b><span className=" align-self-start">adafolio Portfolios</span></b>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
