@@ -79,7 +79,7 @@ export default class Pool extends React.Component {
                                                 title="The number of blocks this pool has minted."
                                                 placement="left"
                                             >
-                                                <th scope="row">Produced Blocks</th></Tooltip>
+                                                <th scope="row">Blocks</th></Tooltip>
                                             <td><p>{item.blocks}</p></td>
                                         </tr>
                                         <tr>
