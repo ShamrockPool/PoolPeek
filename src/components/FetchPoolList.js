@@ -61,6 +61,7 @@ export default class FetchPoolList extends React.Component {
             activestaketo: "",
             //end search params
             advancedSearchFiltersShow: false,
+            orderByFiltersShow: false,
             //order by types
             tickerOrder: false,
             pledgeOrder: false,
@@ -247,6 +248,15 @@ export default class FetchPoolList extends React.Component {
         }
         else {
             this.setState({ advancedSearchFiltersShow: true });
+        }
+    }
+
+    handleOrderByToggleClick() {
+        if (this.state.orderByFiltersShow) {
+            this.setState({ orderByFiltersShow: false });
+        }
+        else {
+            this.setState({ orderByFiltersShow: true });
         }
     }
 
@@ -552,15 +562,15 @@ export default class FetchPoolList extends React.Component {
                         </Table>
                         <FormGroup>
                             <h3><b>Advanced:</b></h3>
-                            <FormControlLabel
-                                control={<Switch size="Normal" checked={this.state.advancedSearchFiltersShow} color="black" onChange={e => this.handleAdvancedClick()} />}
+                            <FormControlLabel value="all"
+                                control={<Switch size="Normal" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
+                                />}
                             />
                         </FormGroup>
 
                         <Collapse isOpened={this.state.advancedSearchFiltersShow}>
                             <Table >
                                 <tbody>
-
                                     <tr>
                                         <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
                                             <Input
@@ -679,62 +689,8 @@ export default class FetchPoolList extends React.Component {
                             </Table>
                         </Collapse>
                         <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
-
-                        <FormGroup>
-                            <br></br>
-                            <h3><b>Order by:</b></h3>
-                            <label>
-                                <span><b>&nbsp;&nbsp;&nbsp;Ascending:</b></span>
-                                <Checkbox
-                                    checked={this.state.tickerOrder}
-                                    onChange={e => this.handleOrderByClick("tickerOrder")}
-                                />
-                                <span>Ticker</span>
-                                <Checkbox
-                                    checked={this.state.pledgeOrder}
-                                    onChange={e => this.handleOrderByClick("pledgeOrder")} />
-                                <span>Pledge</span>
-                                <Checkbox
-                                    checked={this.state.activeStakeOrder}
-                                    onChange={e => this.handleOrderByClick("activeStakeOrder")} />
-                                <span>Active Stake</span>
-                                <Checkbox
-                                    checked={this.state.blocksOrder}
-                                    onChange={e => this.handleOrderByClick("blocksOrder")} />
-                                <span>Blocks</span>
-                                <Checkbox
-                                    checked={this.state.marginOrder}
-                                    onChange={e => this.handleOrderByClick("marginOrder")} />
-                                <span>Margin</span>
-                            </label>
-                        </FormGroup>
-                        <FormGroup>
-                            <label>
-                                <span><b>Descending:</b></span>
-                                <Checkbox
-                                    checked={this.state.tickerOrderDescending}
-                                    onChange={e => this.handleOrderByClick("tickerOrderDescending")}
-                                />
-                                <span>Ticker</span>
-                                <Checkbox
-                                    checked={this.state.pledgeOrderDescending}
-                                    onChange={e => this.handleOrderByClick("pledgeOrderDescending")} />
-                                <span>Pledge</span>
-                                <Checkbox
-                                    checked={this.state.activeStakeOrderDescending}
-                                    onChange={e => this.handleOrderByClick("activeStakeOrderDescending")} />
-                                <span>Active Stake</span>
-                                <Checkbox
-                                    checked={this.state.blocksOrderDescending}
-                                    onChange={e => this.handleOrderByClick("blocksOrderDescending")} />
-                                <span>Blocks</span>
-                                <Checkbox
-                                    checked={this.state.marginOrderDescending}
-                                    onChange={e => this.handleOrderByClick("marginOrderDescending")} />
-                                <span>Margin</span>
-                            </label>
-                        </FormGroup>
-
+                        <br></br>
+                        <br></br>
                         <Pagination style={{ align: "left", width: "82%" }}>
                             <PaginationItem disabled={currentPage <= 0}>
                                 <PaginationLink
@@ -760,8 +716,70 @@ export default class FetchPoolList extends React.Component {
                                 />
                             </PaginationItem>
                         </Pagination>
+
+
                     </div>}
-                <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
+                {/* <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
+                 */}
+                <h3><b>Order by:</b></h3>
+                <FormControlLabel
+                    control={<Switch size="Normal" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
+                />
+                <Collapse isOpened={this.state.orderByFiltersShow}>
+                    <FormGroup>
+                        <label>
+                            <span><b>Ascending:</b></span>
+                            <Checkbox
+                                checked={this.state.tickerOrder}
+                                onChange={e => this.handleOrderByClick("tickerOrder")}
+                            />
+                            <span>Ticker</span>
+                            <Checkbox
+                                checked={this.state.pledgeOrder}
+                                onChange={e => this.handleOrderByClick("pledgeOrder")} />
+                            <span>Pledge</span>
+                            <Checkbox
+                                checked={this.state.activeStakeOrder}
+                                onChange={e => this.handleOrderByClick("activeStakeOrder")} />
+                            <span>Active Stake</span>
+                            <Checkbox
+                                checked={this.state.blocksOrder}
+                                onChange={e => this.handleOrderByClick("blocksOrder")} />
+                            <span>Blocks</span>
+                            <Checkbox
+                                checked={this.state.marginOrder}
+                                onChange={e => this.handleOrderByClick("marginOrder")} />
+                            <span>Margin</span>
+                        </label>
+                    </FormGroup>
+                    <FormGroup>
+                        <label>
+                            <span><b>Descending:</b></span>
+                            <Checkbox
+                                checked={this.state.tickerOrderDescending}
+                                onChange={e => this.handleOrderByClick("tickerOrderDescending")}
+                            />
+                            <span>Ticker</span>
+                            <Checkbox
+                                checked={this.state.pledgeOrderDescending}
+                                onChange={e => this.handleOrderByClick("pledgeOrderDescending")} />
+                            <span>Pledge</span>
+                            <Checkbox
+                                checked={this.state.activeStakeOrderDescending}
+                                onChange={e => this.handleOrderByClick("activeStakeOrderDescending")} />
+                            <span>Active Stake</span>
+                            <Checkbox
+                                checked={this.state.blocksOrderDescending}
+                                onChange={e => this.handleOrderByClick("blocksOrderDescending")} />
+                            <span>Blocks</span>
+                            <Checkbox
+                                checked={this.state.marginOrderDescending}
+                                onChange={e => this.handleOrderByClick("marginOrderDescending")} />
+                            <span>Margin</span>
+                        </label>
+                    </FormGroup>
+                </Collapse>
+
                 <Row>
                     <Col>
                         <Pool pools={this.state.pools} />

@@ -7,7 +7,6 @@ import AdaPoolImage from 'assets/img/adapools.png';
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import "../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
-
 import Chart from '../components/Chart';
 
 var linkify = require('linkifyjs');
@@ -52,7 +51,7 @@ export default class Pool extends React.Component {
                                                 title="The pool ticker"
                                                 placement="left"
                                             >
-                                                <th scope="row" style={{ width: '10%' }}>Ticker</th>
+                                                <th scope="row">Ticker</th>
                                             </Tooltip>
                                             <td scope="row"><p>{ReactHtmlParser(item.ticker)}</p></td>
                                         </tr>
@@ -62,7 +61,7 @@ export default class Pool extends React.Component {
                                                     title="Retirement Epoch"
                                                     placement="left"
                                                 >
-                                                    <th scope="row" style={{ width: '10%' }}>Retirement Epoch</th>
+                                                    <th scope="row">Retirement Epoch</th>
                                                 </Tooltip>
                                                 <td scope="row"><p>{ReactHtmlParser(item.retirement_epoch)}</p></td>
                                             </tr>
@@ -72,7 +71,7 @@ export default class Pool extends React.Component {
                                                 title="The website of the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row" style={{ width: '10%' }}>Website</th></Tooltip>
+                                                <th scope="row">Website</th></Tooltip>
                                             <td><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.homepage}</p></a></td>
                                         </tr>
                                         <tr>
@@ -80,7 +79,7 @@ export default class Pool extends React.Component {
                                                 title="The number of blocks this pool has minted."
                                                 placement="left"
                                             >
-                                                <th scope="row" style={{ width: '10%' }}>Produced Blocks</th></Tooltip>
+                                                <th scope="row">Produced Blocks</th></Tooltip>
                                             <td><p>{item.blocks}</p></td>
                                         </tr>
                                         <tr>
@@ -88,7 +87,7 @@ export default class Pool extends React.Component {
                                                 title="Important pool information"
                                                 placement="left"
                                             >
-                                                <th scope="row" style={{ width: '10%' }}>Pool Info</th></Tooltip>
+                                                <th scope="row">Pool Info</th></Tooltip>
                                             <td><p>Pool margin: {item.margin_pct}%</p>    <p>Pledge: {item.pledge} ₳</p>     <p>Cost per epoch: {item.cost_per_epoch} ₳</p>
                                                 <p>Delegators: {item.active_stake_delegator_count}</p></td>
                                         </tr>
@@ -96,7 +95,7 @@ export default class Pool extends React.Component {
                                             title="Stake is the amount of ADA delegated to the pool."
                                             placement="left"
                                         >
-                                            <th scope="row" style={{ width: '10%' }}>Stake</th></Tooltip>
+                                            <th scope="row">Stake</th></Tooltip>
                                             <td>
                                                 {/* <p>Active Stake: {item.active_stake} ₳</p>
                                             <p>Delegators: {item.active_stake_delegator_count}</p> */}
@@ -113,7 +112,7 @@ export default class Pool extends React.Component {
                                                 title="The current saturation of the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row" style={{ width: '10%' }}>Pool Saturation</th></Tooltip>
+                                                <th scope="row">Pool Saturation</th></Tooltip>
                                             <td><p>{Number(item.pct_saturated).toFixed(3)}%</p>
                                             </td>
                                         </tr>
@@ -122,7 +121,7 @@ export default class Pool extends React.Component {
                                                 title="The meta data urls of the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row" style={{ width: '10%' }}>Pool Meta Data Urls</th></Tooltip>
+                                                <th scope="row">Pool Meta Data Urls</th></Tooltip>
                                             <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
                                                 {item.metadata_extended_url.length > 0 && (
                                                     <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
@@ -134,7 +133,7 @@ export default class Pool extends React.Component {
                                                 title="Sites containing more information on the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row" style={{ width: '10%' }}>External Sites</th></Tooltip>
+                                                <th scope="row">External Sites</th></Tooltip>
                                             <td><a href={"https://pool.pm/" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
                                                 src={PoolPmImage}
                                                 className="pr-2"
@@ -154,7 +153,6 @@ export default class Pool extends React.Component {
                                     </tbody>
                                 </Table>
                             </Card>
-
                         </Card>
                         <br></br>
                     </div >
