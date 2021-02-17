@@ -8,6 +8,7 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import "../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
 import Chart from '../components/Chart';
+import SocialMedia from './SocialMedia';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -22,6 +23,17 @@ export default class Pool extends React.Component {
         super(props);
     }
 
+    async fetchExtendedMetaData(query) {
+        var response = await fetch(query);
+        // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
+        const data = await response.json();
+        console.log(data)
+    }
+
+    myFunction() {
+        console.log("hi");
+    }
+
     render() {
         return (
             this.props.pools.map(function (item, key) {
@@ -29,9 +41,11 @@ export default class Pool extends React.Component {
                 var description = linkifyHtml(item.description, {
                     defaultProtocol: 'https'
                 });
-
                 return (
                     <div key={key} style={{ alignItems: "left" }}>
+
+
+
                         <Card>
                             <CardHeader >
                                 <img
@@ -41,6 +55,9 @@ export default class Pool extends React.Component {
                                     width="28"
                                     height="25"
                                 /><b>{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
+
+                                <SocialMedia extendemetadataurl={item.metadata_extended_url} />
+
                             </CardHeader>
                             <Card body>
                                 <p>{ReactHtmlParser(description)}</p>
