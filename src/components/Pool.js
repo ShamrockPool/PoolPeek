@@ -56,7 +56,7 @@ export default class Pool extends React.Component {
                                     height="25"
                                 /><b>{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
 
-                                <SocialMedia extendemetadataurl={item.metadata_extended_url} />
+                                {/* <SocialMedia extendemetadataurl={item.metadata_extended_url} /> */}
 
                             </CardHeader>
                             <Card body>

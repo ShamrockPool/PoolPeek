@@ -1,13 +1,44 @@
 import React from 'react';
 import _ from 'lodash';
-
 import { getColor } from 'utils/colors';
-import { randomNum } from 'utils/demos';
-
-import { Col, Card, CardHeader, CardBody } from 'reactstrap';
-
 import { Line } from 'react-chartjs-2';
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+
+const lineOptions = {
+    scales: {
+      xAxes: [{
+        gridLines: {
+          display: true,
+        },
+      }],
+      yAxes: [{
+        // stacked: true,
+        gridLines: {
+          display: true,
+        },
+        ticks: {
+          beginAtZero: true,
+          // Return an empty string to draw the tick line but hide the tick label
+          // Return `null` or `undefined` to hide the tick line entirely
+          userCallback(value) {
+            // Convert the number to a string and splite the string every 3 charaters from the end
+            value = value.toString();
+            value = value.split(/(?=(?:...)*$)/);
+  
+            // Convert the array to a string and format the output
+            value = value.join('.');
+            return `₳ ${value}`;
+          },
+        },
+      }],
+    },
+    legend: {
+      display: true,
+    },
+    tooltips: {
+      enabled: true,
+    },
+  };
+
 
 export default class Chart extends React.Component {
     constructor(props) {
@@ -71,7 +102,7 @@ export default class Chart extends React.Component {
                 {/* <Col xl={6} lg={12} md={12}> */}
                 {/* <Card> */}
                 {/* <CardBody> */}
-                    <Line data={this.genLineData()} />
+                    <Line data={this.genLineData()}  options={lineOptions}/>
                 {/* </CardBody> */}
                 {/* </Card> */}
                 {/* </Col> */}
