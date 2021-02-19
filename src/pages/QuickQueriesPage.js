@@ -9,6 +9,16 @@ class QuickQueriesPage extends React.Component {
   }
 
 
+  getPageDescription() {
+
+    if(this.props.pageDescription != undefined)
+    {
+      return this.props.pageDescription;
+    }
+
+    return "Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if the pool meets the actual criteria. This gives us the flexibility to filter pools in ways other sites can't."
+  }
+
   componentDidMount() {
     window.scrollTo(0, 0);
   }
@@ -20,11 +30,10 @@ class QuickQueriesPage extends React.Component {
         className="QuickQueriesPage"
         title={this.props.title}
       >
-      <div>Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide 
-      if the pool meets the actual criteria. This gives us the flexibility to filter pools in ways other sites can't.
-      <br/><br/>
-      </div>
-      <FetchPoolList query={this.props.query}/>
+        <div>{this.getPageDescription()}
+          <br /><br />
+        </div>
+        <FetchPoolList query={this.props.query} />
       </Page>
     );
   }

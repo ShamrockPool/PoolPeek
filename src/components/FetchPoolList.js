@@ -690,8 +690,6 @@ export default class FetchPoolList extends React.Component {
 
                             <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
 
-                            {/* <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
-                 */}
                             <h3><b>Order by:</b></h3>
                             <FormControlLabel
                                 control={<Switch size="Normal" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
@@ -752,6 +750,8 @@ export default class FetchPoolList extends React.Component {
                             </Collapse>
                         </Collapse>
                     </div>}
+
+                <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
 
                 <Pagination style={{ align: "left", width: "82%" }}>
                     <PaginationItem disabled={currentPage <= 0}>

@@ -44,7 +44,8 @@ const navComponents = [
   { to: '/educationpools', name: 'Education', exact: false, Icon: MdPool },
   { to: '/zeroblockpools', name: 'Zero Block', exact: false, Icon: MdPool },
   { to: '/retiringpools', name: 'Soon Retiring', exact: false, Icon: MdPool },
-  { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdPool }
+  { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdPool },
+  { to: '/marchsaturatedpools', name: 'March Saturated', exact: false, Icon: MdPool }
 ];
 
 const navFunQueries = [

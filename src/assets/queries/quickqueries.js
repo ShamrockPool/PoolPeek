@@ -11,3 +11,7 @@ export const retiredpoolsquery = "&qryname=Retired+Pools&onlyretired=1";
 export const funtickersquery = "&op=fundumps&qryname=Fun+Tickers&dumptype=ticker";
 export const funnamesquery = "&op=fundumps&qryname=Fun+Names&dumptype=name";
 export const fundescriptionsquery = "&op=fundumps&qryname=Fun+Names&dumptype=description";
+
+
+export const marchsaturatedpoolsquery = "&activestakefrom=32000000";
+export const marchsaturatedpoolsqueryDesc = "In March the k-parameter will be increased to 1000 from 500, this will mean the saturation level of pools will fall from roughly 64million ADA to 32million ADA staked per pool. The below pools will return less rewards in March consider distributing your stake. :) ";
