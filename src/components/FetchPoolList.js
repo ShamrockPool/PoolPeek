@@ -26,8 +26,6 @@ let queryParams = {
     "activestaketo": ""
 };
 
-let orderBy;
-
 const sid = Math.floor(Math.random() * 100) + Date.now()
 
 
@@ -59,7 +57,7 @@ export default class FetchPoolList extends React.Component {
             costto: "",
             activestakefrom: "",
             activestaketo: "",
-            multiPoolOperators: true,
+            multiPoolOperators: false,
             //end search params
             advancedSearchFiltersShow: false,
             orderByFiltersShow: false,
@@ -181,6 +179,13 @@ export default class FetchPoolList extends React.Component {
         if (this.props.query) {
             this.state.baseQuery = this.props.query;
         }
+
+        if(this.props.multiPoolOperators)
+        {
+            this.state.multiPoolOperators = this.props.multiPoolOperators;
+            this.setState({ multiPoolOperators: this.props.multiPoolOperators });
+        }
+
         await this.getPoolList(this.state.baseUrl + this.state.baseQuery);
 
         if (this.state.filtersWhereRemoved == false) {
