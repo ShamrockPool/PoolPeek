@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "https://shamrockpool.github.io/PoolPeek.github.io/precache-manifest.4227d64c665728f2087be915ab1fc4db.js"
+  "https://shamrockpool.github.io/PoolPeek.github.io/precache-manifest.74247e2acc0b95d85e804f4a4bf1ac1e.js"
 );
 
 workbox.clientsClaim();
