@@ -59,6 +59,7 @@ export default class FetchPoolList extends React.Component {
             costto: "",
             activestakefrom: "",
             activestaketo: "",
+            multiPoolOperators: true,
             //end search params
             advancedSearchFiltersShow: false,
             orderByFiltersShow: false,
@@ -180,11 +181,7 @@ export default class FetchPoolList extends React.Component {
         if (this.props.query) {
             this.state.baseQuery = this.props.query;
         }
-
-
-
         await this.getPoolList(this.state.baseUrl + this.state.baseQuery);
-
 
         if (this.state.filtersWhereRemoved == false) {
             this.showFilters(this.state.pools.length);
@@ -192,6 +189,11 @@ export default class FetchPoolList extends React.Component {
     }
 
     async getPoolList(query) {
+
+        if (this.state.multiPoolOperators) {
+            query += "&exclude_splitters=1";
+        }
+
         var response = await fetch(query);
         // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
         const data = await response.json();
@@ -241,6 +243,23 @@ export default class FetchPoolList extends React.Component {
             "activestaketo": ""
         }
     };
+
+    handleMultiPoolOperatorsClick() {
+        if (this.state.multiPoolOperators) {
+            this.setState({ multiPoolOperators: false });
+            this.state.multiPoolOperators = false;
+        }
+        else {
+            this.setState({ multiPoolOperators: true });
+            this.state.multiPoolOperators = true;
+        }
+
+        if (this.state.searchQuery !== "") {
+            this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
+        }
+        else
+            this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+    }
 
     handleAdvancedClick() {
         if (this.state.advancedSearchFiltersShow) {
@@ -310,8 +329,6 @@ export default class FetchPoolList extends React.Component {
             this.state.marginOrderDescending = false;
             this.setState({ marginOrderDescending: false });
         }
-
-        //alert(orderByType);
     }
 
     handleOrderByClick(orderByType) {
@@ -563,7 +580,7 @@ export default class FetchPoolList extends React.Component {
                         <FormGroup>
                             <h3><b>Advanced:</b></h3>
                             <FormControlLabel value="all"
-                                control={<Switch size="Normal" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
+                                control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
                                 />}
                             />
                         </FormGroup>
@@ -685,6 +702,18 @@ export default class FetchPoolList extends React.Component {
                                         </td>
                                     </tr>
 
+                                    <tr>
+                                        <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                            <label>
+                                                <span>Remove Multi Pool Operators</span>
+                                                <Checkbox
+                                                    checked={this.state.multiPoolOperators}
+                                                    onChange={e => this.handleMultiPoolOperatorsClick()}
+                                                />
+                                            </label>
+                                        </th>
+                                    </tr>
+
                                 </tbody>
                             </Table>
 
@@ -692,7 +721,7 @@ export default class FetchPoolList extends React.Component {
 
                             <h3><b>Order by:</b></h3>
                             <FormControlLabel
-                                control={<Switch size="Normal" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
+                                control={<Switch size="medium" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
                             />
                             <Collapse isOpened={this.state.orderByFiltersShow}>
                                 <FormGroup>
