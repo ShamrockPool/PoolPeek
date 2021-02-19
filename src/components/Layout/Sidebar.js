@@ -1,17 +1,11 @@
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-
-import logo200Image from 'assets/img/logo/logopp_200.png';
-import logo100_75Image from 'assets/img/logo/logo_100_75.png';
 import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
-
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
-import SourceLink from 'components/SourceLink';
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import {
-  MdDashboard,
   MdExtension,
   MdKeyboardArrowDown,
   MdRadioButtonChecked,
@@ -22,10 +16,8 @@ import {
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
-  // UncontrolledTooltip,
   Collapse,
   Nav,
-  Navbar,
   NavItem,
   NavLink as BSNavLink,
 } from 'reactstrap';
@@ -55,7 +47,7 @@ const navFunQueries = [
 ];
 
 const navItems = [
-  { to: '/', name: 'Pool Search', exact: true, Icon: MdDashboard },
+  { to: '/', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 ];
 
