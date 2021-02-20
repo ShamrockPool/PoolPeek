@@ -50,6 +50,7 @@ export default class Pool extends React.Component {
                             <CardHeader >
                                 <img
                                     src={CardanoImage}
+                                    // src={item.extended_meta.url_png_logo}
                                     className="pr-2"
                                     alt=""
                                     width="28"
