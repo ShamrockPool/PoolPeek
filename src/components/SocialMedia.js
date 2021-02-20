@@ -14,28 +14,26 @@ export default class SocialMedia extends React.Component {
         }
     }
 
-    async componentDidMount() {
-        if (this.props.extendedmeta != undefined && this.props.extendedmeta != "") {
-
-            if (this.props.extendedmeta.twitter_handle != "") {
-                this.state.twitterHandle = this.props.extendedmeta.twitter_handle;
-                this.setState({ twitterHandle: this.props.extendedmeta.twitter_handle });
-            }
-
-            if (this.props.extendedmeta.twitter_handle != "") {
-                this.state.telegramHandle = this.props.extendedmeta.telegram_handle;
-                this.setState({ telegramHandle: this.props.extendedmeta.telegram_handle });
-            }
-        }
+    isEmpty(val) {
+        return (val === undefined || val == null || val.length <= 0) ? true : false;
     }
 
+    async componentDidMount() {
+        if (!this.isEmpty(this.props.extendedmeta.twitter_handle)) {
+            this.state.twitterHandle = this.props.extendedmeta.twitter_handle;
+            this.setState({ twitterHandle: this.props.extendedmeta.twitter_handle });
+        }
 
-
+        if (!this.isEmpty(this.props.extendedmeta.twitter_handle)) {
+            this.state.telegramHandle = this.props.extendedmeta.telegram_handle;
+            this.setState({ telegramHandle: this.props.extendedmeta.telegram_handle });
+        }
+    }
 
     render() {
         return (
             <div>
-                {this.state.twitterHandle != "" &&
+                {this.state.twitterHandle !== "" &&
                     <a href={"https://twitter.com/@" + this.state.twitterHandle} target="_blank" rel="noreferrer">
                         <img
                             className="pr-2"
