@@ -15,28 +15,21 @@ export default class SocialMedia extends React.Component {
     }
 
     async componentDidMount() {
-        if (this.props.extendemetadataurl != undefined && this.props.extendemetadataurl != "") {
-            await this.fetchExtendedMetaData(this.props.extendemetadataurl);
+        if (this.props.extendedmeta != undefined && this.props.extendedmeta != "") {
+
+            if (this.props.extendedmeta.twitter_handle != "") {
+                this.state.twitterHandle = this.props.extendedmeta.twitter_handle;
+                this.setState({ twitterHandle: this.props.extendedmeta.twitter_handle });
+            }
+
+            if (this.props.extendedmeta.twitter_handle != "") {
+                this.state.telegramHandle = this.props.extendedmeta.telegram_handle;
+                this.setState({ telegramHandle: this.props.extendedmeta.telegram_handle });
+            }
         }
     }
 
-    async fetchExtendedMetaData(query) {
-        console.log("fetch:" + query)
 
-
-        fetch(query)
-            .then(response => response.json())
-            .then((jsonData) => {
-                // jsonData is parsed json object received from url
-                console.log(jsonData)
-                this.state.twitterHandle = jsonData.info.social.twitter_handle;
-                this.state.telegramHandle = jsonData.info.social.telegram_handle;
-            })
-            .catch((error) => {
-                // handle your errors here
-                console.error(error)
-            })
-    }
 
 
     render() {
