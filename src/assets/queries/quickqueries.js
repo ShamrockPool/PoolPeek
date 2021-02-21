@@ -16,13 +16,13 @@ export const fundescriptionsquery = "&op=fundumps&qryname=Fun+Names&dumptype=des
 export const marchsaturatedpoolsquery = "&activestakefrom=32000000";
 export const marchsaturatedpoolsqueryDesc = "In March the k-parameter will be increased to 1000 from 500, this will mean the saturation level of pools will fall from roughly 64million ADA to 32million ADA staked per pool. The below pools will return less rewards in March consider distributing your stake. :) ";
 
-export const charitypoolsqueryDesc = "Stake pools that have the text 'harit' in their name or description. Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if the pool meets the actual criteria.";
+export const charitypoolsqueryDesc = "Stake pools that have the text 'charity' in their name or description. Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if the pool meets the actual criteria.";
 
-export const baremetalpoolsqueryDesc = "Stake pools that have the text 'etal' in their name or description. Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if the pool meets the actual criteria.";
+export const baremetalpoolsqueryDesc = "Stake pools that have the text 'metal' in their name or description. Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if the pool meets the actual criteria.";
 
 export const dynamicduopoolsqueryDesc = "We have devoted many hours developing and maintaining PoolPeek.com. If you like what you see and want to support our efforts, please consider delegating to our stake pools or tipping us from the 'About Us' page.";
 
-export const educationpoolsqueryDesc = "Stake pools that have the text 'ducat' in their name or description. Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if the pool meets the actual criteria.";
+export const educationpoolsqueryDesc = "Stake pools that have the text 'education' in their name or description. Our text based pool queries look for keywords in the pool's data, the search is not exact and user is left to decide if the pool meets the actual criteria.";
 
 export const zeroblockpoolsqueryDesc = "Stake pools that have no blocks. We support the true decentralization of the Cardano network and believe small pools are a vital part of it, think about helping one of these pools out!";
 
