@@ -33,7 +33,7 @@ class QuickQueriesPage extends React.Component {
         <div>{this.getPageDescription()}
           <br /><br />
         </div>
-        <FetchPoolList query={this.props.query} />
+        <FetchPoolList query={this.props.query} multiPoolOperators={this.props.multiPoolOperators}/>
       </Page>
     );
   }

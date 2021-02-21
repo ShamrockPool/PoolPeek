@@ -580,10 +580,19 @@ export default class FetchPoolList extends React.Component {
                                         />
                                     </td>
                                 </tr>
+                                <tr>
+                                <td>
+                                    <label>
+                                    <span>Remove Multi Pool Operators</span>
+                                    <Checkbox checked={this.state.multiPoolOperators}
+                                     onChange={e => this.handleMultiPoolOperatorsClick()}/>
+                                    </label>
+                                </td>
+                                </tr>
                             </tbody>
                         </Table>
                         <FormGroup>
-                            <h3><b>Advanced:</b></h3>
+                            <h3 style={{ marginTop: "-30px" }}><b>Advanced:</b></h3>
                             <FormControlLabel value="all"
                                 control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
                                 />}
@@ -705,18 +714,6 @@ export default class FetchPoolList extends React.Component {
                                                 value={this.state.activestaketo}
                                             />
                                         </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
-                                            <label>
-                                                <span>Remove Multi Pool Operators</span>
-                                                <Checkbox
-                                                    checked={this.state.multiPoolOperators}
-                                                    onChange={e => this.handleMultiPoolOperatorsClick()}
-                                                />
-                                            </label>
-                                        </th>
                                     </tr>
 
                                 </tbody>
