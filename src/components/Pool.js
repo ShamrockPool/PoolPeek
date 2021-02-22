@@ -111,7 +111,7 @@ export default class Pool extends React.Component {
                                                 placement="left"
                                             >
                                                 <th scope="row">Location</th></Tooltip>
-                                            <td><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.extended_meta.location}</p></a></td>
+                                            <td><p>{item.extended_meta.location}</p></td>
                                         </tr>)}
                                         <tr>
                                             <Tooltip
