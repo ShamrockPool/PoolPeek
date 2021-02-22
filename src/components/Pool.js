@@ -9,7 +9,8 @@ import "../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
 import Chart from '../components/Chart';
 import SocialMedia from './SocialMedia';
-import { isEmpty }  from 'utils/stringutil.js';
+import { isEmpty } from 'utils/stringutil.js';
+import ReactImageFallback from "react-image-fallback";
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -32,6 +33,14 @@ export default class Pool extends React.Component {
     }
 
 
+    onError = () => {
+        if (!this.state.errored) {
+            this.setState({
+                src: CardanoImage,
+                errored: true,
+            });
+        }
+    }
 
     render() {
         return (
@@ -47,15 +56,19 @@ export default class Pool extends React.Component {
 
                         <Card>
                             <CardHeader >
-                                <img
+                                {!isEmpty(item.extended_meta.url_png_logo) ? (
+                                    <ReactImageFallback
+                                        src={item.extended_meta.url_png_logo}
+                                        width="32"
+                                        height="32"
+                                        fallbackImage={CardanoImage} />
+                                ) : (<img
                                     src={CardanoImage}
-                                    // src={item.extended_meta.url_png_logo}
                                     className="pr-2"
-                                    alt=""
-                                    width="28"
-                                    height="25"
-                                /><b>{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
-
+                                    width="34"
+                                    height="28"
+                                />)}
+                                <b>{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
 
                                 <SocialMedia extendedmeta={item.extended_meta} />
 
