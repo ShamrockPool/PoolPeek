@@ -199,6 +199,7 @@ export default class FetchPoolList extends React.Component {
             query += "&exclude_splitters=1";
         }
 
+        this.setState({ pools: {}, loading: true })
         var response = await fetch(query);
         // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
         const data = await response.json();

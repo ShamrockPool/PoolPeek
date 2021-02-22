@@ -9,6 +9,7 @@ import "../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
 import Chart from '../components/Chart';
 import SocialMedia from './SocialMedia';
+import { isEmpty }  from 'utils/stringutil.js';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -30,9 +31,7 @@ export default class Pool extends React.Component {
         console.log(data)
     }
 
-    myFunction() {
-        console.log("hi");
-    }
+
 
     render() {
         return (
@@ -93,6 +92,14 @@ export default class Pool extends React.Component {
                                                 <th scope="row">Website</th></Tooltip>
                                             <td><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.homepage}</p></a></td>
                                         </tr>
+                                        {!isEmpty(item.extended_meta.location) && (<tr>
+                                            <Tooltip
+                                                title="The location of the pool."
+                                                placement="left"
+                                            >
+                                                <th scope="row">Location</th></Tooltip>
+                                            <td><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.extended_meta.location}</p></a></td>
+                                        </tr>)}
                                         <tr>
                                             <Tooltip
                                                 title="The number of blocks this pool has minted."
@@ -122,7 +129,7 @@ export default class Pool extends React.Component {
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
                                                 <p>Active Stake: {item.active_stake} ₳</p>
-                                                {width > 600 &&
+                                                {width > 600 && item.active_stake > 0 &&
                                                     (<Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />)}
                                             </td>
                                         </tr>

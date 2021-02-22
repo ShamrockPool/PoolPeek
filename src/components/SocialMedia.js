@@ -2,7 +2,7 @@ import React from 'react';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter, faTelegram } from "@fortawesome/free-brands-svg-icons";
-
+import { isEmpty }  from 'utils/stringutil.js';
 
 export default class SocialMedia extends React.Component {
 
@@ -13,18 +13,13 @@ export default class SocialMedia extends React.Component {
             telegramHandle: ""
         }
     }
-
-    isEmpty(val) {
-        return (val === undefined || val == null || val.length <= 0) ? true : false;
-    }
-
     async componentDidMount() {
-        if (!this.isEmpty(this.props.extendedmeta.twitter_handle)) {
+        if (!isEmpty(this.props.extendedmeta.twitter_handle)) {
             this.state.twitterHandle = this.props.extendedmeta.twitter_handle;
             this.setState({ twitterHandle: this.props.extendedmeta.twitter_handle });
         }
 
-        if (!this.isEmpty(this.props.extendedmeta.twitter_handle)) {
+        if (!isEmpty(this.props.extendedmeta.twitter_handle)) {
             this.state.telegramHandle = this.props.extendedmeta.telegram_handle;
             this.setState({ telegramHandle: this.props.extendedmeta.telegram_handle });
         }
