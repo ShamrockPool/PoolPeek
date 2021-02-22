@@ -49,10 +49,11 @@ class FunDumpPage extends React.Component {
 Click the navigation option again to pull a different set of 500 random pools.<br/>
 We support the true decentralization of the Cardano network and believe small pools are a vital part of it.<br/><br/>
 </div>
-   {this.state.funDumps.map(function (item, key) { 
-       return <div> <img src={CardanoImage} className="pr-2" width="28" height="25" />
+   {this.state.funDumps.map(function (item, i) { 
+       return <div key={i}> <img src={CardanoImage} className="pr-2" width="28" height="25" />
       <a target="_blank" href={item.homepage}>{ReactHtmlParser(item.dump_text)}</a>
       <a href={"https://pool.pm/" + item.pool_id} target="_blank" rel="noreferrer"><img src={PoolPmImage} className="pr-2" title="pool.pm" /></a>
+      <span>{item.location}</span>
       </div>
    })}<br/><br/>
       

@@ -139,6 +139,84 @@ PoolPeek.com would like to thank the following sites for supplying us tools that
 <li><a href="pooltool.io" target="_blank">pooltool.io</a></li>
 </ul>
 
+<h2>PoolPeek.com Website Privacy Statement</h2>
+<p>This document was last updated on February 21st, 2021.</p>
+
+<b> ACKNOWLEDGEMENT AND ACCEPTANCE OF TERMS</b>
+<br />
+<p>PoolPeek.com is committed to protecting your privacy. This Privacy Statement sets forth our current privacy practices with regard to the 
+information we collect when you or your computer interact with our website.   By accessing PoolPeek.com, you acknowledge and fully 
+understand PoolPeek.com Privacy Statement and freely consent to the information collection and use 
+practices described in this Website Privacy Statement.</p>
+
+
+<b> PARTICIPATING MERCHANT POLICIES</b>
+<br />
+<p>Related services and offerings with links from this website, including vendor sites, have their own privacy statements that can be viewed by 
+clicking on the corresponding links within each respective website. Online merchants and others who participate in 
+PoolPeek.com services are encouraged to participate in industry privacy initiatives and to take a responsible attitude towards consumer privacy.  
+However, since we do not have direct control over the policies or practices of participating merchants and other third parties, 
+we are not responsible for the privacy practices or contents of those sites.  We recommend and encourage that you always review the privacy 
+policies of merchants and other third parties before you provide any personal information or complete any transaction with such parties.</p>
+
+<b> INFORMATION WE COLLECT AND HOW WE USE IT</b>
+
+<p>PoolPeek.com collects certain information from and about its users three ways: directly from our Web Server logs, the user, and with Cookies.</p>
+
+<b> Web Server Logs.</b>
+<br /><p>When you visit our Website, we may track information to administer the site and analyze its usage. Examples of information we may 
+track include: </p>
+ Your Internet protocol address. <br />
+ The kind of browser or computer you use. <br />
+ Number of links you click within the site. <br />
+ State or country from which you accessed the site. <br />
+ Date and time of your visit. <br />
+ Name of your Internet service provider. <br />
+ Web page you linked to our site from. <br />
+ Pages you viewed on the site. <br />
+ <br/>
+
+<b> Use of Cookies</b>
+<br />
+<p>PoolPeek.com may use cookies to personalize or enhance your user experience.  A cookie is a small text file that is placed 
+on your hard disk by a Web page server.  Cookies cannot be used to run programs or deliver viruses to your computer.  
+Cookies are uniquely assigned to you, and can only be read by a Web Server in the domain that issued the cookie to you. </p>
+
+<p>One of the primary purposes of cookies is to provide a convenience feature to save you time.  For example, if you 
+personalize a web page, or navigate within a site, a cookie helps the site to recall your specific information on 
+subsequent visits.  Hence, this simplifies the process of delivering relevant content and eases site 
+navigation by providing and saving your preferences and login information as well as providing personalized functionality. </p>
+
+<p>You have the ability to accept or decline cookies.  Most Web browsers automatically accept cookies, but you can usually 
+modify your browser setting to decline cookies. If you reject cookies by changing your browser settings then be aware that this may 
+disable some of the functionality on our Website.</p>
+
+<b> Personal Information Users</b>
+<br />
+
+<p>We will not disclose personally identifiable information we collect from you to third parties without your permission except to 
+the extent necessary including:</p>
+
+To fulfill your service requests for services. <br />
+To protect ourselves from liability, <br />
+To respond to legal process or comply with law<br />
+<br />
+
+<b> CHANGES TO THIS STATEMENT</b>
+<br />
+<p>PoolPeek.com has the discretion to occasionally update this privacy statement.  
+When we do, we will also revise the “updated” date at the top of this Privacy page.  
+We encourage you to periodically review this privacy statement to stay informed about how we are helping to protect 
+the personal information we collect.  Your continued use of the service constitutes your agreement to 
+this privacy statement and any updates.</p>
+
+<b> CONTACTING US</b>
+<br />
+<p>If you have questions regarding our Privacy Statement, its implementation, failure to adhere to 
+this Privacy Statement and/or our general practices, please contact us at  
+CardanoPoolPeek@gmail.com We will use commercially reasonable efforts to promptly 
+respond and resolve any problem or question.</p>
+
 
      </div>
       </Page>
