@@ -38,7 +38,7 @@ class AboutUsPage extends React.Component {
 PoolPeek.com is a Cardano stake pool explorer that analyzes the publicly available registration data and other data 
 elements such as number of produced blocks and active stake. Delegators can use our powerful query features to narrow down lists of 
 pools and then drill deeper using our external links feature. Stake pool operators can use PoolPeek.com to keep an 
-eye on their competiton. We offer a range or filters on ticker, name, descritpion, blocks, margin, pledge, cost and active stake.
+eye on their competition. We offer a range or filters on ticker, name, description, blocks, margin, pledge, cost and active stake.
 <br/><br/>
 
 PoolPeek.com was created by small stake pool owners who believe all pools should have a fighting chance. 
