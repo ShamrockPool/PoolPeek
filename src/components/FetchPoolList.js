@@ -741,7 +741,7 @@ export default class FetchPoolList extends React.Component {
                             </Table>
 
                             <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
-
+                            <br/><br/>
                             <h3><b>Order by:</b></h3>
                             <FormControlLabel
                                 control={<Switch size="medium" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
