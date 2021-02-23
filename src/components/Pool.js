@@ -36,7 +36,8 @@ function checkImageURL(url) {
                 }
             })
             .catch(err => { return false })
-    }
+    } 
+    return false;
 }
 
 export default class Pool extends React.Component {
