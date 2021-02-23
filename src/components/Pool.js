@@ -17,14 +17,21 @@ require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
 
 const width = window.innerWidth;
+var imageUrl = "";
 
 function checkImageURL(url) {
     if (!isEmpty(url)) {
+
+        if(!url.includes('https'))
+        {
+            url = url.replace('http', 'https');
+        }
         fetch(url)
             .then(res => {
                 if (res.status == 404) {
                     return false;
                 } else {
+                    imageUrl = url;
                     return true;
                 }
             })
@@ -36,7 +43,12 @@ export default class Pool extends React.Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+
+        }
     }
+
+
 
     async fetchExtendedMetaData(query) {
         var response = await fetch(query);
@@ -44,6 +56,8 @@ export default class Pool extends React.Component {
         const data = await response.json();
         console.log(data)
     }
+
+
 
 
     onError = () => {
@@ -71,7 +85,7 @@ export default class Pool extends React.Component {
                             <CardHeader >
                                 {checkImageURL(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
-                                        src={item.extended_meta.url_png_logo}
+                                        src={imageUrl}
                                         width="32"
                                         height="32"
                                         fallbackImage={CardanoImage} />
