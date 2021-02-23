@@ -192,6 +192,13 @@ export default class FetchPoolList extends React.Component {
             this.setState({ multiPoolOperators: this.props.multiPoolOperators });
         }
 
+        if(this.props.poolid)
+        {
+            this.state.baseQuery  += "&poolid="+this.props.poolid;
+            this.state.poolid = this.props.poolid;
+            this.setState({ poolid: this.props.poolid });
+        }
+
         await this.getPoolList(this.state.baseUrl + this.state.baseQuery);
 
         if (this.state.filtersWhereRemoved == false) {
