@@ -31,15 +31,15 @@ function checkImageURL(url) {
 
         try {
             fetch(url, { method: 'HEAD' })
-                .then(res => {
-                    if (res.ok) {
-                        console.log('Image exists.');
-                        imageExists = true;
-                    } else {
-                        console.log('Image does not exist.');
-                        imageExists = false;
-                    }
-                }).catch(err => console.log('Error:', err));
+            .then(res => {
+                if (res.ok) {
+                    console.log('Image exists.');
+                    imageExists = true;
+                } else {
+                    console.log('Image does not exist.');
+                    imageExists = false;
+                }
+            }).catch(err => console.log('Error:', err));
         } catch (error) {
             imageExists = false;
         }
@@ -74,25 +74,20 @@ export default class Pool extends React.Component {
                 });
                 return (
                     <div key={key} style={{ alignItems: "left" }}>
-
-
-
                         <Card>
                             <CardHeader >
                                 {checkImageURL(item.extended_meta.url_png_logo) ? (
-                                    <img
-                                        src={CardanoImage}
-                                        className="pr-2"
-                                        width="34"
-                                        height="28"
-                                    />
-                                ) : (
-                                        <ReactImageFallback
-                                            src={imageUrl}
-                                            width="32"
-                                            height="32"
-                                            fallbackImage={CardanoImage} />
-                                    )}
+                                    <ReactImageFallback
+                                        src={item.extended_meta.url_png_logo}
+                                        width="32"
+                                        height="32"
+                                        fallbackImage={CardanoImage} />
+                                ) : (<img
+                                    src={CardanoImage}
+                                    className="pr-2"
+                                    width="34"
+                                    height="28"
+                                />)}
                                 <b>&nbsp;{ReactHtmlParser(item.name)}</b><br></br>
                                 <small>{item.pool_id}    </small>
                                 <Tooltip
