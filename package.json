@@ -25,6 +25,7 @@
     "react-chartjs-2": "^2.7.4",
     "react-collapse": "^5.1.0",
     "react-component-queries": "^2.3.0",
+    "react-copy-to-clipboard": "^5.0.3",
     "react-d3-map": "^0.8.3",
     "react-dom": "^16.8.4",
     "react-ga": "^2.5.7",

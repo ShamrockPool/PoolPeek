@@ -11,6 +11,9 @@ import Chart from '../components/Chart';
 import SocialMedia from './SocialMedia';
 import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -28,15 +31,15 @@ function checkImageURL(url) {
 
         try {
             fetch(url)
-            .then(res => {
-                if (res.status == 404) {
-                    return false;
-                } else {
-                    imageUrl = url;
-                    return true;
-                }
-            })
-            .catch(err => { return false })
+                .then(res => {
+                    if (res.status == 404) {
+                        return false;
+                    } else {
+                        imageUrl = url;
+                        return true;
+                    }
+                })
+                .catch(err => { return false })
         } catch (error) {
             // console.log(error)
             return false;
@@ -50,7 +53,7 @@ export default class Pool extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            copied: false
         }
     }
 
@@ -89,7 +92,18 @@ export default class Pool extends React.Component {
                                     width="34"
                                     height="28"
                                 />)}
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><br></br>
+                                <small>{item.pool_id}    </small>
+                                <Tooltip
+                                    title="Copy pool direct link"
+                                    placement="left"
+                                >
+                                    <CopyToClipboard text={window.location.href + item.pool_id}>
+
+                                        <FontAwesomeIcon icon={faClipboard} />
+
+                                    </CopyToClipboard>
+                                </Tooltip>
 
                                 {/* <img
                                     src={CardanoImage}
