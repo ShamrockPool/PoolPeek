@@ -23,6 +23,7 @@ const width = window.innerWidth;
 var imageUrl = "";
 
 function checkImageURL(url) {
+    var imageExists = false;
     if (!isEmpty(url)) {
 
         if (!url.includes('https')) {
@@ -30,22 +31,21 @@ function checkImageURL(url) {
         }
 
         try {
-            fetch(url)
-                .then(res => {
-                    if (res.status == 404) {
-                        return false;
-                    } else {
-                        imageUrl = url;
-                        return true;
-                    }
-                })
-                .catch(err => { return false })
+            fetch(url, { method: 'HEAD' })
+            .then(res => {
+                if (res.ok) {
+                    console.log('Image exists.');
+                    imageExists = true;
+                } else {
+                    console.log('Image does not exist.');
+                    imageExists = false;
+                }
+            }).catch(err => console.log('Error:', err));
         } catch (error) {
-            // console.log(error)
-            return false;
+            imageExists = false;
         }
     }
-    return false;
+    return imageExists;
 }
 
 export default class Pool extends React.Component {
