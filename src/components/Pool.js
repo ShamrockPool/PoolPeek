@@ -31,15 +31,15 @@ function checkImageURL(url) {
 
         try {
             fetch(url, { method: 'HEAD' })
-            .then(res => {
-                if (res.ok) {
-                    console.log('Image exists.');
-                    imageExists = true;
-                } else {
-                    console.log('Image does not exist.');
-                    imageExists = false;
-                }
-            }).catch(err => console.log('Error:', err));
+                .then(res => {
+                    if (res.ok) {
+                        console.log('Image exists.');
+                        imageExists = true;
+                    } else {
+                        console.log('Image does not exist.');
+                        imageExists = false;
+                    }
+                }).catch(err => console.log('Error:', err));
         } catch (error) {
             imageExists = false;
         }
@@ -47,17 +47,20 @@ function checkImageURL(url) {
     return imageExists;
 }
 
-function checkUsingImageIsHttps(url)
-{
-    if (isEmpty(url)){
+function checkIsImageUrl(url) {
+    if (isEmpty(url)) {
         return false;
-    } 
-    
-    if(url.includes('https')) {
+    }
+    if (url.startsWith("http")) {
         return true;
     }
     return false;
 }
+
+function convertImageUrlToHttps(url) {
+    return url.replace("http:", "https:");
+}
+
 
 export default class Pool extends React.Component {
 
@@ -81,9 +84,9 @@ export default class Pool extends React.Component {
                     <div key={key} style={{ alignItems: "left" }}>
                         <Card>
                             <CardHeader >
-                                {checkUsingImageIsHttps(item.extended_meta.url_png_logo) ? (
+                                {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
-                                        src={item.extended_meta.url_png_logo}
+                                        src={convertImageUrlToHttps(item.extended_meta.url_png_logo)}
                                         width="32"
                                         height="32"
                                         fallbackImage={CardanoImage} />
