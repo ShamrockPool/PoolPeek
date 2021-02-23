@@ -22,10 +22,16 @@ var imageUrl = "";
 function checkImageURL(url) {
     if (!isEmpty(url)) {
 
-        if(!url.includes('https'))
-        {
+        if (!url.includes('https')) {
             url = url.replace('http', 'https');
         }
+
+        try {
+
+        } catch (error) {
+
+        }
+
         fetch(url)
             .then(res => {
                 if (res.status == 404) {
@@ -36,7 +42,7 @@ function checkImageURL(url) {
                 }
             })
             .catch(err => { return false })
-    } 
+    }
     return false;
 }
 
@@ -84,7 +90,7 @@ export default class Pool extends React.Component {
 
                         <Card>
                             <CardHeader >
-                                {checkImageURL(item.extended_meta.url_png_logo) ? (
+                                {/* {checkImageURL(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
                                         src={imageUrl}
                                         width="32"
@@ -96,6 +102,14 @@ export default class Pool extends React.Component {
                                     width="34"
                                     height="28"
                                 />)}
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p> */}
+
+                                <img
+                                    src={CardanoImage}
+                                    className="pr-2"
+                                    width="34"
+                                    height="28"
+                                />
                                 <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
 
                                 <SocialMedia extendedmeta={item.extended_meta} />
