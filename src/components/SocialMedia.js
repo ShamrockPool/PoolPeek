@@ -99,7 +99,7 @@ export default class SocialMedia extends React.Component {
 
                 {this.state.discordHandle != "" &&
                     <Tooltip
-                        title="Pool Facebook"
+                        title="Pool Discord"
                         placement="left"
                     >
                         <a href={"https://discord.com/invite/" + this.state.discordHandle} target="_blank" rel="noreferrer">
