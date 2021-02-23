@@ -18,6 +18,19 @@ var linkifyHtml = require('linkifyjs/html');
 
 const width = window.innerWidth;
 
+function checkImageURL(url) {
+    if (!isEmpty(url)) {
+        fetch(url)
+            .then(res => {
+                if (res.status == 404) {
+                    return false;
+                } else {
+                    return true;
+                }
+            })
+            .catch(err => { return false })
+    }
+}
 
 export default class Pool extends React.Component {
 
@@ -56,12 +69,12 @@ export default class Pool extends React.Component {
 
                         <Card>
                             <CardHeader >
-                                {!isEmpty(item.extended_meta.url_png_logo) ? (
+                                {checkImageURL(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
                                         src={item.extended_meta.url_png_logo}
                                         width="32"
                                         height="32"
-                                        fallbackImage={CardanoImage} /> 
+                                        fallbackImage={CardanoImage} />
                                 ) : (<img
                                     src={CardanoImage}
                                     className="pr-2"
