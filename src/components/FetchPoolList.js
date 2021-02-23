@@ -23,7 +23,8 @@ let queryParams = {
     "costfrom": "",
     "costto": "",
     "activestakefrom": "",
-    "activestaketo": ""
+    "activestaketo": "",
+    "location": ""
 };
 
 const sid = Math.floor(Math.random() * 100) + Date.now()
@@ -58,6 +59,7 @@ export default class FetchPoolList extends React.Component {
             activestakefrom: "",
             activestaketo: "",
             multiPoolOperators: false,
+            location: "",
             //end search params
             advancedSearchFiltersShow: false,
             orderByFiltersShow: false,
@@ -147,6 +149,11 @@ export default class FetchPoolList extends React.Component {
             this.setState({ activestaketo: e.target.value });
         }
 
+        if (query === "&location=") {
+            queryParams.location = query + e.target.value;
+            this.setState({ location: e.target.value });
+        }
+
         clearTimeout(this.inputTimer);
         this.inputTimer = setTimeout((e) => {
 
@@ -180,8 +187,7 @@ export default class FetchPoolList extends React.Component {
             this.state.baseQuery = this.props.query;
         }
 
-        if(this.props.multiPoolOperators)
-        {
+        if (this.props.multiPoolOperators) {
             this.state.multiPoolOperators = this.props.multiPoolOperators;
             this.setState({ multiPoolOperators: this.props.multiPoolOperators });
         }
@@ -230,7 +236,7 @@ export default class FetchPoolList extends React.Component {
         this.setState({ costto: "" });
         this.setState({ activestakefrom: "" });
         this.setState({ activestaketo: "" });
-
+        this.setState({ location: "" });
 
         queryParams = queryParams = {
             "poolid": "",
@@ -246,7 +252,8 @@ export default class FetchPoolList extends React.Component {
             "costfrom": "",
             "costto": "",
             "activestakefrom": "",
-            "activestaketo": ""
+            "activestaketo": "",
+            "location": ""
         }
     };
 
@@ -553,9 +560,9 @@ export default class FetchPoolList extends React.Component {
                                             style={{ fontSize: 14 }}
                                             type="text"
                                             className="cr-search-form__input"
-                                            placeholder="PoolID...."
-                                            onChange={this.handleChange("&poolid=")}
-                                            value={this.state.poolid}
+                                            placeholder="Location...."
+                                            onChange={this.handleChange("&location=")}
+                                            value={this.state.location}
                                         />
                                     </th>
                                 </tr>
@@ -582,13 +589,13 @@ export default class FetchPoolList extends React.Component {
                                     </td>
                                 </tr>
                                 <tr>
-                                <td>
-                                    <label>
-                                    <span>Remove Multi Pool Operators</span>
-                                    <Checkbox checked={this.state.multiPoolOperators}
-                                     onChange={e => this.handleMultiPoolOperatorsClick()}/>
-                                    </label>
-                                </td>
+                                    <td>
+                                        <label>
+                                            <span>Remove Multi Pool Operators</span>
+                                            <Checkbox checked={this.state.multiPoolOperators}
+                                                onChange={e => this.handleMultiPoolOperatorsClick()} />
+                                        </label>
+                                    </td>
                                 </tr>
                             </tbody>
                         </Table>
@@ -715,6 +722,19 @@ export default class FetchPoolList extends React.Component {
                                                 value={this.state.activestaketo}
                                             />
                                         </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" style={{ align: "left", width: "30%", margin: "20px" }}>
+                                            <Input
+                                                style={{ fontSize: 14 }}
+                                                type="text"
+                                                className="cr-search-form__input"
+                                                placeholder="PoolID...."
+                                                onChange={this.handleChange("&poolid=")}
+                                                value={this.state.poolid}
+                                            />
+                                        </th>
+                                        <td></td>
                                     </tr>
 
                                 </tbody>
