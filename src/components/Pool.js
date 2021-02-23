@@ -98,7 +98,7 @@ export default class Pool extends React.Component {
                                     title="Copy pool direct link"
                                     placement="left"
                                 >
-                                    <CopyToClipboard text={window.location.href + item.pool_id}>
+                                    <CopyToClipboard text={"https://poolpeek.com/pool/" + item.pool_id}>
 
                                         <FontAwesomeIcon icon={faClipboard} />
 

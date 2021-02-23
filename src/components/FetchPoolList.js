@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row, Form, Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
 import _ from 'lodash';
-
+import { isEmpty } from 'utils/stringutil.js';
 import Scroll from '../components/Scroll';
 import Pool from 'components/Pool';
 
@@ -192,7 +192,7 @@ export default class FetchPoolList extends React.Component {
             this.setState({ multiPoolOperators: this.props.multiPoolOperators });
         }
 
-        if(this.props.poolid)
+        if(!isEmpty(this.props.poolid))
         {
             this.state.baseQuery  += "&poolid="+this.props.poolid;
             this.state.poolid = this.props.poolid;

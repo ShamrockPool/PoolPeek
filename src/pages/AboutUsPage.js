@@ -67,12 +67,12 @@ please consider tipping us:
 <br /><br />
 
 
-          <a href={"https://poolpeek.com/99541BED40B1015A1D81083184973B59A3F50BCE4392492E99FF0BEF"}
+          <a href={"https://poolpeek.com/pool/99541BED40B1015A1D81083184973B59A3F50BCE4392492E99FF0BEF"}
             target="_blank" rel="noreferrer"><p>LOCO:</p></a>
 addr1q9z0fjsenn4ne6zjswl3r3k98uuehe7ve7e8649kjsy5yg33myr8mpq6wk3nmqw2hg8v5a6kmlpmk889ye20qussqekslteph6
 <br /><br />
 
-          <a href={"https://poolpeek.com/BE7E2461A584B6532C972EDCA711FA466D7D0E8A86B6629FC0784FF6"}
+          <a href={"https://poolpeek.com/pool/BE7E2461A584B6532C972EDCA711FA466D7D0E8A86B6629FC0784FF6"}
             target="_blank" rel="noreferrer"><p>SHA:</p></a>
 addr1q8ds9zyklmzphd6us528kqlcjmhq874ase5tk8qfc7a7p5fxh64unn46g3scmqzdym6epgkmmzv9uzvymqgdndtwh2psmwddeg
 <br /><br />
