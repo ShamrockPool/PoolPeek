@@ -76,7 +76,7 @@ export default class Pool extends React.Component {
                     <div key={key} style={{ alignItems: "left" }}>
                         <Card>
                             <CardHeader >
-                                {checkImageURL(item.extended_meta.url_png_logo) ? (
+                                {!checkImageURL(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
                                         src={item.extended_meta.url_png_logo}
                                         width="32"
