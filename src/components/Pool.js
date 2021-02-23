@@ -27,12 +27,7 @@ function checkImageURL(url) {
         }
 
         try {
-
-        } catch (error) {
-
-        }
-
-        fetch(url)
+            fetch(url)
             .then(res => {
                 if (res.status == 404) {
                     return false;
@@ -42,6 +37,10 @@ function checkImageURL(url) {
                 }
             })
             .catch(err => { return false })
+        } catch (error) {
+            // console.log(error)
+            return false;
+        }
     }
     return false;
 }
@@ -54,18 +53,6 @@ export default class Pool extends React.Component {
 
         }
     }
-
-
-
-    async fetchExtendedMetaData(query) {
-        var response = await fetch(query);
-        // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
-        const data = await response.json();
-        console.log(data)
-    }
-
-
-
 
     onError = () => {
         if (!this.state.errored) {
@@ -90,7 +77,7 @@ export default class Pool extends React.Component {
 
                         <Card>
                             <CardHeader >
-                                {/* {checkImageURL(item.extended_meta.url_png_logo) ? (
+                                {checkImageURL(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
                                         src={imageUrl}
                                         width="32"
@@ -102,15 +89,15 @@ export default class Pool extends React.Component {
                                     width="34"
                                     height="28"
                                 />)}
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p> */}
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
 
-                                <img
+                                {/* <img
                                     src={CardanoImage}
                                     className="pr-2"
                                     width="34"
                                     height="28"
                                 />
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p> */}
 
                                 <SocialMedia extendedmeta={item.extended_meta} />
 
