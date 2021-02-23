@@ -21,32 +21,6 @@ var linkifyHtml = require('linkifyjs/html');
 
 const width = window.innerWidth;
 
-function checkImageURL(url) {
-    var imageExists = false;
-    if (!isEmpty(url)) {
-
-        if (!url.includes('https')) {
-            url = url.replace('http', 'https');
-        }
-
-        try {
-            fetch(url, { method: 'HEAD' })
-                .then(res => {
-                    if (res.ok) {
-                        console.log('Image exists.');
-                        imageExists = true;
-                    } else {
-                        console.log('Image does not exist.');
-                        imageExists = false;
-                    }
-                }).catch(err => console.log('Error:', err));
-        } catch (error) {
-            imageExists = false;
-        }
-    }
-    return imageExists;
-}
-
 function checkIsImageUrl(url) {
     if (isEmpty(url)) {
         return false;
