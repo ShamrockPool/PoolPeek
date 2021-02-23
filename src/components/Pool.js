@@ -47,6 +47,18 @@ function checkImageURL(url) {
     return imageExists;
 }
 
+function checkUsingImageIsHttps(url)
+{
+    if (isEmpty(url)){
+        return false;
+    } 
+    
+    if(url.includes('https')) {
+        return true;
+    }
+    return false;
+}
+
 export default class Pool extends React.Component {
 
     constructor(props) {
@@ -56,14 +68,7 @@ export default class Pool extends React.Component {
         }
     }
 
-    onError = () => {
-        if (!this.state.errored) {
-            this.setState({
-                src: CardanoImage,
-                errored: true,
-            });
-        }
-    }
+
 
     render() {
         return (
@@ -76,7 +81,7 @@ export default class Pool extends React.Component {
                     <div key={key} style={{ alignItems: "left" }}>
                         <Card>
                             <CardHeader >
-                                {!checkImageURL(item.extended_meta.url_png_logo) ? (
+                                {checkUsingImageIsHttps(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
                                         src={item.extended_meta.url_png_logo}
                                         width="32"
