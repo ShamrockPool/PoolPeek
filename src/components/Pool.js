@@ -61,14 +61,14 @@ export default class Pool extends React.Component {
                                         src={item.extended_meta.url_png_logo}
                                         width="32"
                                         height="32"
-                                        fallbackImage={CardanoImage} />
+                                        fallbackImage={CardanoImage} /> 
                                 ) : (<img
                                     src={CardanoImage}
                                     className="pr-2"
                                     width="34"
                                     height="28"
                                 />)}
-                                <b>{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p>
 
                                 <SocialMedia extendedmeta={item.extended_meta} />
 
