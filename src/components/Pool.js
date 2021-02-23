@@ -20,7 +20,6 @@ require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
 
 const width = window.innerWidth;
-var imageUrl = "";
 
 function checkImageURL(url) {
     var imageExists = false;
@@ -32,15 +31,15 @@ function checkImageURL(url) {
 
         try {
             fetch(url, { method: 'HEAD' })
-            .then(res => {
-                if (res.ok) {
-                    console.log('Image exists.');
-                    imageExists = true;
-                } else {
-                    console.log('Image does not exist.');
-                    imageExists = false;
-                }
-            }).catch(err => console.log('Error:', err));
+                .then(res => {
+                    if (res.ok) {
+                        console.log('Image exists.');
+                        imageExists = true;
+                    } else {
+                        console.log('Image does not exist.');
+                        imageExists = false;
+                    }
+                }).catch(err => console.log('Error:', err));
         } catch (error) {
             imageExists = false;
         }
@@ -81,17 +80,19 @@ export default class Pool extends React.Component {
                         <Card>
                             <CardHeader >
                                 {checkImageURL(item.extended_meta.url_png_logo) ? (
-                                    <ReactImageFallback
-                                        src={imageUrl}
-                                        width="32"
-                                        height="32"
-                                        fallbackImage={CardanoImage} />
-                                ) : (<img
-                                    src={CardanoImage}
-                                    className="pr-2"
-                                    width="34"
-                                    height="28"
-                                />)}
+                                    <img
+                                        src={CardanoImage}
+                                        className="pr-2"
+                                        width="34"
+                                        height="28"
+                                    />
+                                ) : (
+                                        <ReactImageFallback
+                                            src={imageUrl}
+                                            width="32"
+                                            height="32"
+                                            fallbackImage={CardanoImage} />
+                                    )}
                                 <b>&nbsp;{ReactHtmlParser(item.name)}</b><br></br>
                                 <small>{item.pool_id}    </small>
                                 <Tooltip
