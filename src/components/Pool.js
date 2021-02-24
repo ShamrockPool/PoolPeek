@@ -163,7 +163,7 @@ export default class Pool extends React.Component {
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
                                                 <p>Active Stake: {item.active_stake} ₳</p>
-                                                {width > 600 && item.active_stake > 0 &&
+                                                {width > 600 &&
                                                     (<Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />)}
                                             </td>
                                         </tr>
