@@ -16,7 +16,7 @@ export const funtickersquery = "&op=fundumps&qryname=Fun+Tickers&dumptype=ticker
 export const funnamesquery = "&op=fundumps&qryname=Fun+Names&dumptype=name";
 export const fundescriptionsquery = "&op=fundumps&qryname=Fun+Names&dumptype=description";
 
-export const smallproduceblocksquery = "&blockfrom=1&blockto=100&activestakefrom=1100000&activestaketo=10000000&excluderetired=1";
+export const smallproduceblocksquery = "&blockfrom=1&blockto=100&activestakefrom=1210000&activestaketo=10000000&excluderetired=1";
 
 
 export const marchsaturatedpoolsquery = "&activestakefrom=32000000";
@@ -39,4 +39,4 @@ export const retiredpoolsqueryDesc = "Stake pools that have retired.";
 export const onetotenblockpoolsqueryDesc = "Stake pools that have 1 to 10 blocks and less than 10M active stake.";
 
 
-export const smallproduceblocksDesc = "Small stake pools that are likely to consistently mint blocks. Criteria is 1.21M to 10M active stake and have minted between 1 and 100 lifetime blocks.";
+export const smallproduceblocksDesc = "Small stake pools that are likely to mint blocks this epoch. Criteria is 1.21M to 10M active stake and have minted between 1 and 100 lifetime blocks.";
