@@ -35,8 +35,9 @@ const navComponents = [
   { to: '/charitypools', name: 'Charity', exact: false, Icon: MdPool },
   { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdPool },
   { to: '/educationpools', name: 'Education', exact: false, Icon: MdPool },
-  { to: '/zeroblockpools', name: 'Zero Block', exact: false, Icon: MdPool },
-  { to: '/onetotenblockpools', name: 'One to Ten Blocks', exact: false, Icon: MdPool },
+  { to: '/zeroblockpools', name: 'Zero Block Small Pools', exact: false, Icon: MdPool },
+  { to: '/onetotenblockpools', name: 'One to Ten Block Small Pools', exact: false, Icon: MdPool },
+  { to: '/likelytoproduceblocks', name: 'Small Pools Likely to Mint Blocks', exact: false, Icon: MdPool },
   { to: '/retiringpools', name: 'Soon Retiring', exact: false, Icon: MdPool },
   { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdPool }  
 ];
