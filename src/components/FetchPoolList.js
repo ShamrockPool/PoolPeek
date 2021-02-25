@@ -177,7 +177,7 @@ export default class FetchPoolList extends React.Component {
             currentPage: index
         });
 
-        var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(index + 1);
+        var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(index);
         this.getPoolList(u);
     }
 
