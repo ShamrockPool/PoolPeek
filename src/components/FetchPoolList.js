@@ -178,6 +178,11 @@ export default class FetchPoolList extends React.Component {
         });
 
         var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(index);
+
+        if(this.orderBy){
+            u += this.orderBy;
+        }
+
         this.getPoolList(u);
     }
 
@@ -598,7 +603,7 @@ export default class FetchPoolList extends React.Component {
                                 <tr>
                                     <td>
                                         <label>
-                                            <span>Remove Multi Pool Operators</span>
+                                            <span>Exclude Multi Pool Operators</span>
                                             <Checkbox checked={this.state.multiPoolOperators}
                                                 onChange={e => this.handleMultiPoolOperatorsClick()} />
                                         </label>
