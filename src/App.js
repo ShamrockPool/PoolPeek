@@ -29,7 +29,6 @@ class App extends React.Component {
                 <Route exact path="/aboutus" render={(props) => <AboutUsPage/>} />
                 {/* <Route exact path="/:poolid" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} />} /> */}
 
-                <Route exact path="/aboutus" render={(props) => <AboutUsPage/>} />
                 <Route exact path="/poolpeek" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="The Dynamic Duo - Creators of PoolPeek.com!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc}  />} />
                 <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} multiPoolOperators={true}  pageDescription={queries.baremetalpoolsqueryDesc}  />} />
                 <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Education" query={queries.educationquery} multiPoolOperators={true}  pageDescription={queries.educationpoolsqueryDesc}  />} />
