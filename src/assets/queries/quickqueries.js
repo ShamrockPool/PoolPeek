@@ -18,6 +18,8 @@ export const fundescriptionsquery = "&op=fundumps&qryname=Fun+Names&dumptype=des
 
 export const smallproduceblocksquery = "&blockfrom=1&blockto=100&activestakefrom=1210000&activestaketo=10000000&excluderetired=1";
 
+export const twitterpoolsquery = "&activestakefrom=0&activestaketo=10000000&excluderetired=1&has_twitter=1";
+
 
 export const marchsaturatedpoolsquery = "&activestakefrom=32000000";
 export const marchsaturatedpoolsqueryDesc = "In March the k-parameter will be increased to 1000 from 500, this will mean the saturation level of pools will fall from roughly 64million ADA to 32million ADA staked per pool. The below pools will return less rewards in March consider distributing your stake. :) ";
@@ -40,3 +42,7 @@ export const onetotenblockpoolsqueryDesc = "Stake pools that have 1 to 10 blocks
 
 
 export const smallproduceblocksDesc = "Small stake pools that are likely to mint blocks this epoch. Criteria is 1.21M to 10M active stake and have minted between 1 and 100 lifetime blocks.";
+
+export const twitterpoolsqueryDesc = "The creators of PoolPeek.com are very active on twitter so we thought it only fitting we create a page for twitter pools :) The following is a list of small stake pools that have a twitter handle in their extended meta data and have less than 10M active stake.";
+
+
