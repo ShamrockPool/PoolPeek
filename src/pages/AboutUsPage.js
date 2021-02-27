@@ -117,6 +117,16 @@ just as you would using any other PoolPeek.com query.<br />
  Further the decentralization of Cardano by spreading out your delegation to multiple stake pools.
 <br /><br />
 
+<b>Delistment of Pools via SMASH</b>
+<br /><br />
+
+Badly behaved stake pools can be delisted from display in Daedalus. Factors taken into account for such decisions 
+include illegal or malicious metadata content, impersonation, the use of ticker names that were previously 
+registered on the Incentivized Testnet (when this is not the same stake pool/operator), 
+intellectual property rights violations, or stake pools that are no longer active. 
+If a pool is delisted in Daedalus we also delist it in Pool Peek.
+<br/><br/>
+
 
           <b>The Old Site</b>
           <br /><br />
