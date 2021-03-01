@@ -30,7 +30,6 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  { to: '/poolpeek', name: 'The Dynamic Duo', exact: false, Icon: MdPool },
   // { to: '/marchsaturatedpools', name: 'March Saturated', exact: false, Icon: MdPool },
   { to: '/charitypools', name: 'Charity', exact: false, Icon: MdPool },
   { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdPool },
@@ -51,7 +50,8 @@ const navFunQueries = [
 ];
 
 const navItems = [
-  { to: '/', name: 'Pool Search', exact: true, Icon: MdSearch },
+  { to: '/', name: 'The Dynamic Duo', exact: true, Icon: MdPool },
+  { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 ];
 
