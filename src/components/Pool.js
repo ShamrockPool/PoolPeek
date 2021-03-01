@@ -162,7 +162,8 @@ export default class Pool extends React.Component {
                                                 {item.live_stake.length > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
-                                                <p>Active Stake: {item.active_stake} ₳&nbsp;&nbsp;&nbsp;&nbsp;Delegators:&nbsp;{item.active_stake_delegator_count}</p>
+                                                <p>Active Stake: {item.active_stake} ₳</p>
+                                                <p>Active Stake Delegators: {item.active_stake_delegator_count}</p>
                                                 {width > 600 &&
                                                     (<Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />)}
                                             </td>
