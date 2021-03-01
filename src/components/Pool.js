@@ -149,7 +149,7 @@ export default class Pool extends React.Component {
                                             >
                                                 <th scope="row">Pool Info</th></Tooltip>
                                             <td><p>Pool margin: {item.margin_pct}%</p>    <p>Pledge: {item.pledge} ₳</p>     <p>Cost per epoch: {item.cost_per_epoch} ₳</p>
-                                                <p>Delegators: {item.active_stake_delegator_count}</p></td>
+                                                </td>
                                         </tr>
                                         <tr><Tooltip
                                             title="Stake is the amount of ADA delegated to the pool."
@@ -162,7 +162,7 @@ export default class Pool extends React.Component {
                                                 {item.live_stake.length > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
-                                                <p>Active Stake: {item.active_stake} ₳</p>
+                                                <p>Active Stake: {item.active_stake} ₳&nbsp;&nbsp;&nbsp;&nbsp;Delegators:&nbsp;{item.active_stake_delegator_count}</p>
                                                 {width > 600 &&
                                                     (<Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />)}
                                             </td>
