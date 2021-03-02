@@ -32,7 +32,7 @@ class MainLayout extends React.Component {
       this.notificationSystem.addNotification({
         title: <MdLoyalty />,
         message:
-          'Brought to you by LOCO and Shamrock Pool, consider staking with us.',
+          'Brought to you by the ADA Train and Shamrock Pools, consider staking with us.',
         level: 'info',
       });
     }, 1500);

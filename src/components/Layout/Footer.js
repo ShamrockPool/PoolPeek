@@ -7,7 +7,7 @@ const Footer = () => {
     <Navbar>
       <Nav navbar>
         <NavItem>
-          2021 Shamrock (SHA)/LOCO Productions.
+          2021 Shamrock (SHA)/TRAIN Productions.
           <br/>
           <i>Built by small pool owners for small pool delegators.</i>
           <br/>
