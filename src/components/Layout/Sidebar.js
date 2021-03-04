@@ -52,6 +52,7 @@ const navFunQueries = [
 const navItems = [
   { to: '/', name: 'The Dynamic Duo', exact: true, Icon: MdPool },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
+  { to: '/poolsearchmap', name: 'Pool Map Search', exact: true, Icon: MdSearch },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 ];
 

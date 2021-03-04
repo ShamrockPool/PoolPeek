@@ -5,13 +5,23 @@ import PageSpinner from 'components/PageSpinner';
 import React from 'react';
 import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+
+import DashboardPage from 'pages/DashboardPage';
+import QuickQueriesPage from 'pages/QuickQueriesPage';
+import  AdaFoliosPage from 'pages/AdaFoliosPage';
+import  FunDumpPage from 'pages/FunDumpPage';
+import AboutUsPage from 'pages/AboutUsPage';
+import PoolMapPage from 'pages/PoolMap';
+
+
 require('./styles/reduction.scss');
 
-const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
-const QuickQueriesPage = React.lazy(() => import('pages/QuickQueriesPage'));
-const AdaFoliosPage = React.lazy(() => import('pages/AdaFoliosPage'));
-const FunDumpPage = React.lazy(() => import('pages/FunDumpPage'));
-const AboutUsPage = React.lazy(() => import('pages/AboutUsPage'));
+// const DashboardPage = React.lazy(() => import('pages/DashboardPage'));
+// const QuickQueriesPage = React.lazy(() => import('pages/QuickQueriesPage'));
+// const AdaFoliosPage = React.lazy(() => import('pages/AdaFoliosPage'));
+// const FunDumpPage = React.lazy(() => import('pages/FunDumpPage'));
+// const AboutUsPage = React.lazy(() => import('pages/AboutUsPage'));
+// const PoolMapPage = React.lazy(() => import('pages/PoolMap'));
 
 const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
@@ -28,7 +38,10 @@ class App extends React.Component {
                 <Route exact path="/" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="The Dynamic Duo - Creators of PoolPeek.com!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc}  />} />
                
                 <Route exact path="/poolsearch" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} />} />
+                
+                <Route exact path="/poolsearchmap" render={(props) => <PoolMapPage />} />
                
+
                 <Route exact path="/aboutus" render={(props) => <AboutUsPage/>} />
                 {/* <Route exact path="/:poolid" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} />} /> */}
 
