@@ -4,33 +4,29 @@ import {
   Geographies,
   Geography,
   ZoomableGroup,
-  Marker
+  Marker,
+  Graticule
 } from "react-simple-maps";
+// import  { useHistory }  from "react-router-dom";
+
+// const history = useHistory();
 
 const geoUrl =
   "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
-  const markers = [
-    {
-      markerOffset: -30,
-      name: "Buenos Aires",
-      coordinates: [-58.3816, -34.6037]
-    },
-    { markerOffset: 15, name: "La Paz", coordinates: [-68.1193, -16.4897] },
-    { markerOffset: 15, name: "Brasilia", coordinates: [-47.8825, -15.7942] },
-    { markerOffset: 15, name: "Santiago", coordinates: [-70.6693, -33.4489] },
-    { markerOffset: 15, name: "Bogota", coordinates: [-74.0721, 4.711] },
-    { markerOffset: 15, name: "Quito", coordinates: [-78.4678, -0.1807] },
-    { markerOffset: -30, name: "Georgetown", coordinates: [-58.1551, 6.8013] },
-    { markerOffset: -30, name: "Asuncion", coordinates: [-57.5759, -25.2637] },
-    { markerOffset: 15, name: "Paramaribo", coordinates: [-55.2038, 5.852] },
-    { markerOffset: 15, name: "Montevideo", coordinates: [-56.1645, -34.9011] },
-    { markerOffset: 15, name: "Caracas", coordinates: [-66.9036, 10.4806] },
-    { markerOffset: 15, name: "Lima", coordinates: [-77.0428, -12.0464] }
-  ];
-
-const MapChart = () => {
+const MapChart = (props) => {
   const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
+
+  function getMarkers() {
+    var markers = [];
+
+    props.poolsData.poolpeek.geo.map(function (item, key) {
+      var locationShort = item.location.split(",")[0];
+      markers.push({ markerOffset: 5, name: locationShort, coordinates: [item.location_lon, item.location_lat] })
+    });
+
+    return markers;
+  }
 
   function handleZoomIn() {
     if (position.zoom >= 4) return;
@@ -46,8 +42,15 @@ const MapChart = () => {
     setPosition(position);
   }
 
+  function openLocation(locationName) {
+    console.log("location clicked" + locationName)
+  }
+
   return (
     <div>
+      <h3>The red dots represent pools.</h3>
+      <h3>Click the country to view all the pools in there.</h3>
+      <div style={{ width: "80%", height: "90%", margin: "20px", alignItems: "center" }}>
       <ComposableMap>
         <ZoomableGroup
           zoom={position.zoom}
@@ -57,62 +60,56 @@ const MapChart = () => {
           <Geographies geography={geoUrl}>
             {({ geographies }) =>
               geographies.map(geo => (
-                <Geography key={geo.rsmKey} geography={geo} />
+                <Geography
+                  key={geo.rsmKey}
+                  geography={geo}
+                  onClick={() => {
+                    const { NAME, POP_EST } = geo.properties;
+                    console.log(`${NAME} — ${POP_EST}`);
+
+                  //  history.push("/poolsearch");
+                  }}
+                  style={{
+                    default: {
+                      fill: "#D6D6DA",
+                      outline: "none"
+                    },
+                    hover: {
+                      fill: "#F53",
+                      outline: "none"
+                    },
+                    pressed: {
+                      fill: "#E42",
+                      outline: "none"
+                    }
+                  }}
+
+                  fill="#9998A3"
+                  stroke="#EAEAEC"
+                />
               ))
             }
           </Geographies>
-          {markers.map(({ name, coordinates, markerOffset }) => (
-        <Marker key={name} coordinates={coordinates}>
-          <g
-            fill="none"
-            stroke="#FF5533"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            transform="translate(-12, -24)"
-          >
-            <circle cx="12" cy="10" r="3" />
-            <path d="M12 21.7C17.3 17 20 13 20 10a8 8 0 1 0-16 0c0 3 2.7 6.9 8 11.7z" />
-          </g>
-          <text
-            textAnchor="middle"
-            y={markerOffset}
-            style={{ fontFamily: "system-ui", fill: "#5D5A6D" }}
-          >
-            {name}
-          </text>
-        </Marker>
-      ))}
+          {getMarkers().map(({ name, coordinates, markerOffset }) => (
+
+            <Marker key={name} coordinates={coordinates}
+            >
+              <circle r={1.8} fill="#F00" stroke="#fff" strokeWidth={0} />
+              <text
+                textAnchor="middle"
+                y={markerOffset}
+                style={{ fontFamily: "system-ui", fill: "#5D5A6D", fontSize: 4 }}
+              >
+                {name}
+              </text>
+            </Marker>
+
+          ))}
         </ZoomableGroup>
       </ComposableMap>
-      <div className="controls">
-        <button onClick={handleZoomIn}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="3"
-          >
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-        </button>
-        <button onClick={handleZoomOut}>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth="3"
-          >
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-        </button>
       </div>
-    </div>
+
+    </div >
   );
 };
 
