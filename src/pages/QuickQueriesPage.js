@@ -1,7 +1,7 @@
 import FetchPoolList from 'components/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
-
+require('../styles/reduction.scss');
 class QuickQueriesPage extends React.Component {
 
   constructor(props) {

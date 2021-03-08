@@ -21,7 +21,7 @@ class PoolMap extends React.Component {
   async componentDidMount() {
     var poolsData = await this.getPoolLocationData();
     this.state.poolsData = poolsData;
-    this.setState({ poolsData: poolsData })
+    this.setState({ poolsData: poolsData });
   }
 
 
