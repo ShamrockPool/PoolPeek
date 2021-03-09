@@ -56,11 +56,13 @@ class App extends React.Component {
                 <Route exact path="/fabulousdescriptions" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Descriptions" query={queries.fundescriptionsquery} />} />
 
                 <Route exact path="/twitterpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Small Pools w/Twitter Handles" query={queries.twitterpoolsquery} multiPoolOperators={true} pageDescription={queries.twitterpoolsqueryDesc} />} />
-
-
                 <Route exact path="/pool/:poolid" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} />} />
 
-
+                <Route exact path="/64milorgreater" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="64M or greater" query={queries.qry64milorgreater} multiPoolOperators={false}  pageDescription={queries.desc64milorgreater}  />} />
+                <Route exact path="/32milto64mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="32M to < 64M" query={queries.qry32milto64mil} multiPoolOperators={false}  pageDescription={queries.desc32milto64mil}  />} />
+                <Route exact path="/16milto32mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="16M to < 32M" query={queries.qry16milto32mil} multiPoolOperators={false}  pageDescription={queries.desc16milto32mil}  />} />
+                <Route exact path="/8milto16mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="8M to < 16M" query={queries.qry8milto16mil} multiPoolOperators={false}  pageDescription={queries.desc8milto16mil}  />} />
+              
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />

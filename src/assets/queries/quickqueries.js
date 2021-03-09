@@ -46,3 +46,18 @@ export const smallproduceblocksDesc = "Small stake pools that are likely to mint
 export const twitterpoolsqueryDesc = "The creators of PoolPeek.com are very active on twitter so we thought it only fitting we create a page for twitter pools :) The following is a list of small stake pools that have a twitter handle in their extended meta data and have less than 10M active stake.";
 
 
+export const qry64milorgreater = "&activestakefrom=64000000&activestaketo=900000000&excluderetired=1&order=ActiveStake, ";
+export const desc64milorgreater = "Stake pools with 64M or greater active stake."
+
+export const qry32milto64mil = "&activestakefrom=32000000&activestaketo=63999999&excluderetired=1&order=ActiveStake, ";
+export const desc32milto64mil = "Stake pools with 32M to < 64M active stake."
+
+export const qry16milto32mil = "&activestakefrom=16000000&activestaketo=31999999&excluderetired=1&order=ActiveStake, ";
+export const desc16milto32mil = "Stake pools with 16M to < 32M active stake."
+
+export const qry8milto16mil = "&activestakefrom=8000000&activestaketo=15999999&excluderetired=1&order=ActiveStake, ";
+export const desc8milto16mil = "Stake pools with 8M to < 16M active stake."
+
+
+
+
