@@ -12,12 +12,13 @@ class MapChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      poolData: null,
       position: 0,
       isShown: 0,
       latSelected: 0,
       longSelected: 0,
-      locationSelected: ''
+      locationSelected: '',
+      markersFiltered: [],
+      totalMarkers: 0
 
     }
   }
@@ -91,23 +92,12 @@ class MapChart extends React.Component {
 
   getMarkers2() {
     var markers = [];
-
-
-
-
     this.props.poolsData.poolpeek.geo.map(function (item, key) {
-      var location = "";
+      var location = item.location;
       var lat = 0;
       var long = 0;
-      // if (item.location.includes(',')) {
-      //   location = item.location.split(",")[0];
-      // }
-      // // else if (item.location.includes(' ')) {
-      // //   location = item.location.split(" ")[0];
-      // // }
-      // else {
-      location = item.location;
-      //}
+
+
 
       lat = Number(item.location_lat);
       long = Number(item.location_lon);
@@ -131,24 +121,32 @@ class MapChart extends React.Component {
     });
 
     console.log(markers.length)
+    // this.setState({ totalMarkers: markers.length });
 
     return markers;
   }
 
+  openInNewTab = (url) => {
+    const newWindow = window.open(url, '_blank', 'noopener,noreferrer')
+    if (newWindow) newWindow.opener = null
+  }
+
   componentDidMount() {
-    this.state.poolData = this.props.poolsData;
-    console.log(this.state.poolData);
+    var filteredMarkers = this.getMarkers2();
+    this.setState({ totalMarkers:  filteredMarkers.length});
+    this.setState({ markersFiltered:  filteredMarkers});
   }
 
   render() {
     return (
       <div>
-        <h3>The red dots represent pools.</h3>
-        <h3>Click the country to view all the pools in there.</h3>
+        <h3>Click the marker location to be brough to the location search screen.</h3>
+        {/* <h3>Total locations available for pools: {this.props.poolsData.poolpeek.geo.length}</h3> */}
+        <h3>Total unique locations: {this.state.totalMarkers}</h3>
 
         <div style={{ width: "99%", height: "95%", margin: "5px", alignItems: "center" }}>
           <Map defaultCenter={[50.879, 4.6997]} defaultZoom={3} width={1600} height={800}>
-            {this.getMarkers2().map(({ name, long, lat }) => (
+            {this.state.markersFiltered.map(({ name, long, lat }) => (
 
               <Marker anchor={[lat, long]}
                 color='red'
@@ -156,17 +154,19 @@ class MapChart extends React.Component {
                 onClick={({ event, anchor, payload }) => {
 
                   this.state.latSelected = anchor[1];
-                  this.setState({ latSelected: anchor[1] });
                   this.state.longSelected = anchor[0];
-                  this.setState({ longSelected: anchor[0] });
+                  this.setState({ latSelected: anchor[1], longSelected: anchor[0] });
+
+
                   console.log('Clicked marker nr: ', payload);
                   console.log('Clicked marker nr anchor: ', anchor);
 
                   this.state.locationSelected = payload;
-                  this.setState({ locationSelected: payload });
-                  
+                  this.setState({ locationSelected: payload, isShown: true });
                   this.state.isShown = true;
-                  this.setState({ isShown: true });
+
+                  var host = window.location.protocol + "//" + window.location.host;
+                  this.openInNewTab(host+'/poolsearch/'+payload);
                 }}
               >
 
@@ -177,67 +177,11 @@ class MapChart extends React.Component {
     </Overlay> */}
           </Map>
 
-          {this.state.isShown && (<Popout {...this.props} title='Pools in this location' closeWindow={() => this.setState({ isShown: false })}>
-            <FetchPoolList {...this.props} query={"&location="+this.state.locationSelected} multiPoolOperators={true} pageDescription={"Location search:"+this.state.locationSelected}
-            showFilters={false}/>
-        </Popout>)}
+          {/* {this.state.isShown && (<Popout {...this.props} title='Pools in this location' closeWindow={() => this.setState({ isShown: false })}>
+            <FetchPoolList {...this.props} query={"&location=" + this.state.locationSelected} multiPoolOperators={true} pageDescription={"Location search:" + this.state.locationSelected}
+              showFilters={false} />
+          </Popout>)} */}
 
-          {/* <ComposableMap>
-          <ZoomableGroup
-            zoom={position.zoom}
-            center={position.coordinates}
-            onMoveEnd={handleMoveEnd}
-          >
-            <Geographies geography={geoUrl}>
-              {({ geographies }) =>
-                geographies.map(geo => (
-                  <Geography
-                    key={geo.rsmKey}
-                    geography={geo}
-                    onClick={() => {
-                      const { NAME, POP_EST } = geo.properties;
-                      console.log(`${NAME} — ${POP_EST}`);
-
-                      //  history.push("/poolsearch");
-                    }}
-                    style={{
-                      default: {
-                        fill: "#D6D6DA",
-                        outline: "none"
-                      },
-                      hover: {
-                        fill: "#F53",
-                        outline: "none"
-                      },
-                      pressed: {
-                        fill: "#E42",
-                        outline: "none"
-                      }
-                    }}
-
-                    fill="#9998A3"
-                    stroke="#EAEAEC"
-                  />
-                ))
-              }
-            </Geographies>
-            {getMarkers().map(({ name, coordinates, markerOffset }) => (
-
-              <Marker key={name} coordinates={coordinates}
-              >
-                <circle r={0.3} fill="#F00" stroke="#fff" strokeWidth={0} />
-                <text
-                  textAnchor="middle"
-                  y={markerOffset}
-                  style={{ fontFamily: "system-ui", fill: "#5D5A6D", fontSize: 0.5 }}
-                >
-                  {name}
-                </text>
-              </Marker>
-
-            ))}
-          </ZoomableGroup>
-        </ComposableMap> */}
         </div>
 
       </div >
