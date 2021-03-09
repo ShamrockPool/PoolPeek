@@ -15,6 +15,8 @@ class DashboardPage extends React.Component {
     window.scrollTo(0, 0);
   }
 
+
+
   render() {
     return (
       <Page
@@ -22,7 +24,7 @@ class DashboardPage extends React.Component {
       // title="Pool Search"
       // breadcrumbs={[{ name: 'Home', active: true }]}
       >
-        {isEmpty(this.props.match.params.poolid) ? <FetchPoolList query={this.props.query} multiPoolOperators={true} />
+        {isEmpty(this.props.match.params.poolid) ? <FetchPoolList {...this.props} query={this.props.query} multiPoolOperators={true} />
           :
           <FetchPoolList query={this.props.query} multiPoolOperators={true} poolid={this.props.match.params.poolid} />
         }

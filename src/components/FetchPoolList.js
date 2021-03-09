@@ -179,7 +179,7 @@ export default class FetchPoolList extends React.Component {
 
         var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(index);
 
-        if(this.orderBy){
+        if (this.orderBy) {
             u += this.orderBy;
         }
 
@@ -191,15 +191,22 @@ export default class FetchPoolList extends React.Component {
         if (this.props.query) {
             this.state.baseQuery = this.props.query;
         }
+        try {
+            if (!isEmpty(this.props.match.params.location)) {
+                this.state.baseQuery += "&location=" + this.props.match.params.location;
+                this.state.location = this.props.match.params.location;
+                this.setState({ location: this.props.match.params.location });
+            }
+        } catch (error) {}
+
 
         if (this.props.multiPoolOperators) {
             this.state.multiPoolOperators = this.props.multiPoolOperators;
             this.setState({ multiPoolOperators: this.props.multiPoolOperators });
         }
 
-        if(!isEmpty(this.props.poolid))
-        {
-            this.state.baseQuery  += "&poolid="+this.props.poolid;
+        if (!isEmpty(this.props.poolid)) {
+            this.state.baseQuery += "&poolid=" + this.props.poolid;
             this.state.poolid = this.props.poolid;
             this.setState({ poolid: this.props.poolid });
         }
@@ -212,6 +219,8 @@ export default class FetchPoolList extends React.Component {
     }
 
     async getPoolList(query) {
+
+        console.log(query)
 
         if (this.state.multiPoolOperators) {
             query += "&exclude_splitters=1";
@@ -753,7 +762,7 @@ export default class FetchPoolList extends React.Component {
                             </Table>
 
                             <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
-                            <br/><br/>
+                            <br /><br />
                             <h3><b>Order by:</b></h3>
                             <FormControlLabel
                                 control={<Switch size="medium" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
