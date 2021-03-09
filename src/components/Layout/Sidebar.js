@@ -49,6 +49,13 @@ const navFunQueries = [
   { to: '/fabulousdescriptions', name: 'Descriptions', exact: false, Icon: MdFormatListBulleted },
 ];
 
+const navSaturation = [
+  { to: '/64milorgreater', name: '64M or Greater', exact: false, Icon: MdFormatListBulleted },
+  { to: '/32milto64mil', name: '32M to < 64M', exact: false, Icon: MdFormatListBulleted },
+  { to: '/16milto32mil', name: '16M to < 32M', exact: false, Icon: MdFormatListBulleted },
+  { to: '/8milto16mil', name: '8M to < 16M', exact: false, Icon: MdFormatListBulleted },
+];
+
 const navItems = [
   { to: '/', name: 'The Dynamic Duo', exact: true, Icon: MdPool },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
@@ -65,6 +72,7 @@ class Sidebar extends React.Component {
     isOpenPages: true,
     isOpenAdafolio: false,
     isOpenFunQuery: false,
+    isOpenSaturation: false,
     navAdaFolio: [],
   };
 
@@ -174,6 +182,46 @@ class Sidebar extends React.Component {
             </Collapse>
           
 
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Saturation')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdExtension className={bem.e('nav-item-icon')} />
+                  <b><span className=" align-self-start">64M 32M 16M 8M</span></b>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenSaturation
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenSaturation}>
+              {navSaturation.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
 
 
 
