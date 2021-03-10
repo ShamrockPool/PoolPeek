@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ useState } from 'react';
 import { Col, Row, Form, Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
 import _ from 'lodash';
 import { isEmpty } from 'utils/stringutil.js';
@@ -6,7 +6,15 @@ import Scroll from '../components/Scroll';
 import Pool from 'components/Pool';
 import { Collapse } from 'react-collapse';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
+import { css } from "@emotion/core";
+import GridLoader from "react-spinners/GridLoader";
 const WAIT_INTERVAL = 2000
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 let queryParams = {
     "poolid": "",
     "ticker": "",
@@ -195,10 +203,10 @@ export default class FetchPoolList extends React.Component {
                 this.state.location = this.props.match.params.location;
                 this.setState({ location: this.props.match.params.location });
             }
-        } catch (error) {}
+        } catch (error) { }
 
 
-        if (this.props.multiPoolOperators) {
+        if (this.props.multiPoolOperators == true) {
             this.state.multiPoolOperators = this.props.multiPoolOperators;
             this.setState({ multiPoolOperators: this.props.multiPoolOperators });
         }
@@ -545,10 +553,6 @@ export default class FetchPoolList extends React.Component {
     render() {
         const { currentPage, pageCount } = this.state;
 
-        if (this.state.loading) {
-            return <div>loading...</div>
-        }
-
         if (!this.state.pools) {
             return <div>Pools not found...</div>
         }
@@ -822,39 +826,42 @@ export default class FetchPoolList extends React.Component {
                         </Collapse>
                     </div>}
 
-                <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
+                {this.state.loading ?  <div>Loading pools...<GridLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} /></div>
+                    : <div>
+                        <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
 
-                <Pagination style={{ align: "left", width: "82%" }}>
-                    <PaginationItem disabled={currentPage <= 0}>
-                        <PaginationLink
-                            onClick={e => this.handlePageClick(e, currentPage - 1)}
-                            previous
-                            href="#"
-                        />
-                    </PaginationItem>
+                        <Pagination style={{ align: "left", width: "82%" }}>
+                            <PaginationItem disabled={currentPage <= 0}>
+                                <PaginationLink
+                                    onClick={e => this.handlePageClick(e, currentPage - 1)}
+                                    previous
+                                    href="#"
+                                />
+                            </PaginationItem>
 
-                    {_.times(pageCount, (i) =>
-                        <PaginationItem active={i === currentPage} key={i}>
-                            <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
-                                {i + 1}
-                            </PaginationLink>
-                        </PaginationItem>
-                    )}
+                            {_.times(pageCount, (i) =>
+                                <PaginationItem active={i === currentPage} key={i}>
+                                    <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
+                                        {i + 1}
+                                    </PaginationLink>
+                                </PaginationItem>
+                            )}
 
-                    <PaginationItem disabled={currentPage >= pageCount - 1}>
-                        <PaginationLink
-                            onClick={e => this.handlePageClick(e, currentPage + 1)}
-                            next
-                            href="#"
-                        />
-                    </PaginationItem>
-                </Pagination>
+                            <PaginationItem disabled={currentPage >= pageCount - 1}>
+                                <PaginationLink
+                                    onClick={e => this.handlePageClick(e, currentPage + 1)}
+                                    next
+                                    href="#"
+                                />
+                            </PaginationItem>
+                        </Pagination>
 
-                <Row>
-                    <Col>
-                        <Pool pools={this.state.pools} />
-                    </Col>
-                </Row>
+                        <Row>
+                            <Col>
+                                <Pool pools={this.state.pools} />
+                            </Col>
+                        </Row>
+                    </div>}
 
             </div >
         );
