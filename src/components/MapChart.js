@@ -7,6 +7,9 @@ import QuickQueriesPage from '../pages/QuickQueriesPage';
 import FetchPoolList from 'components/FetchPoolList';
 import * as queries from '../assets/queries/quickqueries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+
+const width = window.innerWidth;
+
 class MapChart extends React.Component {
 
   constructor(props) {
@@ -18,7 +21,8 @@ class MapChart extends React.Component {
       longSelected: 0,
       locationSelected: '',
       markersFiltered: [],
-      totalMarkers: 0
+      totalMarkers: 0,
+      mapWidth: 0
 
     }
   }
@@ -131,7 +135,16 @@ class MapChart extends React.Component {
     if (newWindow) newWindow.opener = null
   }
 
+  setMapWidth(){
+    if(width > 600 ){
+      this.state.mapWidth = 1500;
+    }else{
+      this.state.mapWidth = 800;
+    }
+  }
+
   componentDidMount() {
+    this.setMapWidth();
     var filteredMarkers = this.getMarkers2();
     this.setState({ totalMarkers:  filteredMarkers.length});
     this.setState({ markersFiltered:  filteredMarkers});
@@ -140,11 +153,11 @@ class MapChart extends React.Component {
   render() {
     return (
       <div>
-        <h3>Click a marker below to display all pools at that location.</h3>
-        {/* <h3>Total locations available for pools: {this.props.poolsData.poolpeek.geo.length}</h3> */}
+        <h3><b>Click a marker below to display all pools at that location.</b></h3>
+        {/* <h3>Total pools with locations: {this.props.poolsData.poolpeek.geo.length + 1}</h3> */}
         <h3>Total unique pool locations: {this.state.totalMarkers}</h3>
         <div style={{ width: "99%", height: "95%", margin: "5px", alignItems: "center" }}>
-          <Map defaultCenter={[50.879, 4.6997]} defaultZoom={3} width={1600} height={800}>
+          <Map defaultCenter={[50.879, 4.6997]} defaultZoom={3} width={this.state.mapWidth} height={800}>
             {this.state.markersFiltered.map(({ name, long, lat }) => (
 
               <Marker anchor={[lat, long]}
