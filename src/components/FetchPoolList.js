@@ -4,11 +4,9 @@ import _ from 'lodash';
 import { isEmpty } from 'utils/stringutil.js';
 import Scroll from '../components/Scroll';
 import Pool from 'components/Pool';
-
-
 import { Collapse } from 'react-collapse';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
-const WAIT_INTERVAL = 500
+const WAIT_INTERVAL = 2000
 let queryParams = {
     "poolid": "",
     "ticker": "",
