@@ -140,10 +140,9 @@ class MapChart extends React.Component {
   render() {
     return (
       <div>
-        <h3>Click the marker location to be brough to the location search screen.</h3>
+        <h3>Click a marker below to display all pools at that location.</h3>
         {/* <h3>Total locations available for pools: {this.props.poolsData.poolpeek.geo.length}</h3> */}
-        <h3>Total unique locations: {this.state.totalMarkers}</h3>
-
+        <h3>Total unique pool locations: {this.state.totalMarkers}</h3>
         <div style={{ width: "99%", height: "95%", margin: "5px", alignItems: "center" }}>
           <Map defaultCenter={[50.879, 4.6997]} defaultZoom={3} width={1600} height={800}>
             {this.state.markersFiltered.map(({ name, long, lat }) => (
@@ -183,6 +182,7 @@ class MapChart extends React.Component {
           </Popout>)} */}
 
         </div>
+ <small>(If your pool is missing and you would like to see it listed, please update your meta data 'location' field.)</small>
 
       </div >
     );

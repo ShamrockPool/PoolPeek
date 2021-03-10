@@ -12,6 +12,8 @@ import {
   MdMood,
   MdPool,
   MdSearch,
+  MdLocationOn,
+  MdBuild,
   MdFormatListBulleted
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
@@ -57,9 +59,9 @@ const navSaturation = [
 ];
 
 const navItems = [
-  { to: '/', name: 'The Dynamic Duo', exact: true, Icon: MdPool },
+  { to: '/', name: 'The Dynamic Duo', exact: true, Icon: MdBuild },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
-  { to: '/poolsearchmap', name: 'Pool Map Search', exact: true, Icon: MdSearch },
+  { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 ];
 
