@@ -7,7 +7,8 @@ import Pool from 'components/Pool';
 import { Collapse } from 'react-collapse';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 import { css } from "@emotion/core";
-import GridLoader from "react-spinners/GridLoader";
+import CircleLoader
+from "react-spinners/CircleLoader";
 const WAIT_INTERVAL = 2000
 
 const override = css`
@@ -826,7 +827,7 @@ export default class FetchPoolList extends React.Component {
                         </Collapse>
                     </div>}
 
-                {this.state.loading ?  <div>Loading pools...<GridLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} /></div>
+                {this.state.loading ?  <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                     : <div>
                         <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
 

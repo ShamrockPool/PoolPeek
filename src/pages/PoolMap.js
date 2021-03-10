@@ -1,12 +1,18 @@
 import React, { useState } from "react";
 import MapChart from 'components/MapChart';
-import ReactTooltip from "react-tooltip";
+import { css } from "@emotion/core";
+import GridLoader from "react-spinners/GridLoader";
 
-
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 class PoolMap extends React.Component {
   state = {
-    poolsData: null
+    poolsData: null,
+    loading: true
   };
 
   constructor(props) {
@@ -22,6 +28,7 @@ class PoolMap extends React.Component {
     var poolsData = await this.getPoolLocationData();
     this.state.poolsData = poolsData;
     this.setState({ poolsData: poolsData });
+    this.setState({ loading: false });
   }
 
 
@@ -29,7 +36,8 @@ class PoolMap extends React.Component {
 
     return (
       <div>
-        {this.state.poolsData && (<MapChart poolsData={this.state.poolsData}/>)}
+        {this.state.loading == true  ? <GridLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} />
+          : (<MapChart poolsData={this.state.poolsData}/>)}
       </div>
     )
   }
