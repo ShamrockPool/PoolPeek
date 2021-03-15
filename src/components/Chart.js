@@ -98,7 +98,7 @@ export default class Chart extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid" style={{ align: "left", width: "60%", height: "60%" }}>
+            <div className="container-fluid" style={{ align: "left", width: "40%", height: "1%", display: 'inline-block'}}>
                     <Line data={this.genLineData()}  options={lineOptions}/>
             </div >
         );

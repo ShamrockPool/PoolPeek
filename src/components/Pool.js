@@ -169,14 +169,7 @@ export default class Pool extends React.Component {
                                                 <p>{item.extended_meta.location}</p>
                                             </td>
                                         </tr>)}
-                                        <tr>
-                                            <Tooltip
-                                                title="The number of blocks this pool has minted."
-                                                placement="left"
-                                            >
-                                                <th style={tableRowStyle} scope="row">Total Blocks</th></Tooltip>
-                                            <td style={tableRowStyle}><p>{item.blocks}</p></td>
-                                        </tr>
+
                                         <tr>
                                             <Tooltip
                                                 title="Pool margin is how much the pool take as extra rewards"
@@ -184,17 +177,6 @@ export default class Pool extends React.Component {
                                             >
                                                 <th style={tableRowStyle} scope="row">Pool margin</th></Tooltip>
                                             <td style={tableRowStyle}><p>{item.margin_pct}%</p>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <Tooltip
-                                                title="Pledge is how much the pool operator has staked in the pool."
-                                                placement="left"
-                                            >
-                                                <th style={tableRowStyle} scope="row">Pledge</th></Tooltip>
-                                            <td style={tableRowStyle}>
-                                                <p>{item.pledge} ₳</p>
                                             </td>
                                         </tr>
 
@@ -209,7 +191,7 @@ export default class Pool extends React.Component {
                                             </td>
                                         </tr>
 
-                                        <tr>
+                                        {/* <tr>
                                             <Tooltip
                                                 title="How many people are delegating to this pool."
                                                 placement="left"
@@ -218,13 +200,13 @@ export default class Pool extends React.Component {
                                             <td style={tableRowStyle}>
                                                 <p>{item.active_stake_delegator_count}</p>
                                             </td>
-                                        </tr>
+                                        </tr> */}
 
                                         <tr><Tooltip
                                             title="Stake is the amount of ADA delegated to the pool."
                                             placement="left"
                                         >
-                                            <th style={tableRowStyle} scope="row">Stake</th></Tooltip>
+                                            <th style={tableRowStyle} scope="row">Active Stake</th></Tooltip>
                                             <td style={tableRowStyle}>
                                                 {/* <p>Active Stake: {item.active_stake} ₳</p>
                                             <p>Delegators: {item.active_stake_delegator_count}</p> */}
@@ -233,10 +215,21 @@ export default class Pool extends React.Component {
                                                 )}
                                                 {/* <p>Active Stake: {item.active_stake} ₳</p> */}
                                                 {/* <p>Delegators: {item.active_stake_delegator_count}</p> */}
-                                                {width > 600 ?
+                                                <p>{item.active_stake} ₳</p>
+                                                <p>Delegates: {item.active_stake_delegator_count}</p>
+                                                {(width > 600 && item.active_stake_history.length > 0) &&
                                                     <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
-                                                    :
-                                                    <p>Active Stake: {item.active_stake} ₳</p>}
+                                                    }
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <Tooltip
+                                                title="Pledge is how much the pool operator has staked in the pool."
+                                                placement="left"
+                                            >
+                                                <th style={tableRowStyle} scope="row">Pledge</th></Tooltip>
+                                            <td style={tableRowStyle}>
+                                                <p>{item.pledge} ₳</p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -248,6 +241,16 @@ export default class Pool extends React.Component {
                                             <td style={tableRowStyle}><p>{Number(item.pct_saturated).toFixed(3)}%</p>
                                             </td>
                                         </tr>
+
+                                        <tr>
+                                            <Tooltip
+                                                title="The number of blocks this pool has minted."
+                                                placement="left"
+                                            >
+                                                <th style={tableRowStyle} scope="row">Total Blocks</th></Tooltip>
+                                            <td style={tableRowStyle}><p>{item.blocks}</p></td>
+                                        </tr>
+
                                         {/* <tr>
                                             <Tooltip
                                                 title="The meta data urls of the pool."
