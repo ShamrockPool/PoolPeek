@@ -14,6 +14,7 @@ import ReactImageFallback from "react-image-fallback";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import ScaleText from "react-scale-text";
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -83,7 +84,7 @@ export default class Pool extends React.Component {
                     defaultProtocol: 'https'
                 });
                 return (
-                    <div key={key} style={{ alignItems: "left" }}>
+                    <div key={key} style={{ width: "100%", alignItems: "left" }}>
                         <Card>
                             <CardHeader style={cardheaderStyle}>
                                 {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
@@ -98,27 +99,7 @@ export default class Pool extends React.Component {
                                     width="34"
                                     height="28"
                                 />)}
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><br></br>
-                                {/* <small>{item.pool_id}    </small>
-                                <Tooltip
-                                    title="Copy pool direct link"
-                                    placement="left"
-                                >
-                                    <CopyToClipboard text={"https://poolpeek.com/pool/" + item.pool_id}>
-
-                                        <FontAwesomeIcon icon={faClipboard} />
-
-                                    </CopyToClipboard>
-                                </Tooltip> */}
-
-                                {/* <img
-                                    src={CardanoImage}
-                                    className="pr-2"
-                                    width="34"
-                                    height="28"
-                                />
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b><p><small>{item.pool_id}</small></p> */}
-
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b>
                                 <SocialMedia extendedmeta={item.extended_meta} />
 
                             </CardHeader>
@@ -143,7 +124,7 @@ export default class Pool extends React.Component {
                                                 <th style={tableRowStyle} scope="row">Pool ID</th>
                                             </Tooltip>
                                             <td style={tableRowStyle} scope="row">
-                                                <small>{item.pool_id}    </small>
+                                                {width > 600 && (<small>{item.pool_id}    </small>)}
                                                 <Tooltip
                                                     title="Copy pool direct link"
                                                     placement="left"
@@ -179,14 +160,16 @@ export default class Pool extends React.Component {
                                                 placement="left"
                                             >
                                                 <th style={tableRowStyle} scope="row">Location</th></Tooltip>
-                                            <td style={tableRowStyle}><p>{item.extended_meta.location}</p></td>
+                                            <td style={tableRowStyle}>
+                                                <p>{item.extended_meta.location}</p>
+                                            </td>
                                         </tr>)}
                                         <tr>
                                             <Tooltip
                                                 title="The number of blocks this pool has minted."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Blocks</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Total Blocks</th></Tooltip>
                                             <td style={tableRowStyle}><p>{item.blocks}</p></td>
                                         </tr>
                                         <tr>
@@ -194,7 +177,7 @@ export default class Pool extends React.Component {
                                                 title="Pool margin is how much the pool take as extra rewards"
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Pool margin:</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Pool margin</th></Tooltip>
                                             <td style={tableRowStyle}><p>{item.margin_pct}%</p>
                                             </td>
                                         </tr>
@@ -204,7 +187,7 @@ export default class Pool extends React.Component {
                                                 title="Pledge is how much the pool operator has staked in the pool."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Pledge:</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Pledge</th></Tooltip>
                                             <td style={tableRowStyle}>
                                                 <p>{item.pledge} ₳</p>
                                             </td>
@@ -215,7 +198,7 @@ export default class Pool extends React.Component {
                                                 title="How much a pool deducts from rewards."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Costs:</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Costs</th></Tooltip>
                                             <td style={tableRowStyle}>
                                                 <p>{item.cost_per_epoch} ₳</p>
                                             </td>
@@ -226,7 +209,7 @@ export default class Pool extends React.Component {
                                                 title="How many people are delegating to this pool."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Delegators:</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Delegates</th></Tooltip>
                                             <td style={tableRowStyle}>
                                                 <p>{item.active_stake_delegator_count}</p>
                                             </td>
