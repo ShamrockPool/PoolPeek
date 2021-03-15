@@ -69,7 +69,7 @@ const bem = bn.create('sidebar');
 
 class Sidebar extends React.Component {
   state = {
-    isOpenComponents: true,
+    isOpenComponents: false,
     isOpenContents: true,
     isOpenPages: true,
     isOpenAdafolio: false,
