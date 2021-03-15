@@ -2,6 +2,10 @@ body {
   text-align: left;
 }
 
+th, td {
+  padding: 15px;
+}
+
 .pagination {
   /* justify-content: center; */
   /* margin:30px; */

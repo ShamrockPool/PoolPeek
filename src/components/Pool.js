@@ -21,6 +21,34 @@ var linkifyHtml = require('linkifyjs/html');
 
 const width = window.innerWidth;
 
+const tableRowStyle = {
+    // borderBottom: 'solid 3px blue',
+    // background: 'green',
+    // color: 'white',
+    fontWeight: 'bold',
+    padding: 0,
+};
+
+const cardheaderStyle = {
+    // borderBottom:  'solid 1px',
+    borderTop: 'solid 3px green',
+    borderRight: 'solid 3px green',
+    borderLeft: 'solid 3px green',
+    // background: 'green',
+    // color: 'white',
+    paddingBottom: 0
+};
+
+const cardBodyStyle = {
+    borderBottom: 'solid 3px green',
+    // borderTop: 'solid 1px green',
+    borderRight: 'solid 3px green',
+    borderLeft: 'solid 3px green',
+    // background: 'green',
+    // color: 'white',
+    paddingBottom: 0
+};
+
 function checkIsImageUrl(url) {
     if (isEmpty(url)) {
         return false;
@@ -57,7 +85,7 @@ export default class Pool extends React.Component {
                 return (
                     <div key={key} style={{ alignItems: "left" }}>
                         <Card>
-                            <CardHeader >
+                            <CardHeader style={cardheaderStyle}>
                                 {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
                                         src={convertImageUrlToHttps(item.extended_meta.url_png_logo)}
@@ -71,7 +99,7 @@ export default class Pool extends React.Component {
                                     height="28"
                                 />)}
                                 <b>&nbsp;{ReactHtmlParser(item.name)}</b><br></br>
-                                <small>{item.pool_id}    </small>
+                                {/* <small>{item.pool_id}    </small>
                                 <Tooltip
                                     title="Copy pool direct link"
                                     placement="left"
@@ -81,7 +109,7 @@ export default class Pool extends React.Component {
                                         <FontAwesomeIcon icon={faClipboard} />
 
                                     </CopyToClipboard>
-                                </Tooltip>
+                                </Tooltip> */}
 
                                 {/* <img
                                     src={CardanoImage}
@@ -94,7 +122,7 @@ export default class Pool extends React.Component {
                                 <SocialMedia extendedmeta={item.extended_meta} />
 
                             </CardHeader>
-                            <Card body>
+                            <Card style={cardBodyStyle} body>
                                 <p>{ReactHtmlParser(description)}</p>
                                 <Table {...{ ['striped']: true }}>
                                     <tbody>
@@ -103,9 +131,28 @@ export default class Pool extends React.Component {
                                                 title="The pool ticker"
                                                 placement="left"
                                             >
-                                                <th scope="row">Ticker</th>
+                                                <th style={tableRowStyle} scope="row">Ticker</th>
                                             </Tooltip>
-                                            <td scope="row"><p>{ReactHtmlParser(item.ticker)}</p></td>
+                                            <td style={tableRowStyle} scope="row"><p>{ReactHtmlParser(item.ticker)}</p></td>
+                                        </tr>
+                                        <tr>
+                                            <Tooltip
+                                                title="The pool id"
+                                                placement="left"
+                                            >
+                                                <th style={tableRowStyle} scope="row">Pool ID</th>
+                                            </Tooltip>
+                                            <td style={tableRowStyle} scope="row">
+                                                <small>{item.pool_id}    </small>
+                                                <Tooltip
+                                                    title="Copy pool direct link"
+                                                    placement="left"
+                                                >
+                                                    <CopyToClipboard text={"https://poolpeek.com/pool/" + item.pool_id}>
+                                                        <FontAwesomeIcon icon={faClipboard} />
+                                                    </CopyToClipboard>
+                                                </Tooltip>
+                                            </td>
                                         </tr>
                                         {item.retirement_epoch.length > 0 && (
                                             <tr>
@@ -113,9 +160,9 @@ export default class Pool extends React.Component {
                                                     title="Retirement Epoch"
                                                     placement="left"
                                                 >
-                                                    <th scope="row">Retirement Epoch</th>
+                                                    <th style={tableRowStyle} scope="row">Retirement Epoch</th>
                                                 </Tooltip>
-                                                <td scope="row"><p>{ReactHtmlParser(item.retirement_epoch)}</p></td>
+                                                <td style={tableRowStyle} scope="row"><p>{ReactHtmlParser(item.retirement_epoch)}</p></td>
                                             </tr>
                                         )}
                                         <tr>
@@ -123,49 +170,86 @@ export default class Pool extends React.Component {
                                                 title="The website of the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row">Website</th></Tooltip>
-                                            <td><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.homepage}</p></a></td>
+                                                <th style={tableRowStyle} scope="row">Website</th></Tooltip>
+                                            <td style={tableRowStyle}><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.homepage}</p></a></td>
                                         </tr>
                                         {!isEmpty(item.extended_meta.location) && (<tr>
                                             <Tooltip
                                                 title="The location of the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row">Location</th></Tooltip>
-                                            <td><p>{item.extended_meta.location}</p></td>
+                                                <th style={tableRowStyle} scope="row">Location</th></Tooltip>
+                                            <td style={tableRowStyle}><p>{item.extended_meta.location}</p></td>
                                         </tr>)}
                                         <tr>
                                             <Tooltip
                                                 title="The number of blocks this pool has minted."
                                                 placement="left"
                                             >
-                                                <th scope="row">Blocks</th></Tooltip>
-                                            <td><p>{item.blocks}</p></td>
+                                                <th style={tableRowStyle} scope="row">Blocks</th></Tooltip>
+                                            <td style={tableRowStyle}><p>{item.blocks}</p></td>
                                         </tr>
                                         <tr>
                                             <Tooltip
-                                                title="Important pool information"
+                                                title="Pool margin is how much the pool take as extra rewards"
                                                 placement="left"
                                             >
-                                                <th scope="row">Pool Info</th></Tooltip>
-                                            <td><p>Pool margin: {item.margin_pct}%</p>    <p>Pledge: {item.pledge} ₳</p>     <p>Cost per epoch: {item.cost_per_epoch} ₳</p>
-                                                </td>
+                                                <th style={tableRowStyle} scope="row">Pool margin:</th></Tooltip>
+                                            <td style={tableRowStyle}><p>{item.margin_pct}%</p>
+                                            </td>
                                         </tr>
+
+                                        <tr>
+                                            <Tooltip
+                                                title="Pledge is how much the pool operator has staked in the pool."
+                                                placement="left"
+                                            >
+                                                <th style={tableRowStyle} scope="row">Pledge:</th></Tooltip>
+                                            <td style={tableRowStyle}>
+                                                <p>{item.pledge} ₳</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <Tooltip
+                                                title="How much a pool deducts from rewards."
+                                                placement="left"
+                                            >
+                                                <th style={tableRowStyle} scope="row">Costs:</th></Tooltip>
+                                            <td style={tableRowStyle}>
+                                                <p>{item.cost_per_epoch} ₳</p>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <Tooltip
+                                                title="How many people are delegating to this pool."
+                                                placement="left"
+                                            >
+                                                <th style={tableRowStyle} scope="row">Delegators:</th></Tooltip>
+                                            <td style={tableRowStyle}>
+                                                <p>{item.active_stake_delegator_count}</p>
+                                            </td>
+                                        </tr>
+
                                         <tr><Tooltip
                                             title="Stake is the amount of ADA delegated to the pool."
                                             placement="left"
                                         >
-                                            <th scope="row">Stake</th></Tooltip>
-                                            <td>
+                                            <th style={tableRowStyle} scope="row">Stake</th></Tooltip>
+                                            <td style={tableRowStyle}>
                                                 {/* <p>Active Stake: {item.active_stake} ₳</p>
                                             <p>Delegators: {item.active_stake_delegator_count}</p> */}
                                                 {item.live_stake.length > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
-                                                <p>Active Stake: {item.active_stake} ₳</p>
-                                                <p>Active Stake Delegators: {item.active_stake_delegator_count}</p>
-                                                {width > 600 &&
-                                                    (<Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />)}
+                                                {/* <p>Active Stake: {item.active_stake} ₳</p> */}
+                                                {/* <p>Delegators: {item.active_stake_delegator_count}</p> */}
+                                                {width > 600 ?
+                                                    <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
+                                                    :
+                                                    <p>Active Stake: {item.active_stake} ₳</p>}
+
                                             </td>
                                         </tr>
                                         <tr>
@@ -173,8 +257,8 @@ export default class Pool extends React.Component {
                                                 title="The current saturation of the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row">Pool Saturation</th></Tooltip>
-                                            <td><p>{Number(item.pct_saturated).toFixed(3)}%</p>
+                                                <th style={tableRowStyle} scope="row">Pool Saturation</th></Tooltip>
+                                            <td style={tableRowStyle}><p>{Number(item.pct_saturated).toFixed(3)}%</p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -182,8 +266,8 @@ export default class Pool extends React.Component {
                                                 title="The meta data urls of the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row">Pool Meta Data Urls</th></Tooltip>
-                                            <td><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
+                                                <th style={tableRowStyle} scope="row">Pool Meta Data Urls</th></Tooltip>
+                                            <td style={tableRowStyle}><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
                                                 {item.metadata_extended_url.length > 0 && (
                                                     <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
                                                 )}
@@ -194,8 +278,8 @@ export default class Pool extends React.Component {
                                                 title="Sites containing more information on the pool."
                                                 placement="left"
                                             >
-                                                <th scope="row">External Sites</th></Tooltip>
-                                            <td><a href={"https://pool.pm/" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
+                                                <th style={tableRowStyle} scope="row">External Sites</th></Tooltip>
+                                            <td style={tableRowStyle}><a href={"https://pool.pm/" + item.pool_id} target="_blank" rel="noreferrer">                                                                <img
                                                 src={PoolPmImage}
                                                 className="pr-2"
                                                 alt=""
