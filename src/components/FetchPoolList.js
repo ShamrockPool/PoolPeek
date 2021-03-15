@@ -825,11 +825,6 @@ export default class FetchPoolList extends React.Component {
                                 </FormGroup>
                             </Collapse>
                         </Collapse>
-                    </div>}
-
-                {this.state.loading ?  <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-                    : <div>
-                        <p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>
 
                         <Pagination style={{ align: "left", width: "82%" }}>
                             <PaginationItem disabled={currentPage <= 0}>
@@ -857,6 +852,11 @@ export default class FetchPoolList extends React.Component {
                             </PaginationItem>
                         </Pagination>
 
+                    </div>}
+
+                {this.state.loading ?  <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                    : <div>
+                        {this.state.query.count > 10 && (<p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>)}
                         <Row>
                             <Col>
                                 <Pool pools={this.state.pools} />
