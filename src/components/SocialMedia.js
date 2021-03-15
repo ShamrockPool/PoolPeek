@@ -50,7 +50,7 @@ export default class SocialMedia extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{ display: 'inline-block' }}>
                 {this.state.twitterHandle !== "" &&
                     <Tooltip
                         title="Pool Twitter"

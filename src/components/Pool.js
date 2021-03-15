@@ -47,7 +47,10 @@ const cardBodyStyle = {
     borderLeft: 'solid 3px green',
     // background: 'green',
     // color: 'white',
-    paddingBottom: 0
+    paddingBottom: 0,
+    paddingTop: 5,
+    paddingLeft: 10,
+    paddingRight: 10
 };
 
 function checkIsImageUrl(url) {
@@ -87,24 +90,26 @@ export default class Pool extends React.Component {
                     <div key={key} style={{ width: "100%", alignItems: "left" }}>
                         <Card>
                             <CardHeader style={cardheaderStyle}>
-                                {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
-                                    <ReactImageFallback
-                                        src={convertImageUrlToHttps(item.extended_meta.url_png_logo)}
-                                        width="32"
-                                        height="32"
-                                        fallbackImage={CardanoImage} />
-                                ) : (<img
-                                    src={CardanoImage}
-                                    className="pr-2"
-                                    width="34"
-                                    height="28"
-                                />)}
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b>
-                                <SocialMedia extendedmeta={item.extended_meta} />
-
+                                <div style={{ display: 'inline-block' }}>
+                                    {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
+                                        <ReactImageFallback
+                                            src={convertImageUrlToHttps(item.extended_meta.url_png_logo)}
+                                            width="32"
+                                            height="32"
+                                            fallbackImage={CardanoImage} />
+                                    ) : (<img
+                                        src={CardanoImage}
+                                        className="pr-2"
+                                        width="34"
+                                        height="28"
+                                    />)}
+                                    <b>&nbsp;{ReactHtmlParser(item.name)}</b>
+                                    <SocialMedia extendedmeta={item.extended_meta} />
+                                </div>
+                                <p>{ReactHtmlParser(description)}</p>
                             </CardHeader>
                             <Card style={cardBodyStyle} body>
-                                <p>{ReactHtmlParser(description)}</p>
+
                                 <Table {...{ ['striped']: true }}>
                                     <tbody>
                                         <tr>
@@ -209,7 +214,7 @@ export default class Pool extends React.Component {
                                                 title="How many people are delegating to this pool."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Stakers</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Delegates</th></Tooltip>
                                             <td style={tableRowStyle}>
                                                 <p>{item.active_stake_delegator_count}</p>
                                             </td>
@@ -232,7 +237,6 @@ export default class Pool extends React.Component {
                                                     <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
                                                     :
                                                     <p>Active Stake: {item.active_stake} ₳</p>}
-
                                             </td>
                                         </tr>
                                         <tr>
