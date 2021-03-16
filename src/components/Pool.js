@@ -56,7 +56,7 @@ function checkIsImageUrl(url) {
     if (isEmpty(url)) {
         return false;
     }
-    if (url.startsWith("http") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {
+    if (url.startsWith("https") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {
         return true;
     }
     return false;
@@ -92,7 +92,7 @@ export default class Pool extends React.Component {
                                 <div style={{ display: 'inline-block' }}>
                                     {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
                                         <ReactImageFallback
-                                            src={convertImageUrlToHttps(item.extended_meta.url_png_logo)}
+                                            src={item.extended_meta.url_png_logo}
                                             width="32"
                                             height="32"
                                             fallbackImage={CardanoImage} />
