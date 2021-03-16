@@ -59,7 +59,7 @@ const navSaturation = [
 ];
 
 const navItems = [
-  { to: '/', name: 'The Team', exact: true, Icon: MdBuild },
+  { to: '/', name: 'Team Peek', exact: true, Icon: MdBuild },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }

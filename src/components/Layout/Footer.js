@@ -7,13 +7,13 @@ const Footer = () => {
     <Navbar>
       <Nav navbar>
         <NavItem>
-          2021 Shamrock (SHA)/TRAIN Productions.
+          2021 SHA/TRAIN/EAGLE Productions.
           <br/>
           <i>Built by small pool owners for small pool delegators.</i>
           <br/>
           <img src="https://shamrock-pool.com/newimages/favicon-64x64.png" />
           <img src="https://poolpeek.com/loco6464.png" />
-
+          <img src="https://m1crypto.co/assets/pool-metadata/icon-64x64.png" />
 
           <br/><br/>
 		   All opinions are our own and do not constitute financial advice in any way whatsoever.<br/>

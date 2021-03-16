@@ -51,7 +51,8 @@ As we move forward we plan to write tools that will help small pools advertise.
           <b>The Developers</b>
           <br /><br />
 
-PoolPeek.com is developed and maintained by small stake pool owners <a href="https://shamrock-pool.com/" target="_blank">SHA</a> and <a href="http://locoada.com" target="_blank">TRAIN</a>
+PoolPeek.com is developed and maintained by small stake pool owners <a href="https://shamrock-pool.com/" target="_blank">SHA</a>, <a href="http://locoada.com" target="_blank">TRAIN</a> and <a href="https://m1crypto.co/home">EAGLE</a>
+
           <br /><br />
 
 You can reach us on
@@ -77,12 +78,21 @@ addr1q9z0fjsenn4ne6zjswl3r3k98uuehe7ve7e8649kjsy5yg33myr8mpq6wk3nmqw2hg8v5a6kmlp
 addr1q8ds9zyklmzphd6us528kqlcjmhq874ase5tk8qfc7a7p5fxh64unn46g3scmqzdym6epgkmmzv9uzvymqgdndtwh2psmwddeg
 <br /><br />
 
+
           <b>Pool Search</b>
           <br /><br />
 
 Pool Search randomly displays all pools in our system that are not retiring or retired.
 You can click the 'Pool Search' option again anytime to re-order the list.
 After the pools display you can page through the results and refine the query using the basic or advanced filters and sorting.
+<br /><br />
+
+<b>Map Search</b>
+<br /><br />
+
+Map Search displays active stake pools on a map. The coordinates of a pool is based on the pool's extented meta data 'location' field.
+If our geo service finds exactly one match for the pool's location, we count it as a hit and display it on the map. 
+You can then click the marker to drill down and see all pools at that location.
 <br /><br />
 
 
