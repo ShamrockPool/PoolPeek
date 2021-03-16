@@ -56,7 +56,7 @@ function checkIsImageUrl(url) {
     if (isEmpty(url)) {
         return false;
     }
-    if (url.startsWith("http")) {
+    if (url.startsWith("http") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {
         return true;
     }
     return false;
@@ -218,7 +218,7 @@ export default class Pool extends React.Component {
                                                 <p>Delegates: {item.active_stake_delegator_count}</p>
                                                 {(width > 600 && item.active_stake_history.length > 0) &&
                                                     <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
-                                                    }
+                                                }
                                             </td>
                                         </tr>
                                         <tr>
