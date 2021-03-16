@@ -150,7 +150,39 @@ PoolPeek.com would like to thank the following sites for supplying us tools that
             <li><a href="pooltool.io" target="_blank">pooltool.io</a></li>
           </ul>
 
-          <h2>PoolPeek.com Website Privacy Statement</h2>
+<br/>
+
+<h2>Third Party Links Disclaimer</h2>
+
+Third party links to sites and images on our website are provided for visitors’ convenience only. PoolPeek.com accepts no liability for any content on 
+the linked sites, or the site itself and links taken to other sites are done so at your own risk. 
+<br/><br/>
+
+PoolPeek.com does it upmost to link to reputable websites but ultimately has no control over content on these.
+<br/><br/>
+
+PoolPeek.com does not imply that any third party links or images used on our website are endorsed by us, and we accept no responsibility for the 
+content or the use of such websites. PoolPeek.com does not give any representation regarding the quality, safety, 
+suitability or reliability of any external website or any of the content or materials contained on them. We urge users to take adequate 
+steps to safeguard against such things like viruses, worms and other potentially harmful malware.
+<br/><br/>
+
+When using the third party links on PoolPeek.com's website, please remember you should review the privacy policies of those websites and 
+the terms and conditions to get a better understanding of what, why and how they collect and use any personally identifiable information.
+<br/><br/>
+
+Hyperlinks, images and hypertext are provided for your ease, so you can access the variety of information and services provided. 
+We accept no liability arising out of the use of such links, including:
+<br/><br/>
+
+misuse or misunderstanding of these hyperlinks and hypertext links and web site navigational methods<br/>
+third party interpretation of data or information which is distributed around the web site and reached using hypertext and hyperlinks<br/>
+third party understanding of or use of the navigational structure of the site or the interpretation of distributed information on the site<br/>
+We may revise this disclaimer at any time, without prior notice, by updating this web page.
+<br/><br/>
+
+
+<h2>PoolPeek.com Website Privacy Statement</h2>
           <p>This document was last updated on February 21st, 2021.</p>
 
           <b> ACKNOWLEDGEMENT AND ACCEPTANCE OF TERMS</b>
