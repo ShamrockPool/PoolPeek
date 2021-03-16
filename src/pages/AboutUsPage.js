@@ -138,20 +138,8 @@ If a pool is delisted in Daedalus we also delist it in Pool Peek.
 <br/><br/>
 
 
-          <b>The Old Site</b>
-          <br /><br />
-
-You can still access the "classic" version of PoolPeek.com using the link below:
+<b>THANK YOU</b>
 <br /><br />
-
-          <a target="_blank" href="https://PoolPeek.com/PoolPeekClassic.asp">Pool Peek Classic</a>
-          <br />
-https://PoolPeek.com/PoolPeekClassic.asp
-<br /><br />
-
-
-          <b>THANK YOU</b>
-          <br /><br />
 
 PoolPeek.com would like to thank the following sites for supplying us tools that make our site even better:
 <br />
