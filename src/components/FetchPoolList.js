@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React, { useState } from 'react';
 import { Col, Row, Form, Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
 import _ from 'lodash';
 import { isEmpty } from 'utils/stringutil.js';
@@ -8,7 +8,7 @@ import { Collapse } from 'react-collapse';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 import { css } from "@emotion/core";
 import CircleLoader
-from "react-spinners/CircleLoader";
+    from "react-spinners/CircleLoader";
 const WAIT_INTERVAL = 2000
 
 const override = css`
@@ -560,11 +560,10 @@ export default class FetchPoolList extends React.Component {
 
         return (
 
-            <div className="container-fluid" style={{ align: "left", width: "99%" }}>
-
+            <div className="container-fluid" style={{ align: "left", width: "99%", margin: "0px" }}>
                 <Scroll showBelow={250} />
                 {this.state.showFilters &&
-                    <div>
+                    <div className="container-fluid" style={{ align: "left", width: "90%", margin: "0px" }}>
                         <h3><b>Filters:</b></h3>
                         <Table >
                             <tbody>
@@ -623,12 +622,14 @@ export default class FetchPoolList extends React.Component {
                                 </tr>
                             </tbody>
                         </Table>
-                        <FormGroup>
-                            <h3 style={{ marginTop: "-30px" }}><b>Advanced:</b></h3>
-                            <FormControlLabel value="all"
+                        <FormGroup >
+                            {/* <div className="container-fluid" style={{ align: "left", display: 'inline-block'}}> */}
+                            <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b></h3>
+                            <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
                                 control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
                                 />}
                             />
+                            {/* </div> */}
                         </FormGroup>
 
                         <Collapse isOpened={this.state.advancedSearchFiltersShow}>
@@ -828,7 +829,7 @@ export default class FetchPoolList extends React.Component {
 
                         <Pagination style={{ align: "left", width: "82%" }}>
                             <PaginationItem disabled={currentPage <= 0}>
-                                <PaginationLink
+                                <PaginationLink style={{ fontSize: "14px" }}
                                     onClick={e => this.handlePageClick(e, currentPage - 1)}
                                     previous
                                     href="#"
@@ -836,7 +837,7 @@ export default class FetchPoolList extends React.Component {
                             </PaginationItem>
 
                             {_.times(pageCount, (i) =>
-                                <PaginationItem active={i === currentPage} key={i}>
+                                <PaginationItem style={{ fontSize: "14px" }} active={i === currentPage} key={i}>
                                     <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
                                         {i + 1}
                                     </PaginationLink>
@@ -844,25 +845,21 @@ export default class FetchPoolList extends React.Component {
                             )}
 
                             <PaginationItem disabled={currentPage >= pageCount - 1}>
-                                <PaginationLink
+                                <PaginationLink style={{ fontSize: "14px" }}
                                     onClick={e => this.handlePageClick(e, currentPage + 1)}
                                     next
                                     href="#"
                                 />
                             </PaginationItem>
                         </Pagination>
-
+                        {(this.state.query && this.state.query.count > 10) && (<p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>)}
+                        <div className="container-fluid" style={{ align: "left", display: 'inline-block' }}></div>
                     </div>}
 
-                {this.state.loading ?  <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-                    : <div>
-                        {this.state.query.count > 10 && (<p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>)}
-                        <Row>
-                            <Col>
-                                <Pool pools={this.state.pools} />
-                            </Col>
-                        </Row>
-                    </div>}
+                {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                    :
+                    <Pool pools={this.state.pools} />
+                }
 
             </div >
         );
