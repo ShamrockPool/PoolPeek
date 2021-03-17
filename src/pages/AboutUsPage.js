@@ -78,6 +78,10 @@ addr1q9z0fjsenn4ne6zjswl3r3k98uuehe7ve7e8649kjsy5yg33myr8mpq6wk3nmqw2hg8v5a6kmlp
 addr1q8ds9zyklmzphd6us528kqlcjmhq874ase5tk8qfc7a7p5fxh64unn46g3scmqzdym6epgkmmzv9uzvymqgdndtwh2psmwddeg
 <br /><br />
 
+<a href={"https://poolpeek.com/pool/2cdc5cef88f1c15e19c33fd8f47d9bd89c3d7ee4fa09512fbd44a126"}
+            target="_blank" rel="noreferrer"><p>EAGLE:</p></a>
+addr1qxmmr5crp2929u64z8pzxjsdca7u6p6d80spdvzg0h8wz4qryl3a8chygwx7jykj6fmhd4q46s5qeuet9f4ku03krwmq8u2nvx
+<br /><br />
 
           <b>Pool Search</b>
           <br /><br />
@@ -183,8 +187,7 @@ We may revise this disclaimer at any time, without prior notice, by updating thi
 
 
 <h2>PoolPeek.com Website Privacy Statement</h2>
-          <p>This document was last updated on February 21st, 2021.</p>
-
+ 
           <b> ACKNOWLEDGEMENT AND ACCEPTANCE OF TERMS</b>
           <br />
           <p>PoolPeek.com is committed to protecting your privacy. This Privacy Statement sets forth our current privacy practices with regard to the
@@ -240,15 +243,15 @@ disable some of the functionality on our Website.</p>
           <p>We will not disclose personally identifiable information we collect from you to third parties without your permission except to
 the extent necessary including:</p>
 
-To fulfill your service requests for services. <br />
-To protect ourselves from liability, <br />
+To fulfill your service requests for services <br />
+To protect ourselves from liability <br />
 To respond to legal process or comply with law<br />
           <br />
 
           <b> CHANGES TO THIS STATEMENT</b>
           <br />
           <p>PoolPeek.com has the discretion to occasionally update this privacy statement.
-          When we do, we will also revise the “updated” date at the top of this Privacy page.
+          We may revise this privacy statement at any time, without prior notice, by updating this web page.
           We encourage you to periodically review this privacy statement to stay informed about how we are helping to protect
           the personal information we collect.  Your continued use of the service constitutes your agreement to
 this privacy statement and any updates.</p>
