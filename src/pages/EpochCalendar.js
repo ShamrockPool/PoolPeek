@@ -3,7 +3,7 @@ import Page from 'components/Page';
 import React from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
-import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'styles/calendar.css';
 import GridLoader from "react-spinners/GridLoader";
 import { css } from "@emotion/core";
 import Timer from "react-compound-timer";
