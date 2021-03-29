@@ -147,7 +147,7 @@ class EpochCalendar extends React.Component {
                   }
                   startAccessor="start"
                   endAccessor="end"
-                  style={{ height: 750 }}
+                  style={{ height: 650 }}
                 />
               </Card>
             </div>)}
