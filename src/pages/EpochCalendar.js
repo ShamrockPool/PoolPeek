@@ -6,6 +6,9 @@ import moment from 'moment'
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import GridLoader from "react-spinners/GridLoader";
 import { css } from "@emotion/core";
+import Timer from "react-compound-timer";
+import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
+
 const localizer = momentLocalizer(moment);
 
 const override = css`
@@ -14,10 +17,27 @@ const override = css`
   border-color: red;
 `;
 
+const cardBodyStyle = {
+  borderBottom: 'solid 3px green',
+  borderTop: 'solid 3px green',
+  borderRight: 'solid 3px green',
+  borderLeft: 'solid 3px green',
+  // background: 'green',
+  // color: 'white',
+  paddingBottom: 0,
+  paddingTop: 5,
+  paddingLeft: 10,
+  paddingRight: 10,
+  align: "center"
+};
+
+const width = window.innerWidth;
+
 class EpochCalendar extends React.Component {
   state = {
     loading: true,
-    events: []
+    events: [],
+    epochSecondsRemaining: 0
   };
 
   constructor(props) {
@@ -37,9 +57,9 @@ class EpochCalendar extends React.Component {
   generateEpochEvents() {
     console.log("hello");
 
-    var epochDate = new Date(2017, 8, 23, 21, 44);
+    var epochDate = new Date(2017, 8, 23, 21, 44, 59);
     console.log(epochDate);
-    var today = new Date();
+    var today = new Date(new Date().toUTCString());
     var endDate = new Date(today.getFullYear(), 12, 31, 21, 45);
 
     console.log(endDate);
@@ -50,13 +70,18 @@ class EpochCalendar extends React.Component {
     while (epochDate.getTime() < endDate.getTime()) {
       var epochEndDate = new Date(epochDate);
       epochEndDate.setDate(epochEndDate.getDate() + epochLength);
-      console.log(epochEndDate);
 
       var event = {
         'title': 'Epoch ' + epoch,
         'allDay': false,
         'start': epochDate,
         'end': epochEndDate,
+      }
+
+
+      if (today > epochDate && today < epochEndDate) {
+        var timeInEpoch = epochEndDate.getTime() - new Date(Date.now() + (new Date().getTimezoneOffset() * 60000)).getTime();
+        this.state.epochSecondsRemaining = timeInEpoch;
       }
 
       epoch++;
@@ -77,15 +102,55 @@ class EpochCalendar extends React.Component {
       >
         <div>
           {this.state.loading == true ? <GridLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} />
-            : (< Calendar
-              localizer={localizer}
-              events={
-                this.state.events
-              }
-              startAccessor="start"
-              endAccessor="end"
-              style={{ height: 750 }}
-            />)}
+            : (<div>
+              <Timer
+                initialTime={this.state.epochSecondsRemaining}
+                direction="backward"
+              >
+
+                <Card style={cardBodyStyle} body>
+                  
+                  <div className="container-fluid" style={{  width: "100%" }}>
+
+                    <h6><b>Next Cardano Epoch starts in:</b></h6>
+                    <Table {...{ ['striped']: true }}>
+                      <thead>
+                        <tr>
+                          <th>Days</th>
+                          <th>Hours</th>
+                          <th>Minutes</th>
+                          <th>Seconds</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><Timer.Days /></td>
+                          <td><Timer.Hours /></td>
+                          <td><Timer.Minutes /></td>
+                          <td><Timer.Seconds /></td>
+                        </tr>
+                      </tbody>
+                    </Table>
+
+                  </div>
+                </Card>
+
+
+              </Timer>
+
+              <br></br>
+              <Card style={cardBodyStyle} body>
+                < Calendar
+                  localizer={localizer}
+                  events={
+                    this.state.events
+                  }
+                  startAccessor="start"
+                  endAccessor="end"
+                  style={{ height: 750 }}
+                />
+              </Card>
+            </div>)}
         </div>
       </Page>
     );
