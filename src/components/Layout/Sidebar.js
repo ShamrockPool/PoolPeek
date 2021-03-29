@@ -14,7 +14,9 @@ import {
   MdSearch,
   MdLocationOn,
   MdBuild,
-  MdFormatListBulleted
+  MdFormatListBulleted,
+  MdPermContactCalendar,
+  MdDateRange
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -62,7 +64,7 @@ const navItems = [
   { to: '/', name: 'Team Peek', exact: true, Icon: MdBuild },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
-  { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
+  { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange }
 ];
 
 const bem = bn.create('sidebar');
