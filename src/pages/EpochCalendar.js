@@ -55,14 +55,10 @@ class EpochCalendar extends React.Component {
   }
 
   generateEpochEvents() {
-    console.log("hello");
-
     var epochDate = new Date(2017, 8, 23, 21, 44, 59);
-    console.log(epochDate);
     var today = new Date(new Date().toUTCString());
     var endDate = new Date(today.getFullYear(), 12, 31, 21, 45);
 
-    console.log(endDate);
     var events = [];
     var epoch = 0;
     var epochLength = 5;

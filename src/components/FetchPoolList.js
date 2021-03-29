@@ -226,9 +226,6 @@ export default class FetchPoolList extends React.Component {
     }
 
     async getPoolList(query) {
-
-        console.log(query)
-
         if (this.state.multiPoolOperators) {
             query += "&exclude_splitters=1";
         }

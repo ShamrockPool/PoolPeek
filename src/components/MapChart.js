@@ -34,15 +34,10 @@ class MapChart extends React.Component {
 
   getPopout() {
     var tickers = [];
-    console.log(this.state.latSelected)
-    console.log(this.state.longSelected)
-
-
     this.props.poolsData.poolpeek.geo.map(function (item, key) {
       // if (this.state.longSelected == item.location_lon && this.state.latSelected == item.location_lat) {
       //   tickers.push(item.name)
       // }
-      console.log(item.name);
     });
 
 
@@ -90,7 +85,6 @@ class MapChart extends React.Component {
       }
     });
 
-    console.log(markers.length)
     return markers;
   }
 
@@ -124,7 +118,6 @@ class MapChart extends React.Component {
       }
     });
 
-    console.log(markers.length)
     // this.setState({ totalMarkers: markers.length });
 
     return markers;
@@ -168,10 +161,6 @@ class MapChart extends React.Component {
                   this.state.latSelected = anchor[1];
                   this.state.longSelected = anchor[0];
                   this.setState({ latSelected: anchor[1], longSelected: anchor[0] });
-
-
-                  console.log('Clicked marker nr: ', payload);
-                  console.log('Clicked marker nr anchor: ', anchor);
 
                   this.state.locationSelected = payload;
                   this.setState({ locationSelected: payload, isShown: true });
