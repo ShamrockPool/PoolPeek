@@ -64,7 +64,9 @@ const navItems = [
   { to: '/', name: 'Team Peek', exact: true, Icon: MdBuild },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
-  { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange }
+  { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
+  { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
+
 ];
 
 const bem = bn.create('sidebar');
