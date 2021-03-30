@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "https://poolpeek.com/precache-manifest.75a4bfd3e2aa430696e6ae1574f2b56a.js"
+  "https://poolpeek.com/precache-manifest.9ebcedebc762157876068e13dc920070.js"
 );
 
 self.addEventListener('message', (event) => {
