@@ -132,6 +132,7 @@ export default class Pool extends React.Component {
 
                                 </div>
                                 <p>{ReactHtmlParser(description)}</p>
+                                
                             </CardHeader>
                             <Card style={cardBodyStyle} body>
 
@@ -179,14 +180,14 @@ export default class Pool extends React.Component {
                                                 <td style={tableRowStyle} scope="row"><p>{ReactHtmlParser(item.retirement_epoch)}</p></td>
                                             </tr>
                                         )}
-                                        {/* <tr>
+                                        <tr>
                                             <Tooltip
                                                 title="The website of the pool."
                                                 placement="left"
                                             >
                                                 <th style={tableRowStyle} scope="row">Website</th></Tooltip>
                                             <td style={tableRowStyle}><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.homepage}</p></a></td>
-                                        </tr> */}
+                                        </tr>
                                         {!isEmpty(item.extended_meta.location) && (<tr>
                                             <Tooltip
                                                 title="The location of the pool."
