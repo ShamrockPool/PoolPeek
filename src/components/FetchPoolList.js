@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Row, Form, Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
+import { Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
 import _ from 'lodash';
 import { isEmpty } from 'utils/stringutil.js';
 import Scroll from '../components/Scroll';
@@ -66,6 +66,7 @@ export default class FetchPoolList extends React.Component {
             activestakefrom: "",
             activestaketo: "",
             multiPoolOperators: false,
+            saturatedPools: false,
             location: "",
             //end search params
             advancedSearchFiltersShow: false,
@@ -230,6 +231,10 @@ export default class FetchPoolList extends React.Component {
             query += "&exclude_splitters=1";
         }
 
+        if (this.state.saturatedPools) {
+            query += "&exclude_splitters=1";
+        }
+
         this.setState({ pools: {}, loading: true })
         var response = await fetch(query);
         // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
@@ -290,6 +295,23 @@ export default class FetchPoolList extends React.Component {
         else {
             this.setState({ multiPoolOperators: true });
             this.state.multiPoolOperators = true;
+        }
+
+        if (this.state.searchQuery !== "") {
+            this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
+        }
+        else
+            this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+    }
+
+    handleSaturatedPoolsClick() {
+        if (this.state.saturatedPools) {
+            this.setState({ saturatedPools: false });
+            this.state.saturatedPools = false;
+        }
+        else {
+            this.setState({ saturatedPools: true });
+            this.state.saturatedPools = true;
         }
 
         if (this.state.searchQuery !== "") {
@@ -611,9 +633,12 @@ export default class FetchPoolList extends React.Component {
                                 <tr>
                                     <td>
                                         <label>
-                                            <span>Exclude Multi Pool Operators</span>
+                                            <span>Hide Multi Pool Operators</span>
                                             <Checkbox checked={this.state.multiPoolOperators}
                                                 onChange={e => this.handleMultiPoolOperatorsClick()} />
+                                            <span>Hide Saturated Pools</span>
+                                            <Checkbox checked={this.state.saturatedPools}
+                                                onChange={e => this.handleSaturatedPoolsClick()} />
                                         </label>
                                     </td>
                                 </tr>

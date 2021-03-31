@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import Tooltip from "@material-ui/core/Tooltip";
 import PooltoolImage from 'assets/img/pooltool.png';
@@ -7,13 +7,37 @@ import AdaPoolImage from 'assets/img/adapools.png';
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import "../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
-import Chart from '../components/Chart';
+import Chart from './Chart';
 import SocialMedia from './SocialMedia';
 import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { faClipboard, faShare, faShareAlt } from '@fortawesome/free-solid-svg-icons';
+import { Passers } from "prop-passer";
+import {
+    FacebookShareButton,
+    TelegramShareButton,
+    TwitterShareButton,
+    LinkedinShareButton,
+    PinterestShareButton,
+    VKShareButton,
+    WhatsappShareButton,
+    EmailShareButton,
+
+
+    // Comment to sepaate, overwriting codesandbox behavior
+    FacebookIcon,
+    TwitterIcon,
+    TelegramIcon,
+    LinkedinIcon,
+    PinterestIcon,
+    VKIcon,
+    WhatsappIcon,
+    EmailIcon
+} from "react-share";
+import { Telegram } from '@material-ui/icons';
+
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -66,20 +90,21 @@ function convertImageUrlToHttps(url) {
     return url.replace("http:", "https:");
 }
 
-
 export default class Pool extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             copied: false
-        }
+        };
     }
 
-
+    componentDidMount() {
+    }
 
     render() {
         return (
+
             this.props.pools.map(function (item, key) {
 
                 var description = linkifyHtml(item.description, {
@@ -103,7 +128,9 @@ export default class Pool extends React.Component {
                                         height="28"
                                     />)}
                                     <b>&nbsp;{ReactHtmlParser(item.name)}</b>
-                                    <SocialMedia extendedmeta={item.extended_meta} />
+                                    <SocialMedia extendedmeta={item.extended_meta} />&nbsp;
+
+
                                 </div>
                                 <p>{ReactHtmlParser(description)}</p>
                             </CardHeader>
@@ -130,14 +157,17 @@ export default class Pool extends React.Component {
                                             <td style={tableRowStyle} scope="row">
                                                 {width > 600 && (<small>{item.pool_id}    </small>)}
                                                 <Tooltip
-                                                    title="Copy pool direct link"
+                                                    title="Copy Pool ID"
                                                     placement="left"
                                                 >
-                                                    <CopyToClipboard text={"https://poolpeek.com/pool/" + item.pool_id}>
+                                                    <CopyToClipboard text={item.pool_id}
+                                                    >
                                                         <FontAwesomeIcon icon={faClipboard} />
                                                     </CopyToClipboard>
                                                 </Tooltip>
+
                                             </td>
+                                            {/* {this.state.copied ? <span style={{ color: 'red' }}>Copied.</span> : null} */}
                                         </tr>
                                         {item.retirement_epoch.length > 0 && (
                                             <tr>
@@ -189,33 +219,22 @@ export default class Pool extends React.Component {
                                                 <p>{item.cost_per_epoch} ₳</p>
                                             </td>
                                         </tr>
-
-                                        {/* <tr>
+                                        <tr>
                                             <Tooltip
-                                                title="How many people are delegating to this pool."
+                                                title="Stake is the amount of ADA delegated to the pool."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Delegates</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Pool Stake:</th></Tooltip>
                                             <td style={tableRowStyle}>
-                                                <p>{item.active_stake_delegator_count}</p>
-                                            </td>
-                                        </tr> */}
 
-                                        <tr><Tooltip
-                                            title="Stake is the amount of ADA delegated to the pool."
-                                            placement="left"
-                                        >
-                                            <th style={tableRowStyle} scope="row">Active Stake</th></Tooltip>
-                                            <td style={tableRowStyle}>
-                                                {/* <p>Active Stake: {item.active_stake} ₳</p>
-                                            <p>Delegators: {item.active_stake_delegator_count}</p> */}
-                                                {item.live_stake.length > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
+                                                {item.live_stake > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
-                                                {/* <p>Active Stake: {item.active_stake} ₳</p> */}
-                                                {/* <p>Delegators: {item.active_stake_delegator_count}</p> */}
-                                                <p>{item.active_stake} ₳</p>
-                                                <p>Delegates: {item.active_stake_delegator_count}</p>
+                                                {item.live_stake_delegators > 0 && item.live_stake_delegators != "0" && item.live_stake_delegators != "0.0" && (
+                                                    <p>Live Delegators: {item.live_stake_delegators} ₳</p>
+                                                )}
+                                                <p>Active Stake: {item.active_stake} ₳</p>
+                                                <p>Active Delegators: {item.active_stake_delegator_count}</p>
                                                 {(width > 600 && item.active_stake_history.length > 0) &&
                                                     <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
                                                 }
@@ -263,6 +282,37 @@ export default class Pool extends React.Component {
                                             </td>
                                         </tr> */}
                                         <tr>
+                                            <th style={tableRowStyle} scope="row">Share pool:</th>
+                                            <td style={tableRowStyle}>
+                                                <Tooltip
+                                                    title="Share pool Facebook"
+                                                    placement="left">
+                                                    <FacebookShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                                        title={"Checkout " + item.name + " on poolpeek.com!"}>
+                                                        <FacebookIcon
+                                                            size={"1.5rem"} // You can use rem value instead of numbers
+                                                            round
+                                                        />
+                                                    </FacebookShareButton>
+                                                </Tooltip>
+                                                <Tooltip
+                                                    title="Share pool Twitter"
+                                                    placement="left">
+                                                    <TwitterShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                                        title={"Checkout " + item.name + " on poolpeek.com!"}>
+                                                        <TwitterIcon size={"1.5rem"} round />
+                                                    </TwitterShareButton>
+                                                </Tooltip>
+                                                <Tooltip
+                                                    title="Share pool Telegram"
+                                                    placement="left">
+                                                    <TelegramShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                                        title={"Checkout " + item.name + " on poolpeek.com!"}>
+                                                        <TelegramIcon size={"1.5rem"} round />
+                                                    </TelegramShareButton>
+                                                </Tooltip></td>
+                                        </tr>
+                                        <tr>
                                             <Tooltip
                                                 title="Sites containing more information on the pool."
                                                 placement="left"
@@ -289,6 +339,8 @@ export default class Pool extends React.Component {
                             </Card>
                         </Card>
                         <br></br>
+
+
                     </div >
                 )
             })
