@@ -66,7 +66,7 @@ export default class FetchPoolList extends React.Component {
             activestakefrom: "",
             activestaketo: "",
             multiPoolOperators: false,
-            saturatedPools: false,
+            saturatedPools: true,
             location: "",
             //end search params
             advancedSearchFiltersShow: false,
@@ -232,7 +232,7 @@ export default class FetchPoolList extends React.Component {
         }
 
         if (this.state.saturatedPools) {
-            query += "&exclude_splitters=1";
+            query += "&live_stake<63786161";
         }
 
         this.setState({ pools: {}, loading: true })
@@ -584,6 +584,12 @@ export default class FetchPoolList extends React.Component {
                 {this.state.showFilters &&
                     <div className="container-fluid" style={{ align: "left", width: "90%", margin: "0px" }}>
                         <h3><b>Filters:</b></h3>
+                        {/* <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
+                            <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
+                                control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
+                                />}
+                            />
+                        </h3> */}
                         <Table >
                             <tbody>
                                 <tr>
@@ -632,26 +638,27 @@ export default class FetchPoolList extends React.Component {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <label>
+                                        {/* <label>
                                             <span>Hide Multi Pool Operators</span>
                                             <Checkbox checked={this.state.multiPoolOperators}
                                                 onChange={e => this.handleMultiPoolOperatorsClick()} />
                                             <span>Hide Saturated Pools</span>
                                             <Checkbox checked={this.state.saturatedPools}
                                                 onChange={e => this.handleSaturatedPoolsClick()} />
-                                        </label>
+                                        </label> */}
                                     </td>
                                 </tr>
                             </tbody>
                         </Table>
                         <FormGroup >
-                            {/* <div className="container-fluid" style={{ align: "left", display: 'inline-block'}}> */}
-                            <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b></h3>
+
+                            <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
                             <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
-                                control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
-                                />}
-                            />
-                            {/* </div> */}
+                                    control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
+                                    />}
+                                />
+                            </h3>
+
                         </FormGroup>
 
                         <Collapse isOpened={this.state.advancedSearchFiltersShow}>
@@ -875,8 +882,17 @@ export default class FetchPoolList extends React.Component {
                             </PaginationItem>
                         </Pagination>
                         {(this.state.query && this.state.query.count > 10) && (<p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>)}
-                        <div className="container-fluid" style={{ align: "left", display: 'inline-block' }}></div>
+
+                        <span>Hide Saturated Pools</span>
+                        <Checkbox checked={this.state.saturatedPools}
+                            onChange={e => this.handleSaturatedPoolsClick()} />
+                        <span>Hide Multi Pool Operators</span>
+                        <Checkbox checked={this.state.multiPoolOperators}
+                            onChange={e => this.handleMultiPoolOperatorsClick()} />
                     </div>}
+
+
+
 
                 {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                     :

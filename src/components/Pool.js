@@ -13,8 +13,7 @@ import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboard, faShare, faShareAlt } from '@fortawesome/free-solid-svg-icons';
-import { Passers } from "prop-passer";
+import { faClipboard, faGlobe, faShare, faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import {
     FacebookShareButton,
     TelegramShareButton,
@@ -128,7 +127,7 @@ export default class Pool extends React.Component {
                                         height="28"
                                     />)}
                                     <b>&nbsp;{ReactHtmlParser(item.name)}</b>
-                                    <SocialMedia extendedmeta={item.extended_meta} />&nbsp;
+                                    <SocialMedia extendedmeta={item.extended_meta} item={item}/>&nbsp;
 
 
                                 </div>
@@ -152,7 +151,7 @@ export default class Pool extends React.Component {
                                                 title="The pool id"
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Pool ID</th>
+                                                <th style={tableRowStyle} scope="row">ID</th>
                                             </Tooltip>
                                             <td style={tableRowStyle} scope="row">
                                                 {width > 600 && (<small>{item.pool_id}    </small>)}
@@ -180,14 +179,14 @@ export default class Pool extends React.Component {
                                                 <td style={tableRowStyle} scope="row"><p>{ReactHtmlParser(item.retirement_epoch)}</p></td>
                                             </tr>
                                         )}
-                                        <tr>
+                                        {/* <tr>
                                             <Tooltip
                                                 title="The website of the pool."
                                                 placement="left"
                                             >
                                                 <th style={tableRowStyle} scope="row">Website</th></Tooltip>
                                             <td style={tableRowStyle}><a href={item.homepage} target="_blank" rel="noreferrer"><p>{item.homepage}</p></a></td>
-                                        </tr>
+                                        </tr> */}
                                         {!isEmpty(item.extended_meta.location) && (<tr>
                                             <Tooltip
                                                 title="The location of the pool."
@@ -199,24 +198,24 @@ export default class Pool extends React.Component {
                                             </td>
                                         </tr>)}
 
-                                        <tr>
+                                        {/* <tr>
                                             <Tooltip
                                                 title="Pool margin is how much the pool take as extra rewards"
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Pool margin</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Margin</th></Tooltip>
                                             <td style={tableRowStyle}><p>{item.margin_pct}%</p>
                                             </td>
-                                        </tr>
+                                        </tr> */}
 
                                         <tr>
                                             <Tooltip
-                                                title="How much a pool deducts from rewards."
+                                                title="Pool costs, margin is how much the pool take as extra rewards"
                                                 placement="left"
                                             >
                                                 <th style={tableRowStyle} scope="row">Costs</th></Tooltip>
                                             <td style={tableRowStyle}>
-                                                <p>{item.cost_per_epoch} ₳</p>
+                                                <p>{item.margin_pct}% Margin,  {item.cost_per_epoch} ₳ Fixed Fee</p>
                                             </td>
                                         </tr>
                                         <tr>
@@ -224,7 +223,7 @@ export default class Pool extends React.Component {
                                                 title="Stake is the amount of ADA delegated to the pool."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Pool Stake:</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Stake:</th></Tooltip>
                                             <td style={tableRowStyle}>
 
                                                 {item.live_stake > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
@@ -255,7 +254,7 @@ export default class Pool extends React.Component {
                                                 title="The current saturation of the pool."
                                                 placement="left"
                                             >
-                                                <th style={tableRowStyle} scope="row">Pool Saturation</th></Tooltip>
+                                                <th style={tableRowStyle} scope="row">Saturation</th></Tooltip>
                                             <td style={tableRowStyle}><p>{Number(item.pct_saturated).toFixed(3)}%</p>
                                             </td>
                                         </tr>
@@ -284,33 +283,25 @@ export default class Pool extends React.Component {
                                         <tr>
                                             <th style={tableRowStyle} scope="row">Share pool:</th>
                                             <td style={tableRowStyle}>
-                                                <Tooltip
-                                                    title="Share pool Facebook"
-                                                    placement="left">
-                                                    <FacebookShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
-                                                        title={"Checkout " + item.name + " on poolpeek.com!"}>
-                                                        <FacebookIcon
-                                                            size={"1.5rem"} // You can use rem value instead of numbers
-                                                            round
-                                                        />
-                                                    </FacebookShareButton>
-                                                </Tooltip>
-                                                <Tooltip
-                                                    title="Share pool Twitter"
-                                                    placement="left">
-                                                    <TwitterShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
-                                                        title={"Checkout " + item.name + " on poolpeek.com!"}>
-                                                        <TwitterIcon size={"1.5rem"} round />
-                                                    </TwitterShareButton>
-                                                </Tooltip>
-                                                <Tooltip
-                                                    title="Share pool Telegram"
-                                                    placement="left">
-                                                    <TelegramShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
-                                                        title={"Checkout " + item.name + " on poolpeek.com!"}>
-                                                        <TelegramIcon size={"1.5rem"} round />
-                                                    </TelegramShareButton>
-                                                </Tooltip></td>
+
+                                                <FacebookShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                                    title={"Checkout " + item.name + " on poolpeek.com!"}>
+                                                    <FacebookIcon
+                                                        size={"1.5rem"} // You can use rem value instead of numbers
+                                                        round
+                                                    />
+                                                </FacebookShareButton>
+
+                                                <TwitterShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                                    title={"Checkout " + item.name + " on poolpeek.com!"}>
+                                                    <TwitterIcon size={"1.5rem"} round />
+                                                </TwitterShareButton>
+
+                                                <TelegramShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                                    title={"Checkout " + item.name + " on poolpeek.com!"}>
+                                                    <TelegramIcon size={"1.5rem"} round />
+                                                </TelegramShareButton>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <Tooltip

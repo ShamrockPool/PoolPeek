@@ -1,6 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter, faTelegram, faYoutube, faFacebook, faDiscord } from "@fortawesome/free-brands-svg-icons";
+import { faGlobe } from '@fortawesome/free-solid-svg-icons';
 import { isEmpty } from 'utils/stringutil.js';
 import Tooltip from "@material-ui/core/Tooltip";
 
@@ -51,6 +52,19 @@ export default class SocialMedia extends React.Component {
     render() {
         return (
             <div style={{ display: 'inline-block' }}>
+
+                <Tooltip
+                    title="Pool Website"
+                    placement="left"
+                >
+                    <a href={this.props.item.homepage} target="_blank" rel="noreferrer">
+                        <img
+                            className="pr-2"
+                            alt=""
+                        />
+                        <FontAwesomeIcon icon={faGlobe} /></a></Tooltip>
+
+
                 {this.state.twitterHandle !== "" &&
                     <Tooltip
                         title="Pool Twitter"
