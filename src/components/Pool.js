@@ -227,11 +227,11 @@ export default class Pool extends React.Component {
                                                 <th style={tableRowStyle} scope="row">Stake:</th></Tooltip>
                                             <td style={tableRowStyle}>
 
-                                                {item.live_stake > 0 && item.live_stake != "0" && item.live_stake != "0.0" && (
+                                                {item.live_stake != "0" && item.live_stake != "0.0" && (
                                                     <p>Live Stake: {item.live_stake} ₳</p>
                                                 )}
-                                                {item.live_stake_delegators > 0 && item.live_stake_delegators != "0" && item.live_stake_delegators != "0.0" && (
-                                                    <p>Live Delegators: {item.live_stake_delegators} ₳</p>
+                                                {item.live_stake_delegator_count != "0" && item.live_stake_delegator_count != "0.0" && (
+                                                    <p>Live Delegators: {item.live_stake_delegator_count}</p>
                                                 )}
                                                 <p>Active Stake: {item.active_stake} ₳</p>
                                                 <p>Active Delegators: {item.active_stake_delegator_count}</p>
