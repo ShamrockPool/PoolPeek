@@ -232,7 +232,7 @@ export default class FetchPoolList extends React.Component {
         }
 
         if (this.state.saturatedPools) {
-            query += "&live_stake<63786161";
+            query += "&saturated=1";
         }
 
         this.setState({ pools: {}, loading: true })
@@ -883,9 +883,6 @@ export default class FetchPoolList extends React.Component {
                         </Pagination>
                         {(this.state.query && this.state.query.count > 10) && (<p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>)}
 
-                        <span>Hide Saturated Pools</span>
-                        <Checkbox checked={this.state.saturatedPools}
-                            onChange={e => this.handleSaturatedPoolsClick()} />
                         <span>Hide Multi Pool Operators</span>
                         <Checkbox checked={this.state.multiPoolOperators}
                             onChange={e => this.handleMultiPoolOperatorsClick()} />
