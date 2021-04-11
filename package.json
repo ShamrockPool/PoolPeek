@@ -56,6 +56,8 @@
     "victory": "^32.0.0"
   },
   "devDependencies": {
+    "axios": "^0.21.1",
+    "file-saver": "^2.0.5",
     "gh-pages": "^1.2.0",
     "node-sass": "^4.11.0",
     "react-scripts": "3.0.1",
@@ -65,7 +67,8 @@
     "stylelint-config-standard": "^20.0.0",
     "stylelint-order": "^0.8.1",
     "stylelint-scss": "^3.19.0",
-    "typescript": "3.3.3"
+    "typescript": "3.3.3",
+    "xlsx": "^0.16.9"
   },
   "scripts": {
     "start": "react-scripts start",
