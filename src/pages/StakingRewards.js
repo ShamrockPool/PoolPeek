@@ -73,6 +73,10 @@ class StakingRewards extends React.Component {
       >
         <div style={{ width: "100%", alignItems: "left" }}>
         <Card style={cardBodyStyle} body>
+
+        <h3><b>How to find Stake Address</b></h3>
+        <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
+
           <Input
             style={{ fontSize: 14 }}
             type="text"
