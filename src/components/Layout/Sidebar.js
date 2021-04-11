@@ -16,7 +16,8 @@ import {
   MdBuild,
   MdFormatListBulleted,
   MdPermContactCalendar,
-  MdDateRange
+  MdDateRange,
+  MdMoneyOff
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -65,6 +66,7 @@ const navItems = [
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
+  { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
 ];

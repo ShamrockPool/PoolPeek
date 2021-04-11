@@ -13,7 +13,7 @@ import FunDumpPage from 'pages/FunDumpPage';
 import AboutUsPage from 'pages/AboutUsPage';
 import PoolMapPage from 'pages/PoolMap';
 import EpochCalendar from 'pages/EpochCalendar';
-
+import StakingRewards from 'pages/StakingRewards';
 
 
 require('./styles/reduction.scss');
@@ -35,6 +35,7 @@ class App extends React.Component {
                 <Route exact path="/poolsearchmap" render={(props) => <PoolMapPage />} />
 
                 <Route exact path="/epochcalendar" render={(props) => <EpochCalendar />} />
+                <Route exact path="/stakingrewards" render={(props) => <StakingRewards />} />
                 <Route exact path="/aboutus" render={(props) => <AboutUsPage />} />
                 {/* <Route exact path="/:poolid" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} />} /> */}
 
