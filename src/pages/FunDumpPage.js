@@ -1,4 +1,3 @@
-import FetchPoolList from 'components/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';

@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
 import _ from 'lodash';
 import { isEmpty } from 'utils/stringutil.js';
-import Scroll from '../components/Scroll';
-import Pool from 'components/Pool';
+import Scroll from '../Scroll';
+import Pool from 'components/pool/Pool';
 import { Collapse } from 'react-collapse';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 import { css } from "@emotion/core";
@@ -942,10 +942,25 @@ export default class FetchPoolList extends React.Component {
 
 
 
-                {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                {/* {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                     :
                     <Pool pools={this.state.pools} />
+                } */}
+
+                {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                    :
+                    
+
+                    this.state.pools.map(function (item, key) {
+                        return (
+                            <Pool pool={item} />
+                            // <PoolInfo pool={item} />
+                        )
+        
+                    })
+                    
                 }
+                
             </div >
         );
     }
