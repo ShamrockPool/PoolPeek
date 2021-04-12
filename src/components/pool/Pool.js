@@ -11,7 +11,8 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactImageFallback from "react-image-fallback";
 import SocialMedia from '../SocialMedia';
 import ReactHtmlParser from 'react-html-parser';
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faInfo, faDatabase, faPeopleCarry, faShare } from '@fortawesome/free-solid-svg-icons';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -51,10 +52,6 @@ function checkIsImageUrl(url) {
     return false;
 }
 
-function convertImageUrlToHttps(url) {
-    return url.replace("http:", "https:");
-}
-
 export default class Pool extends React.Component {
     constructor(props) {
         super(props);
@@ -77,20 +74,22 @@ export default class Pool extends React.Component {
             <div>
                 <CardHeader style={cardheaderStyle}>
                     <div style={{ display: 'inline-block' }}>
-                        {checkIsImageUrl(this.props.pool.extended_meta.url_png_logo) ? (
-                            <ReactImageFallback
-                                src={this.props.pool.extended_meta.url_png_logo}
-                                width="32"
+                        <h3>
+                            {checkIsImageUrl(this.props.pool.extended_meta.url_png_logo) ? (
+                                <ReactImageFallback
+                                    src={this.props.pool.extended_meta.url_png_logo}
+                                    width="40"
+                                    height="40"
+                                    fallbackImage={CardanoImage} />
+                            ) : (<img
+                                src={CardanoImage}
+                                className="pr-2"
+                                width="38"
                                 height="32"
-                                fallbackImage={CardanoImage} />
-                        ) : (<img
-                            src={CardanoImage}
-                            className="pr-2"
-                            width="34"
-                            height="28"
-                        />)}
-                        <b>&nbsp;{ReactHtmlParser(this.props.pool.name)}</b>
-                        <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />&nbsp;
+                            />)}
+                            <b>&nbsp;{ReactHtmlParser(this.props.pool.name)}</b>
+                            <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />
+                        </h3>
                     </div>
 
                     {/* <p style={{ paddingLeft: '40px' }}><b>{this.props.pool.live_stake} ₳</b></p> */}
@@ -99,18 +98,16 @@ export default class Pool extends React.Component {
                         defaultProtocol: 'https'
                     }))}</p>
 
-                    
-
                     <Tabs
                         selectedIndex={this.state.selectedTab}
                         onSelect={(selectedTab) => this.setState({ selectedTab: selectedTab })}
 
                     >
                         <TabList>
-                            <Tab>Info</Tab>
-                            <Tab>Stats</Tab>
-                            <Tab>Delegates</Tab>
-                            <Tab>Promote</Tab>
+                            <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
+                            <Tab><FontAwesomeIcon icon={faDatabase} /> Stats</Tab>
+                            <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>
+                            <Tab><FontAwesomeIcon icon={faShare} /> Promote</Tab>
                         </TabList>
 
                         <TabPanel>

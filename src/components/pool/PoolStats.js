@@ -120,7 +120,7 @@ export default class PoolStats extends React.Component {
                                     <p>{item.margin_pct}% Margin,  {item.cost_per_epoch} ₳ Fixed Fee</p>
                                 </td>
                             </tr>
-                            <tr>
+                            {/* <tr>
                                 <Tooltip
                                     title="Stake is the amount of ADA delegated to the pool."
                                     placement="left"
@@ -139,6 +139,49 @@ export default class PoolStats extends React.Component {
                                     {(width > 600 && item.active_stake_history.length > 0) &&
                                         <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
                                     }
+                                </td>
+                            </tr> */}
+                            {item.live_stake != "0" && item.live_stake != "0.0" && <tr>
+                                <Tooltip
+                                    title="Stake is the amount of ADA delegated to the pool."
+                                    placement="left"
+                                >
+                                    <th style={tableRowStyle} scope="row">Live Stake</th></Tooltip>
+                                <td style={tableRowStyle}>
+                                    <p>{item.live_stake} ₳</p>
+                                </td>
+                            </tr>}
+                            <tr>
+                                <Tooltip
+                                    title="Stake is the amount of ADA delegated to the pool."
+                                    placement="left"
+                                >
+                                    <th style={tableRowStyle} scope="row">Active Stake</th></Tooltip>
+                                <td style={tableRowStyle}>
+                                    <p>{item.active_stake} ₳</p>
+                                    {(width > 600 && item.active_stake_history.length > 0) &&
+                                        <Chart data={item.active_stake_history} currentEpoch={item.active_stake_epoch} currentActiveStake={item.active_stake} />
+                                    }
+                                </td>
+                            </tr>
+                            {item.live_stake_delegators != "0" && item.live_stake_delegators != "0.0" && <tr>
+                                <Tooltip
+                                    title="The amount of people staking to the pool."
+                                    placement="left"
+                                >
+                                    <th style={tableRowStyle} scope="row">Live Delegates</th></Tooltip>
+                                <td style={tableRowStyle}>
+                                    <p>{item.live_stake_delegator_count} </p>
+                                </td>
+                            </tr>}
+                            <tr>
+                                <Tooltip
+                                    title="The amount of people staking to the pool."
+                                    placement="left"
+                                >
+                                    <th style={tableRowStyle} scope="row">Active Delegators</th></Tooltip>
+                                <td style={tableRowStyle}>
+                                    <p>{item.active_stake_delegator_count}</p>
                                 </td>
                             </tr>
                             <tr>
@@ -163,6 +206,14 @@ export default class PoolStats extends React.Component {
 
                             <tr>
                                 <Tooltip
+                                    title="The number of blocks this pool has minted this Epoch."
+                                    placement="left"
+                                >
+                                    <th style={tableRowStyle} scope="row">Blocks Epoch</th></Tooltip>
+                                <td style={tableRowStyle}><p>{item.blocks}</p></td>
+                            </tr>
+                            <tr>
+                                <Tooltip
                                     title="The number of blocks this pool has minted."
                                     placement="left"
                                 >
@@ -170,18 +221,7 @@ export default class PoolStats extends React.Component {
                                 <td style={tableRowStyle}><p>{item.blocks}</p></td>
                             </tr>
 
-                            {/* <tr>
-                                            <Tooltip
-                                                title="The meta data urls of the pool."
-                                                placement="left"
-                                            >
-                                                <th style={tableRowStyle} scope="row">Pool Meta Data Urls</th></Tooltip>
-                                            <td style={tableRowStyle}><a href={item.metadata_url} target="_blank" rel="noreferrer"><p>{item.meta_url_display}</p></a>
-                                                {item.metadata_extended_url && (
-                                                    <a href={item.metadata_extended_url} target="_blank" rel="noreferrer"><p>{item.meta_ext_url_display}</p></a>
-                                                )}
-                                            </td>
-                                        </tr> */}
+
                         </tbody>
                     </Table>
                 </Card>
