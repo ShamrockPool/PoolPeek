@@ -9,6 +9,9 @@ import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core
 import { css } from "@emotion/core";
 import CircleLoader
     from "react-spinners/CircleLoader";
+import ReactPaginate from 'react-paginate';
+import 'styles/pagination.css';
+
 const WAIT_INTERVAL = 2000
 
 const override = css`
@@ -178,6 +181,22 @@ export default class FetchPoolList extends React.Component {
             }
         }, WAIT_INTERVAL);
     }
+
+
+    handlePageClick = (data) => {
+        let selected = data.selected;
+        let offset = Math.ceil(selected * this.props.perPage);
+
+        this.setState({ offset: offset }, () => {
+            var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(selected);
+
+            if (this.orderBy) {
+                u += this.orderBy;
+            }
+
+            this.getPoolList(u);
+        });
+    };
 
     handlePageClick(e, index) {
         e.preventDefault();
@@ -584,6 +603,13 @@ export default class FetchPoolList extends React.Component {
                 {this.state.showFilters &&
                     <div className="container-fluid" style={{ align: "left", width: "90%", margin: "0px" }}>
                         <h3><b>Filters:</b></h3>
+                        <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
+                            <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
+                                control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
+                                />}
+                            />
+                        </h3>
+
                         {/* <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
                             <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
                                 control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
@@ -636,8 +662,8 @@ export default class FetchPoolList extends React.Component {
                                         />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
+                                {/* <tr>
+                                    <td> */}
                                         {/* <label>
                                             <span>Hide Multi Pool Operators</span>
                                             <Checkbox checked={this.state.multiPoolOperators}
@@ -646,20 +672,20 @@ export default class FetchPoolList extends React.Component {
                                             <Checkbox checked={this.state.saturatedPools}
                                                 onChange={e => this.handleSaturatedPoolsClick()} />
                                         </label> */}
-                                    </td>
-                                </tr>
+                                    {/* </td>
+                                </tr> */}
                             </tbody>
                         </Table>
-                        <FormGroup >
+                        {/* <FormGroup > */}
 
-                            <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
+                        {/* <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
                             <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
                                     control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
                                     />}
                                 />
-                            </h3>
+                            </h3> */}
 
-                        </FormGroup>
+                        {/* </FormGroup> */}
 
                         <Collapse isOpened={this.state.advancedSearchFiltersShow}>
                             <Table >
@@ -855,8 +881,7 @@ export default class FetchPoolList extends React.Component {
                                 </FormGroup>
                             </Collapse>
                         </Collapse>
-
-                        <Pagination style={{ align: "left", width: "82%" }}>
+                        {/* <Pagination style={{ align: "left", width: "82%" }}>
                             <PaginationItem disabled={currentPage <= 0}>
                                 <PaginationLink style={{ fontSize: "14px" }}
                                     onClick={e => this.handlePageClick(e, currentPage - 1)}
@@ -880,12 +905,38 @@ export default class FetchPoolList extends React.Component {
                                     href="#"
                                 />
                             </PaginationItem>
-                        </Pagination>
-                        {(this.state.query && this.state.query.count > 10) && (<p> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}</p>)}
+                        </Pagination> */}
 
-                        <span>Hide Multi Pool Operators</span>
-                        <Checkbox checked={this.state.multiPoolOperators}
-                            onChange={e => this.handleMultiPoolOperatorsClick()} />
+
+
+                        <div className="container-fluid" style={{ align: "left", display: 'inline-block' }}>
+                            <span>Hide Multi Pool Operators</span>
+                            <Checkbox checked={this.state.multiPoolOperators}
+                                onChange={e => this.handleMultiPoolOperatorsClick()} />
+                            <span>Hide Saturated Pools</span>
+                            <Checkbox checked={this.state.saturatedPools}
+                                onChange={e => this.handleSaturatedPoolsClick()} />
+
+                            {(this.state.query && this.state.query.count > 10) && (
+                                <span> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}    </span>)}
+
+
+                            <ReactPaginate
+                                previousLabel={'previous'}
+                                nextLabel={'next'}
+                                breakLabel={'...'}
+                                breakClassName={'break-me'}
+                                pageCount={pageCount}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={5}
+                                onPageChange={this.handlePageClick}
+                                containerClassName={'pagination'}
+                                activeClassName={'active'}
+                            />
+
+
+                        </div>
+
                     </div>}
 
 
@@ -895,7 +946,6 @@ export default class FetchPoolList extends React.Component {
                     :
                     <Pool pools={this.state.pools} />
                 }
-
             </div >
         );
     }
