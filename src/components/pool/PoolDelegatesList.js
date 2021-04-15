@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import "../../styles/components/Table.css";
-
-
-
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -16,31 +12,6 @@ const tableRowStyle = {
     fontWeight: 'bold',
     padding: 0,
 };
-
-const cardheaderStyle = {
-    // borderBottom:  'solid 1px',
-    borderTop: 'solid 3px green',
-    borderRight: 'solid 3px green',
-    borderLeft: 'solid 3px green',
-    // background: 'green',
-    // color: 'white',
-    paddingBottom: 0
-};
-
-const cardBodyStyle = {
-    borderBottom: 'solid 3px green',
-    // borderTop: 'solid 1px green',
-    borderRight: 'solid 3px green',
-    borderLeft: 'solid 3px green',
-    // background: 'green',
-    // color: 'white',
-    paddingBottom: 0,
-    paddingTop: 5,
-    paddingLeft: 10,
-    paddingRight: 10
-};
-
-
 
 export default class PoolDelegatesList extends React.Component {
 

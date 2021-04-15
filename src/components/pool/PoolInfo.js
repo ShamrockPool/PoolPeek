@@ -4,13 +4,13 @@ import Tooltip from "@material-ui/core/Tooltip";
 import PooltoolImage from 'assets/img/pooltool.png';
 import PoolPmImage from 'assets/img/poolpm.png';
 import AdaPoolImage from 'assets/img/adapools.png';
-import "../../styles/components/Table.css";
 import ReactHtmlParser from 'react-html-parser';
 import { isEmpty } from 'utils/stringutil.js';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import "react-tabs/style/react-tabs.css";
+import "../../styles/components/Table.css";
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional

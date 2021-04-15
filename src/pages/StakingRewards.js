@@ -90,7 +90,7 @@ class StakingRewards extends React.Component {
             <br></br>
             <h4><b>How to find Stake Address</b></h4>
             <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
-            <h7><b>Yoroi:</b> Click POOL SEARCH > Enter pool ticker > Click Delegates > Search for your wallet Amount > Click the Stake Address</h7>
+            <h7><b>Yoroi:</b> Click <a href={"https://poolpeek.com/poolsearch"} target="_blank" rel="noreferrer">POOL SEARCH</a> > Enter pool ticker > Click Delegates > Search for your wallet Amount > Click the Stake Address</h7>
             <br></br>
             <Input
               style={{ fontSize: 14 }}
