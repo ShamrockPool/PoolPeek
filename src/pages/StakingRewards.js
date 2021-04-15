@@ -41,13 +41,14 @@ class StakingRewards extends React.Component {
 
     this.setState({ loading: false });
 
-    if(this.props.match.params.stakeAddress)
-    {
-      console.log(this.props.match.params.stakeAddress);
-      this.setState({ stakingAddress: this.props.match.params.stakeAddress });
-      this.state.stakingAddress = this.props.match.params.stakeAddress;
-      console.log(this.state.stakingAddress);     
-      this.getStakingRewards(); 
+    if (!isEmpty(this.props.match)) {
+      if (this.props.match.params.stakeAddress) {
+        console.log(this.props.match.params.stakeAddress);
+        this.setState({ stakingAddress: this.props.match.params.stakeAddress });
+        this.state.stakingAddress = this.props.match.params.stakeAddress;
+        console.log(this.state.stakingAddress);
+        this.getStakingRewards();
+      }
     }
   }
 
@@ -89,7 +90,7 @@ class StakingRewards extends React.Component {
             <br></br>
             <h4><b>How to find Stake Address</b></h4>
             <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
-            <h7><b>Yoroi:</b> Click POOL SEARCH > Enter pool ticker > Click Delegates > Search for your wallet Amount > Copy Stake Address</h7>
+            <h7><b>Yoroi:</b> Click POOL SEARCH > Enter pool ticker > Click Delegates > Search for your wallet Amount > Click the Stake Address</h7>
             <br></br>
             <Input
               style={{ fontSize: 14 }}
