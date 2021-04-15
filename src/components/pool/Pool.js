@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import PoolInfo from 'components/pool/PoolInfo';
 import PoolShare from 'components/pool/PoolShare';
 import PoolStats from 'components/pool/PoolStats';
-import "../../styles/components/Table.css";
+import PoolDelagates from 'components/pool/PoolDelagates';
+
 import { isEmpty } from 'utils/stringutil.js';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'; // eslint-disable-line
 import "react-tabs/style/react-tabs.css";
+import "../../styles/components/Table.css";
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactImageFallback from "react-image-fallback";
@@ -117,7 +119,7 @@ export default class Pool extends React.Component {
                             {this.props.pool && <PoolStats pool={this.props.pool} />}
                         </TabPanel>
                         <TabPanel>
-                            <p>Delegates</p>
+                            {this.props.pool && <PoolDelagates pool={this.props.pool} />}
                         </TabPanel>
                         <TabPanel>
                             {this.props.pool && <PoolShare pool={this.props.pool} />}

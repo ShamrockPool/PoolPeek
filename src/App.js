@@ -67,6 +67,9 @@ class App extends React.Component {
                 <Route exact path="/pool/:poolid" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
                 <Route exact path="/poolsearch/:location" render={(props) => <DashboardPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
 
+                <Route exact path="/stakingrewards/:stakeAddress" render={(props) => <StakingRewards  {...props}/>} />
+
+
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />
