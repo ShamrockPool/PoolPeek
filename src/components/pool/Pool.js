@@ -131,14 +131,9 @@ export default class Pool extends React.Component {
                         </TabPanel>
                     </Tabs>
                 </CardHeader>
-
-
                 <br></br>
             </div>
         )
-
-        // })
-        // )
     };
 };
 

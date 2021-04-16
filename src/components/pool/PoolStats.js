@@ -206,11 +206,11 @@ export default class PoolStats extends React.Component {
 
                             <tr>
                                 <Tooltip
-                                    title="The number of blocks this pool has minted this Epoch."
+                                    title="The number of blocks this pool has minted this Epoch so far."
                                     placement="left"
                                 >
-                                    <th style={tableRowStyle} scope="row">Blocks Epoch</th></Tooltip>
-                                <td style={tableRowStyle}><p>{item.block_history[0].blocks}</p></td>
+                                    <th style={tableRowStyle} scope="row">Live Blocks</th></Tooltip>
+                                <td style={tableRowStyle}><p>{item.blocks_this_epoch}</p></td>
                             </tr>
                             <tr>
                                 <Tooltip

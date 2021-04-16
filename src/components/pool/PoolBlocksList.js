@@ -26,18 +26,22 @@ export default class PoolBlocksList extends React.Component {
     }
 
     render() {
+        var currentEpoch = this.props.currentEpoch;
         return (
-
+            
             this.props.block_history.map(function (item, key) {
                 return (
                     <tbody>
                         <tr>
-                            <td style={tableRowStyle} scope="row">{item.blocks_epoch}</td>
+                            {currentEpoch == item.blocks_epoch ? <td style={tableRowStyle} scope="row">{item.blocks_epoch}*</td> :
+                                <td style={tableRowStyle} scope="row">{item.blocks_epoch}</td>}
                             <td style={tableRowStyle} scope="row">{item.blocks}</td>
                         </tr>
                     </tbody>
+
                 )
             })
+            
         )
     };
 };
