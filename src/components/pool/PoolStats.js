@@ -210,7 +210,7 @@ export default class PoolStats extends React.Component {
                                     placement="left"
                                 >
                                     <th style={tableRowStyle} scope="row">Blocks Epoch</th></Tooltip>
-                                <td style={tableRowStyle}><p>{item.blocks}</p></td>
+                                <td style={tableRowStyle}><p>{item.block_history[0].blocks}</p></td>
                             </tr>
                             <tr>
                                 <Tooltip

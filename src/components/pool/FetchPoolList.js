@@ -664,7 +664,7 @@ export default class FetchPoolList extends React.Component {
                                 </tr>
                                 {/* <tr>
                                     <td> */}
-                                        {/* <label>
+                                {/* <label>
                                             <span>Hide Multi Pool Operators</span>
                                             <Checkbox checked={this.state.multiPoolOperators}
                                                 onChange={e => this.handleMultiPoolOperatorsClick()} />
@@ -672,7 +672,7 @@ export default class FetchPoolList extends React.Component {
                                             <Checkbox checked={this.state.saturatedPools}
                                                 onChange={e => this.handleSaturatedPoolsClick()} />
                                         </label> */}
-                                    {/* </td>
+                                {/* </td>
                                 </tr> */}
                             </tbody>
                         </Table>
@@ -949,18 +949,14 @@ export default class FetchPoolList extends React.Component {
 
                 {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                     :
-                    
-
                     this.state.pools.map(function (item, key) {
                         return (
                             <Pool pool={item} />
-                            // <PoolInfo pool={item} />
                         )
-        
+
                     })
-                    
                 }
-                
+
             </div >
         );
     }

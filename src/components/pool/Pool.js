@@ -3,6 +3,7 @@ import PoolInfo from 'components/pool/PoolInfo';
 import PoolShare from 'components/pool/PoolShare';
 import PoolStats from 'components/pool/PoolStats';
 import PoolDelagates from 'components/pool/PoolDelagates';
+import PoolBlocks from 'components/pool/PoolBlocks';
 
 import { isEmpty } from 'utils/stringutil.js';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'; // eslint-disable-line
@@ -14,7 +15,7 @@ import ReactImageFallback from "react-image-fallback";
 import SocialMedia from '../SocialMedia';
 import ReactHtmlParser from 'react-html-parser';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfo, faDatabase, faPeopleCarry, faShare } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faDatabase, faPeopleCarry, faShare, faCube } from '@fortawesome/free-solid-svg-icons';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -108,6 +109,7 @@ export default class Pool extends React.Component {
                         <TabList>
                             <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
                             <Tab><FontAwesomeIcon icon={faDatabase} /> Stats</Tab>
+                            <Tab><FontAwesomeIcon icon={faCube} /> Blocks</Tab>
                             <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>
                             <Tab><FontAwesomeIcon icon={faShare} /> Promote</Tab>
                         </TabList>
@@ -117,6 +119,9 @@ export default class Pool extends React.Component {
                         </TabPanel>
                         <TabPanel>
                             {this.props.pool && <PoolStats pool={this.props.pool} />}
+                        </TabPanel>
+                        <TabPanel>
+                            {this.props.pool && <PoolBlocks pool={this.props.pool} />}
                         </TabPanel>
                         <TabPanel>
                             {this.props.pool && <PoolDelagates pool={this.props.pool} />}
