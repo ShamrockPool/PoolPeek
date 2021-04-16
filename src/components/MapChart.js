@@ -4,7 +4,7 @@ import Popout from 'components/Popout';
 import { Map, Marker, Overlay } from 'pigeon-maps'
 import 'reactjs-popup/dist/index.css';
 import QuickQueriesPage from '../pages/QuickQueriesPage';
-import FetchPoolList from 'components/FetchPoolList';
+import FetchPoolList from 'components/pool/FetchPoolList';
 import * as queries from '../assets/queries/quickqueries';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 

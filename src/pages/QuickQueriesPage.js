@@ -1,4 +1,4 @@
-import FetchPoolList from 'components/FetchPoolList';
+import FetchPoolList from 'components/pool/FetchPoolList';
 import Page from 'components/Page';
 import React from 'react';
 require('../styles/reduction.scss');

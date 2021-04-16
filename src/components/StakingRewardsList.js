@@ -72,12 +72,8 @@ export default class StakingRewardsList extends React.Component {
             copied: false
         };
     }
-
-
     render() {
         return (
-
-
             /*
 
 delegated_pool: "TRAIN"

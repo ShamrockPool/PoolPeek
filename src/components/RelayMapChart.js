@@ -1,12 +1,8 @@
 import Page from 'components/Page';
 import React from 'react';
-import Popout from 'components/Popout';
 import { Map, Marker, Overlay } from 'pigeon-maps'
 import 'reactjs-popup/dist/index.css';
-import QuickQueriesPage from '../pages/QuickQueriesPage';
-import FetchPoolList from 'components/FetchPoolList';
-import * as queries from '../assets/queries/quickqueries';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+
 
 const width = window.innerWidth;
 

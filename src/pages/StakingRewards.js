@@ -8,7 +8,7 @@ import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 
 const fileType =
-"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const fileExtension = ".xlsx";
 
 const cardBodyStyle = {
@@ -40,13 +40,23 @@ class StakingRewards extends React.Component {
     window.scrollTo(0, 0);
 
     this.setState({ loading: false });
+
+    if (!isEmpty(this.props.match)) {
+      if (this.props.match.params.stakeAddress) {
+        console.log(this.props.match.params.stakeAddress);
+        this.setState({ stakingAddress: this.props.match.params.stakeAddress });
+        this.state.stakingAddress = this.props.match.params.stakeAddress;
+        console.log(this.state.stakingAddress);
+        this.getStakingRewards();
+      }
+    }
   }
 
   handleChange = (query) => (e) => {
     this.setState({ stakingAddress: e.target.value });
   }
 
-  exportToCSV(apiData, fileName){
+  exportToCSV(apiData, fileName) {
     const ws = XLSX.utils.json_to_sheet(apiData);
     const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
     const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
@@ -72,38 +82,45 @@ class StakingRewards extends React.Component {
         title={this.props.title}
       >
         <div style={{ width: "100%", alignItems: "left" }}>
-        <Card style={cardBodyStyle} body>
+          <Card style={cardBodyStyle} body>
+            <h4><b>Staking rewards</b></h4>
+            <h7>This tool is here to help you track your staking rewards from each Epoch.</h7>
+            <h7>Enter your stake address in the below input, if using Daedalus follow the instructions if not follow Pool Search.</h7>
 
-        <h3><b>How to find Stake Address</b></h3>
-        <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
+            <br></br>
+            <h4><b>How to find Stake Address</b></h4>
+            <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
+            <h7><b>Yoroi:</b> Click <a href={"https://poolpeek.com/poolsearch"} target="_blank" rel="noreferrer">POOL SEARCH</a> > Enter pool ticker > Click Delegates > Search for your wallet Amount > Click the Stake Address</h7>
+            <br></br>
+            <Input
+              style={{ fontSize: 14 }}
+              type="text"
+              className="cr-search-form__input"
+              placeholder="Enter Stake Address."
+              value={this.state.stakingAddress}
+              onChange={this.handleChange()}
+            />
+            <br></br>
+            <Button color="primary" onClick={() => { this.getStakingRewards() }}>Submit</Button>
 
-          <Input
-            style={{ fontSize: 14 }}
-            type="text"
-            className="cr-search-form__input"
-            placeholder="Enter Stake Address."
-            onChange={this.handleChange()}
-          />
-          <Button color="primary" onClick={() => { this.getStakingRewards() }}>Submit</Button>
-
-          {this.state.stakingRewardsList != null &&
-            <div style={{ width: "100%", alignItems: "left" }}>
-              <br></br>
-            <Button color="primary" onClick={() => this.exportToCSV(this.state.stakingRewardsList, 'StakingRewards')} style={{ width: "100%", alignItems: "right" }}>Download Excel</Button>
-                  <Table {...{ ['striped']: true }}>
-                    <thead>
-                      <tr>
-                        <th>Epoch</th>
-                        <th>Pool</th>
-                        <th>Reward</th>
-                        <th>Reward_Date</th>
-                        <th>Paid_Date</th>
-                      </tr>
-                    </thead>
-                    <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />
-                  </Table>              
-            </div >
-          }
+            {this.state.stakingRewardsList != null &&
+              <div style={{ width: "100%", alignItems: "left" }}>
+                <br></br>
+                <Button color="primary" onClick={() => this.exportToCSV(this.state.stakingRewardsList, 'StakingRewards')} style={{ width: "100%", alignItems: "right" }}>Download Excel</Button>
+                <Table {...{ ['striped']: true }}>
+                  <thead>
+                    <tr>
+                      <th>Epoch</th>
+                      <th>Pool</th>
+                      <th>Reward</th>
+                      <th>Reward_Date</th>
+                      <th>Paid_Date</th>
+                    </tr>
+                  </thead>
+                  <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />
+                </Table>
+              </div >
+            }
           </Card>
         </div>
       </Page>

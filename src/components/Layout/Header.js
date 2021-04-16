@@ -18,6 +18,7 @@ class Header extends React.Component {
     this.state = {
       adaUsdPrice: "",
       adaEuroPrice: "",
+      adaGbpPrice: "",
       adaBtcPrice: ""
     };
   }
@@ -32,19 +33,25 @@ class Header extends React.Component {
   async getCurrentAdaUSDPrice() {
     var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADAUSDT';
     let price = await this.fetchFromBinance(url);
-    this.setState({ adaUsdPrice: "   USD: $" +price });
+    this.setState({ adaUsdPrice: price });
   }
 
   async getCurrentAdaEuroPrice() {
     var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADAEUR';
     let price = await this.fetchFromBinance(url);
-    this.setState({ adaEuroPrice: "  EURO: €" +price });
+    this.setState({ adaEuroPrice: price });
+  }
+
+  async getCurrentAdaGBPPrice() {
+    var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADAGBP';
+    let price = await this.fetchFromBinance(url);
+    this.setState({ adaGbpPrice: price });
   }
 
   async getCurrentAdaBTCPrice() {
     var url = 'https://api.binance.com/api/v3/ticker/price?symbol=ADABTC';
     let price = await this.fetchFromBinance(url);
-    this.setState({ adaBtcPrice: "  BTC: " +price });
+    this.setState({ adaBtcPrice: price });
   }
 
 
@@ -63,9 +70,11 @@ class Header extends React.Component {
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
     this.getCurrentAdaBTCPrice();
-    this.interval = setInterval(() => this.getCurrentAdaUSDPrice(), 20000);
-    this.interval = setInterval(() => this.getCurrentAdaEuroPrice(), 20000);
-    this.interval = setInterval(() => this.getCurrentAdaBTCPrice(), 20000);
+    this.getCurrentAdaGBPPrice();
+    this.interval = setInterval(() => this.getCurrentAdaUSDPrice(), 30000);
+    this.interval = setInterval(() => this.getCurrentAdaEuroPrice(), 30000);
+    this.interval = setInterval(() => this.getCurrentAdaBTCPrice(), 30000);
+    this.interval = setInterval(() => this.getCurrentAdaGBPPrice(), 30000);
 
   }
 
@@ -80,7 +89,8 @@ class Header extends React.Component {
         </Nav>
         <Nav navbar>
           <div>
-            <p><b>ADA Prices:</b>    {this.state.adaUsdPrice}  {this.state.adaEuroPrice}  {this.state.adaBtcPrice}</p>
+            <p><b>ADA Price:</b>  <b>   $</b>  {this.state.adaUsdPrice} <b>  €</b> {this.state.adaEuroPrice} 
+            <b>  £</b> {this.state.adaGbpPrice} <b>  ₿</b> {this.state.adaBtcPrice} </p>
             <p></p>
             <p></p>
           </div>
