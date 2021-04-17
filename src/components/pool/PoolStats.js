@@ -51,6 +51,8 @@ const tableRowStyle = {
     // color: 'white',
     fontWeight: 'bold',
     padding: 0,
+    paddingLeft: 5,
+    paddingRight: 5
 };
 
 const cardBodyStyle = {
