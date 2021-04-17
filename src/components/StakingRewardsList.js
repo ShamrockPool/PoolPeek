@@ -89,7 +89,7 @@ rewardDate: "2020-09-22"
                         <td style={tableRowStyle} scope="row"><p>{item.epoch}</p></td>
                         <td style={tableRowStyle} scope="row"><p>{item.delegated_pool}</p></td>
                         <td style={tableRowStyle} scope="row"><p>{item.reward}</p></td>
-                        <td style={tableRowStyle} scope="row"><p>{item.rewardDate}</p></td>
+                        {/* <td style={tableRowStyle} scope="row"><p>{item.rewardDate}</p></td> */}
                         <td style={tableRowStyle} scope="row"><p>{item.paidDate}</p></td>
                         </tr>
                     </tbody>

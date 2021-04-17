@@ -24,6 +24,15 @@ const cardBodyStyle = {
   paddingRight: 10
 };
 
+const tableRowStyle = {
+  // borderBottom: 'solid 3px blue',
+  // background: 'green',
+  // color: 'white',
+  fontWeight: 'bold',
+  padding: 0,
+  paddingBottom: 5
+};
+
 
 class StakingRewards extends React.Component {
   state = {
@@ -107,10 +116,10 @@ class StakingRewards extends React.Component {
                 <Table {...{ ['striped']: true }}>
                   <thead>
                     <tr>
-                      <th>Epoch</th>
+                      <th style={tableRowStyle} >Epoch</th>
                       <th>Pool</th>
                       <th>Reward</th>
-                      <th>Reward_Date</th>
+                      {/* <th>Reward_Date</th> */}
                       <th>Paid_Date</th>
                     </tr>
                   </thead>
