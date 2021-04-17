@@ -43,10 +43,8 @@ class StakingRewards extends React.Component {
 
     if (!isEmpty(this.props.match)) {
       if (this.props.match.params.stakeAddress) {
-        console.log(this.props.match.params.stakeAddress);
         this.setState({ stakingAddress: this.props.match.params.stakeAddress });
         this.state.stakingAddress = this.props.match.params.stakeAddress;
-        console.log(this.state.stakingAddress);
         this.getStakingRewards();
       }
     }
@@ -68,7 +66,6 @@ class StakingRewards extends React.Component {
     if (!isEmpty(this.state.stakingAddress)) {
       const response = await fetch('https://smashpeek.com/services/rewards/stakeaddress/' + this.state.stakingAddress);
       const data = await response.json();
-      console.log(data);
       this.setState({ stakingRewardsList: data });
       return data;
     }

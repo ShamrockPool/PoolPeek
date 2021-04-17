@@ -20,6 +20,17 @@ const override = css`
   border-color: red;
 `;
 
+const tableRowStyle = {
+    // borderBottom: 'solid 3px blue',
+    // background: 'green',
+    // color: 'white',
+    fontWeight: 'bold',
+    padding: 0,
+    paddingLeft: 5,
+    paddingRight: 5,
+    width: '50%'
+};
+
 export default class PoolDelagates extends React.Component {
 
     constructor(props) {
@@ -39,7 +50,6 @@ export default class PoolDelagates extends React.Component {
         // if (!isEmpty(this.state.stakingAddress)) {
         const response = await fetch('https://smashpeek.com/services/pool/delegates/' + this.props.pool.pool_id);
         const data = await response.json();
-        console.log(data);
         this.setState({ delegatesList: data });
         this.setState({ loading: false });
         return data;
@@ -54,14 +64,16 @@ export default class PoolDelagates extends React.Component {
                 <Table {...{ ['striped']: true }}>
                     <thead>
                         <tr>
-                            <th>Stake Address</th>
-                            <th>Wallet Amount</th>
+                            <th style={tableRowStyle} >Stake Address</th>
+                            <th style={tableRowStyle}>Wallet Amount</th>
                         </tr>
                     </thead>
+                    <tbody>
                     {this.state.loading ? <div>Loading delegates...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                         :
                         <PoolDelegatesList delegatesList={this.state.delegatesList} />
                     }
+                    </tbody>
                 </Table>
             </div >
         )
