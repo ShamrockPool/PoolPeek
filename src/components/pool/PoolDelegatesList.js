@@ -38,7 +38,7 @@ rewardDate: "2020-09-22"
                     <tbody>
                         <tr>
                             <td style={tableRowStyle} scope="row">
-                            <a href={"https://poolpeek.com/stakingrewards/"+item.stakeAddress} target="_blank" rel="noreferrer">
+                            <a href={window.location.href+"stakingrewards/"+item.stakeAddress} target="_blank" rel="noreferrer">
                                 {item.stakeAddress}</a></td>
                                 <td style={tableRowStyle} scope="row"><p>{Number(item.stakeAmount).toFixed(2)}</p></td>
                         </tr>

@@ -913,9 +913,9 @@ export default class FetchPoolList extends React.Component {
                             <span>Hide Multi Pool Operators</span>
                             <Checkbox checked={this.state.multiPoolOperators}
                                 onChange={e => this.handleMultiPoolOperatorsClick()} />
-                            <span>Hide Saturated Pools</span>
+                            {/* <span>Hide Saturated Pools</span>
                             <Checkbox checked={this.state.saturatedPools}
-                                onChange={e => this.handleSaturatedPoolsClick()} />
+                                onChange={e => this.handleSaturatedPoolsClick()} /> */}
 
                             {(this.state.query && this.state.query.count > 10) && (
                                 <span> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}    </span>)}
