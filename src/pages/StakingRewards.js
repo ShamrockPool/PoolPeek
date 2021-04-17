@@ -116,7 +116,7 @@ class StakingRewards extends React.Component {
                 <Table {...{ ['striped']: true }}>
                   <thead>
                     <tr>
-                      <th style={tableRowStyle} >Epoch</th>
+                      <th>Epoch</th>
                       <th>Pool</th>
                       <th>Reward</th>
                       {/* <th>Reward_Date</th> */}
