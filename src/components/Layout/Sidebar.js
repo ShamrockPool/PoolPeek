@@ -62,7 +62,8 @@ const navSaturation = [
 ];
 
 const navItems = [
-  { to: '/', name: 'Team Peek', exact: true, Icon: MdBuild },
+  { to: '/', name: 'Dashboard', exact: true, Icon: MdBuild },
+  // { to: '/teampeek', name: 'Team Peek', exact: true, Icon: MdBuild },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },

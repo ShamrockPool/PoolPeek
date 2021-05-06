@@ -18,15 +18,20 @@ const IconWidget = ({
     [`bg-${bgColor}`]: bgColor,
   });
   return (
+
+
     <Card inverse className={classes} {...restProps}>
       <CardBody className="cr-widget__icon">
-        <Icon size={50} {...iconProps} />
+        <Icon size={25} {...iconProps} />
       </CardBody>
       <CardBody>
         <CardTitle>{title}</CardTitle>
         <CardSubtitle>{subtitle}</CardSubtitle>
       </CardBody>
     </Card>
+
+
+
   );
 };
 
