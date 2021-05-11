@@ -9,7 +9,6 @@ const ProductMedia = ({ image, title, description, poolid, right, ...restProps }
   return (
     <a href={`https://poolpeek.com/pool/${poolid}`} target="_blank" rel="noreferrer">
       <Media {...restProps}>
-
         <Media left>
           <Media
             object
@@ -20,7 +19,7 @@ const ProductMedia = ({ image, title, description, poolid, right, ...restProps }
         </Media>
         <Media body className="overflow-hidden">
           <Media heading tag="h5" className="text-truncate">
-            {title}
+          <h6><b> {title} </b></h6>
           </Media>
           <p>{description}</p>
         </Media>

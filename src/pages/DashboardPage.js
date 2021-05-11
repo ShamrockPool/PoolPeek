@@ -32,8 +32,22 @@ import {
 import { getColor } from 'utils/colors';
 import googleAppStore from 'assets/img/google_plays.png';
 import appAppStore from 'assets/img/apple_store.png';
+import CircleLoader
+  from "react-spinners/CircleLoader";
+import { css } from "@emotion/core";
+import { isEmpty } from 'utils/stringutil.js';
+import ReactImageFallback from "react-image-fallback";
+import CardanoImage from 'assets/img/cardanoIcon.png';
+import ReactHtmlParser from 'react-html-parser';
+var linkify = require('linkifyjs');
+require('linkifyjs/plugins/hashtag')(linkify); // optional
+var linkifyHtml = require('linkifyjs/html');
 
-const today = new Date();
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 const cardheaderStyle = {
   borderBottom: 'solid 1px green',
@@ -59,6 +73,16 @@ const cardBodyStyle = {
 };
 
 
+function checkIsImageUrl(url) {
+  if (isEmpty(url)) {
+    return false;
+  }
+  if (url.startsWith("https") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {
+    return true;
+  }
+  return false;
+}
+
 class DashboardPage extends React.Component {
 
 
@@ -68,6 +92,8 @@ class DashboardPage extends React.Component {
     modal_nested_parent: false,
     modal_nested: false,
     backdrop: true,
+    loading: true,
+    pools: null,
   };
 
   toggle = modalType => () => {
@@ -85,12 +111,17 @@ class DashboardPage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+    this.getPoolList();
   }
 
+  async getPoolList() {
+    var response = await fetch("https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&sid=1614342231163&blockfrom=1&blockto=100&activestakefrom=250000&activestaketo=8000000&excluderetired=1&exclude_splitters=1&has_twitter=1");
+    const data = await response.json();
+    console.log(data);
+    this.state.pools = data.poolpeek.pools;
+    this.setState({ pools: data.poolpeek.pools, loading: false });
+  }
   render() {
-    const primaryColor = getColor('primary');
-    const secondaryColor = getColor('secondary');
-
     return (
       <Page
         className="DashboardPage"
@@ -176,7 +207,7 @@ class DashboardPage extends React.Component {
           toggle={this.toggle()}
         // className={this.props.className}
         >
-          <ModalHeader toggle={this.toggle()}>Modal title</ModalHeader>
+          <ModalHeader toggle={this.toggle()}>Poolpeek Mobile Links</ModalHeader>
           <ModalBody>
             <Row>
               <Col>
@@ -192,7 +223,7 @@ class DashboardPage extends React.Component {
 
           </ModalBody>
           <ModalFooter>
- {' '}
+            {' '}
             <Button color="secondary" onClick={this.toggle()}>
               Close
                     </Button>
@@ -223,9 +254,41 @@ class DashboardPage extends React.Component {
 
           <Col md="6" sm="12" xs="12">
             <Card>
-              <CardHeader style={cardheaderStyle}><p><b>Pool of the hour</b></p></CardHeader>
+              <CardHeader style={cardheaderStyle}><p><b>Recommended Pools of the Day</b></p></CardHeader>
               <CardBody style={cardBodyStyle} body>
-                POOL PROMO HERE
+                {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                  :
+                  this.state.pools.map(function (item, index) {
+                    if (index <= 3) {
+                      return (
+                        <div style={{ display: 'inline-block' }}>
+                          <a href={`https://poolpeek.com/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
+                            <h6>
+                              {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
+                                <ReactImageFallback
+                                  src={item.extended_meta.url_png_logo}
+                                  width="40"
+                                  height="40"
+                                  fallbackImage={CardanoImage} />
+                              ) : (<img
+                                src={CardanoImage}
+                                className="pr-2"
+                                width="38"
+                                height="32"
+                              />)}
+                              <b>&nbsp;{ReactHtmlParser(item.name)}</b>
+                            </h6>
+
+                            <p>{ReactHtmlParser(linkifyHtml(item.description, {
+                              defaultProtocol: 'https'
+                            }))}</p>
+                          </a>
+                        </div>
+
+                      )
+                    }
+                  })
+                }
               </CardBody>
             </Card>
           </Col>
