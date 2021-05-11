@@ -24,8 +24,14 @@ import {
   ListGroup,
   ListGroupItem,
   Row,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
 } from 'reactstrap';
 import { getColor } from 'utils/colors';
+import googleAppStore from 'assets/img/google_plays.png';
+import appAppStore from 'assets/img/apple_store.png';
 
 const today = new Date();
 
@@ -54,6 +60,28 @@ const cardBodyStyle = {
 
 
 class DashboardPage extends React.Component {
+
+
+  state = {
+    modal: false,
+    modal_backdrop: false,
+    modal_nested_parent: false,
+    modal_nested: false,
+    backdrop: true,
+  };
+
+  toggle = modalType => () => {
+    if (!modalType) {
+      return this.setState({
+        modal: !this.state.modal,
+      });
+    }
+
+    this.setState({
+      [`modal_${modalType}`]: !this.state[`modal_${modalType}`],
+    });
+  };
+
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
@@ -122,13 +150,14 @@ class DashboardPage extends React.Component {
           </Col>
 
           <Col >
-          <IconWidget
-                bgColor="white"
-                inverse={false}
-                icon={FaMobileAlt}
-                title="Download Mobile APP"
-                subtitle=""
-              />
+            <IconWidget
+              bgColor="white"
+              inverse={false}
+              icon={FaMobileAlt}
+              title="Download Mobile APP"
+              subtitle=""
+              onClick={this.toggle()}
+            />
           </Col>
 
           <Col >
@@ -142,6 +171,33 @@ class DashboardPage extends React.Component {
           </Col>
         </Row>
 
+        <Modal
+          isOpen={this.state.modal}
+          toggle={this.toggle()}
+        // className={this.props.className}
+        >
+          <ModalHeader toggle={this.toggle()}>Modal title</ModalHeader>
+          <ModalBody>
+            <Row>
+              <Col>
+                <a href="https://play.google.com/store/apps/details?id=com.colorworkapps.poolPeek" target="_blank" rel="noreferrer">
+                  <img src={googleAppStore} width={450} alt='' /></a>
+              </Col>
+              <Col></Col>
+              <Col>
+                <a href="https://apps.apple.com/us/app/poolPeek/id1558648735" target="_blank" rel="noreferrer">
+                  <img src={appAppStore} width={450} alt='' /></a>
+              </Col>
+            </Row>
+
+          </ModalBody>
+          <ModalFooter>
+ {' '}
+            <Button color="secondary" onClick={this.toggle()}>
+              Close
+                    </Button>
+          </ModalFooter>
+        </Modal>
 
         <Row>
           <Col md="6" sm="12" xs="12">

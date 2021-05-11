@@ -90,13 +90,23 @@ class StakingRewards extends React.Component {
         <div style={{ width: "100%", alignItems: "left" }}>
           <Card style={cardBodyStyle} body>
             <h4><b>Staking rewards</b></h4>
+            <h7>Staking rewards are earnings you receive for staking your ADA to a pool.</h7>
             <h7>This tool is here to help you track your staking rewards from each Epoch.</h7>
+            <br></br>
+            <h7>Register with our Staking Rewards <a href={"http://t.me/poolpeek_bot"} target="_blank" rel="noreferrer">Telegram BOT!!</a></h7>
+
+            <br></br>
+
             <h7>Enter your stake address in the below input, if using Daedalus follow the instructions if not follow Pool Search.</h7>
 
             <br></br>
-            <h4><b>How to find Stake Address</b></h4>
+            <h4><b>Stake Address:</b></h4>
+            <h7>You will need your Stake Address, here is how to find it. </h7>
             <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
             <h7><b>Yoroi:</b> Click <a href={"https://poolpeek.com/poolsearch"} target="_blank" rel="noreferrer">POOL SEARCH</a> > Enter pool ticker > Click Delegates > Search for your wallet Amount > Click the Stake Address</h7>
+            
+            
+            
             <br></br>
             <Input
               style={{ fontSize: 14 }}
