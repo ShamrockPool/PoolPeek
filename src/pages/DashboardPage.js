@@ -28,6 +28,7 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
+  CardText
 } from 'reactstrap';
 import { getColor } from 'utils/colors';
 import googleAppStore from 'assets/img/google_plays.png';
@@ -94,6 +95,9 @@ class DashboardPage extends React.Component {
     backdrop: true,
     loading: true,
     pools: null,
+    liveStake: '',
+    totalWalletsStaked: '',
+    totalAdaSupply: ''
   };
 
   toggle = modalType => () => {
@@ -112,6 +116,7 @@ class DashboardPage extends React.Component {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
     this.getPoolList();
+    this.getDashboardData();
   }
 
   async getPoolList() {
@@ -121,6 +126,15 @@ class DashboardPage extends React.Component {
     this.state.pools = data.poolpeek.pools;
     this.setState({ pools: data.poolpeek.pools, loading: false });
   }
+
+  async getDashboardData() {
+    var response = await fetch("https://smashpeek.com/services/dashboard/data");
+    const data = await response.json();
+    console.log(data);
+
+    this.setState({ liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply });
+  }
+
   render() {
     return (
       <Page
@@ -129,42 +143,45 @@ class DashboardPage extends React.Component {
       // breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
         <Row>
-          <Col >
-            <NumberWidget
-              title="ADA Supply"
-              number="9.8k"
-              color="secondary"
-              progress={{
-                value: 75,
-                label: 'Last month',
-              }}
-            />
+          <Col lg={4} md={2} sm={2} xs={12} className="mb-3">
+            <Card inverse color='secondary'>
+              <CardBody>
+                <CardTitle className="text-capitalize">
+                ADA Supply
+                </CardTitle>
+                <CardText>
+                  Total:  {this.state.totalAdaSupply}
+                </CardText>
+              </CardBody>
+            </Card>
           </Col>
 
-          <Col >
-            <NumberWidget
-              title="ADA Wallets"
-              number="450,000"
-              color="secondary"
-              progress={{
-                value: 45,
-                label: 'Last month',
-              }}
-            />
+          <Col lg={4} md={2} sm={2} xs={12} className="mb-3">
+            <Card inverse color='primary'>
+              <CardBody>
+                <CardTitle className="text-capitalize">
+                Staked Wallets
+                </CardTitle>
+                <CardText>
+                  Total:  {this.state.totalWalletsStaked}
+                </CardText>
+              </CardBody>
+            </Card>
           </Col>
 
-          <Col >
-            <NumberWidget
-              title="ADA Staked"
-              number="22.2B"
-              color="secondary"
-              progress={{
-                value: 72,
-                label: '% of ADA Supply',
-              }}
-            />
-
+          <Col lg={4} md={2} sm={2} xs={12} className="mb-3">
+            <Card inverse color='secondary'>
+              <CardBody>
+                <CardTitle className="text-capitalize">
+                ADA Staked
+                </CardTitle>
+                <CardText>
+                  Total:  {this.state.liveStake}
+                </CardText>
+              </CardBody>
+            </Card>
           </Col>
+
         </Row>
 
         <Row>
@@ -233,7 +250,7 @@ class DashboardPage extends React.Component {
         <Row>
           <Col md="6" sm="12" xs="12">
             <Card>
-              <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support poolpeek.com by staking with us!</p></CardHeader>
+              <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
               <CardBody style={cardBodyStyle} body>
                 {teamPeekData.map(
                   ({ id, image, title, description, poolid, right }) => (
