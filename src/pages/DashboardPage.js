@@ -9,7 +9,8 @@ import {
   FaTwitter,
   FaTelegram,
   FaMobile,
-  FaMobileAlt
+  FaMobileAlt,
+  FaTelegramPlane
 } from 'react-icons/fa';
 import {
   Badge,
@@ -84,6 +85,14 @@ function checkIsImageUrl(url) {
   return false;
 }
 
+function shuffle(a) {
+  for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
 class DashboardPage extends React.Component {
 
 
@@ -115,6 +124,9 @@ class DashboardPage extends React.Component {
   componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+
+    this.teamPeekData = shuffle(teamPeekData);
+
     this.getPoolList();
     this.getDashboardData();
   }
@@ -217,6 +229,16 @@ class DashboardPage extends React.Component {
               subtitle=""
             /></a>
           </Col>
+
+          <Col >
+            <a href="http://t.me/poolpeek_bot" target="_blank" rel="noreferrer"> <IconWidget
+              bgColor="white"
+              inverse={false}
+              icon={FaTelegramPlane}
+              title="Staking Rewards Bot"
+              subtitle="Register Your Stake Address"
+            /></a>
+          </Col>
         </Row>
 
         <Modal
@@ -271,7 +293,7 @@ class DashboardPage extends React.Component {
 
           <Col md="6" sm="12" xs="12">
             <Card>
-              <CardHeader style={cardheaderStyle}><p><b>Recommended Pools of the Day</b></p></CardHeader>
+              <CardHeader style={cardheaderStyle}><p><b>Recommended Pools</b></p></CardHeader>
               <CardBody style={cardBodyStyle} body>
                 {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                   :
@@ -301,17 +323,12 @@ class DashboardPage extends React.Component {
                             }))}</p>
                           </a>
                         </div>
-
                       )
                     }
                   })
                 }
               </CardBody>
             </Card>
-          </Col>
-        </Row>
-        <Row>
-          <Col lg="4" md="12" sm="12" xs="12">
           </Col>
         </Row>
       </Page>

@@ -14,12 +14,12 @@ const ProductMedia = ({ image, title, description, poolid, right, ...restProps }
             object
             src={image}
             className="rounded mr-2 mb-2"
-            style={{ width: 100, height: 'auto' }}
+            style={{ width: 120, height: 'auto' }}
           />
         </Media>
         <Media body className="overflow-hidden">
           <Media heading tag="h5" className="text-truncate">
-          <h6><b> {title} </b></h6>
+          <h5><b> {title} </b></h5>
           </Media>
           <p>{description}</p>
         </Media>
