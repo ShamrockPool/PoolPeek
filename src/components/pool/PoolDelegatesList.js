@@ -52,7 +52,7 @@ rewardDate: "2020-09-22"
                     <tr>
                         <td style={tableRowStyle} scope="row">
                             <a href={"https://poolpeek.com/stakingrewards/" + item.stakeAddress} target="_blank" rel="noreferrer">
-                            <p style={{fontSize: '1.3vw'}}>{item.stakeAddress}</p></a></td>
+                            <p style={{fontSize: '1.2vw'}}>{item.stakeAddress}</p></a></td>
                         <td style={tableRowStyleStake} scope="row"><p style={{fontSize: '1.3vw'}}>{Number(item.stakeAmount).toFixed(2)}</p></td>
                     </tr>
                 )
