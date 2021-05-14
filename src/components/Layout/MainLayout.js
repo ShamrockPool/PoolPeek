@@ -32,7 +32,7 @@ class MainLayout extends React.Component {
       this.notificationSystem.addNotification({
         title: <MdLoyalty />,
         message:
-          'Poolpeek is brought to you by TRAIN, EAGLE an SHA pools, please consider staking with us to help cover the costs of running this service'
+          'Poolpeek is brought to you by SHA, EAGLE and Brave pool, please consider staking with us to help cover the costs of running this service'
           ,
         level: 'info',
       });

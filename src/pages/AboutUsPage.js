@@ -50,7 +50,7 @@ As we move forward we plan to write tools that will help small pools advertise.
           <b>The Developers</b>
           <br /><br />
 
-PoolPeek.com is developed and maintained by small stake pool owners <a href="https://shamrock-pool.com/" target="_blank">SHA</a>, <a href="http://locoada.com" target="_blank">TRAIN</a> and <a href="https://m1crypto.co/home">EAGLE</a>
+PoolPeek.com is developed and maintained by small stake pool owners <a href="https://shamrock-pool.com/" target="_blank">SHA</a>, <a href="https://m1crypto.co/home">EAGLE</a>
 
           <br /><br />
 

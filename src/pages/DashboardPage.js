@@ -45,6 +45,8 @@ var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
 
+const width = window.innerWidth;
+
 const override = css`
   display: block;
   margin: 0 auto;
@@ -106,7 +108,8 @@ class DashboardPage extends React.Component {
     pools: null,
     liveStake: '',
     totalWalletsStaked: '',
-    totalAdaSupply: ''
+    totalAdaSupply: '',
+    modalImageWidth: 450
   };
 
   toggle = modalType => () => {
@@ -125,8 +128,11 @@ class DashboardPage extends React.Component {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
 
-    this.teamPeekData = shuffle(teamPeekData);
+    if (width < 600) {
+      this.setState({ modal: true, modalImageWidth: width / 1.2 });
+    }
 
+    this.teamPeekData = shuffle(teamPeekData);
     this.getPoolList();
     this.getDashboardData();
   }
@@ -246,17 +252,18 @@ class DashboardPage extends React.Component {
           toggle={this.toggle()}
         // className={this.props.className}
         >
-          <ModalHeader toggle={this.toggle()}>Poolpeek Mobile Links</ModalHeader>
+          <ModalHeader toggle={this.toggle()}>Poolpeek Mobile</ModalHeader>
           <ModalBody>
             <Row>
+              <p>Welcome - if you are viewing poolpeek using a mobile device you can download our App from the links below. </p>
               <Col>
                 <a href="https://play.google.com/store/apps/details?id=com.colorworkapps.poolPeek" target="_blank" rel="noreferrer">
-                  <img src={googleAppStore} width={450} alt='' /></a>
+                  <img src={googleAppStore} width={this.state.modalImageWidth} alt='' /></a>
               </Col>
               <Col></Col>
               <Col>
                 <a href="https://apps.apple.com/us/app/poolPeek/id1558648735" target="_blank" rel="noreferrer">
-                  <img src={appAppStore} width={450} alt='' /></a>
+                  <img src={appAppStore} width={this.state.modalImageWidth} alt='' /></a>
               </Col>
             </Row>
 
