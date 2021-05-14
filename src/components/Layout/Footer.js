@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Navbar, Nav, NavItem } from 'reactstrap';
+import brave from 'assets/img/teampeek/brave.jpg';
 
 const Footer = () => {
   return (
@@ -10,9 +11,9 @@ const Footer = () => {
           2021 SHA/EAGLE/BRAVE Productions.
           <br/>
           <i>Built by small pool owners for small pool delegators.</i>
-          <br/>
+          {/* <br/> */}
           <img src="https://shamrock-pool.com/newimages/favicon-64x64.png" />
-          {/* <img src="https://poolpeek.com/loco6464.png" /> */}
+          {/* <img src={brave} /> */}
           <img src="https://m1crypto.co/assets/pool-metadata/icon-64x64.png" />
 
           <br/><br/>
