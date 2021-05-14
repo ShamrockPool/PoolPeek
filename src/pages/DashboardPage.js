@@ -87,8 +87,8 @@ function checkIsImageUrl(url) {
 
 function shuffle(a) {
   for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
 }
@@ -159,10 +159,10 @@ class DashboardPage extends React.Component {
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
-                ADA Supply
+                  {this.state.totalAdaSupply}
                 </CardTitle>
                 <CardText>
-                  Total:  {this.state.totalAdaSupply}
+                  ADA Supply
                 </CardText>
               </CardBody>
             </Card>
@@ -172,10 +172,10 @@ class DashboardPage extends React.Component {
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
-                Staked Wallets
+                  {this.state.totalWalletsStaked}
                 </CardTitle>
                 <CardText>
-                  Total:  {this.state.totalWalletsStaked}
+                  Staked Wallets
                 </CardText>
               </CardBody>
             </Card>
@@ -185,10 +185,10 @@ class DashboardPage extends React.Component {
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
-                ADA Staked
+                  {this.state.liveStake}
                 </CardTitle>
                 <CardText>
-                  Total:  {this.state.liveStake}
+                  ADA Staked
                 </CardText>
               </CardBody>
             </Card>
