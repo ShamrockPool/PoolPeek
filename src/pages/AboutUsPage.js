@@ -66,12 +66,6 @@ We have devoted many hours developing and maintaining PoolPeek.com, If you like 
 please consider tipping us:
 <br /><br />
 
-
-          <a href={"https://poolpeek.com/pool/99541BED40B1015A1D81083184973B59A3F50BCE4392492E99FF0BEF"}
-            target="_blank" rel="noreferrer"><p>TRAIN:</p></a>
-addr1q9z0fjsenn4ne6zjswl3r3k98uuehe7ve7e8649kjsy5yg33myr8mpq6wk3nmqw2hg8v5a6kmlpmk889ye20qussqekslteph6
-<br /><br />
-
           <a href={"https://poolpeek.com/pool/BE7E2461A584B6532C972EDCA711FA466D7D0E8A86B6629FC0784FF6"}
             target="_blank" rel="noreferrer"><p>SHA:</p></a>
 addr1q8ds9zyklmzphd6us528kqlcjmhq874ase5tk8qfc7a7p5fxh64unn46g3scmqzdym6epgkmmzv9uzvymqgdndtwh2psmwddeg
@@ -86,8 +80,8 @@ addr1qxmmr5crp2929u64z8pzxjsdca7u6p6d80spdvzg0h8wz4qryl3a8chygwx7jykj6fmhd4q46s5
           <br /><br />
 
 Pool Search randomly displays all pools in our system that are not retiring or retired.
-You can click the 'Pool Search' option again anytime to re-order the list.
-After the pools display you can page through the results and refine the query using the basic or advanced filters and sorting.
+The order of the pools is updated daily with small pools taking priority. New pools added throughout the day will 
+be placed at the top of the list. After the pools display you can page through the results and refine the query using the basic or advanced filters and sorting.
 <br /><br />
 
 <b>Map Search</b>
