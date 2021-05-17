@@ -109,7 +109,8 @@ class DashboardPage extends React.Component {
     liveStake: '',
     totalWalletsStaked: '',
     totalAdaSupply: '',
-    modalImageWidth: 450
+    modalImageWidth: 450,
+    percentageOfSupplyStaked: 0
   };
 
   toggle = modalType => () => {
@@ -135,6 +136,9 @@ class DashboardPage extends React.Component {
     this.teamPeekData = shuffle(teamPeekData);
     this.getPoolList();
     this.getDashboardData();
+
+
+
   }
 
   async getPoolList() {
@@ -151,6 +155,15 @@ class DashboardPage extends React.Component {
     console.log(data);
 
     this.setState({ liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply });
+    this.state.liveStake = data.liveStake;
+    this.state.totalAdaSupply =  data.totalAdaSupply;
+
+    var adaSupply = parseFloat(data.liveStake.replace(/,/g, ''));
+    var liveStake = parseFloat(data.totalAdaSupply.replace(/,/g, ''));
+    var percentage = ((adaSupply / liveStake) * 100).toFixed(2)
+    this.setState({
+      percentageOfSupplyStaked: percentage
+    });
   }
 
   render() {
@@ -161,7 +174,7 @@ class DashboardPage extends React.Component {
       // breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
         <Row>
-          <Col lg={4} md={2} sm={2} xs={12} className="mb-3">
+          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -174,7 +187,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={4} md={2} sm={2} xs={12} className="mb-3">
+          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -187,7 +200,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={4} md={2} sm={2} xs={12} className="mb-3">
+          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -195,6 +208,19 @@ class DashboardPage extends React.Component {
                 </CardTitle>
                 <CardText>
                   ADA Staked
+                </CardText>
+              </CardBody>
+            </Card>
+          </Col>
+
+          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
+            <Card inverse color='primary'>
+              <CardBody>
+                <CardTitle className="text-capitalize">
+                  {this.state.percentageOfSupplyStaked}
+                </CardTitle>
+                <CardText>
+                  % Of ADA Supply Staked
                 </CardText>
               </CardBody>
             </Card>
