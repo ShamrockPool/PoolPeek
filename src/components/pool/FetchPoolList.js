@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Input, Pagination, PaginationItem, PaginationLink, Table, Button } from 'reactstrap';
+import { Input, Pagination, PaginationItem, PaginationLink, Table, Button, Col, Row } from 'reactstrap';
 import _ from 'lodash';
 import { isEmpty } from 'utils/stringutil.js';
 import Scroll from '../Scroll';
@@ -11,6 +11,8 @@ import CircleLoader
     from "react-spinners/CircleLoader";
 import ReactPaginate from 'react-paginate';
 import 'styles/pagination.css';
+
+import PoolCard from 'components/Card/PoolCard';
 
 const WAIT_INTERVAL = 2000
 
@@ -598,10 +600,10 @@ export default class FetchPoolList extends React.Component {
 
         return (
 
-            <div className="container-fluid" style={{ align: "left", width: "99%", margin: "0px" }}>
+            <div className="container-fluid" style={{ align: "left", width: "100%", margin: "0px" }}>
                 <Scroll showBelow={250} />
                 {this.state.showFilters &&
-                    <div className="container-fluid" style={{ align: "left", width: "90%", margin: "0px" }}>
+                    <div>
                         <h3><b>Filters:</b></h3>
                         <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
                             <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
@@ -881,33 +883,6 @@ export default class FetchPoolList extends React.Component {
                                 </FormGroup>
                             </Collapse>
                         </Collapse>
-                        {/* <Pagination style={{ align: "left", width: "82%" }}>
-                            <PaginationItem disabled={currentPage <= 0}>
-                                <PaginationLink style={{ fontSize: "14px" }}
-                                    onClick={e => this.handlePageClick(e, currentPage - 1)}
-                                    previous
-                                    href="#"
-                                />
-                            </PaginationItem>
-
-                            {_.times(pageCount, (i) =>
-                                <PaginationItem style={{ fontSize: "14px" }} active={i === currentPage} key={i}>
-                                    <PaginationLink onClick={e => this.handlePageClick(e, i)} href="#">
-                                        {i + 1}
-                                    </PaginationLink>
-                                </PaginationItem>
-                            )}
-
-                            <PaginationItem disabled={currentPage >= pageCount - 1}>
-                                <PaginationLink style={{ fontSize: "14px" }}
-                                    onClick={e => this.handlePageClick(e, currentPage + 1)}
-                                    next
-                                    href="#"
-                                />
-                            </PaginationItem>
-                        </Pagination> */}
-
-
 
                         <div className="container-fluid" style={{ align: "left", display: 'inline-block' }}>
                             <span>Hide Multi Pool Operators</span>
@@ -919,44 +894,39 @@ export default class FetchPoolList extends React.Component {
 
                             {(this.state.query && this.state.query.count > 10) && (
                                 <span> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}    </span>)}
-
-
-                            <ReactPaginate
-                                previousLabel={'previous'}
-                                nextLabel={'next'}
-                                breakLabel={'...'}
-                                breakClassName={'break-me'}
-                                pageCount={pageCount}
-                                marginPagesDisplayed={2}
-                                pageRangeDisplayed={5}
-                                onPageChange={this.handlePageClick}
-                                containerClassName={'pagination'}
-                                activeClassName={'active'}
-                            />
-
-
                         </div>
 
                     </div>}
 
+                <Row>
+                    {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                        :
+                        this.state.pools.map(function (item, key) {
+                            return (
 
-
-
-                {/* {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-                    :
-                    <Pool pools={this.state.pools} />
-                } */}
-
-                {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-                    :
-                    this.state.pools.map(function (item, key) {
-                        return (
-                            <Pool pool={item} />
-                        )
-
-                    })
-                }
-
+                                <Col lg={4} md={4} sm={4} xs={12} className="mb-3">
+                                    <div className='ProjectCards'>
+                                        <PoolCard
+                                            img={item.imageUrl}
+                                            pool={item} />
+                                    </div>
+                                </Col>
+                            )
+                        })
+                    }
+                </Row>
+                <ReactPaginate
+                    previousLabel={'previous'}
+                    nextLabel={'next'}
+                    breakLabel={'...'}
+                    breakClassName={'break-me'}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={5}
+                    onPageChange={this.handlePageClick}
+                    containerClassName={'pagination'}
+                    activeClassName={'active'}
+                />
             </div >
         );
     }

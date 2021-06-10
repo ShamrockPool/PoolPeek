@@ -21,8 +21,6 @@ class PoolSearchPage extends React.Component {
     return (
       <Page
         className="PoolSearchPage"
-      // title="Pool Search"
-      // breadcrumbs={[{ name: 'Home', active: true }]}
       >
         {isEmpty(this.props.match.params.poolid) ? <FetchPoolList {...this.props} query={this.props.query} />
           :

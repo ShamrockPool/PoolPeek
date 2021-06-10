@@ -65,6 +65,7 @@ export default class Pool extends React.Component {
 
     }
     componentDidMount() {
+        
     }
     setTab(index) {
         this.setState({

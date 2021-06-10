@@ -15,7 +15,7 @@ import AboutUsPage from 'pages/AboutUsPage';
 import PoolMapPage from 'pages/PoolMap';
 import EpochCalendar from 'pages/EpochCalendar';
 import StakingRewards from 'pages/StakingRewards';
-
+import PoolDetailsPage from 'pages/PoolDetailsPage';
 
 require('./styles/reduction.scss');
 
@@ -65,7 +65,7 @@ class App extends React.Component {
                 <Route exact path="/16milto32mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="16M to < 32M" query={queries.qry16milto32mil} multiPoolOperators={false}  pageDescription={queries.desc16milto32mil}  />} />
                 <Route exact path="/8milto16mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="8M to < 16M" query={queries.qry8milto16mil} multiPoolOperators={false}  pageDescription={queries.desc8milto16mil}  />} />
 
-                <Route exact path="/pool/:poolid" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
+                <Route exact path="/pool/:poolid" render={(props) => <PoolDetailsPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
                 <Route exact path="/poolsearch/:location" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
                 <Route exact path="/stakingrewards/:stakeAddress" render={(props) => <StakingRewards  {...props}/>} />
 
