@@ -186,8 +186,12 @@ export default class PoolDetailsComponent extends React.Component {
                                                 {/* START INFO */}
                                                 <div>
                                                     <Row>
-                                                        <Col xl={4} lg={4} md={12} sm={12}>
-                                                            <Card>
+                                                        <Col xl={6} lg={6} md={12} sm={12}>
+                                                            <Card style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                }}>
                                                                 < CardHeader style={{
                                                                     justifyContent: 'center',
                                                                     alignItems: 'center',
@@ -209,8 +213,12 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                             </Card>
                                                         </Col>
-                                                        <Col xl={4} lg={4} md={12} sm={12}>
-                                                            <Card>
+                                                        <Col xl={6} lg={6} md={12} sm={12}>
+                                                            <Card style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                }}>
                                                                 <CardHeader style={{
                                                                     justifyContent: 'center',
                                                                     alignItems: 'center',
@@ -232,9 +240,14 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                             </Card>
                                                         </Col>
-                                                        <Col xl={4} lg={4} md={12} sm={12}>
-                                                            <Card>
-                                                                < CardHeader style={{
+                                                        {/* <Col xl={4} lg={4} md={12} sm={12}>
+                                                            <Card style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                    height: '100%'
+                                                                }}>
+                                                                <CardHeader style={{
                                                                     justifyContent: 'center',
                                                                     alignItems: 'center',
                                                                     width: '100%',
@@ -247,19 +260,23 @@ export default class PoolDetailsComponent extends React.Component {
                                                                 }}>
                                                                     <Row>
                                                                         <div>
-                                                                            <h2>{this.calculateLuck()}%</h2>
-                                                                            <small>This.</small>
+                                                                            <h2>{""+this.calculateLuck()}%</h2>
+                                                                            <small>This is the amount of luck this pool recieved last Epoch.</small>
                                                                         </div>
                                                                     </Row>
                                                                 </CardBody>
 
                                                             </Card>
-                                                        </Col>
+                                                        </Col> */}
                                                     </Row>
 
                                                     <Row>
                                                         <Col xl={4} lg={4} md={12} sm={12}>
-                                                            <Card>
+                                                            <Card style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                }}>
                                                                 < CardHeader style={{
                                                                     justifyContent: 'center',
                                                                     alignItems: 'center',
@@ -282,12 +299,15 @@ export default class PoolDetailsComponent extends React.Component {
                                                             </Card>
                                                         </Col>
                                                         <Col xl={4} lg={4} md={12} sm={12}>
-                                                            <Card>
-                                                                < CardHeader style={{
+                                                            <Card style={{
                                                                     justifyContent: 'center',
                                                                     alignItems: 'center',
                                                                     width: '100%',
-                                                                    borderRadius: 'none',
+                                                                }}>
+                                                                <CardHeader style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
                                                                 }}>Live Stake</CardHeader>
                                                                 <CardBody style={{
                                                                     justifyContent: 'center',
