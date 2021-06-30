@@ -815,7 +815,7 @@ export default class FetchPoolList extends React.Component {
                             </Table>
 
                             <Button color="secondary" onClick={() => this.resetSearchFilters()} type="submit">Reset Filters</Button>
-                            <br /><br />
+                            {/* <br /><br />
                             <h3><b>Order by:</b></h3>
                             <FormControlLabel
                                 control={<Switch size="medium" checked={this.state.orderByFiltersShow} onChange={e => this.handleOrderByToggleClick()} />}
@@ -873,8 +873,8 @@ export default class FetchPoolList extends React.Component {
                                         <span>Margin</span>
                                     </label>
                                 </FormGroup>
-                            </Collapse>
-                        </Collapse>
+                            </Collapse>*/}
+                        </Collapse> 
 
                         <div className="container-fluid" style={{ align: "left", display: 'inline-block' }}>
                             <span>Hide Multi Pool Operators</span>
