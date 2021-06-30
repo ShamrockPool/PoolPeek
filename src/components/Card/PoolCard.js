@@ -35,7 +35,7 @@ export default class PoolCard extends React.Component {
     render() {
         return (
             <Link to={{ pathname: '/pool/' + this.props.pool.pool_id, state: { projectDetails: this.props.projectDetails } }}>
-                <div className="ProjectCard" style={{ minheight: '15rem', width: '23.5rem' }}>
+                <div className="ProjectCard">
                     <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
                         {this.checkIsImageUrl(this.props.pool.extended_meta.url_png_logo) ? (
                             <ReactImageFallback

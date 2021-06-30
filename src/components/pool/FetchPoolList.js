@@ -254,6 +254,7 @@ export default class FetchPoolList extends React.Component {
 
     async componentDidMount() {
         await this.getAllPools();
+        this.setState({ allpoolsList: this.shuffle(this.state.allpoolsList) });
 
         try {
             if (!isEmpty(this.props.match.params.location)) {
@@ -274,7 +275,7 @@ export default class FetchPoolList extends React.Component {
         }
 
         this.performPoolListFilter();
-        
+
         if (this.state.filtersWhereRemoved == false) {
             this.showFilters(this.state.poolsToDisplay.length);
         }
@@ -618,10 +619,6 @@ export default class FetchPoolList extends React.Component {
 
     render() {
         const { currentPage, pageCount } = this.state;
-
-        // if (!this.state.poolsToDisplay) {
-        //     return <div>Pools not found...</div>
-        // }
 
         return (
 
