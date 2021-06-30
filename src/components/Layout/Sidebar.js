@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
+import logo from 'assets/img/logo/logo-144x144.png';
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import {
@@ -118,9 +119,9 @@ class Sidebar extends React.Component {
         <Container>
           <Row className="justify-content-md-center">
             <Col  style={{backgroundColor: 'black', width:'115px', padding:'0px'}}>
-              <img src={logo115_91Image}
+              <img src={logo}
                             width="115"
-                            height="91"
+                            height="100"
                             className="pr-2"
                             title="Welcome to PoolPeek.com"/>
             </Col>

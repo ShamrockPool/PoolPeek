@@ -14,6 +14,8 @@ import 'styles/pagination.css';
 
 import PoolCard from 'components/Card/PoolCard';
 
+import { baseUrl, allPools } from '../../assets/services';
+
 const WAIT_INTERVAL = 2000
 
 const override = css`
@@ -48,7 +50,7 @@ export default class FetchPoolList extends React.Component {
         this.state = {
             searchText: null,
             loading: true,
-            pools: null,
+            pools: [],
             query: null,
             baseUrl: "https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&sid=" + sid,
             baseQuery: "",
@@ -56,23 +58,23 @@ export default class FetchPoolList extends React.Component {
             currentPage: 0,
             pageCount: 0,
             //search params
-            poolid: "",
-            ticker: "",
-            name: "",
-            description: "",
-            blockfrom: "",
-            blockto: "",
-            marginfrom: "",
-            marginto: "",
-            pledgefrom: "",
-            pledgeto: "",
-            costfrom: "",
-            costto: "",
-            activestakefrom: "",
-            activestaketo: "",
+            poolid: null,
+            ticker: null,
+            name: null,
+            description: null,
+            blockfrom: null,
+            blockto: null,
+            marginfrom: null,
+            marginto: null,
+            pledgefrom: null,
+            pledgeto: null,
+            costfrom: null,
+            costto: null,
+            activestakefrom: null,
+            activestaketo: null,
             multiPoolOperators: false,
-            saturatedPools: true,
-            location: "",
+            saturatedPools: false,
+            location: null,
             //end search params
             advancedSearchFiltersShow: false,
             orderByFiltersShow: false,
@@ -90,139 +92,171 @@ export default class FetchPoolList extends React.Component {
             ascendingOrderDescending: true,
             //end order by types
             showFilters: true,
-            filtersWhereRemoved: false
+            filtersWhereRemoved: false,
+
+            //new querymap
+            queryMap: [],
+            allpoolsList: null,
+            poolsToDisplay: null,
+            pageSelected: ""
 
         };
     }
     //be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
     handleChange = (query) => (e) => {
-
         if (query === "&poolid=") {
-            queryParams.poolid = query + e.target.value;
             this.setState({ poolid: e.target.value });
         }
-
         if (query === "&ticker=") {
-            queryParams.ticker = query + e.target.value;
             this.setState({ ticker: e.target.value });
         }
-
         if (query === "&name=") {
-            queryParams.name = query + e.target.value;
             this.setState({ name: e.target.value });
         }
-
         if (query === "&description=") {
-            queryParams.description = query + e.target.value;
             this.setState({ description: e.target.value });
         }
-
         if (query === "&blockfrom=") {
-            queryParams.blockfrom = query + e.target.value;
             this.setState({ blockfrom: e.target.value });
         }
         if (query === "&blockto=") {
-            queryParams.blockto = query + e.target.value;
             this.setState({ blockto: e.target.value });
         }
-
         if (query === "&marginfrom=") {
-            queryParams.marginfrom = query + e.target.value;
             this.setState({ marginfrom: e.target.value });
         }
         if (query === "&marginto=") {
-            queryParams.marginto = query + e.target.value;
             this.setState({ marginto: e.target.value });
         }
-
         if (query === "&pledgefrom=") {
-            queryParams.pledgefrom = query + e.target.value;
             this.setState({ pledgefrom: e.target.value });
         }
         if (query === "&pledgeto=") {
-            queryParams.pledgeto = query + e.target.value;
             this.setState({ pledgeto: e.target.value });
         }
 
         if (query === "&costfrom=") {
-            queryParams.costfrom = query + e.target.value;
             this.setState({ costfrom: e.target.value });
         }
         if (query === "&costto=") {
-            queryParams.costto = query + e.target.value;
             this.setState({ costto: e.target.value });
         }
 
         if (query === "&activestakefrom=") {
-            queryParams.activestakefrom = query + e.target.value;
             this.setState({ activestakefrom: e.target.value });
         }
         if (query === "&activestaketo=") {
-            queryParams.activestaketo = query + e.target.value;
             this.setState({ activestaketo: e.target.value });
         }
 
         if (query === "&location=") {
-            queryParams.location = query + e.target.value;
+            this.state.location = e.target.value;
             this.setState({ location: e.target.value });
         }
 
         clearTimeout(this.inputTimer);
         this.inputTimer = setTimeout((e) => {
+            this.performPoolListFilter();
+        }, 400);
 
-            var allQueryParams = "";
-            this.mapObject(queryParams, function (key, value) {
-                if (value !== "") {
-                    allQueryParams += value;
-                }
-            })
-
-            if (allQueryParams) {
-                this.state.searchQuery = allQueryParams;
-                this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
-            }
-        }, WAIT_INTERVAL);
     }
 
+    performPoolListFilter() {
+        var poolsToDisplay = this.state.allpoolsList;
+
+        if (this.state.poolid) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.pool_id == this.state.poolid);
+        }
+
+        if (this.state.ticker) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.ticker.toLowerCase().includes(this.state.ticker.toLowerCase()));
+        }
+
+        if (this.state.name) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.name.toLowerCase().includes(this.state.name.toLowerCase()));
+        }
+
+        if (this.state.description) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.description.toLowerCase().includes(this.state.description.toLowerCase()));
+        }
+
+        if (this.state.blockfrom) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.blocks >= this.state.blockfrom);
+        }
+        if (this.state.blockto) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.blocks <= this.state.blockto);
+        }
+
+        if (this.state.marginfrom) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.margin_pct >= this.state.marginfrom);
+        }
+        if (this.state.marginto) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.margin_pct <= this.state.marginto);
+        }
+
+        if (this.state.pledgefrom) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.pledge >= this.state.pledgefrom);
+        }
+        if (this.state.pledgeto) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.pledge <= this.state.pledgeto);
+        }
+
+        if (this.state.costfrom) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.cost_per_epoch >= this.state.costfrom);
+        }
+        if (this.state.costto) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.cost_per_epoch <= this.state.costto);
+        }
+
+        if (this.state.activestakefrom) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.active_stake >= this.state.activestakefrom);
+        }
+        if (this.state.activestaketo) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.active_stake <= this.state.activestaketo);
+        }
+
+        if (this.state.location) {
+            var location = this.state.location;
+            poolsToDisplay = poolsToDisplay.filter(function (pool) {
+                try {
+                    if (!isEmpty(pool.extended_meta.location)) {
+                        if (pool.extended_meta.location.toLowerCase().includes(location.toLowerCase())) {
+                            return pool;
+                        }
+                    }
+                } catch (error) {
+                }
+            });
+        }
+
+        if (this.state.multiPoolOperators == true) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.pool_splitter == "0");
+        }
+
+        if (this.state.saturatedPools == true) {
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.live_stake <= "63786161.16");
+        }
+
+        this.state.poolsToDisplay = poolsToDisplay;
+        this.setState({ pageCount: poolsToDisplay.length / 30 });
+
+        if(this.state.pageSelected != ""){
+            poolsToDisplay = poolsToDisplay.slice(this.state.pageSelected * 30);
+        }
+        this.setState({ poolsToDisplay: poolsToDisplay });
+    }
 
     handlePageClick = (data) => {
-        let selected = data.selected;
-        let offset = Math.ceil(selected * this.props.perPage);
-
-        this.setState({ offset: offset }, () => {
-            var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(selected);
-
-            if (this.orderBy) {
-                u += this.orderBy;
-            }
-
-            this.getPoolList(u);
-        });
+        this.state.pageSelected = data.selected;
+        this.setState({ pageSelected: data.selected });
+        this.performPoolListFilter();
     };
 
-    handlePageClick(e, index) {
-        e.preventDefault();
-        this.setState({
-            currentPage: index
-        });
-
-        var u = this.state.baseUrl + this.state.baseQuery + this.state.searchQuery + "&page=" + parseInt(index);
-
-        if (this.orderBy) {
-            u += this.orderBy;
-        }
-
-        this.getPoolList(u);
-    }
-
     async componentDidMount() {
+        await this.getAllPools();
 
-        if (this.props.query) {
-            this.state.baseQuery = this.props.query;
-        }
         try {
             if (!isEmpty(this.props.match.params.location)) {
-                this.state.baseQuery += "&location=" + this.props.match.params.location;
                 this.state.location = this.props.match.params.location;
                 this.setState({ location: this.props.match.params.location });
             }
@@ -235,35 +269,25 @@ export default class FetchPoolList extends React.Component {
         }
 
         if (!isEmpty(this.props.poolid)) {
-            this.state.baseQuery += "&poolid=" + this.props.poolid;
             this.state.poolid = this.props.poolid;
             this.setState({ poolid: this.props.poolid });
         }
 
-        await this.getPoolList(this.state.baseUrl + this.state.baseQuery);
-
+        this.performPoolListFilter();
+        
         if (this.state.filtersWhereRemoved == false) {
-            this.showFilters(this.state.pools.length);
+            this.showFilters(this.state.poolsToDisplay.length);
         }
+        this.setState({ loading: false });
     }
 
-    async getPoolList(query) {
-        if (this.state.multiPoolOperators) {
-            query += "&exclude_splitters=1";
-        }
+    async getAllPools() {
+        var response = await fetch(baseUrl + allPools);
+        var data = await response.json();
+        console.log(data);
 
-        if (this.state.saturatedPools) {
-            query += "&saturated=1";
-        }
-
-        this.setState({ pools: {}, loading: true })
-        var response = await fetch(query);
-        // const response = await fetch(this.state.baseUrl + this.state.searchQuery);
-        const data = await response.json();
-        this.state.pools = data.poolpeek.pools;
-        this.setState({ pools: data.poolpeek.pools, loading: true })
-        this.setState({ query: data.poolpeek.query, loading: true })
-        this.setState({ pageCount: data.poolpeek.query.pageCount, loading: false })
+        this.setState({ allpoolsList: data.poolpeek.pools });
+        this.setState({ pageCount: data.poolpeek.pools.length / 30 });
     }
 
     mapObject(object, callback) {
@@ -318,11 +342,8 @@ export default class FetchPoolList extends React.Component {
             this.state.multiPoolOperators = true;
         }
 
-        if (this.state.searchQuery !== "") {
-            this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
-        }
-        else
-            this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+        this.performPoolListFilter();
+
     }
 
     handleSaturatedPoolsClick() {
@@ -335,11 +356,7 @@ export default class FetchPoolList extends React.Component {
             this.state.saturatedPools = true;
         }
 
-        if (this.state.searchQuery !== "") {
-            this.getPoolList(this.state.baseUrl + this.state.baseQuery + this.state.searchQuery);
-        }
-        else
-            this.getPoolList(this.state.baseUrl + this.state.baseQuery);
+        this.performPoolListFilter();
     }
 
     handleAdvancedClick() {
@@ -591,12 +608,20 @@ export default class FetchPoolList extends React.Component {
         }
     }
 
+    shuffle(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
     render() {
         const { currentPage, pageCount } = this.state;
 
-        if (!this.state.pools) {
-            return <div>Pools not found...</div>
-        }
+        // if (!this.state.poolsToDisplay) {
+        //     return <div>Pools not found...</div>
+        // }
 
         return (
 
@@ -611,13 +636,6 @@ export default class FetchPoolList extends React.Component {
                                 />}
                             />
                         </h3>
-
-                        {/* <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
-                            <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
-                                control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
-                                />}
-                            />
-                        </h3> */}
                         <Table >
                             <tbody>
                                 <tr>
@@ -664,31 +682,8 @@ export default class FetchPoolList extends React.Component {
                                         />
                                     </td>
                                 </tr>
-                                {/* <tr>
-                                    <td> */}
-                                {/* <label>
-                                            <span>Hide Multi Pool Operators</span>
-                                            <Checkbox checked={this.state.multiPoolOperators}
-                                                onChange={e => this.handleMultiPoolOperatorsClick()} />
-                                            <span>Hide Saturated Pools</span>
-                                            <Checkbox checked={this.state.saturatedPools}
-                                                onChange={e => this.handleSaturatedPoolsClick()} />
-                                        </label> */}
-                                {/* </td>
-                                </tr> */}
                             </tbody>
                         </Table>
-                        {/* <FormGroup > */}
-
-                        {/* <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
-                            <FormControlLabel style={{ align: "left", display: 'inline-block' }} value="all"
-                                    control={<Switch size="medium" checked={this.state.advancedSearchFiltersShow} onChange={e => this.handleAdvancedClick()}
-                                    />}
-                                />
-                            </h3> */}
-
-                        {/* </FormGroup> */}
-
                         <Collapse isOpened={this.state.advancedSearchFiltersShow}>
                             <Table >
                                 <tbody>
@@ -888,33 +883,15 @@ export default class FetchPoolList extends React.Component {
                             <span>Hide Multi Pool Operators</span>
                             <Checkbox checked={this.state.multiPoolOperators}
                                 onChange={e => this.handleMultiPoolOperatorsClick()} />
-                            {/* <span>Hide Saturated Pools</span>
+                            <span>Hide Saturated Pools</span>
                             <Checkbox checked={this.state.saturatedPools}
-                                onChange={e => this.handleSaturatedPoolsClick()} /> */}
+                                onChange={e => this.handleSaturatedPoolsClick()} />
 
                             {(this.state.query && this.state.query.count > 10) && (
-                                <span> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.pools.length}    </span>)}
+                                <span> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.poolsToDisplay.length}    </span>)}
                         </div>
 
                     </div>}
-
-                <Row>
-                    {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-                        :
-                        this.state.pools.map(function (item, key) {
-                            return (
-
-                                <Col lg={4} md={4} sm={4} xs={12} className="mb-3">
-                                    <div className='ProjectCards'>
-                                        <PoolCard
-                                            img={item.imageUrl}
-                                            pool={item} />
-                                    </div>
-                                </Col>
-                            )
-                        })
-                    }
-                </Row>
                 <ReactPaginate
                     previousLabel={'previous'}
                     nextLabel={'next'}
@@ -927,6 +904,25 @@ export default class FetchPoolList extends React.Component {
                     containerClassName={'pagination'}
                     activeClassName={'active'}
                 />
+                <Row>
+                    {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                        :
+                        this.state.poolsToDisplay.map(function (item, key) {
+                            if (key > 30) return;
+                            return (
+
+                                <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+                                    <div className='ProjectCards'>
+                                        <PoolCard
+                                            img={item.imageUrl}
+                                            pool={item} />
+                                    </div>
+                                </Col>
+                            )
+                        })
+                    }
+                </Row>
+
             </div >
         );
     }

@@ -53,7 +53,7 @@ export default class SocialMedia extends React.Component {
         return (
             <div style={{ display: 'inline-block' }}>
 
-                <Tooltip
+                {/* <Tooltip
                     title="Pool Website"
                     placement="left"
                 >
@@ -62,7 +62,7 @@ export default class SocialMedia extends React.Component {
                             className="pr-2"
                             alt=""
                         />
-                        <FontAwesomeIcon icon={faGlobe} /></a></Tooltip>
+                        <FontAwesomeIcon icon={faGlobe} /></a></Tooltip> */}
 
 
                 {this.state.twitterHandle !== "" &&
@@ -75,7 +75,7 @@ export default class SocialMedia extends React.Component {
                                 className="pr-2"
                                 alt=""
                             />
-                            <FontAwesomeIcon icon={faTwitter} /></a></Tooltip>}
+                            <FontAwesomeIcon size="2x" icon={faTwitter} /></a></Tooltip>}
 
                 {this.state.telegramHandle != "" &&
                     <Tooltip
@@ -86,7 +86,7 @@ export default class SocialMedia extends React.Component {
                             <img
                                 className="pr-2"
                                 alt=""
-                            /> <FontAwesomeIcon icon={faTelegram} /></a></Tooltip>}
+                            /> <FontAwesomeIcon size="2x" icon={faTelegram} /></a></Tooltip>}
 
                 {this.state.youtubeHandle != "" &&
                     <Tooltip
@@ -97,7 +97,7 @@ export default class SocialMedia extends React.Component {
                             <img
                                 className="pr-2"
                                 alt=""
-                            /> <FontAwesomeIcon icon={faYoutube} /></a></Tooltip>}
+                            /> <FontAwesomeIcon size="2x" icon={faYoutube} /></a></Tooltip>}
 
                 {this.state.facebookHandle != "" &&
                     <Tooltip
@@ -108,7 +108,7 @@ export default class SocialMedia extends React.Component {
                             <img
                                 className="pr-2"
                                 alt=""
-                            /> <FontAwesomeIcon icon={faFacebook} /></a></Tooltip>}
+                            /> <FontAwesomeIcon size="2x" icon={faFacebook} /></a></Tooltip>}
 
                 {this.state.discordHandle != "" &&
                     <Tooltip
@@ -119,7 +119,7 @@ export default class SocialMedia extends React.Component {
                             <img
                                 className="pr-2"
                                 alt=""
-                            /> <FontAwesomeIcon icon={faDiscord} /></a></Tooltip>}
+                            /> <FontAwesomeIcon size="2x" icon={faDiscord} /></a></Tooltip>}
             </div>
         )
     };

@@ -13,17 +13,12 @@ import {
   FaTelegramPlane
 } from 'react-icons/fa';
 import {
-  Badge,
   Button,
   Card,
   CardBody,
-  CardDeck,
-  CardGroup,
   CardHeader,
   CardTitle,
   Col,
-  ListGroup,
-  ListGroupItem,
   Row,
   Modal,
   ModalBody,
@@ -31,7 +26,6 @@ import {
   ModalHeader,
   CardText
 } from 'reactstrap';
-import { getColor } from 'utils/colors';
 import googleAppStore from 'assets/img/google_plays.png';
 import appAppStore from 'assets/img/apple_store.png';
 import CircleLoader
@@ -41,6 +35,10 @@ import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactHtmlParser from 'react-html-parser';
+
+import SearchInput from 'components/SearchInput';
+import { baseUrl, dashboardData, recommendedPools, allPools } from '../assets/services';
+
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -72,7 +70,7 @@ const cardBodyStyle = {
   // color: 'white',
   paddingBottom: 0,
   paddingTop: 5,
-  paddingLeft: 10,
+  paddingLeft:20,
   paddingRight: 10
 };
 
@@ -110,7 +108,8 @@ class DashboardPage extends React.Component {
     totalWalletsStaked: '',
     totalAdaSupply: '',
     modalImageWidth: 450,
-    percentageOfSupplyStaked: 0
+    percentageOfSupplyStaked: 0,
+    allpools: null
   };
 
   toggle = modalType => () => {
@@ -125,7 +124,7 @@ class DashboardPage extends React.Component {
     });
   };
 
-  componentDidMount() {
+  async componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
 
@@ -133,30 +132,43 @@ class DashboardPage extends React.Component {
       this.setState({ modal: true, modalImageWidth: width / 1.2 });
     }
 
-    this.teamPeekData = shuffle(teamPeekData);
-    this.getPoolList();
-    this.getDashboardData();
+    this.teamPeekData = teamPeekData;//shuffle(teamPeekData);
 
+    await this.getDashboardData();
 
-
-  }
-
-  async getPoolList() {
-    var response = await fetch("https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&sid=1614342231163&blockfrom=1&blockto=100&activestakefrom=250000&activestaketo=8000000&excluderetired=1&exclude_splitters=1&has_twitter=1");
-    const data = await response.json();
-    console.log(data);
-    this.state.pools = data.poolpeek.pools;
-    this.setState({ pools: data.poolpeek.pools, loading: false });
   }
 
   async getDashboardData() {
-    var response = await fetch("https://smashpeek.com/services/dashboard/data");
+    this.getDashboardStatsData();
+    await this.getAllPools();
+    await this.getPoolList();
+    this.setState({
+      loading: false
+    });
+  }
+
+  async getAllPools() {
+    var response = await fetch(baseUrl + allPools);
+    var data = await response.json();
+    console.log(data);
+    this.setState({ allpools: data.poolpeek.pools });
+  }
+
+  async getPoolList() {
+    var response = await fetch(baseUrl + recommendedPools);
+    var data = await response.json();
+    console.log(data);
+    this.setState({ pools: data.poolpeek.pools });
+  }
+
+  async getDashboardStatsData() {
+    var response = await fetch(baseUrl + dashboardData);
     const data = await response.json();
     console.log(data);
 
     this.setState({ liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply });
     this.state.liveStake = data.liveStake;
-    this.state.totalAdaSupply =  data.totalAdaSupply;
+    this.state.totalAdaSupply = data.totalAdaSupply;
 
     var adaSupply = parseFloat(data.liveStake.replace(/,/g, ''));
     var liveStake = parseFloat(data.totalAdaSupply.replace(/,/g, ''));
@@ -164,6 +176,16 @@ class DashboardPage extends React.Component {
     this.setState({
       percentageOfSupplyStaked: percentage
     });
+  }
+
+
+  isLoading() {
+    if (this.state.loading || this.state.allpools == null || this.state.pools == null) {
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 
   render() {
@@ -276,7 +298,6 @@ class DashboardPage extends React.Component {
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle()}
-        // className={this.props.className}
         >
           <ModalHeader toggle={this.toggle()}>Poolpeek Mobile</ModalHeader>
           <ModalBody>
@@ -298,72 +319,82 @@ class DashboardPage extends React.Component {
             {' '}
             <Button color="secondary" onClick={this.toggle()}>
               Close
-                    </Button>
+            </Button>
           </ModalFooter>
         </Modal>
+        {this.isLoading() ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+          : <div>
+            <Row>
+              <Col lg={12} sm={12} sm={12} xs={12}>
+                <Card>
+                  <SearchInput allpools={this.state.allpools} />
+                </Card>
+              </Col>
+            </Row>
 
-        <Row>
-          <Col md="6" sm="12" xs="12">
-            <Card>
-              <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
-              <CardBody style={cardBodyStyle} body>
-                {teamPeekData.map(
-                  ({ id, image, title, description, poolid, right }) => (
-                    //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
+            <Row>
+              <Col md="6" sm="12" xs="12">
+                <Card>
+                  <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
+                  <CardBody style={cardBodyStyle} body>
+                    {teamPeekData.map(
+                      ({ id, image, title, description, poolid, right }) => (
+                        //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
 
-                    <ProductMedia
-                      key={id}
-                      image={image}
-                      title={title}
-                      description={description}
-                      poolid={poolid}
-                    />
-                  ),
-                )}
-              </CardBody>
-            </Card>
-          </Col>
+                        <ProductMedia
+                          key={id}
+                          image={image}
+                          title={title}
+                          description={description}
+                          poolid={poolid}
+                        />
+                      ),
+                    )}
+                  </CardBody>
+                </Card>
+              </Col>
 
-          <Col md="6" sm="12" xs="12">
-            <Card>
-              <CardHeader style={cardheaderStyle}><p><b>Recommended Pools</b></p></CardHeader>
-              <CardBody style={cardBodyStyle} body>
-                {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-                  :
-                  this.state.pools.map(function (item, index) {
-                    if (index <= 3) {
-                      return (
-                        <div style={{ display: 'inline-block' }}>
-                          <a href={`https://poolpeek.com/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
-                            <h6>
-                              {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
-                                <ReactImageFallback
-                                  src={item.extended_meta.url_png_logo}
-                                  width="40"
-                                  height="40"
-                                  fallbackImage={CardanoImage} />
-                              ) : (<img
-                                src={CardanoImage}
-                                className="pr-2"
-                                width="38"
-                                height="32"
-                              />)}
-                              <b>&nbsp;{ReactHtmlParser(item.name)}</b>
-                            </h6>
+              <Col md="6" sm="12" xs="12">
+                <Card>
+                  <CardHeader style={cardheaderStyle}><p><b>Recommended Pools</b></p></CardHeader>
+                  <CardBody style={cardBodyStyle} body>
 
-                            <p>{ReactHtmlParser(linkifyHtml(item.description, {
-                              defaultProtocol: 'https'
-                            }))}</p>
-                          </a>
-                        </div>
-                      )
+                    {this.state.pools.map(function (item, index) {
+                      if (index <= 3) {
+                        return (
+                          <Row>
+                          <div style={{ display: 'inline-block' }}>
+                            <a href={`https://poolpeek.com/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
+                              <h6>
+                                {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
+                                  <ReactImageFallback
+                                    src={item.extended_meta.url_png_logo}
+                                    width="40"
+                                    height="40"
+                                    fallbackImage={CardanoImage} />
+                                ) : (<img
+                                  src={CardanoImage}
+                                  className="pr-2"
+                                  width="38"
+                                  height="32"
+                                />)}
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b>
+                              </h6>
+
+                              <p>{ReactHtmlParser(linkifyHtml(item.description, {
+                                defaultProtocol: 'https'
+                              }))}</p>
+                            </a>
+                          </div>
+                          </Row>
+                        )
+                      }
+                    })
                     }
-                  })
-                }
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row></div>}
       </Page>
     );
   }

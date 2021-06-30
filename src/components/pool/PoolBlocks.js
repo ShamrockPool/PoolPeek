@@ -43,8 +43,7 @@ export default class PoolBlocks extends React.Component {
                             <th>Block Amount</th>
                         </tr>
                     </thead>
-                    <PoolBlocksList block_history={this.props.pool.block_history} currentEpoch={this.props.pool.active_stake_epoch}/>
-                    <p>* Current Epoch.</p>
+                    <PoolBlocksList block_history={this.props.pool.block_history} currentEpoch={this.props.pool.active_stake_epoch} />
                 </Table>
             </div >
         )
