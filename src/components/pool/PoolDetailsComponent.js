@@ -164,7 +164,7 @@ export default class PoolDetailsComponent extends React.Component {
                                 </Col>
                             </Row>
 
-                            <Row>
+                            
                                 <Tabs
                                     selectedIndex={this.state.selectedTab}
                                     onSelect={(selectedTab) => this.setState({ selectedTab: selectedTab })}
@@ -401,10 +401,9 @@ export default class PoolDetailsComponent extends React.Component {
                                                 {/* END DELEGATES */}
                                             </TabPanel>
                                         </CardBody>
-
                                     </Card>
                                 </Tabs>
-                            </Row>
+                            
                         </Col>
                         <Col xl={3} lg={3} md={12} sm={12}>
                             <Row style={{
@@ -415,12 +414,10 @@ export default class PoolDetailsComponent extends React.Component {
                                     <Card style={{
                                         alignItems: 'center'
                                     }}>
-
-                                        < CardHeader style={{
+                                        <CardHeader style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             width: '100%',
-                                            borderRadius: '1.9em'
                                         }}>Pool Links</CardHeader>
 
                                         <CardBody>
