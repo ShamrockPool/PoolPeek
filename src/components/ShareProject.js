@@ -61,7 +61,7 @@ export default class ShareProject extends React.Component {
         return (
                 <div>
                 <FacebookShareButton url={baseUrl + this.props.name}
-                    title={"Checkout " + this.props.name + " on buildingoncardano.com!"}>
+                    title={"Checkout " + this.props.name + " on poolpeek.com!"}>
                     <FacebookIcon
                         size={"2.5rem"}
                         round
@@ -69,12 +69,12 @@ export default class ShareProject extends React.Component {
                 </FacebookShareButton>
 
                 <TwitterShareButton url={baseUrl + this.props.name}
-                    title={"Checkout " + this.props.name + " on buildingoncardano.com!"}>
+                    title={"Checkout " + this.props.name + " on poolpeek.com!"}>
                     <TwitterIcon size={"2.5rem"} round />
                 </TwitterShareButton>
 
                 <TelegramShareButton url={baseUrl + this.props.name}
-                    title={"Checkout " + this.props.name + " on buildingoncardano.com!"}>
+                    title={"Checkout " + this.props.name + " on poolpeek.com!"}>
                     <TelegramIcon size={"2.5rem"} round />
                 </TelegramShareButton>
             </div >

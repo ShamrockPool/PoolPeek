@@ -43,23 +43,12 @@ export default class PoolDelagates extends React.Component {
     }
 
     componentDidMount() {
-        this.getDelegates();
+
     }
 
-    async getDelegates() {
-        // if (!isEmpty(this.state.stakingAddress)) {
-        const response = await fetch('https://smashpeek.com/services/pool/delegates/' + this.props.pool.pool_id);
-        const data = await response.json();
-        this.setState({ delegatesList: data });
-        this.setState({ loading: false });
-        return data;
-        // }
-    }
 
     render() {
-
         return (
-
             <div style={{ width: "100%", alignItems: "left" }}>
                 <Table {...{ ['striped']: true }}>
                     <thead>
@@ -69,10 +58,10 @@ export default class PoolDelagates extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                    {this.state.loading ? <div>Loading delegates...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-                        :
-                        <PoolDelegatesList delegatesList={this.state.delegatesList} />
-                    }
+                        {this.props.delegatesList == null ? <div>Loading delegates...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                            :
+                            <PoolDelegatesList delegatesList={this.props.delegatesList} />
+                        }
                     </tbody>
                 </Table>
             </div >

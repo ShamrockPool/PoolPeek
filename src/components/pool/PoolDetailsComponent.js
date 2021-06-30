@@ -71,12 +71,23 @@ export default class PoolDetailsComponent extends React.Component {
         this.state = {
             copied: false,
             selectedTab: 0,
-            loading: true
+            loading: true,
+            delegatesList: null
         };
 
     }
     componentDidMount() {
+        this.getDelegates();
+    }
 
+    async getDelegates() {
+        // if (!isEmpty(this.state.stakingAddress)) {
+        const response = await fetch('https://smashpeek.com/services/pool/delegates/' + this.props.pool.pool_id);
+        const data = await response.json();
+        this.setState({ delegatesList: data });
+        this.setState({ loading: false });
+        return data;
+        // }
     }
 
 
@@ -84,6 +95,21 @@ export default class PoolDetailsComponent extends React.Component {
         var name = handle.replace('https://twitter.com/', '');
         name = name.replace('@', '');
         return name;
+    }
+
+    calculateLuck() {
+        try {
+            var lastEpochStakeString = this.props.pool.active_stake_history[1].active_stake.replaceAll(",", "");
+            var lastEpochStake = Number(lastEpochStakeString);
+            var divider = lastEpochStake / 1062037;
+            var blockEpoch = this.props.pool.block_history[1].blocks;
+            var blocksLuck = blockEpoch / divider;
+    
+            return Math.round(blocksLuck * 100, 0);
+        } catch (error) {
+            return 0;
+        }
+
     }
 
     render() {
@@ -100,20 +126,20 @@ export default class PoolDetailsComponent extends React.Component {
                         style={{
                             justifyContent: 'left',
                             alignItems: 'top',
-                        }}>
-                        <Col xl={8} lg={12} md={12} sm={6}>
+                        }}>                        
+                        <Col xl={9} lg={9} md={12} sm={12} >
                             <Row>
                                 <Card>
                                     <CardBody>
                                         <Row>
-                                            <Col sm={2}>
+                                            <Col xl={2} lg={2} md={12} sm={12} >
                                                 <ReactImageFallback
                                                     src={this.props.pool.extended_meta.url_png_logo}
                                                     width="140"
                                                     height="140"
                                                     fallbackImage={CardanoImage} />
                                             </Col>
-                                            <Col sm={8}>
+                                            <Col xl={10} lg={10} md={12} sm={12} >
                                                 <h1>{ReactHtmlParser(this.props.pool.name)}({ReactHtmlParser(this.props.pool.ticker)})</h1>
                                                 <h3>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
                                                     defaultProtocol: 'https'
@@ -159,7 +185,7 @@ export default class PoolDetailsComponent extends React.Component {
                                             {/* START INFO */}
                                             <div>
                                                 <Row>
-                                                    <Col xl={6} lg={6} md={12} sm={12}>
+                                                    <Col xl={4} lg={4} md={12} sm={12}>
                                                         <Card>
                                                             < CardHeader style={{
                                                                 justifyContent: 'center',
@@ -182,7 +208,7 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                         </Card>
                                                     </Col>
-                                                    <Col xl={6} lg={6} md={12} sm={12}>
+                                                    <Col xl={4} lg={4} md={12} sm={12}>
                                                         <Card>
                                                             <CardHeader style={{
                                                                 justifyContent: 'center',
@@ -199,6 +225,29 @@ export default class PoolDetailsComponent extends React.Component {
                                                                     <div>
                                                                         <h2>{this.props.pool.cost_per_epoch}₳</h2>
                                                                         <small>Fixed fee is the minimum amount of ADA a pool subtracts from block production rewards. The minimum is 340₳.</small>
+                                                                    </div>
+                                                                </Row>
+                                                            </CardBody>
+
+                                                        </Card>
+                                                    </Col>
+                                                    <Col xl={4} lg={4} md={12} sm={12}>
+                                                        <Card>
+                                                            < CardHeader style={{
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                width: '100%',
+                                                                borderRadius: 'none',
+                                                            }}>Luck Last Epoch</CardHeader>
+                                                            <CardBody style={{
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                textAlign: 'center',
+                                                            }}>
+                                                                <Row>
+                                                                    <div>
+                                                                        <h2>{this.calculateLuck()}%</h2>
+                                                                        <small>This.</small>
                                                                     </div>
                                                                 </Row>
                                                             </CardBody>
@@ -326,7 +375,7 @@ export default class PoolDetailsComponent extends React.Component {
                                             {/* START DELEGATES */}
                                             {this.props.pool &&
                                                 <div>
-                                                    <PoolDelagates pool={this.props.pool} />
+                                                    <PoolDelagates pool={this.props.pool} delegatesList={this.state.delegatesList}/>
                                                 </div>}
                                             {/* END DELEGATES */}
                                         </TabPanel>
@@ -343,7 +392,7 @@ export default class PoolDetailsComponent extends React.Component {
 
                         </Col>
 
-                        <Col md={2} sm={6} lg={3} xs={12} className="mb-3">
+                        <Col xl={3} lg={3} md={12} sm={12}>
                             <Row style={{
                                 justifyContent: 'center',
                                 alignItems: 'center',

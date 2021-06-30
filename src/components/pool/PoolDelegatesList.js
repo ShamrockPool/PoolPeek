@@ -46,7 +46,6 @@ rewardDate: "2020-09-22"
 */
     render() {
         return (
-
             this.props.delegatesList.map(function (item, key) {
                 return (                    
                     <tr>
