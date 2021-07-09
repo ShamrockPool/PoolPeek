@@ -17,6 +17,10 @@ import EpochCalendar from 'pages/EpochCalendar';
 import StakingRewards from 'pages/StakingRewards';
 import PoolDetailsPage from 'pages/PoolDetailsPage';
 
+import GA4React from "ga-4-react";
+const ga4react = new GA4React("UA-201777163-1");
+ga4react.initialize();
+
 require('./styles/reduction.scss');
 
 const getBasename = () => {
