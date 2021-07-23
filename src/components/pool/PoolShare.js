@@ -52,19 +52,6 @@ const cardBodyStyle = {
     paddingRight: 10
 };
 
-function checkIsImageUrl(url) {
-    if (isEmpty(url)) {
-        return false;
-    }
-    if (url.startsWith("https") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {
-        return true;
-    }
-    return false;
-}
-
-function convertImageUrlToHttps(url) {
-    return url.replace("http:", "https:");
-}
 
 export default class PoolShare extends React.Component {
 

@@ -37,7 +37,7 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactHtmlParser from 'react-html-parser';
 
 import SearchInput from 'components/SearchInput';
-import { baseUrl, dashboardData, recommendedPools, allPools } from '../assets/services';
+import { baseUrl,baseUrlPoolPeekService, dashboardData, recommendedPools, allPools, getPoolForSearchList } from '../assets/services';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -148,23 +148,23 @@ class DashboardPage extends React.Component {
   }
 
   async getAllPools() {
-    var response = await fetch(baseUrl + allPools);
+    var response = await fetch(baseUrlPoolPeekService + getPoolForSearchList);
     var data = await response.json();
-    console.log(data);
-    this.setState({ allpools: data.poolpeek.pools });
+    //console.log(data);
+    this.setState({ allpools: data.pools });
   }
 
   async getPoolList() {
     var response = await fetch(baseUrl + recommendedPools);
     var data = await response.json();
-    console.log(data);
+   //console.log(data);
     this.setState({ pools: data.poolpeek.pools });
   }
 
   async getDashboardStatsData() {
     var response = await fetch(baseUrl + dashboardData);
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
 
     this.setState({ liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply });
     this.state.liveStake = data.liveStake;

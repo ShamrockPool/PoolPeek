@@ -23,7 +23,7 @@ export default class PoolCard extends React.Component {
     }
 
     checkIsImageUrl(url) {
-        if (isEmpty(url)) {
+        if (url == null || isEmpty(url)) {
             return false;
         }
         if (url.startsWith("https") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {

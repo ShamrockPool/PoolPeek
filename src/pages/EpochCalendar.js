@@ -58,7 +58,7 @@ class EpochCalendar extends React.Component {
   }
 
   getStakeRewardsDate(date) {
-    console.log(date)
+    //console.log(date)
     var epochDate = new Date(2017, 8, 23, 21, 44, 59);
     var today = new Date(new Date().toUTCString());
     var endDate = new Date(today.getFullYear(), 12, 31, 21, 45);
@@ -90,7 +90,7 @@ class EpochCalendar extends React.Component {
       }
       if (wasInLiveEpoch) {
         epochsSinceLiveEpoch++;
-        if (epochsSinceLiveEpoch == 5) {
+        if (epochsSinceLiveEpoch == 4) {
           var dateString = "End of Epoch " + epoch;
           this.setState({ rewardsDate: dateString });
           stakeRewardEvent = {
@@ -163,7 +163,7 @@ class EpochCalendar extends React.Component {
   }
 
   eventStyleGetter(event, start, end, isSelected) {
-    console.log(event);
+    //console.log(event);
     if (event.title == '*Staking Rewards paid') {
       var style = {
         backgroundColor: 'red'
