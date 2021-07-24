@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import MapChart from 'components/MapChart';
 import { css } from "@emotion/core";
 import GridLoader from "react-spinners/GridLoader";
-import { baseUrl, geoLocs } from '../assets/services';
+import { baseUrlPoolPeekService, allPoolsPPS } from '../assets/services';
 
 const override = css`
   display: block;
@@ -21,7 +21,7 @@ class PoolMap extends React.Component {
   }
 
   async getPoolLocationData() {
-    const response = await fetch(baseUrl + geoLocs);
+    const response = await fetch(baseUrlPoolPeekService + allPoolsPPS);
     return await response.json();
   }
 

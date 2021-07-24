@@ -92,7 +92,7 @@ export default class PoolDetailsComponent extends React.Component {
 
 
     getTwitterName(handle) {
-        if(handle != null && !isEmpty(handle)){
+        if (handle != null && !isEmpty(handle)) {
             var name = handle.replace('https://twitter.com/', '');
             name = name.replace('@', '');
             return name;
@@ -112,7 +112,14 @@ export default class PoolDetailsComponent extends React.Component {
         } catch (error) {
             return 0;
         }
+    }
 
+    calculateTotalBlocks() {
+        var total = 0;
+        this.props.pool.block_history.forEach(element => {
+            total += parseInt(element.blocks);
+        });
+        return total;
     }
 
     render() {
@@ -182,6 +189,8 @@ export default class PoolDetailsComponent extends React.Component {
                                         <TabList>
                                             <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
                                             <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>
+                                            <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Block History</Tab>
+                                            <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Stake History</Tab>
                                         </TabList>
                                     </CardHeader>
                                     <CardBody>
@@ -189,7 +198,7 @@ export default class PoolDetailsComponent extends React.Component {
                                             {/* START INFO */}
                                             <div>
                                                 <Row>
-                                                    <Col xl={6} lg={6} md={12} sm={12}>
+                                                    <Col xl={4} lg={4} md={12} sm={12}>
                                                         <Card style={{
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
@@ -208,7 +217,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                             }}>
                                                                 <Row>
                                                                     <div>
-                                                                        <h2>{this.props.pool.margin_pct}%</h2>
+                                                                        <h2>{this.props.pool.margin_pct * 100}%</h2>
                                                                         <small>Pool Margin is the % of extra fee's a pool withdraws from block production rewards. The lower the better for delegates.</small>
                                                                     </div>
                                                                 </Row>
@@ -216,7 +225,7 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                         </Card>
                                                     </Col>
-                                                    <Col xl={6} lg={6} md={12} sm={12}>
+                                                    <Col xl={4} lg={4} md={12} sm={12}>
                                                         <Card style={{
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
@@ -243,34 +252,34 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                         </Card>
                                                     </Col>
-                                                    {/* <Col xl={4} lg={4} md={12} sm={12}>
-                                                            <Card style={{
-                                                                    justifyContent: 'center',
-                                                                    alignItems: 'center',
-                                                                    width: '100%',
-                                                                    height: '100%'
-                                                                }}>
-                                                                <CardHeader style={{
-                                                                    justifyContent: 'center',
-                                                                    alignItems: 'center',
-                                                                    width: '100%',
-                                                                    borderRadius: 'none',
-                                                                }}>Luck Last Epoch</CardHeader>
-                                                                <CardBody style={{
-                                                                    justifyContent: 'center',
-                                                                    alignItems: 'center',
-                                                                    textAlign: 'center',
-                                                                }}>
-                                                                    <Row>
-                                                                        <div>
-                                                                            <h2>{""+this.calculateLuck()}%</h2>
-                                                                            <small>This is the amount of luck this pool recieved last Epoch.</small>
-                                                                        </div>
-                                                                    </Row>
-                                                                </CardBody>
+                                                    <Col xl={4} lg={4} md={12} sm={12}>
+                                                        <Card style={{
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center',
+                                                            width: '100%',
+                                                            height: '100%'
+                                                        }}>
+                                                            <CardHeader style={{
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                width: '100%',
+                                                                borderRadius: 'none',
+                                                            }}>Luck Last Epoch</CardHeader>
+                                                            <CardBody style={{
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                textAlign: 'center',
+                                                            }}>
+                                                                <Row>
+                                                                    <div>
+                                                                        <h2>{"" + this.calculateLuck()}%</h2>
+                                                                        <small>This is the amount of luck this pool recieved last Epoch.</small>
+                                                                    </div>
+                                                                </Row>
+                                                            </CardBody>
 
-                                                            </Card>
-                                                        </Col> */}
+                                                        </Card>
+                                                    </Col>
                                                 </Row>
 
                                                 <Row>
@@ -351,47 +360,59 @@ export default class PoolDetailsComponent extends React.Component {
                                                         </Card>
                                                     </Col>
                                                 </Row>
-
-                                                <Row>
-                                                    <Col xl={6} lg={6} md={12} sm={12}>
-                                                        <Card>
-                                                            < CardHeader style={{
+                                                {this.props.pool.block_history != null && this.props.pool.block_history.length > 0 &&
+                                                    <Row>
+                                                        <Col xl={6} lg={6} md={12} sm={12}>
+                                                            <Card style={{
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
                                                                 width: '100%',
-                                                                borderRadius: 'none',
-                                                            }}>Active Stake - History</CardHeader>
-                                                            <CardBody style={{
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                textAlign: 'center',
                                                             }}>
-                                                                {(width > 600 && this.props.pool.active_stake_history != null && this.props.pool.active_stake_history.length > 0) &&
-                                                                    <Chart data={this.props.pool.active_stake_history} currentEpoch={this.props.pool.active_stake_epoch} currentActiveStake={this.props.pool.active_stake} />
-                                                                }
-                                                            </CardBody>
-
-                                                        </Card>
-                                                    </Col>
-                                                    <Col xl={6} lg={6} md={12} sm={12}>
-                                                        <Card>
-                                                            < CardHeader style={{
+                                                                <CardHeader style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                }}>Blocks This Epoch</CardHeader>
+                                                                <CardBody style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    textAlign: 'center',
+                                                                }}>
+                                                                    <Row>
+                                                                        <div>
+                                                                            <h2>{this.props.pool.block_history[0].blocks}</h2>
+                                                                            <small>Blocks produced by the pool in current Epoch.</small>
+                                                                        </div>
+                                                                    </Row>
+                                                                </CardBody>
+                                                            </Card>
+                                                        </Col>
+                                                        <Col xl={6} lg={6} md={12} sm={12}>
+                                                            <Card style={{
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
                                                                 width: '100%',
-                                                                borderRadius: 'none',
-                                                            }}>Blocks <small>* Current Epoch.</small></CardHeader>
-                                                            <CardBody style={{
-                                                                justifyContent: 'center',
-                                                                alignItems: 'center',
-                                                                textAlign: 'center',
                                                             }}>
-                                                                {this.props.pool && <PoolBlocks pool={this.props.pool} />}
-                                                            </CardBody>
-
-                                                        </Card>
-                                                    </Col>
-                                                </Row>
+                                                                <CardHeader style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                }}>Lifetime Blocks</CardHeader>
+                                                                <CardBody style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    textAlign: 'center',
+                                                                }}>
+                                                                    <Row>
+                                                                        <div>
+                                                                            <h2>{this.calculateTotalBlocks()}</h2>
+                                                                            <small>Amount of blocks this pool has minted.</small>
+                                                                        </div>
+                                                                    </Row>
+                                                                </CardBody>
+                                                            </Card>
+                                                        </Col>
+                                                    </Row>}
                                             </div>
                                             {/* END INFO */}
                                         </TabPanel>
@@ -402,6 +423,44 @@ export default class PoolDetailsComponent extends React.Component {
                                                     <PoolDelagates pool={this.props.pool} delegatesList={this.state.delegatesList} />
                                                 </div>}
                                             {/* END DELEGATES */}
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <Card>
+                                                < CardHeader style={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    width: '100%',
+                                                    borderRadius: 'none',
+                                                }}>Blocks <small>* Current Epoch.</small></CardHeader>
+                                                <CardBody style={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    textAlign: 'center',
+                                                }}>
+                                                    {this.props.pool && <PoolBlocks pool={this.props.pool} />}
+                                                </CardBody>
+
+                                            </Card>
+                                        </TabPanel>
+                                        <TabPanel>
+                                            <Card>
+                                                < CardHeader style={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    width: '100%',
+                                                    borderRadius: 'none',
+                                                }}>Active Stake - History</CardHeader>
+                                                <CardBody style={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    textAlign: 'center',
+                                                }}>
+                                                    {(width > 600 && this.props.pool.active_stake_history != null && this.props.pool.active_stake_history.length > 0) &&
+                                                        <Chart data={this.props.pool.active_stake_history} currentEpoch={this.props.pool.active_stake_epoch} currentActiveStake={this.props.pool.active_stake} />
+                                                    }
+                                                </CardBody>
+
+                                            </Card>
                                         </TabPanel>
                                     </CardBody>
                                 </Card>

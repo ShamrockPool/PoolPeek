@@ -14,7 +14,7 @@ import 'styles/pagination.css';
 
 import PoolCard from 'components/Card/PoolCard';
 
-import { baseUrl, allPools } from '../../assets/services';
+import { baseUrl, allPools, baseUrlPoolPeekService, allPoolsPPS } from '../../assets/services';
 
 const WAIT_INTERVAL = 2000
 
@@ -52,7 +52,6 @@ export default class FetchPoolList extends React.Component {
             loading: true,
             pools: [],
             query: null,
-            baseUrl: "https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&sid=" + sid,
             baseQuery: "",
             searchQuery: "",
             currentPage: 0,
@@ -283,12 +282,12 @@ export default class FetchPoolList extends React.Component {
     }
 
     async getAllPools() {
-        var response = await fetch(baseUrl + allPools);
+        var response = await fetch(baseUrlPoolPeekService + allPoolsPPS);
         var data = await response.json();
         console.log(data);
 
-        this.setState({ allpoolsList: data.poolpeek.pools });
-        this.setState({ pageCount: data.poolpeek.pools.length / 30 });
+        this.setState({ allpoolsList: data.pools });
+        this.setState({ pageCount: data.pools.length / 30 });
     }
 
     mapObject(object, callback) {

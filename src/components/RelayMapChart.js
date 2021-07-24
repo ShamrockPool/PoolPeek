@@ -30,15 +30,15 @@ class RelayMapChart extends React.Component {
 
   getPopout() {
     var tickers = [];
-    console.log(this.state.latSelected)
-    console.log(this.state.longSelected)
+    // console.log(this.state.latSelected)
+    // console.log(this.state.longSelected)
 
 
     this.props.poolsData.poolpeek.geo.map(function (item, key) {
       // if (this.state.longSelected == item.location_lon && this.state.latSelected == item.location_lat) {
       //   tickers.push(item.name)
       // }
-      console.log(item.name);
+      // console.log(item.name);
     });
 
 

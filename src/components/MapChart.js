@@ -1,12 +1,7 @@
-import Page from 'components/Page';
 import React from 'react';
-import Popout from 'components/Popout';
 import { Map, Marker, Overlay } from 'pigeon-maps'
 import 'reactjs-popup/dist/index.css';
-import QuickQueriesPage from '../pages/QuickQueriesPage';
-import FetchPoolList from 'components/pool/FetchPoolList';
-import * as queries from '../assets/queries/quickqueries';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+
 
 const width = window.innerWidth;
 
@@ -44,77 +39,81 @@ class MapChart extends React.Component {
   }
 
 
-  getMarkers() {
-    var markers = [];
+  // getMarkers() {
+  //   var markers = [];
 
 
-    this.props.poolsData.poolpeek.geo.map(function (item, key) {
-      var location;
-      if (item.location.includes(',')) {
-        location = item.location.split(",")[0];
-      }
-      // else if (item.location.includes(' ')) {
-      //   location = item.location.split(" ")[0];
-      // }
-      else {
-        location = item.location;
-      }
+  //   this.props.poolsData.map(function (item, key) {
+  //     var location;
+  //     if (item.extended_meta.location.includes(',')) {
+  //       location = item.location.split(",")[0];
+  //     }
+  //     // else if (item.location.includes(' ')) {
+  //     //   location = item.location.split(" ")[0];
+  //     // }
+  //     else {
+  //       location = item.location;
+  //     }
 
-      var shouldAdd = true;
-      if (markers.length == 0) {
-        markers.push({ markerOffset: 1, name: location, coordinates: [item.location_lon, item.location_lat] });
-      }
+  //     var shouldAdd = true;
+  //     if (markers.length == 0) {
+  //       markers.push({ markerOffset: 1, name: location, coordinates: [item.location_lon, item.location_lat] });
+  //     }
 
-      markers.map(function (addedMarker, key) {
+  //     markers.map(function (addedMarker, key) {
 
-        if (addedMarker.coordinates[0] == item.location_lon && addedMarker.coordinates[1] == item.location_lat) {
-          //dont add
-          shouldAdd = false;
-          return;
-        }
+  //       if (addedMarker.coordinates[0] == item.location_lon && addedMarker.coordinates[1] == item.location_lat) {
+  //         //dont add
+  //         shouldAdd = false;
+  //         return;
+  //       }
 
-        if (addedMarker.name.includes(location)) {
-          //dont add
-          shouldAdd = false;
-          return;
-        }
-      });
+  //       if (addedMarker.name.includes(location)) {
+  //         //dont add
+  //         shouldAdd = false;
+  //         return;
+  //       }
+  //     });
 
-      if (shouldAdd) {
-        markers.push({ markerOffset: 1, name: location, coordinates: [item.location_lon, item.location_lat] });
-      }
-    });
+  //     if (shouldAdd) {
+  //       markers.push({ markerOffset: 1, name: location, coordinates: [item.location_lon, item.location_lat] });
+  //     }
+  //   });
 
-    return markers;
-  }
+  //   return markers;
+  // }
 
   getMarkers2() {
     var markers = [];
-    this.props.poolsData.poolpeek.geo.map(function (item, key) {
-      var location = item.location;
+    var poolsData = this.props.poolsData;
+    poolsData.pools.map(function (item, key) {
+      var location = item.extended_meta.location;
       var lat = 0;
       var long = 0;
 
 
 
-      lat = Number(item.location_lat);
-      long = Number(item.location_lon);
+      lat = Number(item.extended_meta.location_lat);
+      long = Number(item.extended_meta.location_lon);
 
-      var shouldAdd = true;
-      if (markers.length == 0) {
-        markers.push({ name: location, lat: lat, long: long });
-      }
-      markers.map(function (addedMarker, key) {
+      if (lat != 0 && long != 0) {
 
-        if (addedMarker.lon == item.location_lon && addedMarker.lat == item.location_lat) {
-          //dont add location exists
-          shouldAdd = false;
-          return;
+        var shouldAdd = true;
+        if (markers.length == 0) {
+          markers.push({ name: location, lat: lat, long: long });
         }
-      });
+        markers.map(function (addedMarker, key) {
 
-      if (shouldAdd) {
-        markers.push({ name: location, lat: lat, long: long });
+          if (addedMarker.lon == item.location_lon && addedMarker.lat == item.location_lat) {
+            //dont add location exists
+            shouldAdd = false;
+            return;
+          }
+        });
+
+        if (shouldAdd) {
+          markers.push({ name: location, lat: lat, long: long });
+        }
       }
     });
 
@@ -128,10 +127,10 @@ class MapChart extends React.Component {
     if (newWindow) newWindow.opener = null
   }
 
-  setMapWidth(){
-    if(width > 600 ){
+  setMapWidth() {
+    if (width > 600) {
       this.state.mapWidth = 1500;
-    }else{
+    } else {
       this.state.mapWidth = 800;
     }
   }
@@ -139,8 +138,8 @@ class MapChart extends React.Component {
   componentDidMount() {
     this.setMapWidth();
     var filteredMarkers = this.getMarkers2();
-    this.setState({ totalMarkers:  filteredMarkers.length});
-    this.setState({ markersFiltered:  filteredMarkers});
+    this.setState({ totalMarkers: filteredMarkers.length });
+    this.setState({ markersFiltered: filteredMarkers });
   }
 
   render() {
@@ -167,7 +166,7 @@ class MapChart extends React.Component {
                   this.state.isShown = true;
 
                   var host = window.location.protocol + "//" + window.location.host;
-                  this.openInNewTab(host+'/poolsearch/'+payload);
+                  this.openInNewTab(host + '/poolsearch/' + payload);
                 }}
               >
 
@@ -184,7 +183,7 @@ class MapChart extends React.Component {
           </Popout>)} */}
 
         </div>
- <small>(If your pool is missing and you would like to see it listed, please update your meta data 'location' field.)</small>
+        <small>(If your pool is missing and you would like to see it listed, please update your meta data 'location' field.)</small>
 
       </div >
     );

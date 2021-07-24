@@ -356,7 +356,7 @@ class DashboardPage extends React.Component {
 
               <Col md="6" sm="12" xs="12">
                 <Card>
-                  <CardHeader style={cardheaderStyle}><p><b>Recommended Pools</b></p></CardHeader>
+                  <CardHeader style={cardheaderStyle}><p><b>Random Quality Pools</b></p></CardHeader>
                   <CardBody style={cardBodyStyle} body>
 
                     {this.state.pools.map(function (item, index) {
