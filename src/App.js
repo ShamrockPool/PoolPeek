@@ -16,6 +16,7 @@ import PoolMapPage from 'pages/PoolMap';
 import EpochCalendar from 'pages/EpochCalendar';
 import StakingRewards from 'pages/StakingRewards';
 import PoolDetailsPage from 'pages/PoolDetailsPage';
+import StakingCalculator from 'pages/StakingCalculator';
 
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
@@ -42,6 +43,7 @@ class App extends React.Component {
 
                 <Route exact path="/epochcalendar" render={(props) => <EpochCalendar />} />
                 <Route exact path="/stakingrewards" render={(props) => <StakingRewards />} />
+                <Route exact path="/stakingcalculator" render={(props) => <StakingCalculator />} />
                 <Route exact path="/aboutus" render={(props) => <AboutUsPage />} />
 
                 <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} multiPoolOperators={true} pageDescription={queries.baremetalpoolsqueryDesc} />} />

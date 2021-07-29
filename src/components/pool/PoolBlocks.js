@@ -40,7 +40,10 @@ export default class PoolBlocks extends React.Component {
                     <thead>
                         <tr>
                             <th>Epoch</th>
-                            <th>Block Amount</th>
+                            <th>Active Stake</th>
+                            <th>Expected Blocks</th>
+                            <th>Blocks Minted</th>
+                            <th>Luck</th>
                         </tr>
                     </thead>
                     {this.props.pool.block_history != null &&

@@ -37,7 +37,7 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactHtmlParser from 'react-html-parser';
 
 import SearchInput from 'components/SearchInput';
-import { baseUrl,baseUrlPoolPeekService, dashboardData, recommendedPools, allPools, getPoolForSearchList } from '../assets/services';
+import { baseUrl,baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -155,10 +155,10 @@ class DashboardPage extends React.Component {
   }
 
   async getPoolList() {
-    var response = await fetch(baseUrl + recommendedPools);
+    var response = await fetch(baseUrlPoolPeekService + getPoolForRecommendedList);
     var data = await response.json();
    //console.log(data);
-    this.setState({ pools: data.poolpeek.pools });
+    this.setState({ pools: data.pools });
   }
 
   async getDashboardStatsData() {

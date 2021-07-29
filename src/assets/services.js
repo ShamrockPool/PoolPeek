@@ -9,8 +9,8 @@ export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
 
 //
 export const dashboardData = "/dashboard/data";
-export const recommendedPools = "/pool/recommendedpp";
-export const allPools = "/pool/allpp";
+// export const recommendedPools = "/pool/recommendedpp";
+// export const allPools = "/pool/allpp";
 export const geoLocs = "/pool/geopp"
 
 
@@ -18,6 +18,7 @@ export const geoLocs = "/pool/geopp"
 export const allPoolsPPS = "/pooldetails/getall";
 export const getPoolById = "/pooldetails/getone/";
 export const getPoolForSearchList = "/pooldetails/getallsearchlist"
+export const getPoolForRecommendedList = "/pooldetails/getrecommendedpools"
 
 
 

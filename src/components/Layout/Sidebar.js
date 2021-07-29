@@ -16,7 +16,7 @@ import {
   MdLocationOn,
   MdBuild,
   MdFormatListBulleted,
-  MdPermContactCalendar,
+  MdAccountBalance,
   MdDateRange,
   MdMoneyOff
 } from 'react-icons/md';
@@ -68,6 +68,7 @@ const navItems = [
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
+  { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
   { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff },
   { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
@@ -97,7 +98,7 @@ class Sidebar extends React.Component {
   }
 
   async componentDidMount() {
-    this.getAdafolioGroups();    
+   // this.getAdafolioGroups();    
   };
 
   handleClick = name => () => {
@@ -151,7 +152,7 @@ class Sidebar extends React.Component {
               </NavItem>
             ))}
 
-            <NavItem
+            {/* <NavItem
               className={bem.e('nav-item')}
               onClick={this.handleClick('Components')}
             >
@@ -314,7 +315,7 @@ class Sidebar extends React.Component {
                   </BSNavLink>
                 </NavItem>
               ))}
-            </Collapse>
+            </Collapse> */}
           </Nav>
 
         </div>

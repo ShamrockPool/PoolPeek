@@ -60,7 +60,7 @@ export default class Chart extends React.Component {
             }
         }
         chartData = chartData.reverse();
-        chartData.push(parseFloat(this.props.currentActiveStake.replace(/,/g, '')));
+       // chartData.push(parseFloat(this.props.currentActiveStake.replace(/,/g, '')));
         return chartData;
     }
 

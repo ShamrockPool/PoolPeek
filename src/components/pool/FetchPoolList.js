@@ -180,38 +180,38 @@ export default class FetchPoolList extends React.Component {
         }
 
         if (this.state.blockfrom) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.blocks >= this.state.blockfrom);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.blocks) >= this.state.blockfrom);
         }
         if (this.state.blockto) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.blocks <= this.state.blockto);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.blocks) <= this.state.blockto);
         }
 
         if (this.state.marginfrom) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.margin_pct >= this.state.marginfrom);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.margin_pct.replaceAll(',', '')) >= this.state.marginfrom);
         }
         if (this.state.marginto) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.margin_pct <= this.state.marginto);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.margin_pct.replaceAll(',', '')) <= this.state.marginto);
         }
 
         if (this.state.pledgefrom) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.pledge >= this.state.pledgefrom);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.pledge.replaceAll(',', '')) >= this.state.pledgefrom);
         }
         if (this.state.pledgeto) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.pledge <= this.state.pledgeto);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.pledge.replaceAll(',', '')) <= this.state.pledgeto);
         }
 
         if (this.state.costfrom) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.cost_per_epoch >= this.state.costfrom);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.cost_per_epoch.replaceAll(',', '')) >= this.state.costfrom);
         }
         if (this.state.costto) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.cost_per_epoch <= this.state.costto);
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.cost_per_epoch.replaceAll(',', '')) <= this.state.costto);
         }
 
         if (this.state.activestakefrom) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.active_stake >= this.state.activestakefrom);
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.active_stake != null && Number(pool.active_stake.replaceAll(',', '')) >= this.state.activestakefrom);
         }
         if (this.state.activestaketo) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.active_stake <= this.state.activestaketo);
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.active_stake != null && Number(pool.active_stake.replaceAll(',', '')) <= this.state.activestaketo);
         }
 
         if (this.state.location) {
@@ -233,7 +233,7 @@ export default class FetchPoolList extends React.Component {
         }
 
         if (this.state.saturatedPools == true) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.live_stake <= "63786161.16");
+            poolsToDisplay = poolsToDisplay.filter(pool => Number(pool.live_stake.replace(',', '')) <= 63786161.16);
         }
 
         this.state.poolsToDisplay = poolsToDisplay;

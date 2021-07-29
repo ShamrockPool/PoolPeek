@@ -65,7 +65,7 @@ class SearchInput extends React.Component {
             options={this.state.options}
             onChange={this.handleChange}
             styles={customStyles}
-            placeholder="Search Pools..."
+            placeholder={"Search Pools..."}
             openMenuOnClick={false}
             classNamePrefix="select"
             styles={customStyles}

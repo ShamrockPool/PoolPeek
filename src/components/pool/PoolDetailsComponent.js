@@ -114,6 +114,39 @@ export default class PoolDetailsComponent extends React.Component {
         }
     }
 
+    calculateTotalLuck() {
+        try {
+            var totalLuck = 0;
+            for (let i = 1; i < this.props.pool.active_stake_history.length; i++) {
+
+                var active_stake_history = this.props.pool.active_stake_history[i];
+                var lastEpochStakeString = active_stake_history.active_stake.replaceAll(",", "");
+                var lastEpochStake = Number(lastEpochStakeString);
+                var divider = lastEpochStake / 1062037;
+                
+                var block_history = null;
+                var blockEpoch = 0;
+                var blocksLuck = 0;
+                try {
+                    block_history = this.props.pool.block_history[i];
+                    blockEpoch = block_history.blocks;
+                    blocksLuck = blockEpoch / divider;
+                } catch (error) {
+                    
+                }
+
+                if(blocksLuck != null && blocksLuck != 0){
+                    totalLuck += Math.round(blocksLuck * 100, 0);
+                }
+            }
+            var totalLuckPercent = totalLuck / this.props.pool.active_stake_history.length;
+            return  totalLuckPercent.toFixed(2);
+        } catch (error) {
+            console.log(error);
+            return 0;
+        }
+    }
+
     calculateTotalBlocks() {
         var total = 0;
         this.props.pool.block_history.forEach(element => {
@@ -405,13 +438,38 @@ export default class PoolDetailsComponent extends React.Component {
                                                                 }}>
                                                                     <Row>
                                                                         <div>
-                                                                            <h2>{this.calculateTotalBlocks()}</h2>
+                                                                            <h2>{this.props.pool.blocks}</h2>
                                                                             <small>Amount of blocks this pool has minted.</small>
                                                                         </div>
                                                                     </Row>
                                                                 </CardBody>
                                                             </Card>
                                                         </Col>
+                                                        {/* <Col xl={4} lg={4} md={12} sm={12}>
+                                                            <Card style={{
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                width: '100%',
+                                                            }}>
+                                                                <CardHeader style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                }}>Lifetime Luck</CardHeader>
+                                                                <CardBody style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    textAlign: 'center',
+                                                                }}>
+                                                                    <Row>
+                                                                        <div>
+                                                                            <h2>{this.calculateTotalLuck()}</h2>
+                                                                            <small>How well this pool has performed in terms of ADA rewards.</small>
+                                                                        </div>
+                                                                    </Row>
+                                                                </CardBody>
+                                                            </Card>
+                                                        </Col> */}
                                                     </Row>}
                                             </div>
                                             {/* END INFO */}
@@ -431,7 +489,9 @@ export default class PoolDetailsComponent extends React.Component {
                                                     alignItems: 'center',
                                                     width: '100%',
                                                     borderRadius: 'none',
-                                                }}>Blocks <small>* Current Epoch.</small></CardHeader>
+                                                }}>Blocks 
+                                                <small>* Current Epoch, potential for more blocks.</small>
+                                                </CardHeader>
                                                 <CardBody style={{
                                                     justifyContent: 'center',
                                                     alignItems: 'center',
