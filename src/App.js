@@ -4,7 +4,7 @@ import { MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import React from 'react';
 import componentQueries from 'react-component-queries';
-import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch, HashRouter } from 'react-router-dom';
 
 import DashboardPage from 'pages/DashboardPage';
 import PoolSearchPage from 'pages/PoolSearchPage';
@@ -31,7 +31,8 @@ const getBasename = () => {
 class App extends React.Component {
   render() {
     return (
-      <BrowserRouter basename={getBasename()}>
+      // <BrowserRouter basename={getBasename()}>
+      <HashRouter basename={getBasename()}>
         <GAListener>
           <Switch>
             <MainLayout breakpoint={this.props.breakpoint}>
@@ -80,7 +81,7 @@ class App extends React.Component {
             <Redirect to="/" />
           </Switch>
         </GAListener>
-      </BrowserRouter>
+      </HashRouter>
     );
   }
 }
