@@ -7,7 +7,7 @@ import Typography from 'components/Typography';
 
 const ProductMedia = ({ image, title, description, poolid, right, ...restProps }) => {
   return (
-    <a href={`https://poolpeek.com/pool/${poolid}`} target="_blank" rel="noreferrer">
+    <a href={`https://poolpeek.com/#/pool/${poolid}`} target="_blank" rel="noreferrer">
       <Media {...restProps}>
         <Media left>
           <Media

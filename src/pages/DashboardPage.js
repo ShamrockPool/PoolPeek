@@ -364,7 +364,7 @@ class DashboardPage extends React.Component {
                         return (
                           <Row>
                           <div style={{ display: 'inline-block' }}>
-                            <a href={`https://poolpeek.com/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
+                            <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
                               <h6>
                                 {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
                                   <ReactImageFallback

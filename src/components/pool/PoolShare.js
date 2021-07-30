@@ -74,7 +74,7 @@ export default class PoolShare extends React.Component {
                                 <th style={tableRowStyle} scope="row">Share pool:</th>
                                 <td style={tableRowStyle}>
 
-                                    <FacebookShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                    <FacebookShareButton url={"https://poolpeek.com/#/pool/" + item.pool_id}
                                         title={"Checkout " + item.name + " on poolpeek.com!"}>
                                         <FacebookIcon
                                             size={"2.5rem"}
@@ -82,12 +82,12 @@ export default class PoolShare extends React.Component {
                                         />
                                     </FacebookShareButton>
 
-                                    <TwitterShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                    <TwitterShareButton url={"https://poolpeek.com/#/pool/" + item.pool_id}
                                         title={"Checkout " + item.name + " on poolpeek.com!"}>
                                         <TwitterIcon size={"2.5rem"} round />
                                     </TwitterShareButton>
 
-                                    <TelegramShareButton url={"https://poolpeek.com/pool/" + item.pool_id}
+                                    <TelegramShareButton url={"https://poolpeek.com/#/pool/" + item.pool_id}
                                         title={"Checkout " + item.name + " on poolpeek.com!"}>
                                         <TelegramIcon size={"2.5rem"} round />
                                     </TelegramShareButton>
