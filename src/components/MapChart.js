@@ -166,7 +166,7 @@ class MapChart extends React.Component {
                   this.state.isShown = true;
 
                   var host = window.location.protocol + "//" + window.location.host;
-                  this.openInNewTab(host + '/poolsearch/' + payload);
+                  this.openInNewTab(host + '/#/poolsearch/' + payload);
                 }}
               >
 

@@ -16,6 +16,7 @@ import SocialMedia from '../SocialMedia';
 import ReactHtmlParser from 'react-html-parser';
 import { faInfo, faDatabase, faPeopleCarry, faShare, faCube } from '@fortawesome/free-solid-svg-icons';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
+import { Timeline } from 'react-twitter-widgets'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
@@ -72,11 +73,13 @@ export default class PoolDetailsComponent extends React.Component {
             copied: false,
             selectedTab: 0,
             loading: true,
-            delegatesList: null
+            delegatesList: null,
+            twitterUrl: null
         };
 
     }
     componentDidMount() {
+        this.getTwitterName();
         this.getDelegates();
     }
 
@@ -91,13 +94,14 @@ export default class PoolDetailsComponent extends React.Component {
     }
 
 
-    getTwitterName(handle) {
+    getTwitterName() {
+         var handle = this.props.pool.extended_meta.twitter_handle;
         if (handle != null && !isEmpty(handle)) {
             var name = handle.replace('https://twitter.com/', '');
             name = name.replace('@', '');
-            return name;
+            var url = "https://twitter.com/" + name + "?ref_src=twsrc%5Etfw";
+            this.setState({ twitterUrl: url });
         }
-        return "";
     }
 
     calculateLuck() {
@@ -123,7 +127,7 @@ export default class PoolDetailsComponent extends React.Component {
                 var lastEpochStakeString = active_stake_history.active_stake.replaceAll(",", "");
                 var lastEpochStake = Number(lastEpochStakeString);
                 var divider = lastEpochStake / 1062037;
-                
+
                 var block_history = null;
                 var blockEpoch = 0;
                 var blocksLuck = 0;
@@ -132,15 +136,15 @@ export default class PoolDetailsComponent extends React.Component {
                     blockEpoch = block_history.blocks;
                     blocksLuck = blockEpoch / divider;
                 } catch (error) {
-                    
+
                 }
 
-                if(blocksLuck != null && blocksLuck != 0){
+                if (blocksLuck != null && blocksLuck != 0) {
                     totalLuck += Math.round(blocksLuck * 100, 0);
                 }
             }
             var totalLuckPercent = totalLuck / this.props.pool.active_stake_history.length;
-            return  totalLuckPercent.toFixed(2);
+            return totalLuckPercent.toFixed(2);
         } catch (error) {
             console.log(error);
             return 0;
@@ -250,7 +254,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                             }}>
                                                                 <Row>
                                                                     <div>
-                                                                        <h2>{this.props.pool.margin_pct * 100}%</h2>
+                                                                        <h2>{this.props.pool.margin_pct}%</h2>
                                                                         <small>Pool Margin is the % of extra fee's a pool withdraws from block production rewards. The lower the better for delegates.</small>
                                                                     </div>
                                                                 </Row>
@@ -489,8 +493,8 @@ export default class PoolDetailsComponent extends React.Component {
                                                     alignItems: 'center',
                                                     width: '100%',
                                                     borderRadius: 'none',
-                                                }}>Blocks 
-                                                <small>* Current Epoch, potential for more blocks.</small>
+                                                }}>Blocks
+                                                    <small>* Current Epoch, potential for more blocks.</small>
                                                 </CardHeader>
                                                 <CardBody style={{
                                                     justifyContent: 'center',
@@ -566,34 +570,32 @@ export default class PoolDetailsComponent extends React.Component {
                                                 justifyContent: 'center',
                                                 alignItems: 'center',
                                                 textAlign: 'center',
+                                                height: 400,
+                                                overflow: 'auto'
                                             }}>
-                                                <TwitterTimelineEmbed
-                                                    sourceType="profile"
-                                                    screenName={this.getTwitterName(this.props.pool.extended_meta.twitter_handle)}
-                                                    // screenName="PoolShamrock"
-                                                    options={{ height: 400 }}
-                                                />
+
+                                                <a class="twitter-timeline" href={this.state.twitterUrl}></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+                                            {/* <Timeline
+                                                dataSource={{
+                                                    sourceType: 'profile',
+                                                    screenName: 'TwitterDev'
+                                                }}
+                                                options={{
+                                                    height: '400'
+                                                }}
+                                            />
+
+                                            <TwitterTimelineEmbed
+                                                sourceType="profile"
+                                                screenName={this.state.twitterUrl}
+                                                // screenName="PoolShamrock"
+                                                options={{ height: 400 }}
+                                            /> */}
                                             </CardBody>
                                         </Card>}
 
-                                    {!isEmpty(this.props.pool.extended_meta.location) &&
-                                        <Card>
-                                            <CardHeader style={{
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                width: '100%',
-                                                borderRadius: 'none',
-                                            }}>
-                                                Pool Owner Location</CardHeader>
-                                            <CardBody style={{
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                textAlign: 'center',
-                                            }}>
-                                                <h2>{this.props.pool.extended_meta.location}</h2>
-                                            </CardBody>
-                                        </Card>}
-
+                                {!isEmpty(this.props.pool.extended_meta.location) &&
                                     <Card>
                                         <CardHeader style={{
                                             justifyContent: 'center',
@@ -601,15 +603,32 @@ export default class PoolDetailsComponent extends React.Component {
                                             width: '100%',
                                             borderRadius: 'none',
                                         }}>
-                                            Share Pool</CardHeader>
+                                            Pool Owner Location</CardHeader>
                                         <CardBody style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             textAlign: 'center',
                                         }}>
-                                            <ShareProject name={this.props.pool.pool_id} />
+                                            <h2>{this.props.pool.extended_meta.location}</h2>
                                         </CardBody>
-                                    </Card>
+                                    </Card>}
+
+                                <Card>
+                                    <CardHeader style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        width: '100%',
+                                        borderRadius: 'none',
+                                    }}>
+                                        Share Pool</CardHeader>
+                                    <CardBody style={{
+                                        justifyContent: 'center',
+                                        alignItems: 'center',
+                                        textAlign: 'center',
+                                    }}>
+                                        <ShareProject name={this.props.pool.pool_id} />
+                                    </CardBody>
+                                </Card>
                                 </Col>
                             </Row>
                         </Col>
@@ -617,7 +636,7 @@ export default class PoolDetailsComponent extends React.Component {
 
 
 
-                    {/* <Row>
+                {/* <Row>
                             <Col>
                                 {this.state.project.relatedProjects != null && this.state.project.relatedProjects.length > 0 &&
                                     <Card>
