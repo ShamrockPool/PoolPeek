@@ -237,10 +237,10 @@ export default class FetchPoolList extends React.Component {
         }
 
         this.state.poolsToDisplay = poolsToDisplay;
-        this.setState({ pageCount: poolsToDisplay.length / 30 });
+        this.setState({ pageCount: poolsToDisplay.length / 15 });
 
         if(this.state.pageSelected != ""){
-            poolsToDisplay = poolsToDisplay.slice(this.state.pageSelected * 30);
+            poolsToDisplay = poolsToDisplay.slice(this.state.pageSelected * 15);
         }
         this.setState({ poolsToDisplay: poolsToDisplay });
     }
@@ -904,7 +904,7 @@ export default class FetchPoolList extends React.Component {
                     {this.state.loading ? <div>Loading pools...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                         :
                         this.state.poolsToDisplay.map(function (item, key) {
-                            if (key > 30) return;
+                            if (key > 15) return;
                             return (
 
                                 <Col lg={3} md={12} sm={12} xs={12} className="mb-3">

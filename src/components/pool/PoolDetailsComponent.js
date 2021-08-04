@@ -95,7 +95,7 @@ export default class PoolDetailsComponent extends React.Component {
 
 
     getTwitterName() {
-         var handle = this.props.pool.extended_meta.twitter_handle;
+        var handle = this.props.pool.extended_meta.twitter_handle;
         if (handle != null && !isEmpty(handle)) {
             var name = handle.replace('https://twitter.com/', '');
             name = name.replace('@', '');
@@ -203,6 +203,8 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <FontAwesomeIcon icon={faClipboard} />
                                                         </CopyToClipboard>
                                                     </Tooltip>
+                                                    <br></br>
+                                                    <h2>{this.props.pool.live_stake}₳</h2>
                                                     {/* </div> */}
                                                 </Col>
                                             </Row>
@@ -289,19 +291,18 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                         </Card>
                                                     </Col>
+
                                                     <Col xl={4} lg={4} md={12} sm={12}>
                                                         <Card style={{
                                                             justifyContent: 'center',
                                                             alignItems: 'center',
                                                             width: '100%',
-                                                            height: '100%'
                                                         }}>
                                                             <CardHeader style={{
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
                                                                 width: '100%',
-                                                                borderRadius: 'none',
-                                                            }}>Luck Last Epoch</CardHeader>
+                                                            }}>Pledge</CardHeader>
                                                             <CardBody style={{
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
@@ -309,14 +310,15 @@ export default class PoolDetailsComponent extends React.Component {
                                                             }}>
                                                                 <Row>
                                                                     <div>
-                                                                        <h2>{"" + this.calculateLuck()}%</h2>
-                                                                        <small>This is the amount of luck this pool recieved last Epoch.</small>
+                                                                        <h2>{this.props.pool.pledge}₳</h2>
+                                                                        <small>The amount of ADA the pool owner has pledged to the pool.</small>
                                                                     </div>
                                                                 </Row>
                                                             </CardBody>
 
                                                         </Card>
                                                     </Col>
+
                                                 </Row>
 
                                                 <Row>
@@ -373,6 +375,7 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                         </Card>
                                                     </Col>
+
                                                     <Col xl={4} lg={4} md={12} sm={12}>
                                                         <Card>
                                                             < CardHeader style={{
@@ -399,7 +402,38 @@ export default class PoolDetailsComponent extends React.Component {
                                                 </Row>
                                                 {this.props.pool.block_history != null && this.props.pool.block_history.length > 0 &&
                                                     <Row>
-                                                        <Col xl={6} lg={6} md={12} sm={12}>
+
+                                                        <Col xl={4} lg={4} md={12} sm={12}>
+                                                            <Card style={{
+                                                                justifyContent: 'center',
+                                                                alignItems: 'center',
+                                                                width: '100%',
+                                                                height: '100%'
+                                                            }}>
+                                                                <CardHeader style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    width: '100%',
+                                                                    borderRadius: 'none',
+                                                                }}>Luck Last Epoch</CardHeader>
+                                                                <CardBody style={{
+                                                                    justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    textAlign: 'center',
+                                                                }}>
+                                                                    <Row>
+                                                                        <div>
+                                                                            <h2>{"" + this.calculateLuck()}%</h2>
+                                                                            <small>This is the amount of luck this pool recieved last Epoch.</small>
+                                                                        </div>
+                                                                    </Row>
+                                                                </CardBody>
+
+                                                            </Card>
+                                                        </Col>
+
+
+                                                        <Col xl={4} lg={4} md={12} sm={12}>
                                                             <Card style={{
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
@@ -418,13 +452,13 @@ export default class PoolDetailsComponent extends React.Component {
                                                                     <Row>
                                                                         <div>
                                                                             <h2>{this.props.pool.block_history[0].blocks}</h2>
-                                                                            <small>Blocks produced by the pool in current Epoch.</small>
+                                                                            <small>Blocks produced by the pool in current Epoch, potential for more blocks.</small>
                                                                         </div>
                                                                     </Row>
                                                                 </CardBody>
                                                             </Card>
                                                         </Col>
-                                                        <Col xl={6} lg={6} md={12} sm={12}>
+                                                        <Col xl={4} lg={4} md={12} sm={12}>
                                                             <Card style={{
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
@@ -576,7 +610,7 @@ export default class PoolDetailsComponent extends React.Component {
 
                                                 <a class="twitter-timeline" href={this.state.twitterUrl}></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-                                            {/* <Timeline
+                                                {/* <Timeline
                                                 dataSource={{
                                                     sourceType: 'profile',
                                                     screenName: 'TwitterDev'
@@ -595,7 +629,24 @@ export default class PoolDetailsComponent extends React.Component {
                                             </CardBody>
                                         </Card>}
 
-                                {!isEmpty(this.props.pool.extended_meta.location) &&
+                                    {!isEmpty(this.props.pool.extended_meta.location) &&
+                                        <Card>
+                                            <CardHeader style={{
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                width: '100%',
+                                                borderRadius: 'none',
+                                            }}>
+                                                Pool Owner Location</CardHeader>
+                                            <CardBody style={{
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                textAlign: 'center',
+                                            }}>
+                                                <h2>{this.props.pool.extended_meta.location}</h2>
+                                            </CardBody>
+                                        </Card>}
+
                                     <Card>
                                         <CardHeader style={{
                                             justifyContent: 'center',
@@ -603,32 +654,15 @@ export default class PoolDetailsComponent extends React.Component {
                                             width: '100%',
                                             borderRadius: 'none',
                                         }}>
-                                            Pool Owner Location</CardHeader>
+                                            Share Pool</CardHeader>
                                         <CardBody style={{
                                             justifyContent: 'center',
                                             alignItems: 'center',
                                             textAlign: 'center',
                                         }}>
-                                            <h2>{this.props.pool.extended_meta.location}</h2>
+                                            <ShareProject name={this.props.pool.pool_id} />
                                         </CardBody>
-                                    </Card>}
-
-                                <Card>
-                                    <CardHeader style={{
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        width: '100%',
-                                        borderRadius: 'none',
-                                    }}>
-                                        Share Pool</CardHeader>
-                                    <CardBody style={{
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        textAlign: 'center',
-                                    }}>
-                                        <ShareProject name={this.props.pool.pool_id} />
-                                    </CardBody>
-                                </Card>
+                                    </Card>
                                 </Col>
                             </Row>
                         </Col>
@@ -636,7 +670,7 @@ export default class PoolDetailsComponent extends React.Component {
 
 
 
-                {/* <Row>
+                    {/* <Row>
                             <Col>
                                 {this.state.project.relatedProjects != null && this.state.project.relatedProjects.length > 0 &&
                                     <Card>

@@ -13,17 +13,21 @@ const Footer = () => {
           <br />
           <i>Built by small pool owners for small pool delegators.</i>
           {/* <br/> */}
-          <img
-            src={shamrock}
-            className="pr-2"
-            width="70vh" height="70vh"
-          />
-          <img
-            src={brave}
-            className="pr-2"
-            width="70vh" height="70vh"
-          />
-          <img src="https://m1crypto.co/assets/pool-metadata/icon-64x64.png" />
+          <a href="https://shamrock-pool.com/" target="_blank">
+            <img
+              src={shamrock}
+              className="rounded"
+              style={{ width: "7vh", height: "7vh", cursor: 'pointer' }}
+            />
+          </a>
+          <a href="https://www.braveheartstakepool.com/" target="_blank">
+            <img
+              src={brave}
+              className="pr-2"
+              width="70vh" height="70vh"
+            /></a>
+          <a href="https://m1crypto.co/ada-pool" target="_blank">
+            <img src="https://m1crypto.co/assets/pool-metadata/icon-64x64.png" /></a>
           <br /><br />
           All opinions are our own and do not constitute financial advice in any way whatsoever.<br />
           Nothing published by us constitutes an investment recommendation.<br />
