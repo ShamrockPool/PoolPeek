@@ -12,7 +12,7 @@ import QuickQueriesPage from 'pages/QuickQueriesPage';
 import AdaFoliosPage from 'pages/AdaFoliosPage';
 import FunDumpPage from 'pages/FunDumpPage';
 import AboutUsPage from 'pages/AboutUsPage';
-import PoolMapPage from 'pages/PoolMap';
+import PoolMapV2 from 'pages/PoolMapV2';
 import EpochCalendar from 'pages/EpochCalendar';
 import StakingRewards from 'pages/StakingRewards';
 import PoolDetailsPage from 'pages/PoolDetailsPage';
@@ -40,7 +40,7 @@ class App extends React.Component {
                 <Route exact path="/" render={(props) => <DashboardPage />} />
                 <Route exact path="/teampeek" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="We are the Creators of PoolPeek.com and PoolPeek Mobile!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc} />} />
                 <Route exact path="/poolsearch" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false}/>} />
-                <Route exact path="/poolsearchmap" render={(props) => <PoolMapPage />} />
+                <Route exact path="/poolsearchmap" render={(props) => <PoolMapV2 />} />
 
                 <Route exact path="/epochcalendar" render={(props) => <EpochCalendar />} />
                 <Route exact path="/stakingrewards" render={(props) => <StakingRewards />} />

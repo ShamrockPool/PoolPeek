@@ -17,7 +17,8 @@ export const geoLocs = "/pool/geopp"
 //poolpeek service
 export const allPoolsPPS = "/pooldetails/getall";
 export const getPoolById = "/pooldetails/getone/";
-export const getPoolForSearchList = "/pooldetails/getallsearchlist"
+export const getmappools = "/pooldetails/getmappools";//getmappools
+export const getPoolForSearchList = "/pooldetails/getallsearchlist";//
 export const getPoolForRecommendedList = "/pooldetails/getrecommendedpools"
 
 

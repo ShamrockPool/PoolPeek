@@ -5,7 +5,7 @@ import 'reactjs-popup/dist/index.css';
 
 const width = window.innerWidth;
 
-class MapChart extends React.Component {
+class MapChartV2 extends React.Component {
 
   constructor(props) {
     super(props);
@@ -20,57 +20,6 @@ class MapChart extends React.Component {
       mapWidth: 0
 
     }
-  }
-
-  // const [position, setPosition] = useState({ coordinates: [0, 0], zoom: 1 });
-  // const [isShown, setIsShown] = useState(false);
-  // const [latSelected, setlatSelected] = useState(0);
-  // const [longSelected, setlongSelected] = useState(0);
-
-  getPopout() {
-    var tickers = [];
-    this.props.poolsData.poolpeek.geo.map(function (item, key) {
-      // if (this.state.longSelected == item.location_lon && this.state.latSelected == item.location_lat) {
-      //   tickers.push(item.name)
-      // }
-    });
-
-
-  }
-
-  getMarkers2() {
-    var markers = [];
-    var poolsData = this.props.poolsData;
-    poolsData.pools.map(function (item, key) {
-      var location = item.extended_meta.location;
-      var lat = 0;
-      var long = 0;
-
-      lat = Number(item.extended_meta.location_lat);
-      long = Number(item.extended_meta.location_lon);
-
-      if (lat != 0 && long != 0) {
-
-        var shouldAdd = true;
-        if (markers.length == 0) {
-          markers.push({ name: location, lat: lat, long: long });
-        }
-        markers.map(function (addedMarker, key) {
-
-          if (addedMarker.lon == item.location_lon && addedMarker.lat == item.location_lat) {
-            //dont add location exists
-            shouldAdd = false;
-            return;
-          }
-        });
-
-        if (shouldAdd) {
-          markers.push({ name: location, lat: lat, long: long });
-        }
-      }
-    });
-
-    return markers;
   }
 
   openInNewTab = (url) => {
@@ -88,24 +37,24 @@ class MapChart extends React.Component {
 
   componentDidMount() {
     this.setMapWidth();
-    var filteredMarkers = this.getMarkers2();
-    this.setState({ totalMarkers: filteredMarkers.length });
-    this.setState({ markersFiltered: filteredMarkers });
+
   }
 
   render() {
     return (
       <div>
-        <h3><b>Click a marker below to display all pools at that location.</b></h3>
+        <h3><b>Pool search map of all pool owner locations.</b></h3>
+        <h3>Click a marker below to display all pools at that location.</h3>
         {/* <h3>Total pools with locations: {this.props.poolsData.poolpeek.geo.length + 1}</h3> */}
-        <h3>Total unique pool locations: {this.state.totalMarkers}</h3>
+        <h3>Total unique pool locations: {this.props.poolsData.length}</h3>
         <div style={{ width: "99%", height: "95%", margin: "5px", alignItems: "center" }}>
           <Map defaultCenter={[50.879, 4.6997]} defaultZoom={3} width={this.state.mapWidth} height={800}>
-            {this.state.markersFiltered.map(({ name, long, lat }) => (
 
-              <Marker anchor={[lat, long]}
+            {this.props.poolsData.map(({ extended_meta }) => (
+
+              <Marker anchor={[Number(extended_meta.location_lat), Number(extended_meta.location_lon)]}
                 color='red'
-                payload={name}
+                payload={extended_meta.location}
                 onClick={({ event, anchor, payload }) => {
 
                   this.state.latSelected = anchor[1];
@@ -141,4 +90,4 @@ class MapChart extends React.Component {
   }
 };
 
-export default MapChart;
+export default MapChartV2;
