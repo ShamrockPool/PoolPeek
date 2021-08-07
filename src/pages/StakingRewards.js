@@ -6,6 +6,10 @@ import { isEmpty } from 'utils/stringutil.js';
 import StakingRewardsList from 'components/StakingRewardsList';
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
+import { baseUrl } from '../assets/services';
+import CircleLoader
+  from "react-spinners/CircleLoader";
+import { css } from "@emotion/core";
 
 const fileType =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
@@ -33,12 +37,19 @@ const tableRowStyle = {
   paddingBottom: 5
 };
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
+
 
 class StakingRewards extends React.Component {
   state = {
     loading: true,
     stakingAddress: null,
-    stakingRewardsList: null
+    stakingRewardsList: null,
+    startLoader: false
   };
 
   constructor(props) {
@@ -48,7 +59,7 @@ class StakingRewards extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
 
-    this.setState({ loading: false });
+
 
     if (!isEmpty(this.props.match)) {
       if (this.props.match.params.stakeAddress) {
@@ -73,9 +84,10 @@ class StakingRewards extends React.Component {
 
   async getStakingRewards() {
     if (!isEmpty(this.state.stakingAddress)) {
-      const response = await fetch('https://smashpeek.com/services/rewards/stakeaddress/' + this.state.stakingAddress);
+      this.setState({ startLoader: true });
+      const response = await fetch(baseUrl + '/rewards/stakeaddress/' + this.state.stakingAddress);
       const data = await response.json();
-      this.setState({ stakingRewardsList: data });
+      this.setState({ stakingRewardsList: data, loading: false });
       return data;
     }
   }
@@ -104,9 +116,9 @@ class StakingRewards extends React.Component {
             <h7>You will need your Stake Address, here is how to find it. </h7>
             <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
             <h7><b>Yoroi:</b> Click <a href={"https://poolpeek.com/#/poolsearch"} target="_blank" rel="noreferrer">POOL SEARCH</a> > Enter pool ticker > Click Delegates > Search for your wallet Amount > Click the Stake Address</h7>
-            
-            
-            
+
+
+
             <br></br>
             <Input
               style={{ fontSize: 14 }}
@@ -119,6 +131,8 @@ class StakingRewards extends React.Component {
             <br></br>
             <Button color="primary" onClick={() => { this.getStakingRewards() }}>Submit</Button>
 
+            {this.state.startLoader == true && <CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} />}
+
             {this.state.stakingRewardsList != null &&
               <div style={{ width: "100%", alignItems: "left" }}>
                 <br></br>
@@ -129,10 +143,12 @@ class StakingRewards extends React.Component {
                       <th>Epoch</th>
                       <th>Pool</th>
                       <th>Reward</th>
-                      {/* <th>Reward_Date</th> */}
+                      <th>Reward_Date</th>
                       <th>Paid_Date</th>
+                      <th>ADA Price</th>
                     </tr>
                   </thead>
+
                   <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />
                 </Table>
               </div >

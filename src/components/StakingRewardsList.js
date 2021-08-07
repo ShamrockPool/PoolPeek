@@ -53,15 +53,6 @@ const cardBodyStyle = {
     paddingRight: 10
 };
 
-function checkIsImageUrl(url) {
-    if (isEmpty(url)) {
-        return false;
-    }
-    if (url.startsWith("https") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {
-        return true;
-    }
-    return false;
-}
 
 
 export default class StakingRewardsList extends React.Component {
@@ -72,6 +63,12 @@ export default class StakingRewardsList extends React.Component {
             copied: false
         };
     }
+
+
+    componentDidMount() {
+    }
+
+
     render() {
         return (
             /*
@@ -83,14 +80,16 @@ reward: "424.1558300000000000"
 rewardDate: "2020-09-22"
             */
             this.props.stakingRewardsList.map(function (item, key) {
+
                 return (
                     <tbody>
                         <tr>
-                        <td style={tableRowStyle} scope="row"><p>{item.epoch}</p></td>
-                        <td style={tableRowStyle} scope="row"><p>{item.delegated_pool}</p></td>
-                        <td style={tableRowStyle} scope="row"><p>{item.reward}</p></td>
-                        {/* <td style={tableRowStyle} scope="row"><p>{item.rewardDate}</p></td> */}
-                        <td style={tableRowStyle} scope="row"><p>{item.paidDate}</p></td>
+                            <td style={tableRowStyle} scope="row"><p>{item.epoch}</p></td>
+                            <td style={tableRowStyle} scope="row"><p>{item.delegated_pool}</p></td>
+                            <td style={tableRowStyle} scope="row"><p>{item.reward}</p></td>
+                            <td style={tableRowStyle} scope="row"><p>{item.rewardDate}</p></td>
+                            <td style={tableRowStyle} scope="row"><p>{item.paidDate}</p></td>
+                            <td style={tableRowStyle} scope="row"><p>{item.adaPrice}</p></td>
                         </tr>
                     </tbody>
                 )
