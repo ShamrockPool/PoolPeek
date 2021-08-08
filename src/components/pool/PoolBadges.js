@@ -83,6 +83,13 @@ export default class PoolBadges extends React.Component {
                     style={{ width: badgeWidth, height: 'auto' }}
                 />}
 
+                {Number(this.props.poolBlocksTotal) > 499 && <Media
+                    object
+                    src={blocks_500}
+                    className="rounded mr-2 mb-2"
+                    style={{ width: badgeWidth, height: 'auto' }}
+                />}
+
                 {Number(this.props.poolBlocksTotal) > 249 && <Media
                     object
                     src={blocks_250}
