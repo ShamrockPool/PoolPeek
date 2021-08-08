@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import "../../styles/components/Table.css";
-import { Input, Pagination, PaginationItem, PaginationLink, Table, Button, Card, CardBody, CardHeader, Col, Row, CardText } from 'reactstrap';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { Row } from 'reactstrap';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 
@@ -47,12 +50,22 @@ rewardDate: "2020-09-22"
     render() {
         return (
             this.props.delegatesList.map(function (item, key) {
-                return (                    
+                var copied = false;
+                return (
                     <tr>
                         <td style={tableRowStyle} scope="row">
+                            <Row>
                             <a href={"https://poolpeek.com/#/stakingrewards/" + item.stakeAddress} target="_blank" rel="noreferrer">
-                            <p style={{fontSize: '1.2vw'}}>{item.stakeAddress}</p></a></td>
-                        <td style={tableRowStyleStake} scope="row"><p style={{fontSize: '1.3vw'}}>{Number(item.stakeAmount).toFixed(2)}</p></td>
+                                <p style={{ fontSize: '1.0vw' }}>{item.stakeAddress}</p></a>
+                            <CopyToClipboard text={item.stakeAddress}>
+                                <FontAwesomeIcon icon={faClipboard} />
+                            </CopyToClipboard>
+                            </Row>
+                            {/* {copied ? <span style={{color: 'red'}}>Copied.</span> : null} */}
+                        </td>
+
+
+                        <td style={tableRowStyleStake} scope="row"><p style={{ fontSize: '1.2vw' }}>{Number(item.stakeAmount).toFixed(2)}</p></td>
                     </tr>
                 )
             })

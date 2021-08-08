@@ -1,7 +1,7 @@
 import Page from 'components/Page';
 import ProductMedia from 'components/ProductMedia';
 import { IconWidget, NumberWidget } from 'components/Widget';
-import  PoolSearchWizard  from 'components/PoolSearchWizard';
+import PoolSearchWizard from 'components/PoolSearchWizard';
 import {
   teamPeekData,
 } from 'demos/dashboardPage';
@@ -110,7 +110,8 @@ class DashboardPage extends React.Component {
     totalAdaSupply: '',
     modalImageWidth: 450,
     percentageOfSupplyStaked: 0,
-    allpools: null
+    allpools: null,
+    favouritepools: []
   };
 
   toggle = modalType => () => {
@@ -128,6 +129,8 @@ class DashboardPage extends React.Component {
   async componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+
+    this.getFavouritePools();
 
     if (width < 600) {
       this.setState({ modal: true, modalImageWidth: width / 1.2 });
@@ -191,6 +194,15 @@ class DashboardPage extends React.Component {
 
   startWizard() {
     console.log("started");
+  }
+
+  getFavouritePools() {
+    var storage = localStorage.getItem('favouritepools');
+    if (storage != null) {
+      var obj = JSON.parse(storage);
+
+      this.setState({ favouritepools: obj.favouritepools });
+    }
   }
 
   render() {
@@ -344,21 +356,38 @@ class DashboardPage extends React.Component {
 
               <Col md="4" sm="12" xs="12">
                 <Card>
-                  <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
+                  <CardHeader style={cardheaderStyle}><p><b>Favourite Pools</b> - Click the favourite icon on pools.</p></CardHeader>
                   <CardBody style={cardBodyStyle} body>
-                    {teamPeekData.map(
-                      ({ id, image, title, description, poolid, right }) => (
-                        //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
+                    {this.state.favouritepools.map(function (item, index) {
 
-                        <ProductMedia
-                          key={id}
-                          image={image}
-                          title={title}
-                          description={description}
-                          poolid={poolid}
-                        />
-                      ),
-                    )}
+                      return (
+                        <Row>
+                          <div style={{ display: 'inline-block' }}>
+                            <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
+                              <h6>
+                                {checkIsImageUrl(item.url_png_logo) ? (
+                                  <ReactImageFallback
+                                    src={item.url_png_logo}
+                                    width="40"
+                                    height="40"
+                                    fallbackImage={CardanoImage} />
+                                ) : (<img
+                                  src={CardanoImage}
+                                  className="pr-2"
+                                  width="38"
+                                  height="32"
+                                />)}
+                                <b>&nbsp;{item.name}</b>
+                              </h6>
+
+                              {/* <p>{item.description}</p> */}
+                            </a>
+                          </div>
+                        </Row>
+                      )
+
+                    })
+                    }
                   </CardBody>
                 </Card>
               </Col>
@@ -404,6 +433,28 @@ class DashboardPage extends React.Component {
                 </Card>
               </Col>
             </Row></div>}
+
+        <Row>
+          <Card>
+            <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
+            <CardBody style={cardBodyStyle} body>
+              {teamPeekData.map(
+                ({ id, image, title, description, poolid, right }) => (
+                  //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
+
+                  <ProductMedia
+                    key={id}
+                    image={image}
+                    title={title}
+                    description={description}
+                    poolid={poolid}
+                  />
+                ),
+              )}
+            </CardBody>
+          </Card>
+
+        </Row>
       </Page>
     );
   }

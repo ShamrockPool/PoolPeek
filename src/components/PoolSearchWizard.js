@@ -3,9 +3,8 @@ import { MdSearch } from 'react-icons/md';
 import { CardBody, Button, Row, Card, CardHeader } from 'reactstrap';
 import Select from 'react-select';
 import { Link, Redirect } from "react-router-dom";
-import ReactImageFallback from "react-image-fallback";
-import CardanoImage from 'assets/img/cardanoIcon.png';
-import ReactHtmlParser from 'react-html-parser';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHatWizard, faMagic } from '@fortawesome/free-solid-svg-icons';
 
 const cardheaderStyle = {
   borderBottom: 'solid 1px green',
@@ -37,21 +36,31 @@ class PoolSearchWizard extends React.Component {
     this.state = {
       wizardStarted: false,
 
-      wizardSaturationChoosen: false,
+      wizardPledgeChoosen: null,
+      wizardRemoveLowPledge: false,
+
+      wizardSaturationChoosen: null,
       wizardRemoveSaturated: false,
-      wizardPoolSizeChoosen: false,
+
+      wizardPoolSizeChoosen: null,
       wizardPoolSize: null,
-      wizardProfessionalPoolChoosen: false,
+
+      wizardProfessionalPoolChoosen: null,
       wizardProfessionalPool: false,
-      wizardFeeChoosen: false,
+
+      wizardFeeChoosen: null,
       wizardFeeSize: null,
-      wizardFixedFeeChoosen: false,
+
+      wizardFixedFeeChoosen: null,
       wizardFixedFeeSize: null,
-      wizardPoolHostingChoosen: false,
+
+      wizardPoolHostingChoosen: null,
       wizardPoolHostingTypeSize: null,
-      wizardCharityPoolChoosen: false,
+
+      wizardCharityPoolChoosen: null,
       wizardCharityPool: false,
-      wizardSinglePoolOperatorChoosen: false,
+
+      wizardSinglePoolOperatorChoosen: null,
       wizardSinglePoolOperator: false
     };
   }
@@ -67,7 +76,7 @@ class PoolSearchWizard extends React.Component {
     const { selectedOption } = this.state;
     return (
       <Card >
-        <CardHeader style={cardheaderStyle}><p><b>Pool Selection Wizard</b></p></CardHeader>
+        <CardHeader style={cardheaderStyle}><p><b>Pool Selection Wizard</b> - Use this wizard as a quick way to filter pools.</p></CardHeader>
         <CardBody style={cardBodyStyle} body >
           {this.state.wizardStarted == false && <div className="WizardCard" style={{
             justifyContent: 'center',
@@ -77,20 +86,52 @@ class PoolSearchWizard extends React.Component {
             onClick={() => this.setState({ wizardStarted: true })}>
             <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
               <div className="WizardCard-body">
+                <FontAwesomeIcon icon={faMagic} size="3x" color="white" />
                 <h2>START</h2>
                 <h3>Use our wizard to pick a pool that fits your needs.</h3>
               </div>
             </div>
           </div>}
 
-          {/* ELIMINATE SATURATED AND LOW STAKED */}
-          {this.state.wizardStarted && <div>
+          {/* START ELIMINATE LOW PLEDGE POOLS */}
+          {this.state.wizardStarted && this.state.wizardPledgeChoosen == null && <div>
             <div className="WizardCard" style={{
               justifyContent: 'center',
               alignItems: 'center',
               textAlign: 'center',
             }}
-              onClick={() => this.setState({ wizardStarted: null })}>
+              onClick={() => this.setState({ wizardStarted: null, wizardPledgeChoosen: true, wizardRemoveLowPledge: true })}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+                <div className="WizardCard-body">
+                  <h2>Eliminated Low Pledged Pools</h2>
+                  <h4>Remove pools with less than 5k Ada pledged</h4>
+                </div>
+              </div>
+            </div>
+            <div className="WizardCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+              onClick={() => this.setState({ wizardStarted: null, wizardPledgeChoosen: true, wizardRemoveLowPledge: false })}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+                <div className="WizardCard-body">
+                  <h2>All pools</h2>
+                  <h4>Pledge doesnt bother me</h4>
+                </div>
+              </div>
+            </div>
+          </div>}
+          {/* END ELIMINATE LOW PLEDGE POOLS */}
+
+          {/* START ELIMINATE SATURATED AND LOW STAKED */}
+          {this.state.wizardPledgeChoosen  && this.state.wizardSaturationChoosen == null && <div>
+            <div className="WizardCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+              onClick={() => this.setState({ wizardStarted: null, wizardSaturationChoosen: true, wizardRemoveSaturated: true })}>
               <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
                 <div className="WizardCard-body">
                   <h2>Eliminated Saturated and underfunded</h2>
@@ -103,7 +144,7 @@ class PoolSearchWizard extends React.Component {
               alignItems: 'center',
               textAlign: 'center',
             }}
-              onClick={() => this.setState({ wizardStarted: null })}>
+              onClick={() => this.setState({ wizardStarted: null, wizardSaturationChoosen: true, wizardRemoveSaturated: false })}>
               <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
                 <div className="WizardCard-body">
                   <h2>All pools</h2>
@@ -112,6 +153,40 @@ class PoolSearchWizard extends React.Component {
               </div>
             </div>
           </div>}
+          {/* END ELIMINATE SATURATED AND LOW STAKED */}
+
+          {/* START ELIMINATE PROFESSIONAL POOLS */}
+          {this.state.wizardSaturationChoosen && this.state.wizardProfessionalPoolChoosen == null && <div>
+            <div className="WizardCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+              onClick={() => this.setState({ wizardStarted: null, wizardProfessionalPoolChoosen: true, wizardProfessionalPool: true })}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+                <div className="WizardCard-body">
+                  <h2>Professional Pool</h2>
+                  <h4>Pool with Website and description</h4>
+                </div>
+              </div>
+            </div>
+            <div className="WizardCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}
+              onClick={() => this.setState({ wizardStarted: null, wizardProfessionalPoolChoosen: true, wizardProfessionalPool: false })}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+                <div className="WizardCard-body">
+                  <h2>All pools</h2>
+                  <h4>Saturation level doesnt bother me</h4>
+                </div>
+              </div>
+            </div>
+          </div>}
+          {/* END ELIMINATE ELIMINATE PROFESSIONAL POOLS */}
+
+
 
 
           {this.state.wizardStarted != false && <Row>

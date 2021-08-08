@@ -21,6 +21,10 @@ import { Timeline } from 'react-twitter-widgets'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import Favorite from "@material-ui/icons/Favorite";
+import IconButton from '@material-ui/core/IconButton';
 import Chart from '../Chart';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -75,13 +79,16 @@ export default class PoolDetailsComponent extends React.Component {
             selectedTab: 0,
             loading: true,
             delegatesList: null,
-            twitterUrl: null
+            twitterUrl: null,
+            favourite: false
         };
 
     }
     componentDidMount() {
         this.getTwitterName();
         this.getDelegates();
+
+        this.isPoolFavourite(ReactHtmlParser(this.props.pool.name));
     }
 
     async getDelegates() {
@@ -160,6 +167,83 @@ export default class PoolDetailsComponent extends React.Component {
         return total;
     }
 
+    handleFavourite(isFav) {
+        this.setState({ favourite: isFav });
+
+        var poolName = ReactHtmlParser(this.props.pool.name);
+        var poolId = this.props.pool.pool_id;
+        var url_png_logo = this.props.pool.extended_meta.url_png_logo;
+        var description = ReactHtmlParser(linkifyHtml(this.props.pool.description, {
+            defaultProtocol: 'https'
+        }));
+
+        var poolNameString = poolName[0];
+        var storage = localStorage.getItem('favouritepools');
+        if (storage != null) {
+            var obj = JSON.parse(storage);
+
+            //add to favourites
+            if (isFav) {
+                var isAfavouritePool = false;
+                obj.favouritepools.forEach((item) => {
+                    if (item.name == poolNameString) {
+                        isAfavouritePool = true;
+                    }
+                });
+
+                if (!isAfavouritePool) {
+                    obj['favouritepools'].push({ "name": poolNameString, "pool_id": poolId, "url_png_logo": url_png_logo, "description": description });
+                    var jsonStr = JSON.stringify(obj);
+                    localStorage.setItem('favouritepools', jsonStr);
+                }
+            } else {//remove from favourites
+                var newFavsJson = '{"favouritepools":[]}';
+                var newFavsJsonObj = JSON.parse(newFavsJson);
+                var existingFavs = JSON.parse(storage);
+                existingFavs.favouritepools.forEach((item) => {
+                    if (item.name != poolNameString) {
+                        newFavsJsonObj['favouritepools'].push({ "name": poolNameString, "pool_id": poolId, "url_png_logo": url_png_logo, "description": description });
+                    }
+                });
+                localStorage.setItem('favouritepools', JSON.stringify(newFavsJsonObj));
+
+            }
+
+
+        } else {
+            var jsonStr = '{"favouritepools":[]}';
+            var obj = JSON.parse(jsonStr);
+            obj['favouritepools'].push({ "name": poolNameString, "pool_id": poolId, "url_png_logo": url_png_logo, "description": description });
+            var jsonStr = JSON.stringify(obj);
+            localStorage.setItem('favouritepools', jsonStr);
+        }
+
+    }
+
+    isPoolFavourite(poolName) {
+
+        // var jsonStr = '{"favouritepools":[]}';
+        // var obj = JSON.parse(jsonStr);
+        // var jsonStr = JSON.stringify(obj);
+        // localStorage.setItem('favouritepools', jsonStr);
+
+        var poolNameString = poolName[0];
+        var storage = localStorage.getItem('favouritepools');
+        if (storage != null) {
+            var obj = JSON.parse(storage);
+            var foundPool = false;
+            obj.favouritepools.forEach((item) => {
+                if (item.name == poolNameString) {
+                    foundPool = true;
+                    return;
+                }
+            });
+            this.setState({ favourite: foundPool });
+        } else {
+            this.setState({ favourite: false });
+        }
+    }
+
     render() {
         return (
             < div >
@@ -207,6 +291,24 @@ export default class PoolDetailsComponent extends React.Component {
                                                     <br></br>
                                                     <h2>{this.props.pool.live_stake}₳</h2>
                                                     {/* </div> */}
+                                                    {this.state.favourite == false &&
+                                                        <div>
+                                                            <IconButton onClick={() => {
+                                                                this.handleFavourite(true)
+                                                            }} aria-label="delete" color="primary">
+                                                                <FavoriteBorderIcon></FavoriteBorderIcon>
+                                                            </IconButton>
+                                                        </div>
+
+                                                    }
+                                                    {this.state.favourite &&
+                                                        <div>
+                                                            <IconButton onClick={() => { this.handleFavourite(false)}} aria-label="delete" color="secondary">
+                                                                <Favorite></Favorite>
+                                                            </IconButton>
+                                                            <small>Favourite pool</small>
+                                                        </div>
+                                                    }
                                                 </Col>
                                             </Row>
                                         </CardBody>
@@ -581,7 +683,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                     alignItems: 'center',
                                                     textAlign: 'center',
                                                 }}>
-                                                    <PoolBadges poolBlocksTotal={this.props.pool.blocks}/>
+                                                    <PoolBadges poolBlocksTotal={this.props.pool.blocks} />
                                                 </CardBody>
 
                                             </Card>
