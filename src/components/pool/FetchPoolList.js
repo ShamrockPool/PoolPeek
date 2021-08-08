@@ -14,7 +14,7 @@ import 'styles/pagination.css';
 
 import PoolCard from 'components/Card/PoolCard';
 
-import { baseUrl, allPools, baseUrlPoolPeekService, allPoolsPPS } from '../../assets/services';
+import { baseUrl, getallmobile, baseUrlPoolPeekService, allPoolsPPS } from '../../assets/services';
 
 const WAIT_INTERVAL = 2000
 
@@ -282,7 +282,7 @@ export default class FetchPoolList extends React.Component {
     }
 
     async getAllPools() {
-        var response = await fetch(baseUrlPoolPeekService + allPoolsPPS);
+        var response = await fetch(baseUrlPoolPeekService + getallmobile);
         var data = await response.json();
         console.log(data);
 

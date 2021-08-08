@@ -146,6 +146,7 @@ class StakingRewards extends React.Component {
                       <th>Reward_Date</th>
                       <th>Paid_Date</th>
                       <th>ADA Price</th>
+                      <th>USD Value</th>
                     </tr>
                   </thead>
 

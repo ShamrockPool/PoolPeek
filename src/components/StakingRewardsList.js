@@ -90,6 +90,7 @@ rewardDate: "2020-09-22"
                             <td style={tableRowStyle} scope="row"><p>{item.rewardDate}</p></td>
                             <td style={tableRowStyle} scope="row"><p>{item.paidDate}</p></td>
                             <td style={tableRowStyle} scope="row"><p>{item.adaPrice}</p></td>
+                            <td style={tableRowStyle} scope="row"><p>{item.fiatValue}</p></td>
                         </tr>
                     </tbody>
                 )
