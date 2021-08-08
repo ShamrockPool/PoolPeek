@@ -46,7 +46,7 @@ class MapChartV2 extends React.Component {
         <h3><b>Pool search map of all pool owner locations.</b></h3>
         <h3>Click a marker below to display all pools at that location.</h3>
         {/* <h3>Total pools with locations: {this.props.poolsData.poolpeek.geo.length + 1}</h3> */}
-        <h3>Total unique pool locations: {this.props.poolsData.length}</h3>
+        {this.props.poolsData != null && <h3>Total unique pool locations: {this.props.poolsData.length}</h3>}
         <div style={{ width: "99%", height: "95%", margin: "5px", alignItems: "center" }}>
           <Map defaultCenter={[50.879, 4.6997]} defaultZoom={3} width={this.state.mapWidth} height={800}>
 
