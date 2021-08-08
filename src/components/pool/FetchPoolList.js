@@ -219,9 +219,18 @@ export default class FetchPoolList extends React.Component {
             poolsToDisplay = poolsToDisplay.filter(function (pool) {
                 try {
                     if (!isEmpty(pool.extended_meta.location)) {
-                        if (pool.extended_meta.location.toLowerCase().includes(location.toLowerCase())) {
+                        if (location.toLowerCase().includes(pool.extended_meta.location.toLowerCase())) {
                             return pool;
                         }
+                        else if(pool.extended_meta.location.includes(",")){
+                            var locationSplit = pool.extended_meta.location.split(",");
+
+                            locationSplit.forEach(locationSplit => {
+                                if (location.toLowerCase().trim().includes(locationSplit.toLowerCase().trim())) {
+                                    return pool;
+                                }
+                            });
+                        } 
                     }
                 } catch (error) {
                 }
@@ -623,7 +632,7 @@ export default class FetchPoolList extends React.Component {
 
             <div className="container-fluid" style={{ align: "left", width: "100%", margin: "0px" }}>
                 <Scroll showBelow={250} />
-                {this.state.showFilters &&
+                {/* {this.state.showFilters && */}
                     <div>
                         <h3><b>Filters:</b></h3>
                         <h3 style={{ marginTop: "-30px", marginRight: "10px", align: "left", display: 'inline-block' }}><b>Advanced:</b>&nbsp;&nbsp;
@@ -887,7 +896,7 @@ export default class FetchPoolList extends React.Component {
                                 <span> <b>Total pools:</b> {this.state.query.count}, <b>Displaying:</b> {this.state.poolsToDisplay.length}    </span>)}
                         </div>
 
-                    </div>}
+                    </div>
                 <ReactPaginate
                     previousLabel={'previous'}
                     nextLabel={'next'}

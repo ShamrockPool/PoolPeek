@@ -3,6 +3,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import Page from 'components/Page';
 import ShareProject from '../../components/ShareProject';
 import PoolDelagates from 'components/pool/PoolDelagates';
+import PoolBadges from 'components/pool/PoolBadges';
 import PoolBlocks from 'components/pool/PoolBlocks';
 import { css } from "@emotion/core";
 import { isEmpty } from 'utils/stringutil.js';
@@ -14,7 +15,7 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactImageFallback from "react-image-fallback";
 import SocialMedia from '../SocialMedia';
 import ReactHtmlParser from 'react-html-parser';
-import { faInfo, faDatabase, faPeopleCarry, faShare, faCube } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faDatabase, faPeopleCarry, faHistory, faCube, faAward } from '@fortawesome/free-solid-svg-icons';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import { Timeline } from 'react-twitter-widgets'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
@@ -228,8 +229,9 @@ export default class PoolDetailsComponent extends React.Component {
                                         <TabList>
                                             <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
                                             <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>
-                                            <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Block History</Tab>
-                                            <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Stake History</Tab>
+                                            <Tab><FontAwesomeIcon icon={faCube} /> Block History</Tab>
+                                            <Tab><FontAwesomeIcon icon={faHistory} /> Stake History</Tab>
+                                            <Tab><FontAwesomeIcon icon={faAward} /> Badges</Tab>
                                         </TabList>
                                     </CardHeader>
                                     <CardBody>
@@ -521,6 +523,7 @@ export default class PoolDetailsComponent extends React.Component {
                                             {/* END DELEGATES */}
                                         </TabPanel>
                                         <TabPanel>
+                                            {/* Start Block history */}
                                             <Card>
                                                 < CardHeader style={{
                                                     justifyContent: 'center',
@@ -539,8 +542,10 @@ export default class PoolDetailsComponent extends React.Component {
                                                 </CardBody>
 
                                             </Card>
+                                            {/* End Block history */}
                                         </TabPanel>
                                         <TabPanel>
+                                            {/* Start Stake history */}
                                             <Card>
                                                 < CardHeader style={{
                                                     justifyContent: 'center',
@@ -559,6 +564,28 @@ export default class PoolDetailsComponent extends React.Component {
                                                 </CardBody>
 
                                             </Card>
+                                            {/* End Stake history */}
+                                        </TabPanel>
+
+                                        <TabPanel>
+                                            {/* Start Badges */}
+                                            <Card>
+                                                < CardHeader style={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    width: '100%',
+                                                    borderRadius: 'none',
+                                                }}>Badges earned by the pool</CardHeader>
+                                                <CardBody style={{
+                                                    justifyContent: 'center',
+                                                    alignItems: 'center',
+                                                    textAlign: 'center',
+                                                }}>
+                                                    <PoolBadges poolBlocksTotal={this.props.pool.blocks}/>
+                                                </CardBody>
+
+                                            </Card>
+                                            {/* End Badges */}
                                         </TabPanel>
                                     </CardBody>
                                 </Card>

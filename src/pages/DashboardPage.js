@@ -1,6 +1,7 @@
 import Page from 'components/Page';
 import ProductMedia from 'components/ProductMedia';
 import { IconWidget, NumberWidget } from 'components/Widget';
+import  PoolSearchWizard  from 'components/PoolSearchWizard';
 import {
   teamPeekData,
 } from 'demos/dashboardPage';
@@ -35,9 +36,9 @@ import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactHtmlParser from 'react-html-parser';
-
+import { Link } from 'react-router-dom';
 import SearchInput from 'components/SearchInput';
-import { baseUrl,baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
+import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -70,7 +71,7 @@ const cardBodyStyle = {
   // color: 'white',
   paddingBottom: 0,
   paddingTop: 5,
-  paddingLeft:20,
+  paddingLeft: 20,
   paddingRight: 10
 };
 
@@ -157,7 +158,7 @@ class DashboardPage extends React.Component {
   async getPoolList() {
     var response = await fetch(baseUrlPoolPeekService + getPoolForRecommendedList);
     var data = await response.json();
-   //console.log(data);
+    //console.log(data);
     this.setState({ pools: data.pools });
   }
 
@@ -186,6 +187,10 @@ class DashboardPage extends React.Component {
     else {
       return false;
     }
+  }
+
+  startWizard() {
+    console.log("started");
   }
 
   render() {
@@ -297,7 +302,7 @@ class DashboardPage extends React.Component {
 
         <Modal
           isOpen={this.state.modal}
-          toggle={this.toggle()}
+          toggle={false}
         >
           <ModalHeader toggle={this.toggle()}>Poolpeek Mobile</ModalHeader>
           <ModalBody>
@@ -333,7 +338,11 @@ class DashboardPage extends React.Component {
             </Row>
 
             <Row>
-              <Col md="6" sm="12" xs="12">
+              <Col md="5" sm="12" xs="12">
+                <PoolSearchWizard />
+              </Col>
+
+              <Col md="4" sm="12" xs="12">
                 <Card>
                   <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
                   <CardBody style={cardBodyStyle} body>
@@ -354,7 +363,7 @@ class DashboardPage extends React.Component {
                 </Card>
               </Col>
 
-              <Col md="6" sm="12" xs="12">
+              <Col md="3" sm="12" xs="12">
                 <Card>
                   <CardHeader style={cardheaderStyle}><p><b>Random Quality Pools</b></p></CardHeader>
                   <CardBody style={cardBodyStyle} body>
@@ -363,29 +372,29 @@ class DashboardPage extends React.Component {
                       if (index <= 3) {
                         return (
                           <Row>
-                          <div style={{ display: 'inline-block' }}>
-                            <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
-                              <h6>
-                                {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
-                                  <ReactImageFallback
-                                    src={item.extended_meta.url_png_logo}
-                                    width="40"
-                                    height="40"
-                                    fallbackImage={CardanoImage} />
-                                ) : (<img
-                                  src={CardanoImage}
-                                  className="pr-2"
-                                  width="38"
-                                  height="32"
-                                />)}
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b>
-                              </h6>
+                            <div style={{ display: 'inline-block' }}>
+                              <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
+                                <h6>
+                                  {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
+                                    <ReactImageFallback
+                                      src={item.extended_meta.url_png_logo}
+                                      width="40"
+                                      height="40"
+                                      fallbackImage={CardanoImage} />
+                                  ) : (<img
+                                    src={CardanoImage}
+                                    className="pr-2"
+                                    width="38"
+                                    height="32"
+                                  />)}
+                                  <b>&nbsp;{ReactHtmlParser(item.name)}</b>
+                                </h6>
 
-                              <p>{ReactHtmlParser(linkifyHtml(item.description, {
-                                defaultProtocol: 'https'
-                              }))}</p>
-                            </a>
-                          </div>
+                                <p>{ReactHtmlParser(linkifyHtml(item.description, {
+                                  defaultProtocol: 'https'
+                                }))}</p>
+                              </a>
+                            </div>
                           </Row>
                         )
                       }
