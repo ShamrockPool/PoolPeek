@@ -25,7 +25,7 @@ var linkifyHtml = require('linkifyjs/html');
 const width = window.innerWidth;
 
 
-const badgeWidth = 300;
+const badgeWidth = 500;
 const padding = "10px";
 export default class PoolBadges extends React.Component {
 

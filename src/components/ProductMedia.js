@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'utils/propTypes';
 
 import { Media } from 'reactstrap';
-
+import { Link } from 'react-router-dom';
 import Typography from 'components/Typography';
 
 const ProductMedia = ({ image, title, description, poolid, right, ...restProps }) => {
   return (
-    <a href={`https://poolpeek.com/#/pool/${poolid}`} target="_blank" rel="noreferrer">
+    // <a href={`https://poolpeek.com/#/pool/${poolid}`} target="_blank" rel="noreferrer">
+    <Link to={`/pool/${poolid}`}>
       <Media {...restProps}>
         <Media left>
           <Media
@@ -19,7 +20,7 @@ const ProductMedia = ({ image, title, description, poolid, right, ...restProps }
         </Media>
         <Media body className="overflow-hidden">
           <Media heading tag="h5" className="text-truncate">
-          <h5><b> {title} </b></h5>
+            <h5><b> {title} </b></h5>
           </Media>
           <p>{description}</p>
         </Media>
@@ -32,7 +33,7 @@ const ProductMedia = ({ image, title, description, poolid, right, ...restProps }
         </Media>
 
       </Media>
-    </a>
+    </Link>
   );
 };
 

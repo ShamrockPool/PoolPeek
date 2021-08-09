@@ -363,7 +363,7 @@ class DashboardPage extends React.Component {
                       return (
                         <Row>
                           <div style={{ display: 'inline-block' }}>
-                            <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
+                            <Link to={`/pool/${item.pool_id}`}>
                               <h6>
                                 {checkIsImageUrl(item.url_png_logo) ? (
                                   <ReactImageFallback
@@ -381,7 +381,7 @@ class DashboardPage extends React.Component {
                               </h6>
 
                               {/* <p>{item.description}</p> */}
-                            </a>
+                            </Link>
                           </div>
                         </Row>
                       )
@@ -402,7 +402,8 @@ class DashboardPage extends React.Component {
                         return (
                           <Row>
                             <div style={{ display: 'inline-block' }}>
-                              <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer">
+                              {/* <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer"> */}
+                              <Link to={`/pool/${item.pool_id}`}>
                                 <h6>
                                   {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
                                     <ReactImageFallback
@@ -422,7 +423,7 @@ class DashboardPage extends React.Component {
                                 <p>{ReactHtmlParser(linkifyHtml(item.description, {
                                   defaultProtocol: 'https'
                                 }))}</p>
-                              </a>
+                              </Link>
                             </div>
                           </Row>
                         )

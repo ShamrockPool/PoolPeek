@@ -677,7 +677,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                     alignItems: 'center',
                                                     width: '100%',
                                                     borderRadius: 'none',
-                                                }}>Badges earned by the pool</CardHeader>
+                                                }}>Badges earned by the pool - get in touch if you would like an nft</CardHeader>
                                                 <CardBody style={{
                                                     justifyContent: 'center',
                                                     alignItems: 'center',
