@@ -213,7 +213,7 @@ class DashboardPage extends React.Component {
       // breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
         <Row>
-          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -226,7 +226,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -239,7 +239,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -252,9 +252,9 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={2} sm={2} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
-              <CardBody>
+              <CardBody >
                 <CardTitle className="text-capitalize">
                   {this.state.percentageOfSupplyStaked}
                 </CardTitle>
@@ -307,12 +307,12 @@ class DashboardPage extends React.Component {
               inverse={false}
               icon={FaTelegramPlane}
               title="Staking Rewards Bot"
-              subtitle="Register Your Stake Address"
+              subtitle=""
             /></a>
           </Col>
         </Row>
 
-        <Modal
+        {/* <Modal
           isOpen={this.state.modal}
           toggle={false}
         >
@@ -338,61 +338,14 @@ class DashboardPage extends React.Component {
               Close
             </Button>
           </ModalFooter>
-        </Modal>
+        </Modal> */}
         {this.isLoading() ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-          : <div>
+          : 
             <Row>
-              <Col lg={12} sm={12} sm={12} xs={12}>
-                <Card>
-                  <SearchInput allpools={this.state.allpools} />
-                </Card>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col md="5" sm="12" xs="12">
+              <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
                 <PoolSearchWizard />
               </Col>
-
-              <Col md="4" sm="12" xs="12">
-                <Card>
-                  <CardHeader style={cardheaderStyle}><p><b>Favourite Pools</b> - Click the favourite icon on pools.</p></CardHeader>
-                  <CardBody style={cardBodyStyle} body>
-                    {this.state.favouritepools.map(function (item, index) {
-
-                      return (
-                        <Row>
-                          <div style={{ display: 'inline-block' }}>
-                            <Link to={`/pool/${item.pool_id}`}>
-                              <h6>
-                                {checkIsImageUrl(item.url_png_logo) ? (
-                                  <ReactImageFallback
-                                    src={item.url_png_logo}
-                                    width="40"
-                                    height="40"
-                                    fallbackImage={CardanoImage} />
-                                ) : (<img
-                                  src={CardanoImage}
-                                  className="pr-2"
-                                  width="38"
-                                  height="32"
-                                />)}
-                                <b>&nbsp;{item.name}</b>
-                              </h6>
-
-                              {/* <p>{item.description}</p> */}
-                            </Link>
-                          </div>
-                        </Row>
-                      )
-
-                    })
-                    }
-                  </CardBody>
-                </Card>
-              </Col>
-
-              <Col md="3" sm="12" xs="12">
+              <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
                 <Card>
                   <CardHeader style={cardheaderStyle}><p><b>Random Quality Pools</b></p></CardHeader>
                   <CardBody style={cardBodyStyle} body>
@@ -433,30 +386,71 @@ class DashboardPage extends React.Component {
                   </CardBody>
                 </Card>
               </Col>
-            </Row></div>}
+              <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+                <Row>
+                  <Card>
+                    <CardHeader style={cardheaderStyle}><p><b>Favourite Pools</b> - Click the favourite icon on pools.</p></CardHeader>
+                    <CardBody style={cardBodyStyle} body>
+                      {this.state.favouritepools.map(function (item, index) {
 
-        <Row>
-          <Card>
-            <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
-            <CardBody style={cardBodyStyle} body>
-              {teamPeekData.map(
-                ({ id, image, title, description, poolid, right }) => (
-                  //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
+                        return (
+                          <Row>
+                            <div style={{ display: 'inline-block' }}>
+                              <Link to={`/pool/${item.pool_id}`}>
+                                <h6>
+                                  {checkIsImageUrl(item.url_png_logo) ? (
+                                    <ReactImageFallback
+                                      src={item.url_png_logo}
+                                      width="40"
+                                      height="40"
+                                      fallbackImage={CardanoImage} />
+                                  ) : (<img
+                                    src={CardanoImage}
+                                    className="pr-2"
+                                    width="38"
+                                    height="32"
+                                  />)}
+                                  <b>&nbsp;{item.name}</b>
+                                </h6>
 
-                  <ProductMedia
-                    key={id}
-                    image={image}
-                    title={title}
-                    description={description}
-                    poolid={poolid}
-                  />
-                ),
-              )}
-            </CardBody>
-          </Card>
+                                {/* <p>{item.description}</p> */}
+                              </Link>
+                            </div>
+                          </Row>
+                        )
 
-        </Row>
-      </Page>
+                      })
+                      }
+                    </CardBody>
+                  </Card>
+                </Row>
+                <Row>
+                  <Card>
+                    <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
+                    <CardBody style={cardBodyStyle} body>
+
+                      {teamPeekData.map(
+                        ({ id, image, title, description, poolid, right }) => (
+                          //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
+
+                          <ProductMedia
+                            key={id}
+                            image={image}
+                            title={title}
+                            description={""}
+                            poolid={poolid}
+                          />
+                        ),
+                      )}
+
+                    </CardBody>
+                  </Card>
+
+                </Row>
+              </Col>
+            </Row>
+          }
+      </Page >
     );
   }
 }

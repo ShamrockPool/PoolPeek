@@ -8,6 +8,9 @@ import {
   Navbar,
 } from 'reactstrap';
 import bn from 'utils/bemnames';
+import SearchInput from 'components/SearchInput';
+import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from 'assets/services';
+
 
 const bem = bn.create('header');
 
@@ -19,7 +22,8 @@ class Header extends React.Component {
       adaUsdPrice: "",
       adaEuroPrice: "",
       adaGbpPrice: "",
-      adaBtcPrice: ""
+      adaBtcPrice: "",
+      allpools: null
     };
   }
 
@@ -65,7 +69,9 @@ class Header extends React.Component {
     return data.price;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+
+    await this.getAllPools();
 
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
@@ -78,10 +84,18 @@ class Header extends React.Component {
 
   }
 
+  async getAllPools() {
+    var response = await fetch(baseUrlPoolPeekService + getPoolForSearchList);
+    var data = await response.json();
+    //console.log(data);
+    this.setState({ allpools: data.pools });
+  }
+
   render() {
 
     return (
-      <Navbar light expand className={bem.b('bg-white')}>
+      // <Navbar light expand className={bem.b('bg-white')}>
+      <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Nav navbar className="mr-2">
           <Button outline onClick={this.handleSidebarControlButton}>
             <MdClearAll size={25} />
@@ -89,13 +103,16 @@ class Header extends React.Component {
         </Nav>
         <Nav navbar>
           <div>
-            <p><b>ADA Price:</b>  <b>   $</b>  {this.state.adaUsdPrice} <b>  €</b> {this.state.adaEuroPrice} 
-            <b>  £</b> {this.state.adaGbpPrice} <b>  ₿</b> {this.state.adaBtcPrice} </p>
+            <p><b>ADA Price:</b>  <b>   $</b>  {this.state.adaUsdPrice} <b>  €</b> {this.state.adaEuroPrice}
+              <b>  £</b> {this.state.adaGbpPrice} <b>  ₿</b> {this.state.adaBtcPrice} </p>
             <p></p>
             <p></p>
           </div>
-          {/* <p>PoolPeek.com is an advanced Cardano stake pool explorer that analyzes the publicly available registration data and other data elements such as number of produced blocks.</p>
-          <p>Please support our development efforts by delegating to the ADA Train (TRAIN) or Shamrock (SHA) stake pools</p> */}
+        </Nav>
+        <Nav navbar className={bem.e('nav-right')}>
+          {this.state.allpools != null &&
+            <SearchInput allpools={this.state.allpools} />
+          }
         </Nav>
       </Navbar>
     );

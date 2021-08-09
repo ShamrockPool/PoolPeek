@@ -22,7 +22,7 @@ const IconWidget = ({
 
     <Card inverse className={classes} {...restProps}>
       <CardBody className="cr-widget__icon">
-        <Icon size={25} {...iconProps} />
+        <Icon size={5} {...iconProps} />
       </CardBody>
       <CardBody>
         <CardTitle>{title}</CardTitle>
@@ -46,7 +46,7 @@ IconWidget.propTypes = {
 IconWidget.defaultProps = {
   bgColor: 'primary',
   icon: 'span',
-  iconProps: { size: 50 },
+  iconProps: { size: 30 },
 };
 
 export default IconWidget;

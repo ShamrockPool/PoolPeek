@@ -1,11 +1,107 @@
 import React from 'react';
 import { MdSearch } from 'react-icons/md';
 import { Form, Input, Col, Card, CardHeader } from 'reactstrap';
-import Select from 'react-select';
-import { Link, Redirect } from "react-router-dom";
-import ReactImageFallback from "react-image-fallback";
-import CardanoImage from 'assets/img/cardanoIcon.png';
+import Select, { components } from 'react-select';
+import { Redirect } from "react-router-dom";
 import ReactHtmlParser from 'react-html-parser';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { truncate } from 'lodash';
+
+const width = window.innerWidth;
+
+const DropdownIndicator = props => {
+  return (
+    components.DropdownIndicator && (
+      <components.DropdownIndicator {...props}>
+        <FontAwesomeIcon icon={faSearch} />
+      </components.DropdownIndicator>
+    )
+  );
+};
+
+const mobileStyle = {
+  control: (base, state) => ({
+    ...base,
+    border: state.isFocused ? 0 : 0,
+    boxShadow: state.isFocused ? 0 : 0,
+    cursor: 'text',
+    borderRadius: 0,
+    borderBottom: '1px',
+    width: '70vw',
+    padding: '0.3em'
+  }),
+
+  option: (styles, { isFocused }) => {
+    return {
+      ...styles,
+      cursor: 'pointer',
+      backgroundColor: isFocused ? 'white' : 'white',
+      color: isFocused ? 'rgba(0, 0, 0)' : 'black',
+      lineHeight: 2,
+    }
+  },
+
+  input: styles => ({
+    ...styles,
+    color: 'black',
+    fontFamily: 'Times New Roman, Times, Serif',
+  }),
+
+  menu: styles => ({
+    ...styles,
+    marginTop: 0,
+    boxShadow: 'none',
+    borderRadius: 0,
+  }),
+
+  singleValue: styles => ({
+    ...styles,
+    color: 'rgba(0, 0, 0)',
+  }),
+};
+
+const standardStyle = {
+  control: (base, state) => ({
+    ...base,
+    border: state.isFocused ? 0 : 0,
+    boxShadow: state.isFocused ? 0 : 0,
+    cursor: 'text',
+    borderRadius: 0,
+    borderBottom: '1px',
+    width: '36vw',
+    padding: '0.3em'
+  }),
+
+  option: (styles, { isFocused }) => {
+    return {
+      ...styles,
+      cursor: 'pointer',
+      backgroundColor: isFocused ? 'white' : 'white',
+      color: isFocused ? 'rgba(0, 0, 0)' : 'black',
+      lineHeight: 2,
+    }
+  },
+
+  input: styles => ({
+    ...styles,
+    color: 'black',
+  }),
+
+  menu: styles => ({
+    ...styles,
+    marginTop: 0,
+    boxShadow: 'none',
+    borderRadius: 0,
+  }),
+
+  singleValue: styles => ({
+    ...styles,
+    color: 'rgba(0, 0, 0)',
+  }),
+}
+
+
 
 class SearchInput extends React.Component {
   constructor(props) {
@@ -17,12 +113,6 @@ class SearchInput extends React.Component {
       projectName: ""
     };
   }
-
-  // <ReactImageFallback
-  // src={item.extended_meta.url_png_logo}
-  // width="30px"
-  // height="30px"
-  // fallbackImage={CardanoImage} />
 
   componentDidMount() {
     var data = this.props.allpools;
@@ -57,22 +147,21 @@ class SearchInput extends React.Component {
   render() {
     const { selectedOption } = this.state;
     return (
-      <Card inverse color='secondary'>
         <div className="serach-tab">
           {this.redirect()}
           <Select
             value={selectedOption}
             options={this.state.options}
             onChange={this.handleChange}
-            styles={customStyles}
+            styles={width <= 700 ? mobileStyle : standardStyle}
             placeholder={"Search Pools..."}
-            openMenuOnClick={false}
+            openMenuOnClick={true}
             classNamePrefix="select"
-            styles={customStyles}
+            // styles={customStyles}
             menuColor='blue'
+            components={{ DropdownIndicator }}
           />
         </div>
-      </Card>
     );
   }
 }
