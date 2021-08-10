@@ -24,19 +24,19 @@ class MainLayout extends React.Component {
   componentDidMount() {
     this.checkBreakpoint(this.props.breakpoint);
 
-    setTimeout(() => {
-      if (!this.notificationSystem) {
-        return;
-      }
+    // setTimeout(() => {
+    //   if (!this.notificationSystem) {
+    //     return;
+    //   }
 
-      this.notificationSystem.addNotification({
-        title: <MdLoyalty />,
-        message:
-          'Poolpeek is brought to you by SHA, EAGLE and Brave pool, please consider staking with us to help cover the costs of running this service'
-          ,
-        level: 'info',
-      });
-    }, 1500);
+    //   this.notificationSystem.addNotification({
+    //     title: <MdLoyalty />,
+    //     message:
+    //       'Poolpeek is brought to you by SHA, EAGLE and Brave pool, please consider staking with us to help cover the costs of running this service'
+    //       ,
+    //     level: 'info',
+    //   });
+    // }, 1500);
   }
 
   // close sidebar when

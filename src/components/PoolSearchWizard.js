@@ -6,30 +6,6 @@ import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHatWizard, faMagic } from '@fortawesome/free-solid-svg-icons';
 
-const cardheaderStyle = {
-  borderBottom: 'solid 1px green',
-  borderTop: 'solid 1px green',
-  borderRight: 'solid 1px green',
-  borderLeft: 'solid 1px green',
-  // background: 'green',
-  // color: 'white',
-  paddingBottom: 0
-};
-
-const cardBodyStyle = {
-  borderBottom: 'solid 1px green',
-  // borderTop: 'solid 1px green',
-  borderRight: 'solid 1px green',
-  borderLeft: 'solid 1px green',
-  // background: 'green',
-  // color: 'white',
-  paddingBottom: 0,
-  paddingTop: 5,
-  paddingLeft: 20,
-  paddingRight: 10
-};
-
-
 class PoolSearchWizard extends React.Component {
   constructor(props) {
     super(props)
@@ -76,8 +52,8 @@ class PoolSearchWizard extends React.Component {
     const { selectedOption } = this.state;
     return (
       <Card >
-        <CardHeader style={cardheaderStyle}><p><b>Pool Selection Wizard</b> - Use this wizard as a quick way to filter pools.</p></CardHeader>
-        <CardBody style={cardBodyStyle} body >
+        <CardHeader><h6><b>Pool Selection Wizard</b></h6><small>Use this wizard as a quick way to filter pools.</small></CardHeader>
+        <CardBody body >
           {this.state.wizardStarted == false && <div className="WizardCard" style={{
             justifyContent: 'center',
             alignItems: 'center',

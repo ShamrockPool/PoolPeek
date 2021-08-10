@@ -39,6 +39,7 @@ import ReactHtmlParser from 'react-html-parser';
 import { Link } from 'react-router-dom';
 import SearchInput from 'components/SearchInput';
 import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -52,28 +53,28 @@ const override = css`
   border-color: red;
 `;
 
-const cardheaderStyle = {
-  borderBottom: 'solid 1px green',
-  borderTop: 'solid 1px green',
-  borderRight: 'solid 1px green',
-  borderLeft: 'solid 1px green',
-  // background: 'green',
-  // color: 'white',
-  paddingBottom: 0
-};
+// const cardheaderStyle = {
+//   borderBottom: 'solid 1px green',
+//   borderTop: 'solid 1px green',
+//   borderRight: 'solid 1px green',
+//   borderLeft: 'solid 1px green',
+//   // background: 'green',
+//   // color: 'white',
+//   paddingBottom: 0
+// };
 
-const cardBodyStyle = {
-  borderBottom: 'solid 1px green',
-  // borderTop: 'solid 1px green',
-  borderRight: 'solid 1px green',
-  borderLeft: 'solid 1px green',
-  // background: 'green',
-  // color: 'white',
-  paddingBottom: 0,
-  paddingTop: 5,
-  paddingLeft: 20,
-  paddingRight: 10
-};
+// const cardBodyStyle = {
+//   borderBottom: 'solid 1px green',
+//   // borderTop: 'solid 1px green',
+//   borderRight: 'solid 1px green',
+//   borderLeft: 'solid 1px green',
+//   // background: 'green',
+//   // color: 'white',
+//   paddingBottom: 0,
+//   paddingTop: 5,
+//   paddingLeft: 20,
+//   paddingRight: 10
+// };
 
 
 function checkIsImageUrl(url) {
@@ -213,7 +214,21 @@ class DashboardPage extends React.Component {
       // breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
         <Row>
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+            <Card inverse color='primary'>
+              <CardBody>
+                <CardTitle className="text-capitalize">
+                  {0}
+                </CardTitle>
+                <CardText>
+                  Stake Pools
+                </CardText>
+              </CardBody>
+            </Card>
+          </Col>
+
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -226,7 +241,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -239,7 +254,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -252,14 +267,27 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
-              <CardBody >
+              <CardBody body>
                 <CardTitle className="text-capitalize">
                   {this.state.percentageOfSupplyStaked}
                 </CardTitle>
                 <CardText>
                   % Of ADA Supply Staked
+                </CardText>
+              </CardBody>
+            </Card>
+          </Col>
+
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+            <Card inverse color='secondary'>
+              <CardBody>
+                <CardTitle className="text-capitalize">
+                  {0}
+                </CardTitle>
+                <CardText>
+                  Average Stake Per Pool
                 </CardText>
               </CardBody>
             </Card>
@@ -340,116 +368,123 @@ class DashboardPage extends React.Component {
           </ModalFooter>
         </Modal> */}
         {this.isLoading() ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-          : 
-            <Row>
-              <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
-                <PoolSearchWizard />
-              </Col>
-              <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
-                <Card>
-                  <CardHeader style={cardheaderStyle}><p><b>Random Quality Pools</b></p></CardHeader>
-                  <CardBody style={cardBodyStyle} body>
+          :
+          <Row>
+            <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
 
-                    {this.state.pools.map(function (item, index) {
-                      if (index <= 3) {
-                        return (
-                          <Row>
-                            <div style={{ display: 'inline-block' }}>
-                              {/* <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer"> */}
-                              <Link to={`/pool/${item.pool_id}`}>
-                                <h6>
-                                  {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
-                                    <ReactImageFallback
-                                      src={item.extended_meta.url_png_logo}
-                                      width="40"
-                                      height="40"
-                                      fallbackImage={CardanoImage} />
-                                  ) : (<img
-                                    src={CardanoImage}
-                                    className="pr-2"
-                                    width="38"
-                                    height="32"
-                                  />)}
-                                  <b>&nbsp;{ReactHtmlParser(item.name)}</b>
-                                </h6>
+              <Card>
+                <CardHeader >
+                  <p><h6><b>Favourite Pools</b></h6></p><small>Click the favourite icon  on pools.</small>
+                  <FavoriteBorderIcon></FavoriteBorderIcon>
+                </CardHeader>
+                <CardBody body>
+                  {this.state.favouritepools.map(function (item, index) {
 
-                                <p>{ReactHtmlParser(linkifyHtml(item.description, {
-                                  defaultProtocol: 'https'
-                                }))}</p>
-                              </Link>
-                            </div>
-                          </Row>
-                        )
-                      }
-                    })
+                    return (
+                      <div style={{ display: 'inline-block', paddingRight: '5px' }}>
+                        <Link to={`/pool/${item.pool_id}`}>
+                          <h6>
+                            {checkIsImageUrl(item.url_png_logo) ? (
+                              <ReactImageFallback
+                                src={item.url_png_logo}
+                                width="40"
+                                height="40"
+                                fallbackImage={CardanoImage} />
+                            ) : (<img
+                              src={CardanoImage}
+                              className="pr-2"
+                              width="38"
+                              height="32"
+                            />)}
+                            <b>&nbsp;{item.name}</b>
+                          </h6>
+
+                          {/* <p>{item.description}</p> */}
+                        </Link>
+                      </div>
+                    )
+
+                  })
+                  }
+                </CardBody>
+              </Card>
+
+
+              <Card>
+                <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
+                <CardBody body>
+
+                  {teamPeekData.map(
+                    ({ id, image, title, description, poolid, imgWidth, imgHeight, right }) => (
+                      //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
+
+                      <div style={{ display: 'inline-block', paddingRight: '10px' }}>
+                        <Link to={`/pool/${poolid}`}>
+                          <h6>
+                            <ReactImageFallback
+                              src={image}
+                              width={imgWidth}
+                              height={imgHeight}
+                              fallbackImage={null} />
+                            <b>&nbsp;{title}</b>
+                          </h6>
+                          {/* <p>{item.description}</p> */}
+                        </Link>
+                      </div>
+
+                    ),
+                  )}
+
+                </CardBody>
+              </Card>
+
+
+            </Col>
+            <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
+              <PoolSearchWizard />
+            </Col>
+            <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+              <Card>
+                <CardHeader><h6><b>Random Quality Pools</b></h6><small>A randomising list of pools we recommend!</small></CardHeader>
+                <CardBody body>
+
+                  {this.state.pools.map(function (item, index) {
+                    if (index <= 3) {
+                      return (
+                          <div style={{ display: 'inline-block' }}>
+                            {/* <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer"> */}
+                            <Link to={`/pool/${item.pool_id}`}>
+                              <h6>
+                                {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
+                                  <ReactImageFallback
+                                    src={item.extended_meta.url_png_logo}
+                                    width="40"
+                                    height="40"
+                                    fallbackImage={CardanoImage} />
+                                ) : (<img
+                                  src={CardanoImage}
+                                  className="pr-2"
+                                  width="38"
+                                  height="32"
+                                />)}
+                                <b>&nbsp;{ReactHtmlParser(item.name)}</b>
+                              </h6>
+
+                              <p>{ReactHtmlParser(linkifyHtml(item.description, {
+                                defaultProtocol: 'https'
+                              }))}</p>
+                            </Link>
+                          </div>
+                      )
                     }
-                  </CardBody>
-                </Card>
-              </Col>
-              <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
-                <Row>
-                  <Card>
-                    <CardHeader style={cardheaderStyle}><p><b>Favourite Pools</b> - Click the favourite icon on pools.</p></CardHeader>
-                    <CardBody style={cardBodyStyle} body>
-                      {this.state.favouritepools.map(function (item, index) {
+                  })
+                  }
+                </CardBody>
+              </Card>
+            </Col>
 
-                        return (
-                          <Row>
-                            <div style={{ display: 'inline-block' }}>
-                              <Link to={`/pool/${item.pool_id}`}>
-                                <h6>
-                                  {checkIsImageUrl(item.url_png_logo) ? (
-                                    <ReactImageFallback
-                                      src={item.url_png_logo}
-                                      width="40"
-                                      height="40"
-                                      fallbackImage={CardanoImage} />
-                                  ) : (<img
-                                    src={CardanoImage}
-                                    className="pr-2"
-                                    width="38"
-                                    height="32"
-                                  />)}
-                                  <b>&nbsp;{item.name}</b>
-                                </h6>
-
-                                {/* <p>{item.description}</p> */}
-                              </Link>
-                            </div>
-                          </Row>
-                        )
-
-                      })
-                      }
-                    </CardBody>
-                  </Card>
-                </Row>
-                <Row>
-                  <Card>
-                    <CardHeader style={cardheaderStyle}><p><b>Team Peek</b> - Support PoolPeek by staking with us!</p></CardHeader>
-                    <CardBody style={cardBodyStyle} body>
-
-                      {teamPeekData.map(
-                        ({ id, image, title, description, poolid, right }) => (
-                          //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
-
-                          <ProductMedia
-                            key={id}
-                            image={image}
-                            title={title}
-                            description={""}
-                            poolid={poolid}
-                          />
-                        ),
-                      )}
-
-                    </CardBody>
-                  </Card>
-
-                </Row>
-              </Col>
-            </Row>
-          }
+          </Row>
+        }
       </Page >
     );
   }

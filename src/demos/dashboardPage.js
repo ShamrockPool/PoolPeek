@@ -1,6 +1,6 @@
 import shamrock from 'assets/img/teampeek/shamrock.png';
 import train from 'assets/img/teampeek/train.png';
-import eagle from 'assets/img/teampeek/eagle.png';
+import eagle from 'assets/img/teampeek/eagle2.png';
 import brave from 'assets/img/teampeek/brave.jpg';
 
 export const teamPeekData = [
@@ -10,6 +10,8 @@ export const teamPeekData = [
     title: 'Shamrock',
     description: 'We’re currently looking for stakers to join the pool and help us reach our goal of 10 million ada active stake.',
     poolid: 'be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6',
+    imgHeight: '90',
+    imgWidth: '90'
   },
   // {
   //   id: 2,
@@ -20,17 +22,21 @@ export const teamPeekData = [
   // },
   {
     id: 2,
-    image: eagle,
-    title: 'Eagle',
-    description: 'Cloud based pool operating out of va, usa (single pool operator). Portion of proceeds go to charity fighting hunger, supporting education, and providing medicine in africa.',
-    poolid: '2cdc5cef88f1c15e19c33fd8f47d9bd89c3d7ee4fa09512fbd44a126',
-  },
-  {
-    id: 3,
     image: brave,
     title: 'Brave',
     description: 'At braveheartstakepool we are committed in providing the cardano community with financial. We will strive to provide quality reliably service 24/7 & aim to maximise your return on stake. Braveheartstakepool ‘brave’.',
     poolid: 'c7013e0a9e0f04a0363998cac5db01f08aa466b755a1a91c42b4c4b3',
+    imgHeight: '100',
+    imgWidth: '100'
+  },
+  {
+    id: 3,
+    image: eagle,
+    title: 'Eagle',
+    description: 'Cloud based pool operating out of va, usa (single pool operator). Portion of proceeds go to charity fighting hunger, supporting education, and providing medicine in africa.',
+    poolid: '2cdc5cef88f1c15e19c33fd8f47d9bd89c3d7ee4fa09512fbd44a126',
+    imgHeight: '70',
+    imgWidth: '70'
   },
 ];
 

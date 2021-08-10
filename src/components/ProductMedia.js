@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import Typography from 'components/Typography';
 import ReactImageFallback from "react-image-fallback";
 
-const ProductMedia = ({ image, title, description, poolid, right, ...restProps }) => {
+const ProductMedia = ({ image, title, description, poolid, right, imgWidth, imgHeight,  ...restProps }) => {
   return (
     // <a href={`https://poolpeek.com/#/pool/${poolid}`} target="_blank" rel="noreferrer">
     <Link to={`/pool/${poolid}`}>
@@ -32,21 +32,21 @@ const ProductMedia = ({ image, title, description, poolid, right, ...restProps }
         </Col>
       </div> */}
 
-      <Row>
-        <div style={{ display: 'inline-block' }}>
+
+        <div style={{ display: 'inline-block', paddingRight: '10px' }}>
           <Link to={`/pool/${poolid}`}>
             <h6>
               <ReactImageFallback
                 src={image}
-                width="80"
-                height="80"
+                width={imgWidth}
+                height={imgHeight}
                 fallbackImage={null} />
               <b>&nbsp;{title}</b>
             </h6>
             {/* <p>{item.description}</p> */}
           </Link>
         </div>
-      </Row>
+
 
       {/* <Media
           object

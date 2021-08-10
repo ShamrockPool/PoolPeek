@@ -9,6 +9,48 @@
   border-top-right-radius: calc(.25rem - 1px);
   border-bottom-right-radius: calc(.25rem - 1px);
 }
+
+
+.card {
+  background: #ffffff;
+  border-radius: 1.0em;
+  box-shadow: 0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03);
+  transition: all ease 200ms;
+  margin-bottom: 5px;
+  border: 2px solid rgb(211, 210, 210);
+}
+
+.card-header {
+  background: #fefefe;
+  border-radius: 1.0em!important;
+  border-bottom: 0px;
+  box-shadow: 0 8px 10px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.1), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.01);
+  transition: all ease 200ms;
+  border: 2px solid green;
+  margin: 10px;
+  // border-top: 2px solid green;
+  // border-bottom: 2px solid green;
+  // border-right: 2px solid green;
+  // border-left: 2px solid green;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+}
+
+.card-body {
+  border-radius: 1.0em!important;
+  border-bottom: 0px;
+  transition: all ease 200ms;
+  align-items: center;
+  align-content: center;
+  text-align: center;
+  padding: 10px;
+  margin: 5px;
+  // min-height: 9rem;
+}
+
+
+
 .ProjectCards {
   display: flex;
   align-items: flex-start;
@@ -16,8 +58,8 @@
 }
 
 .ProjectCard {
-  background: #fff;
-  border-radius: 0.6em;
+  background: rgb(177, 187, 177);
+  border-radius: 1.6em;
   margin: 1em;
   overflow: hidden;
   cursor: pointer;
@@ -148,4 +190,64 @@
   letter-spacing: 0.04em;
   margin: 1.4em 0 0 0;
 
+}
+
+
+
+
+.react-tabs {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.react-tabs__tab-list {
+  border-bottom: 1px solid green;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+.react-tabs__tab {
+  display: inline-block;
+  border: 1px solid transparent;
+  border-bottom: none;
+  bottom: -1px;
+  position: relative;
+  list-style: none;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.react-tabs__tab--selected {
+  background: rgb(252, 252, 252);
+  border-color: green;
+  color: black;
+  border-radius: 5px 5px 0 0;
+}
+
+.react-tabs__tab--disabled {
+  color: GrayText;
+  cursor: default;
+}
+
+.react-tabs__tab:focus {
+  box-shadow: 0 0 5px hsl(208, 99%, 50%);
+  border-color: hsl(208, 99%, 50%);
+  outline: none;
+}
+
+.react-tabs__tab:focus:after {
+  content: "";
+  position: absolute;
+  height: 5px;
+  left: -4px;
+  right: -4px;
+  bottom: -5px;
+  background: #fff;
+}
+
+.react-tabs__tab-panel {
+  display: none;
+}
+
+.react-tabs__tab-panel--selected {
+  display: block;
 }

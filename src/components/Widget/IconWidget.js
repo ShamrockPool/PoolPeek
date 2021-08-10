@@ -21,7 +21,7 @@ const IconWidget = ({
 
 
     <Card inverse className={classes} {...restProps}>
-      <CardBody className="cr-widget__icon">
+      <CardBody style={{minHeight: 0}} className="cr-widget__icon">
         <Icon size={5} {...iconProps} />
       </CardBody>
       <CardBody>
