@@ -22,7 +22,7 @@ import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Favorite from "@material-ui/icons/Favorite";
 import IconButton from '@material-ui/core/IconButton';
-import { baseUrlPoolPeekService, getPoolDelegates } from 'assets/services';
+import { baseUrlPoolPeekService, getPoolDelegates, getStakeFeedHistory } from 'assets/services';
 import Chart from '../Chart';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -78,14 +78,15 @@ export default class PoolDetailsComponent extends React.Component {
             loading: true,
             delegatesList: null,
             twitterUrl: null,
-            favourite: false
+            favourite: false,
+            stakeFeed: null
         };
 
     }
     componentDidMount() {
         this.getTwitterName();
         this.getDelegates();
-
+        // this.getStakeFeed();
         this.isPoolFavourite(ReactHtmlParser(this.props.pool.name));
     }
 
@@ -94,10 +95,20 @@ export default class PoolDetailsComponent extends React.Component {
         const response = await fetch(baseUrlPoolPeekService + getPoolDelegates + this.props.pool.pool_id);
         const data = await response.json();
         this.setState({ delegatesList: data });
-        this.setState({ loading: false });
         return data;
         // }
     }
+
+    // async getStakeFeed() {
+    //     // if (!isEmpty(this.state.stakingAddress)) {
+    //         var url = baseUrlPoolPeekService + getStakeFeedHistory + this.props.pool.pool_id;
+    //     const response = await fetch(url);
+    //     const data = await response.json();
+    //     this.setState({ stakeFeed: data });
+    //     this.setState({ loading: false });
+    //     return data;
+    //     // }
+    // }
 
 
     getTwitterName() {
@@ -530,12 +541,12 @@ export default class PoolDetailsComponent extends React.Component {
                         <Col xl={3} lg={3} md={12} sm={12}>
                             <Row>
                                 <Col>
-                                    <Card>
+                                    {/* <Card>
                                         <CardHeader>Stake Feed</CardHeader>
                                         <CardBody>
                                            
                                         </CardBody>
-                                    </Card>
+                                    </Card> */}
 
                                     {!isEmpty(this.props.pool.extended_meta.twitter_handle) &&
                                         <Card>

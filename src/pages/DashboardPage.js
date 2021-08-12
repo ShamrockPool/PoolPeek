@@ -198,7 +198,8 @@ class DashboardPage extends React.Component {
     const data = await response.json();
     //console.log(data);
 
-    this.setState({ liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply });
+    this.setState({ liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply,
+    totalPools: data.totalPools, averageStakePerPool: data.averageStakePerPool });
     this.state.liveStake = data.liveStake;
     this.state.totalAdaSupply = data.totalAdaSupply;
 
@@ -242,20 +243,20 @@ class DashboardPage extends React.Component {
       >
         <Row>
 
-          {/* <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
-                  {0}
+                  {this.state.totalPools}
                 </CardTitle>
                 <CardText>
                   Stake Pools
                 </CardText>
               </CardBody>
             </Card>
-          </Col> */}
+          </Col>
 
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -268,7 +269,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -281,7 +282,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -294,7 +295,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody body>
                 <CardTitle className="text-capitalize">
@@ -307,18 +308,18 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          {/* <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
-                  {0}
+                  {this.state.averageStakePerPool}
                 </CardTitle>
                 <CardText>
                   Average Stake Per Pool
                 </CardText>
               </CardBody>
             </Card>
-          </Col> */}
+          </Col>
 
         </Row>
 
@@ -404,7 +405,9 @@ class DashboardPage extends React.Component {
                   <p><h6><b>Favourite Pools</b></h6></p><small>Click the favourite icon  on pools.</small>
                   <Favorite style={{ color: red }}></Favorite>
                 </CardHeader>
-                <CardBody body>
+                <CardBody body style={{minHeight: 345}}>
+                  <Row>
+                    <Col>
                   {this.state.favouritepools.map(function (item, index) {
 
                     return (
@@ -433,6 +436,8 @@ class DashboardPage extends React.Component {
 
                   })
                   }
+                  </Col>
+                  </Row>
                 </CardBody>
               </Card>
 
@@ -509,10 +514,10 @@ class DashboardPage extends React.Component {
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
               <Card>
                 <CardHeader><h6><b>Random Quality Pools</b></h6><small>A randomising list of pools we recommend!</small></CardHeader>
-                <CardBody body>
+                <CardBody body style={{minHeight: 350}}>
 
                   {this.state.pools.map(function (item, index) {
-                    if (index <= 3) {
+                    if (index <= 2) {
                       return (
                         <Row style={{ display: 'inline-block' }}>
                           {/* <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer"> */}
