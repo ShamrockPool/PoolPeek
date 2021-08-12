@@ -559,6 +559,19 @@ export default class PoolDetailsComponent extends React.Component {
                                         </CardBody>
                                     </Card> */}
 
+                                    <Card>
+                                        <CardHeader>Pool Links</CardHeader>
+                                        <CardBody>
+                                            {!isEmpty(this.props.pool.homepage) && (
+                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                    <Button variant="outline-light"><a href={this.props.pool.homepage} target="_blank" rel="noreferrer">Website</a></Button>
+                                                    <br /><br />
+                                                </div>
+                                            )}
+                                            <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />
+                                        </CardBody>
+                                    </Card>
+
                                     {!isEmpty(this.props.pool.extended_meta.twitter_handle) &&
                                         <Card>
                                             <CardHeader>
@@ -578,30 +591,19 @@ export default class PoolDetailsComponent extends React.Component {
                                                 options={{
                                                     height: '400'
                                                 }}/> */}
-                                            
 
-                                                    <TwitterTimelineEmbed
-                                                        sourceType="profile"
-                                                        screenName={this.state.twitterUrl}
-                                                        // screenName="PoolShamrock"
-                                                        options={{ height: 400 }}
-                                                    />
-                                                
+
+                                                <TwitterTimelineEmbed
+                                                    sourceType="profile"
+                                                    screenName={this.state.twitterUrl}
+                                                    // screenName="PoolShamrock"
+                                                    options={{ height: 400 }}
+                                                />
+
                                             </CardBody>
                                         </Card>}
 
-                                    <Card>
-                                        <CardHeader>Pool Links</CardHeader>
-                                        <CardBody>
-                                            {!isEmpty(this.props.pool.homepage) && (
-                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                    <Button variant="outline-light"><a href={this.props.pool.homepage} target="_blank" rel="noreferrer">Website</a></Button>
-                                                    <br /><br />
-                                                </div>
-                                            )}
-                                            <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />
-                                        </CardBody>
-                                    </Card>
+
 
                                     {!isEmpty(this.props.pool.extended_meta.location) &&
                                         <Card>
