@@ -23,6 +23,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Favorite from "@material-ui/icons/Favorite";
 import IconButton from '@material-ui/core/IconButton';
 import { baseUrlPoolPeekService, getPoolDelegates, getStakeFeedHistory } from 'assets/services';
+import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import Chart from '../Chart';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -111,13 +112,23 @@ export default class PoolDetailsComponent extends React.Component {
     // }
 
 
+    // getTwitterName() {
+    //     var handle = this.props.pool.extended_meta.twitter_handle;
+    //     if (handle != null && !isEmpty(handle)) {
+    //         var name = handle.replace('https://twitter.com/', '');
+    //         name = name.replace('@', '');
+    //         var url = "https://twitter.com/" + name + "?ref_src=twsrc%5Etfw";
+    //         this.setState({ twitterUrl: url });
+    //     }
+    // }
+
     getTwitterName() {
         var handle = this.props.pool.extended_meta.twitter_handle;
         if (handle != null && !isEmpty(handle)) {
             var name = handle.replace('https://twitter.com/', '');
             name = name.replace('@', '');
             var url = "https://twitter.com/" + name + "?ref_src=twsrc%5Etfw";
-            this.setState({ twitterUrl: url });
+            this.setState({ twitterUrl: name });
         }
     }
 
@@ -557,7 +568,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                 overflow: 'auto'
                                             }}>
 
-                                                <a class="twitter-timeline" href={this.state.twitterUrl}></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                                                {/* <a class="twitter-timeline" href={this.state.twitterUrl}></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> */}
 
                                                 {/* <Timeline
                                                 dataSource={{
@@ -566,15 +577,16 @@ export default class PoolDetailsComponent extends React.Component {
                                                 }}
                                                 options={{
                                                     height: '400'
-                                                }}
-                                            />
+                                                }}/> */}
+                                            
 
-                                            <TwitterTimelineEmbed
-                                                sourceType="profile"
-                                                screenName={this.state.twitterUrl}
-                                                // screenName="PoolShamrock"
-                                                options={{ height: 400 }}
-                                            /> */}
+                                                    <TwitterTimelineEmbed
+                                                        sourceType="profile"
+                                                        screenName={this.state.twitterUrl}
+                                                        // screenName="PoolShamrock"
+                                                        options={{ height: 400 }}
+                                                    />
+                                                
                                             </CardBody>
                                         </Card>}
 
