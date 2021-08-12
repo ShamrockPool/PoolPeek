@@ -202,7 +202,7 @@ class EpochCalendar extends React.Component {
                     initialTime={this.state.epochSecondsRemaining}
                     direction="backward"
                   >
-                    <Card style={cardBodyStyle} body>
+                    <Card body>
                       <div className="container-fluid" style={{ width: "100%" }}>
 
                         <h6><b>Next Cardano Epoch starts in:</b></h6>
@@ -231,7 +231,7 @@ class EpochCalendar extends React.Component {
                 </Col>
 
                 <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
-                  <Card style={cardBodyStyle} body>
+                  <Card body>
                     <div className="container-fluid" style={{ width: "100%", height: "100%" }}>
                       <h6><b>When staking rewards:</b></h6>
                       <Label for="name" sm={3}>Staked date: </Label>
@@ -256,7 +256,7 @@ class EpochCalendar extends React.Component {
               </Row>
 
               <Row>
-                <Card style={cardBodyStyle} body>
+                <Card body>
                   < Calendar
                     localizer={localizer}
                     events={
@@ -264,7 +264,7 @@ class EpochCalendar extends React.Component {
                     }
                     startAccessor="start"
                     endAccessor="end"
-                    style={{ height: 700 }}
+                    style={{ height: 700, width: "80%" }}
                     eventPropGetter={(this.eventStyleGetter)}
                   />
                 </Card>

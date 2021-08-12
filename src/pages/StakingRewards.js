@@ -87,7 +87,7 @@ class StakingRewards extends React.Component {
       this.setState({ startLoader: true });
       const response = await fetch(baseUrl + '/rewards/stakeaddress/' + this.state.stakingAddress);
       const data = await response.json();
-      this.setState({ stakingRewardsList: data, loading: false });
+      this.setState({ stakingRewardsList: data, loading: false, startLoader: false });
       return data;
     }
   }
@@ -131,33 +131,34 @@ class StakingRewards extends React.Component {
             <br></br>
             <Button color="primary" onClick={() => { this.getStakingRewards() }}>Submit</Button>
 
-            {this.state.startLoader == true && <CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} />}
+            {this.state.startLoader == true && <div><br></br><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} />
+            <br></br><p><b>Fetching Data, this can take a few seconds as we retrieve ADA prices.</b></p></div>}
 
-            {this.state.stakingRewardsList != null &&
-              <div style={{ width: "100%", alignItems: "left" }}>
-                <br></br>
-                <Button color="primary" onClick={() => this.exportToCSV(this.state.stakingRewardsList, 'StakingRewards')} style={{ width: "100%", alignItems: "right" }}>Download Excel</Button>
-                <Table {...{ ['striped']: true }}>
-                  <thead>
-                    <tr>
-                      <th>Epoch</th>
-                      <th>Pool</th>
-                      <th>Reward</th>
-                      <th>Reward_Date</th>
-                      <th>Paid_Date</th>
-                      <th>ADA Price</th>
-                      <th>USD Value</th>
-                    </tr>
-                  </thead>
+              {this.state.stakingRewardsList != null &&
+                <div style={{ width: "100%", alignItems: "left" }}>
+                  <br></br>
+                  <Button color="primary" onClick={() => this.exportToCSV(this.state.stakingRewardsList, 'StakingRewards')} style={{ width: "100%", alignItems: "right" }}>Download Excel</Button>
+                  <Table {...{ ['striped']: true }}>
+                    <thead>
+                      <tr>
+                        <th>Epoch</th>
+                        <th>Pool</th>
+                        <th>Reward</th>
+                        <th>Reward_Date</th>
+                        <th>Paid_Date</th>
+                        <th>ADA Price</th>
+                        <th>USD Value</th>
+                      </tr>
+                    </thead>
 
-                  <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />
-                </Table>
-              </div >
-            }
+                    <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />
+                  </Table>
+                </div >
+              }
           </Card>
         </div>
       </Page>
-    );
+        );
   }
 }
-export default StakingRewards;
+        export default StakingRewards;

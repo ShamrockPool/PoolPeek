@@ -5,6 +5,7 @@ import PoolSearchWizard from 'components/PoolSearchWizard';
 import {
   teamPeekData,
 } from 'demos/dashboardPage';
+import Timer from "react-compound-timer";
 import React from 'react';
 import {
   FaTwitter,
@@ -14,7 +15,7 @@ import {
   FaTelegramPlane
 } from 'react-icons/fa';
 import {
-  Button,
+  Table,
   Card,
   CardBody,
   CardHeader,
@@ -39,7 +40,8 @@ import ReactHtmlParser from 'react-html-parser';
 import { Link } from 'react-router-dom';
 import SearchInput from 'components/SearchInput';
 import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import Favorite from '@material-ui/icons/Favorite';
+import { red } from '@material-ui/core/colors';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -112,7 +114,8 @@ class DashboardPage extends React.Component {
     modalImageWidth: 450,
     percentageOfSupplyStaked: 0,
     allpools: null,
-    favouritepools: []
+    favouritepools: [],
+    epochSecondsRemaining: 0,
   };
 
   toggle = modalType => () => {
@@ -132,6 +135,7 @@ class DashboardPage extends React.Component {
     window.scrollTo(0, 0);
 
     this.getFavouritePools();
+    this.generateEpochEvents();
 
     if (width < 600) {
       this.setState({ modal: true, modalImageWidth: width / 1.2 });
@@ -150,6 +154,29 @@ class DashboardPage extends React.Component {
     this.setState({
       loading: false
     });
+  }
+
+  generateEpochEvents() {
+    var epochDate = new Date(2017, 8, 23, 21, 44, 59);
+    var today = new Date(new Date().toUTCString());
+    var endDate = new Date(today.getFullYear(), 12, 31, 21, 45);
+
+    var epoch = 0;
+    var epochLength = 5;
+
+    while (epochDate.getTime() < endDate.getTime()) {
+      var epochEndDate = new Date(epochDate);
+      epochEndDate.setDate(epochEndDate.getDate() + epochLength);
+
+      if (today > epochDate && today < epochEndDate) {
+        var timeInEpoch = epochEndDate.getTime() - new Date(Date.now() + (new Date().getTimezoneOffset() * 60000)).getTime();
+        this.state.epochSecondsRemaining = timeInEpoch;
+
+
+      }
+      epoch++;
+      epochDate = new Date(epochEndDate);
+    }
   }
 
   async getAllPools() {
@@ -215,7 +242,7 @@ class DashboardPage extends React.Component {
       >
         <Row>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          {/* <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -226,9 +253,9 @@ class DashboardPage extends React.Component {
                 </CardText>
               </CardBody>
             </Card>
-          </Col>
+          </Col> */}
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -241,7 +268,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -254,7 +281,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -267,7 +294,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='primary'>
               <CardBody body>
                 <CardTitle className="text-capitalize">
@@ -280,7 +307,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          {/* <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -291,7 +318,7 @@ class DashboardPage extends React.Component {
                 </CardText>
               </CardBody>
             </Card>
-          </Col>
+          </Col> */}
 
         </Row>
 
@@ -375,7 +402,7 @@ class DashboardPage extends React.Component {
               <Card>
                 <CardHeader >
                   <p><h6><b>Favourite Pools</b></h6></p><small>Click the favourite icon  on pools.</small>
-                  <FavoriteBorderIcon></FavoriteBorderIcon>
+                  <Favorite style={{ color: red }}></Favorite>
                 </CardHeader>
                 <CardBody body>
                   {this.state.favouritepools.map(function (item, index) {
@@ -387,8 +414,8 @@ class DashboardPage extends React.Component {
                             {checkIsImageUrl(item.url_png_logo) ? (
                               <ReactImageFallback
                                 src={item.url_png_logo}
-                                width="40"
-                                height="40"
+                                width="60"
+                                height="60"
                                 fallbackImage={CardanoImage} />
                             ) : (<img
                               src={CardanoImage}
@@ -410,38 +437,74 @@ class DashboardPage extends React.Component {
               </Card>
 
 
-              <Card>
-                <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
-                <CardBody body>
 
-                  {teamPeekData.map(
-                    ({ id, image, title, description, poolid, imgWidth, imgHeight, right }) => (
-                      //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
-
-                      <div style={{ display: 'inline-block', paddingRight: '10px' }}>
-                        <Link to={`/pool/${poolid}`}>
-                          <h6>
-                            <ReactImageFallback
-                              src={image}
-                              width={imgWidth}
-                              height={imgHeight}
-                              fallbackImage={null} />
-                            <b>&nbsp;{title}</b>
-                          </h6>
-                          {/* <p>{item.description}</p> */}
-                        </Link>
-                      </div>
-
-                    ),
-                  )}
-
-                </CardBody>
-              </Card>
 
 
             </Col>
             <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
-              <PoolSearchWizard />
+              {/* <PoolSearchWizard />
+               */}
+
+              <Timer
+                initialTime={this.state.epochSecondsRemaining}
+                direction="backward"
+              >
+                <Card>
+                <CardHeader><h6><b>Next Cardano Epoch starts in:</b></h6></CardHeader>
+                <CardBody body>
+                  <div className="container-fluid" style={{ width: "100%" }}>
+
+                    {/* <h6><b>Next Cardano Epoch starts in:</b></h6> */}
+                    <Table {...{ ['striped']: true }}>
+                      <thead>
+                        <tr>
+                          <th>Days</th>
+                          <th>Hours</th>
+                          <th>Minutes</th>
+                          <th>Seconds</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><Timer.Days /></td>
+                          <td><Timer.Hours /></td>
+                          <td><Timer.Minutes /></td>
+                          <td><Timer.Seconds /></td>
+                        </tr>
+                      </tbody>
+                    </Table>
+
+                  </div>
+                  </CardBody>
+                </Card>
+                <Card>
+                  <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
+                  <CardBody body>
+
+                    {teamPeekData.map(
+                      ({ id, image, title, description, poolid, imgWidth, imgHeight, right }) => (
+                        //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
+
+                        <div style={{ display: 'inline-block', paddingRight: '10px' }}>
+                          <Link to={`/pool/${poolid}`}>
+                            <h6>
+                              <ReactImageFallback
+                                src={image}
+                                width={imgWidth}
+                                height={imgHeight}
+                                fallbackImage={null} />
+                              <b>&nbsp;{title}</b>
+                            </h6>
+                            {/* <p>{item.description}</p> */}
+                          </Link>
+                        </div>
+
+                      ),
+                    )}
+
+                  </CardBody>
+                </Card>
+              </Timer>
             </Col>
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
               <Card>
@@ -451,30 +514,30 @@ class DashboardPage extends React.Component {
                   {this.state.pools.map(function (item, index) {
                     if (index <= 3) {
                       return (
-                          <div style={{ display: 'inline-block' }}>
-                            {/* <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer"> */}
-                            <Link to={`/pool/${item.pool_id}`}>
-                              <h6>
-                                {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
-                                  <ReactImageFallback
-                                    src={item.extended_meta.url_png_logo}
-                                    width="40"
-                                    height="40"
-                                    fallbackImage={CardanoImage} />
-                                ) : (<img
-                                  src={CardanoImage}
-                                  className="pr-2"
-                                  width="38"
-                                  height="32"
-                                />)}
-                                <b>&nbsp;{ReactHtmlParser(item.name)}</b>
-                              </h6>
+                        <Row style={{ display: 'inline-block' }}>
+                          {/* <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer"> */}
+                          <Link to={`/pool/${item.pool_id}`}>
+                            <h6>
+                              {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
+                                <ReactImageFallback
+                                  src={item.extended_meta.url_png_logo}
+                                  width="40"
+                                  height="40"
+                                  fallbackImage={CardanoImage} />
+                              ) : (<img
+                                src={CardanoImage}
+                                className="pr-2"
+                                width="38"
+                                height="32"
+                              />)}
+                              <b>&nbsp;{ReactHtmlParser(item.name)}</b>
+                            </h6>
 
-                              <p>{ReactHtmlParser(linkifyHtml(item.description, {
-                                defaultProtocol: 'https'
-                              }))}</p>
-                            </Link>
-                          </div>
+                            <p>{ReactHtmlParser(linkifyHtml(item.description, {
+                              defaultProtocol: 'https'
+                            }))}</p>
+                          </Link>
+                        </Row>
                       )
                     }
                   })

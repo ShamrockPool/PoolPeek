@@ -49,7 +49,6 @@ class PoolSearchWizard extends React.Component {
 
 
   render() {
-    const { selectedOption } = this.state;
     return (
       <Card >
         <CardHeader><h6><b>Pool Selection Wizard</b></h6><small>Use this wizard as a quick way to filter pools.</small></CardHeader>
@@ -101,7 +100,7 @@ class PoolSearchWizard extends React.Component {
           {/* END ELIMINATE LOW PLEDGE POOLS */}
 
           {/* START ELIMINATE SATURATED AND LOW STAKED */}
-          {this.state.wizardPledgeChoosen  && this.state.wizardSaturationChoosen == null && <div>
+          {this.state.wizardPledgeChoosen && this.state.wizardSaturationChoosen == null && <div>
             <div className="WizardCard" style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -111,7 +110,7 @@ class PoolSearchWizard extends React.Component {
               <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
                 <div className="WizardCard-body">
                   <h2>Eliminated Saturated and underfunded</h2>
-                  <h4>Remove pools with more than 50Million Ada Staked and less than 50k Ada</h4>
+                  <h4>Remove pools with more than 50Million Ada Staked and less than 50k Ada Staked</h4>
                 </div>
               </div>
             </div>
@@ -142,7 +141,7 @@ class PoolSearchWizard extends React.Component {
               <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
                 <div className="WizardCard-body">
                   <h2>Professional Pool</h2>
-                  <h4>Pool with Website and description</h4>
+                  <h4>Pool with Website and description.</h4>
                 </div>
               </div>
             </div>
@@ -155,7 +154,7 @@ class PoolSearchWizard extends React.Component {
               <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
                 <div className="WizardCard-body">
                   <h2>All pools</h2>
-                  <h4>Saturation level doesnt bother me</h4>
+                  <h4>This doesnt bother me.</h4>
                 </div>
               </div>
             </div>
@@ -168,7 +167,18 @@ class PoolSearchWizard extends React.Component {
           {this.state.wizardStarted != false && <Row>
             <Button
               size="sm"
-              onClick={() => this.setState({ wizardStarted: false })}
+              onClick={() => this.setState({
+                wizardStarted: false, 
+                wizardPledgeChoosen: null,
+                wizardSaturationChoosen: null,
+                wizardPoolSizeChoosen: null,
+                wizardProfessionalPoolChoosen: null,
+                wizardFeeChoosen: null,
+                wizardFixedFeeChoosen: null,
+                wizardPoolHostingChoosen: null,
+                wizardCharityPoolChoosen: null,
+                wizardSinglePoolOperatorChoosen: null
+              })}
             >
               Reset
             </Button>

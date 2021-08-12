@@ -16,15 +16,13 @@ import ReactImageFallback from "react-image-fallback";
 import SocialMedia from '../SocialMedia';
 import ReactHtmlParser from 'react-html-parser';
 import { faInfo, faDatabase, faPeopleCarry, faHistory, faCube, faAward } from '@fortawesome/free-solid-svg-icons';
-import { TwitterTimelineEmbed } from 'react-twitter-embed';
-import { Timeline } from 'react-twitter-widgets'
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import Favorite from "@material-ui/icons/Favorite";
 import IconButton from '@material-ui/core/IconButton';
+import { baseUrlPoolPeekService, getPoolDelegates } from 'assets/services';
 import Chart from '../Chart';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -93,7 +91,7 @@ export default class PoolDetailsComponent extends React.Component {
 
     async getDelegates() {
         // if (!isEmpty(this.state.stakingAddress)) {
-        const response = await fetch('https://smashpeek.com/services/pool/delegates/' + this.props.pool.pool_id);
+        const response = await fetch(baseUrlPoolPeekService + getPoolDelegates + this.props.pool.pool_id);
         const data = await response.json();
         this.setState({ delegatesList: data });
         this.setState({ loading: false });
@@ -516,7 +514,7 @@ export default class PoolDetailsComponent extends React.Component {
                                         <TabPanel>
                                             {/* Start Badges */}
                                             <Card>
-                                                <CardHeader>Badges earned by the pool - get in touch if you would like an nft</CardHeader>
+                                                <CardHeader>Badges earned by the pool as blocks are produced - get in touch if you would like an nft version.</CardHeader>
                                                 <CardBody>
                                                     <PoolBadges poolBlocksTotal={this.props.pool.blocks} />
                                                 </CardBody>
@@ -533,16 +531,9 @@ export default class PoolDetailsComponent extends React.Component {
                             <Row>
                                 <Col>
                                     <Card>
-                                        <CardHeader>Pool Links</CardHeader>
-
+                                        <CardHeader>Stake Feed</CardHeader>
                                         <CardBody>
-                                            {!isEmpty(this.props.pool.homepage) && (
-                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                    <Button variant="outline-light"><a href={this.props.pool.homepage} target="_blank" rel="noreferrer">Website</a></Button>
-                                                    <br /><br />
-                                                </div>
-                                            )}
-                                            <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />
+                                           
                                         </CardBody>
                                     </Card>
 
@@ -575,6 +566,19 @@ export default class PoolDetailsComponent extends React.Component {
                                             /> */}
                                             </CardBody>
                                         </Card>}
+
+                                    <Card>
+                                        <CardHeader>Pool Links</CardHeader>
+                                        <CardBody>
+                                            {!isEmpty(this.props.pool.homepage) && (
+                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                    <Button variant="outline-light"><a href={this.props.pool.homepage} target="_blank" rel="noreferrer">Website</a></Button>
+                                                    <br /><br />
+                                                </div>
+                                            )}
+                                            <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />
+                                        </CardBody>
+                                    </Card>
 
                                     {!isEmpty(this.props.pool.extended_meta.location) &&
                                         <Card>

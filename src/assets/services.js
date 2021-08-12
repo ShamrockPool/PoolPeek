@@ -1,9 +1,9 @@
 
-//export const baseUrl = "http://localhost:8081";
-export const baseUrl = "https://smashpeek.com/services";
+export const baseUrl = "http://localhost:8081";
+//export const baseUrl = "https://smashpeek.com/services";
 
-//export const baseUrlPoolPeekService = "http://localhost:8087";
-export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
+export const baseUrlPoolPeekService = "http://localhost:8087";
+//export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
 
 
 
@@ -20,6 +20,7 @@ export const getPoolById = "/pooldetails/getone/";
 export const getmappools = "/pooldetails/getmappools";//getmappools
 export const getallmobile = "/pooldetails/getallmobile";//getallmobile
 export const getPoolForSearchList = "/pooldetails/getallsearchlist";//
+export const getPoolDelegates = "/pooldelegates/get/";//
 export const getPoolForRecommendedList = "/pooldetails/getrecommendedpools"
 
 

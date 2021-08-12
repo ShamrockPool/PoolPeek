@@ -3,6 +3,7 @@ import "../../styles/components/Table.css";
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 import { Row } from 'reactstrap';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -55,17 +56,18 @@ rewardDate: "2020-09-22"
                     <tr>
                         <td style={tableRowStyle} scope="row">
                             <Row>
-                            <a href={"https://poolpeek.com/#/stakingrewards/" + item.stakeAddress} target="_blank" rel="noreferrer">
-                                <p style={{ fontSize: '1.0vw' }}>{item.stakeAddress}</p></a>
-                            <CopyToClipboard text={item.stakeAddress}>
-                                <FontAwesomeIcon icon={faClipboard} />
-                            </CopyToClipboard>
+                                <Link to={`/stakingrewards/${item.stake_address}`}>
+                                    <p style={{ fontSize: '1.0vw' }}>{item.stake_address}</p>
+                                </Link>
+                                <CopyToClipboard text={item.stake_address}>
+                                    <FontAwesomeIcon icon={faClipboard} />
+                                </CopyToClipboard>
                             </Row>
                             {/* {copied ? <span style={{color: 'red'}}>Copied.</span> : null} */}
                         </td>
 
 
-                        <td style={tableRowStyleStake} scope="row"><p style={{ fontSize: '1.2vw' }}>{Number(item.stakeAmount).toFixed(2)}</p></td>
+                        <td style={tableRowStyleStake} scope="row"><p style={{ fontSize: '1.2vw' }}>{Number(item.stake_amount).toFixed(2)}</p></td>
                     </tr>
                 )
             })
