@@ -61,7 +61,7 @@ class PoolSearchWizard extends React.Component {
             onClick={() => this.setState({ wizardStarted: true })}>
             <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
               <div className="WizardCard-body">
-                <FontAwesomeIcon icon={faMagic} size="3x" color="white" />
+                <FontAwesomeIcon icon={faMagic} size="3x"  style={{ color: "red" }} />
                 <h2>START</h2>
                 <h3>Use our wizard to pick a pool that fits your needs.</h3>
               </div>

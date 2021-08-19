@@ -26,7 +26,8 @@ import {
   ModalBody,
   ModalFooter,
   ModalHeader,
-  CardText
+  CardText,
+  Button
 } from 'reactstrap';
 import googleAppStore from 'assets/img/google_plays.png';
 import appAppStore from 'assets/img/apple_store.png';
@@ -138,7 +139,7 @@ class DashboardPage extends React.Component {
     this.generateEpochEvents();
 
     if (width < 600) {
-      this.setState({ modal: true, modalImageWidth: width / 1.2 });
+      this.setState({ modal: false, modalImageWidth: width / 1.2 });
     }
 
     this.teamPeekData = teamPeekData;//shuffle(teamPeekData);
@@ -243,7 +244,7 @@ class DashboardPage extends React.Component {
       >
         <Row>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -256,7 +257,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -269,7 +270,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -282,7 +283,7 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -295,20 +296,20 @@ class DashboardPage extends React.Component {
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='primary'>
               <CardBody body>
                 <CardTitle className="text-capitalize">
                   {this.state.percentageOfSupplyStaked}
                 </CardTitle>
                 <CardText>
-                  % Of ADA Supply Staked
+                  % Of ADA Staked
                 </CardText>
               </CardBody>
             </Card>
           </Col>
 
-          <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -324,51 +325,51 @@ class DashboardPage extends React.Component {
         </Row>
 
         <Row>
-          <Col >
+        <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
             <a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">
               <IconWidget
                 bgColor="white"
                 inverse={false}
                 icon={FaTwitter}
-                title="Follow Our Twitter"
+                title="Our Twitter"
                 subtitle=""
               />
             </a>
           </Col>
 
-          <Col >
+          <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
             <IconWidget
               bgColor="white"
               inverse={false}
               icon={FaMobileAlt}
-              title="Download Mobile APP"
+              title="Mobile APP"
               subtitle=""
               onClick={this.toggle()}
             />
           </Col>
 
-          <Col >
+          <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
             <a href="https://t.me/poolpeek" target="_blank" rel="noreferrer"> <IconWidget
               bgColor="white"
               inverse={false}
               icon={FaTelegram}
-              title="Join Our Telegram"
+              title="Telegram"
               subtitle=""
             /></a>
           </Col>
 
-          <Col >
+          <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
             <a href="http://t.me/poolpeek_bot" target="_blank" rel="noreferrer"> <IconWidget
               bgColor="white"
               inverse={false}
               icon={FaTelegramPlane}
-              title="Staking Rewards Bot"
+              title="Staking Bot"
               subtitle=""
             /></a>
           </Col>
         </Row>
 
-        {/* <Modal
+        <Modal
           isOpen={this.state.modal}
           toggle={false}
         >
@@ -394,7 +395,7 @@ class DashboardPage extends React.Component {
               Close
             </Button>
           </ModalFooter>
-        </Modal> */}
+        </Modal>
         {this.isLoading() ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           :
           <Row>
@@ -405,7 +406,7 @@ class DashboardPage extends React.Component {
                   <p><h6><b>Favourite Pools</b></h6></p><small>Click the favourite icon  on pools.</small>
                   <Favorite style={{ color: red }}></Favorite>
                 </CardHeader>
-                <CardBody body style={{minHeight: 345}}>
+                <CardBody body >
                   <Row>
                     <Col>
                   {this.state.favouritepools.map(function (item, index) {
