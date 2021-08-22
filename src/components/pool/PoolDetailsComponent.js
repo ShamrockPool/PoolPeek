@@ -353,9 +353,10 @@ export default class PoolDetailsComponent extends React.Component {
                                     <CardHeader>
                                         <TabList>
                                             <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
-                                            <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>
+                                            {/* <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab> */}
+                                            {width > 700 && <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>}
                                             <Tab><FontAwesomeIcon icon={faCube} /> Block History</Tab>
-                                            <Tab><FontAwesomeIcon icon={faHistory} /> Stake History</Tab>
+                                            {width > 700 && <Tab><FontAwesomeIcon icon={faHistory} /> Stake History</Tab>}
                                             <Tab><FontAwesomeIcon icon={faAward} /> Badges</Tab>
                                         </TabList>
                                     </CardHeader>
@@ -499,14 +500,14 @@ export default class PoolDetailsComponent extends React.Component {
                                             </div>
                                             {/* END INFO */}
                                         </TabPanel>
-                                        <TabPanel>
+                                        {width > 700 && <TabPanel>
                                             {/* START DELEGATES */}
                                             {this.props.pool &&
                                                 <div>
                                                     <PoolDelagates pool={this.props.pool} delegatesList={this.state.delegatesList} />
                                                 </div>}
                                             {/* END DELEGATES */}
-                                        </TabPanel>
+                                        </TabPanel>}
                                         <TabPanel>
                                             {/* Start Block history */}
                                             <Card>
@@ -520,7 +521,7 @@ export default class PoolDetailsComponent extends React.Component {
                                             </Card>
                                             {/* End Block history */}
                                         </TabPanel>
-                                        <TabPanel>
+                                        {width > 700 && <TabPanel>
                                             {/* Start Stake history */}
                                             <Card>
                                                 <CardHeader>Active Stake - History</CardHeader>
@@ -532,7 +533,7 @@ export default class PoolDetailsComponent extends React.Component {
 
                                             </Card>
                                             {/* End Stake history */}
-                                        </TabPanel>
+                                        </TabPanel>}
 
                                         <TabPanel>
                                             {/* Start Badges */}

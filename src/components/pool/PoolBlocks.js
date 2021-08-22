@@ -38,13 +38,20 @@ export default class PoolBlocks extends React.Component {
             <div style={{ width: "100%", alignItems: "left" }}>
                 <Table {...{ ['striped']: true }}>
                     <thead>
-                        <tr>
+                    {width > 700 &&<tr>
                             <th>Epoch</th>
                             <th>Active Stake</th>
                             <th>Expected Blocks</th>
                             <th>Blocks Minted</th>
                             <th>Luck</th>
-                        </tr>
+                        </tr>}
+                        {width < 700 &&<tr>
+                            <th>Epoch</th>
+                            
+                            <th>Expected Blocks</th>
+                            <th>Blocks Minted</th>
+                            <th>Luck</th>
+                        </tr>}
                     </thead>
                     {this.props.pool.block_history != null &&
                     <PoolBlocksList block_history={this.props.pool.block_history} currentEpoch={this.props.pool.active_stake_epoch} />}

@@ -111,7 +111,7 @@ export default class Pool extends React.Component {
                             <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
                             <Tab><FontAwesomeIcon icon={faDatabase} /> Stats</Tab>
                             <Tab><FontAwesomeIcon icon={faCube} /> Blocks</Tab>
-                            <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>
+                            {width > 700 &&<Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>}
                             <Tab><FontAwesomeIcon icon={faShare} /> Promote</Tab>
                         </TabList>
 
