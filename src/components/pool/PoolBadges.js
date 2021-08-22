@@ -117,7 +117,7 @@ export default class PoolBadges extends React.Component {
             return 85763;
         } else if (name == 'blocks_5000') {
             return 85764;
-        }else if (name == 'blocks_1_gif') {//START OF GIFS
+        } else if (name == 'blocks_1_gif') {//START OF GIFS
             return 85771;
         } else if (name == 'blocks_5_gif') {
             return 85773;
@@ -359,12 +359,14 @@ export default class PoolBadges extends React.Component {
                                 {this.state.nftresponse != null &&
                                     <div>
                                         <br></br>
-                                        {width < 700 && <small><b>Payment Address:</b> {this.state.nftresponse.paymentAddress}</small>}
+                                        {width < 700 && <small style={{ fontSize: '63%' }}><b>Payment Address:</b><br></br> {this.state.nftresponse.paymentAddress} </small>}
                                         {width > 700 && <p><b>Payment Address:</b> {this.state.nftresponse.paymentAddress}</p>}
-                                        <CopyToClipboard text={this.state.nftresponse.paymentAddress}
-                                            onCopy={() => this.setState({ copied: true })}>
-                                            <FontAwesomeIcon icon={faClipboard} />
-                                        </CopyToClipboard>
+                                        <p>
+                                            <CopyToClipboard text={this.state.nftresponse.paymentAddress}
+                                                onCopy={() => this.setState({ copied: true })}>
+                                                <FontAwesomeIcon icon={faClipboard} />
+                                            </CopyToClipboard>
+                                        </p>
                                         {this.state.copied ? <span style={{ color: 'red' }}>Copied.</span> : null}
 
                                         <p><b>ADA Price:</b> {this.state.nftresponse.adaToSend}</p>
