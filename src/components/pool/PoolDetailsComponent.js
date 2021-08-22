@@ -25,6 +25,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { baseUrlPoolPeekService, getPoolDelegates, getStakeFeedHistory } from 'assets/services';
 import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import Chart from '../Chart';
+import { Link } from 'react-router-dom';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -536,7 +537,7 @@ export default class PoolDetailsComponent extends React.Component {
                                         <TabPanel>
                                             {/* Start Badges */}
                                             <Card>
-                                                <CardHeader>Badges earned by the pool as blocks are produced - get in touch if you would like an nft version.</CardHeader>
+                                                <CardHeader>Badges earned by the pool.</CardHeader>
                                                 <CardBody>
                                                     <PoolBadges poolBlocksTotal={this.props.pool.blocks} />
                                                 </CardBody>

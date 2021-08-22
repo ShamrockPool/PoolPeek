@@ -24,6 +24,8 @@ export const getPoolDelegates = "/pooldelegates/get/";//
 export const getStakeFeedHistory = "/pooldelegates/get/history/"
 export const getPoolForRecommendedList = "/pooldetails/getrecommendedpools"
 
+export const mintNFT = "/nft/mint/";//{nftId}
+
 
 
 
