@@ -346,16 +346,8 @@ export default class PoolBadges extends React.Component {
                             alignItems: 'center',
                             textAlign: 'center',
                         }}>
-                            <Row tyle={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                textAlign: 'center',
-                            }}>
-                                <div tyle={{
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                    textAlign: 'center',
-                                }}>
+                            <Row>
+                                <div>
                                     <p>You have choosen to mint nft: {this.state.nftname}</p>
                                     <p >Once you click the MINT button you will be presented with a payment address and an amount.</p>
                                     <p style={{ color: 'red' }}>You will then have 20 minutes to pay before the transaction expires.</p>
@@ -367,7 +359,8 @@ export default class PoolBadges extends React.Component {
                                 {this.state.nftresponse != null &&
                                     <div>
                                         <br></br>
-                                        <p><b>Payment Address:</b> {this.state.nftresponse.paymentAddress}</p>
+                                        {width < 700 && <small><b>Payment Address:</b> {this.state.nftresponse.paymentAddress}</small>}
+                                        {width > 700 && <p><b>Payment Address:</b> {this.state.nftresponse.paymentAddress}</p>}
                                         <CopyToClipboard text={this.state.nftresponse.paymentAddress}
                                             onCopy={() => this.setState({ copied: true })}>
                                             <FontAwesomeIcon icon={faClipboard} />
