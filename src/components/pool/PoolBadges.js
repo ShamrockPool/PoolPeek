@@ -371,6 +371,7 @@ export default class PoolBadges extends React.Component {
 
                                         <p><b>ADA Price:</b> {this.state.nftresponse.adaToSend}</p>
                                         <p><b>Expiry Time:</b> {this.setExpiryTime()}</p>
+                                        <p><b>You will be refunded 2ADA upon recieving your NFT.</b></p>
                                     </div>}
                             </Row>
 
