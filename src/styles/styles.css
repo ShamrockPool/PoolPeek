@@ -1,0 +1,101 @@
+tr {
+    height: 60px !important;
+    vertical-align: bottom;
+    border: none !important;
+
+}
+
+/* th {
+    max-width: 125px;
+    min-width: 125px;
+    padding: 0 !important;
+    overflow-x: auto;
+    white-space: nowrap;
+    text-align: left !important;
+    vertical-align: middle;
+    border: none !important;
+} */
+
+th {
+    height: 60px !important;    
+    text-align: left !important;
+    vertical-align: middle !important;;
+    border: none !important;
+    background:#f8f9fa;
+} 
+
+td {
+    height: 60px !important;    
+    text-align: left !important;
+    vertical-align: middle !important;;
+    border: none !important;
+}
+.App a {
+    color: #0a2cee;
+    transition: 0.2s all ease-in-out;
+  }
+  .App a:hover {
+    opacity: 0.75;
+  }
+
+.App {
+    z-index: 10;
+    text-align: center;
+    margin: 0px 24px;
+    transition: 0.1s all ease-in-out;
+    animation: app-enter-anim 0.1s ease-out;
+  }
+  .App-text {
+    opacity: 1;
+    transition: 0.1s all ease-in-out;
+  }
+  .App-particles__container {
+    overflow: hidden;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 0;
+  }
+  .App-particles__container canvas {
+    transition: 0.2s all ease-in-out;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+  }
+  
+  .App-text__title {
+    margin: 0px;
+    font-weight: 400;
+    font-size: 3.25rem;
+    letter-spacing: 0.5rem;
+    font-family: "Oswald", sans-serif;
+  }
+  .App-text__body {
+    margin: 0px;
+    margin-top: 12px;
+    font-weight: 400;
+    font-size: 1.2rem;
+  }
+  
+  @keyframes app-enter-anim {
+    from {
+      opacity: 0.8;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transfrom: scale(1);
+    }
+  }
+  @-webkit-keyframes app-enter-anim {
+    from {
+      opacity: 0.8;
+      transform: scale(0.7);
+    }
+    to {
+      opacity: 1;
+      transfrom: scale(1);
+    }
+  }

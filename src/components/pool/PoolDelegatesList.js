@@ -4,7 +4,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
-import { Row } from 'reactstrap';
+import { Row, Button } from 'reactstrap';
+import Tooltip from "@material-ui/core/Tooltip";
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 
@@ -15,8 +16,11 @@ const tableRowStyle = {
     // color: 'white',
     fontWeight: 'normal',
     padding: 0,
-    width: '75%',
+    // width: '75%',
     maxWidth: 75,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
 };
 
 const tableRowStyleStake = {
@@ -25,8 +29,11 @@ const tableRowStyleStake = {
     // color: 'white',
     fontWeight: 'normal',
     padding: 0,
-    width: '25%',
+    // width: '25%',
     maxWidth: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
 };
 
 const width = window.innerWidth;
@@ -54,20 +61,32 @@ rewardDate: "2020-09-22"
                 var copied = false;
                 return (
                     <tr>
-                        <td style={tableRowStyle} scope="row">
-                            <Row>
-                                <Link to={`/stakingrewards/${item.stake_address}`}>
-                                    <p style={{ fontSize: '1.0vw' }}>{item.stake_address}</p>
-                                </Link>
-                                <CopyToClipboard text={item.stake_address}>
-                                    <FontAwesomeIcon icon={faClipboard} />
-                                </CopyToClipboard>
-                            </Row>
+                        <td style={tableRowStyle} scope="row" >
+
+                            <Tooltip
+                                title="View staking rewards"
+                                placement="left"
+                            >
+                                <Row>
+                                    <Link to={`/stakingrewards/${item.stake_address}`}>
+                                        <small style={{ paddingLeft: '40px' }}>{item.stake_address}</small>
+                                    </Link><p>  </p>
+                                    <CopyToClipboard text={item.stake_address}>
+                                        <FontAwesomeIcon icon={faClipboard} />
+                                    </CopyToClipboard>
+                                </Row>
+                            </Tooltip>
+
                             {/* {copied ? <span style={{color: 'red'}}>Copied.</span> : null} */}
                         </td>
+                        <td style={tableRowStyleStake} scope="row"><p>{Number(item.stake_amount).toFixed(2)}</p></td>
 
+                        <td style={tableRowStyle} scope="row" >
+                            <Row>
+                                <Button variant="outline-light"> <Link to={`/stakingrewards/${item.stake_address}`}><small>Rewards</small></Link></Button>
+                            </Row>
+                        </td>
 
-                        <td style={tableRowStyleStake} scope="row"><p style={{ fontSize: '1.2vw' }}>{Number(item.stake_amount).toFixed(2)}</p></td>
                     </tr>
                 )
             })

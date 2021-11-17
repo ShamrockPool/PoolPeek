@@ -135,7 +135,7 @@ export default class PoolDetailsComponent extends React.Component {
 
     calculateLuck() {
         try {
-            var lastEpochStakeString = this.props.pool.active_stake_history[1].active_stake.replaceAll(",", "");
+            var lastEpochStakeString = this.props.pool.active_stake_history[0].active_stake.replaceAll(",", "");
             var lastEpochStake = Number(lastEpochStakeString);
             var divider = lastEpochStake / 1062037;
             var blockEpoch = this.props.pool.block_history[1].blocks;
@@ -512,10 +512,13 @@ export default class PoolDetailsComponent extends React.Component {
                                             {/* Start Block history */}
                                             <Card>
                                                 < CardHeader>Blocks
-                                                    <small>* Current Epoch, potential for more blocks.</small>
+                                                    <br></br>
+                                                    <small>* Current Epoch, potential for more blocks.</small><br></br>
+                                                    <small>After epoch transition the * Current Epoch will look invalid as we process.</small>
                                                 </CardHeader>
                                                 <CardBody>
                                                     {this.props.pool && <PoolBlocks pool={this.props.pool} />}
+                                                    {/* <p>Currently under construction!</p> */}
                                                 </CardBody>
 
                                             </Card>

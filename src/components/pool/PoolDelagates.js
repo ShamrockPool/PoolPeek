@@ -28,7 +28,10 @@ const tableRowStyle = {
     padding: 0,
     paddingLeft: 5,
     paddingRight: 5,
-    width: '50%'
+    width: '50%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center'
 };
 
 export default class PoolDelagates extends React.Component {
@@ -49,15 +52,24 @@ export default class PoolDelagates extends React.Component {
 
     render() {
         return (
-            <div style={{ width: "100%", alignItems: "left" }}>
-                <Table {...{ ['striped']: true }}>
-                    <thead>
-                        <tr>
-                            <th style={tableRowStyle} >Stake Address</th>
+            <div style={{ width: "100%", alignItems: "center" }}>
+                <Table {...{ ['striped']: false }} style={{ justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center' }}>
+                    <thead style={{ justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center' }}>
+                        <tr style={{ justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center' }}>
+                            <th style={tableRowStyle}>Stake Address</th>
                             <th style={tableRowStyle}>Wallet Amount</th>
+                            <th style={tableRowStyle}>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{ justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center' }}>
                         {this.props.delegatesList == null ? <div>Loading delegates...<CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
                             :
                             <PoolDelegatesList delegatesList={this.props.delegatesList} />

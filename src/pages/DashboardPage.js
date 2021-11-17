@@ -12,7 +12,8 @@ import {
   FaTelegram,
   FaMobile,
   FaMobileAlt,
-  FaTelegramPlane
+  FaTelegramPlane,
+  FaWizardsOfTheCoast
 } from 'react-icons/fa';
 import {
   Table,
@@ -43,6 +44,8 @@ import SearchInput from 'components/SearchInput';
 import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
 import Favorite from '@material-ui/icons/Favorite';
 import { red } from '@material-ui/core/colors';
+
+import Iframe from 'react-iframe'
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -199,8 +202,10 @@ class DashboardPage extends React.Component {
     const data = await response.json();
     //console.log(data);
 
-    this.setState({ liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply,
-    totalPools: data.totalPools, averageStakePerPool: data.averageStakePerPool });
+    this.setState({
+      liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply,
+      totalPools: data.totalPools, averageStakePerPool: data.averageStakePerPool
+    });
     this.state.liveStake = data.liveStake;
     this.state.totalAdaSupply = data.totalAdaSupply;
 
@@ -325,7 +330,7 @@ class DashboardPage extends React.Component {
         </Row>
 
         <Row>
-        <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+          <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
             <a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">
               <IconWidget
                 bgColor="white"
@@ -337,7 +342,7 @@ class DashboardPage extends React.Component {
             </a>
           </Col>
 
-          <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+          <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
             <IconWidget
               bgColor="white"
               inverse={false}
@@ -348,22 +353,12 @@ class DashboardPage extends React.Component {
             />
           </Col>
 
-          <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+          <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
             <a href="https://t.me/poolpeek" target="_blank" rel="noreferrer"> <IconWidget
               bgColor="white"
               inverse={false}
               icon={FaTelegram}
               title="Telegram"
-              subtitle=""
-            /></a>
-          </Col>
-
-          <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-            <a href="http://t.me/poolpeek_bot" target="_blank" rel="noreferrer"> <IconWidget
-              bgColor="white"
-              inverse={false}
-              icon={FaTelegramPlane}
-              title="Staking Bot"
               subtitle=""
             /></a>
           </Col>
@@ -399,7 +394,33 @@ class DashboardPage extends React.Component {
         {this.isLoading() ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           :
           <Row>
+
             <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+
+              <Card>
+                <CardHeader >
+                  <p><h6><b>Pool Selection Wizard</b></h6></p><small>Use the below wizard to help you find your pool.</small>
+
+
+                </CardHeader>
+                <CardBody body >
+{/* 
+                  <Iframe url="https://pool-peek.web.app/#/wizard"
+                    // width="450px"
+                    height="700px"
+                    // id="myId"
+                    // className="myClassname"
+                    display="initial"
+                    position="relative" /> */}
+                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"> <IconWidget
+                    bgColor="white"
+                    inverse={false}
+                    // icon={FaWizardsOfTheCoast}
+                    title="Pool Wizard"
+                    subtitle=""
+                  /></a>
+                </CardBody>
+              </Card>
 
               <Card>
                 <CardHeader >
@@ -409,35 +430,35 @@ class DashboardPage extends React.Component {
                 <CardBody body >
                   <Row>
                     <Col>
-                  {this.state.favouritepools.map(function (item, index) {
+                      {this.state.favouritepools.map(function (item, index) {
 
-                    return (
-                      <div style={{ display: 'inline-block', paddingRight: '5px' }}>
-                        <Link to={`/pool/${item.pool_id}`}>
-                          <h6>
-                            {checkIsImageUrl(item.url_png_logo) ? (
-                              <ReactImageFallback
-                                src={item.url_png_logo}
-                                width="60"
-                                height="60"
-                                fallbackImage={CardanoImage} />
-                            ) : (<img
-                              src={CardanoImage}
-                              className="pr-2"
-                              width="38"
-                              height="32"
-                            />)}
-                            <b>&nbsp;{item.name}</b>
-                          </h6>
+                        return (
+                          <div style={{ display: 'inline-block', paddingRight: '5px' }}>
+                            <Link to={`/pool/${item.pool_id}`}>
+                              <h6>
+                                {checkIsImageUrl(item.url_png_logo) ? (
+                                  <ReactImageFallback
+                                    src={item.url_png_logo}
+                                    width="60"
+                                    height="60"
+                                    fallbackImage={CardanoImage} />
+                                ) : (<img
+                                  src={CardanoImage}
+                                  className="pr-2"
+                                  width="38"
+                                  height="32"
+                                />)}
+                                <b>&nbsp;{item.name}</b>
+                              </h6>
 
-                          {/* <p>{item.description}</p> */}
-                        </Link>
-                      </div>
-                    )
+                              {/* <p>{item.description}</p> */}
+                            </Link>
+                          </div>
+                        )
 
-                  })
-                  }
-                  </Col>
+                      })
+                      }
+                    </Col>
                   </Row>
                 </CardBody>
               </Card>
@@ -456,31 +477,31 @@ class DashboardPage extends React.Component {
                 direction="backward"
               >
                 <Card>
-                <CardHeader><h6><b>Next Cardano Epoch starts in:</b></h6></CardHeader>
-                <CardBody body>
-                  <div className="container-fluid" style={{ width: "100%" }}>
+                  <CardHeader><h6><b>Next Cardano Epoch starts in:</b></h6></CardHeader>
+                  <CardBody body>
+                    <div className="container-fluid" style={{ width: "100%" }}>
 
-                    {/* <h6><b>Next Cardano Epoch starts in:</b></h6> */}
-                    <Table {...{ ['striped']: true }}>
-                      <thead>
-                        <tr>
-                          <th>Days</th>
-                          <th>Hours</th>
-                          <th>Minutes</th>
-                          <th>Seconds</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><Timer.Days /></td>
-                          <td><Timer.Hours /></td>
-                          <td><Timer.Minutes /></td>
-                          <td><Timer.Seconds /></td>
-                        </tr>
-                      </tbody>
-                    </Table>
+                      {/* <h6><b>Next Cardano Epoch starts in:</b></h6> */}
+                      <Table {...{ ['striped']: true }}>
+                        <thead>
+                          <tr>
+                            <th>Days</th>
+                            <th>Hours</th>
+                            <th>Minutes</th>
+                            <th>Seconds</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><Timer.Days /></td>
+                            <td><Timer.Hours /></td>
+                            <td><Timer.Minutes /></td>
+                            <td><Timer.Seconds /></td>
+                          </tr>
+                        </tbody>
+                      </Table>
 
-                  </div>
+                    </div>
                   </CardBody>
                 </Card>
                 <Card>
@@ -515,7 +536,7 @@ class DashboardPage extends React.Component {
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
               <Card>
                 <CardHeader><h6><b>Random Quality Pools</b></h6><small>A randomising list of pools we recommend!</small></CardHeader>
-                <CardBody body style={{minHeight: 350}}>
+                <CardBody body style={{ minHeight: 350 }}>
 
                   {this.state.pools.map(function (item, index) {
                     if (index <= 2) {
