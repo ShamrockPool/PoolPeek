@@ -230,7 +230,7 @@ class SundaePools extends React.Component {
                           Total Pools
                         </CardTitle>
                         <CardText>
-                          80
+                          74
                         </CardText>
                       </CardBody>
                     </Card>
@@ -243,7 +243,7 @@ class SundaePools extends React.Component {
                           Total Stake
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(Number(1.9346480739E9))}
+                          {this.addCommas(Number(1.8646080739E9))}
                         </CardText>
                       </CardBody>
                     </Card>
@@ -256,7 +256,7 @@ class SundaePools extends React.Component {
                           Total Delegates
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(121131)}
+                          {this.addCommas(120131)}
                         </CardText>
                       </CardBody>
                     </Card>

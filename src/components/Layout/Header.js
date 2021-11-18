@@ -71,7 +71,7 @@ class Header extends React.Component {
 
   async componentDidMount() {
 
-    await this.getAllPools();
+    //await this.getAllPools();
 
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
@@ -84,12 +84,12 @@ class Header extends React.Component {
 
   }
 
-  async getAllPools() {
-    var response = await fetch(baseUrlPoolPeekService + getPoolForSearchList);
-    var data = await response.json();
-    //console.log(data);
-    this.setState({ allpools: data.pools });
-  }
+  // async getAllPools() {
+  //   var response = await fetch(baseUrlPoolPeekService + getPoolForSearchList);
+  //   var data = await response.json();
+  //   //console.log(data);
+  //   this.setState({ allpools: data.pools });
+  // }
 
   render() {
 
@@ -109,11 +109,11 @@ class Header extends React.Component {
             <p></p>
           </div>
         </Nav>
-        <Nav navbar className={bem.e('nav-right')}>
+        {/* <Nav navbar className={bem.e('nav-right')}>
           {this.state.allpools != null &&
             <SearchInput allpools={this.state.allpools} />
           }
-        </Nav>
+        </Nav> */}
       </Navbar>
     );
   }
