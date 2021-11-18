@@ -187,6 +187,33 @@ class SundaePools extends React.Component {
                       </CardBody>
                     </Card>
                   </Col>
+
+                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='primary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                          ISO Start Date
+                        </CardTitle>
+                        <CardText>
+                          Not released
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                          ISO End Date
+                        </CardTitle>
+                        <CardText>
+                          Not released
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
                 </Row>
 
                 <Row>
@@ -203,7 +230,7 @@ class SundaePools extends React.Component {
                           Total Pools
                         </CardTitle>
                         <CardText>
-                          68
+                          80
                         </CardText>
                       </CardBody>
                     </Card>
@@ -286,7 +313,7 @@ class SundaePools extends React.Component {
                   </Col>
 
                   <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
+                    <Card inverse color='secondary'>
                       <CardBody>
                         <CardTitle className="text-capitalize">
                           Live Total Delegates
@@ -303,6 +330,7 @@ class SundaePools extends React.Component {
             </Row>
 
             <Row>
+              <small>Table ordered by saturation</small>
               <Table {...{ ['striped']: true }}>
                 <thead>
                   <tr>
