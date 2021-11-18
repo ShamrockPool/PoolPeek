@@ -322,7 +322,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                         </CopyToClipboard>
                                                     </Tooltip>
                                                     <br></br>
-                                                    <h2>{this.props.pool.live_stake}₳</h2>
+                                                    <h2>{this.addCommas(this.props.pool.live_stake)}₳</h2>
                                                     {/* </div> */}
                                                     {this.state.favourite == false &&
                                                         <div>
