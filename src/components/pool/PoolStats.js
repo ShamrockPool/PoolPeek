@@ -105,6 +105,8 @@ export default class PoolStats extends React.Component {
     handleChange = (query) => (e) => {
     }
 
+
+
     render() {
         var item = this.props.pool;
         return (

@@ -265,6 +265,18 @@ export default class PoolDetailsComponent extends React.Component {
         }
     }
 
+    addCommas(nStr) {
+        nStr += '';
+        var x = nStr.split('.');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        }
+        return x1 + x2;
+      }
+
     render() {
         return (
             < div >
@@ -405,7 +417,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <CardHeader>Active Stake - Epoch {this.props.pool.active_stake_epoch}</CardHeader>
                                                             <CardBody >
 
-                                                                <h2>{this.props.pool.active_stake}₳</h2>
+                                                                <h2>{this.addCommas(this.props.pool.active_stake)}₳</h2>
                                                                 <small>Amount of ADA staked to the pool this epoch.</small>
 
                                                             </CardBody>
@@ -417,7 +429,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <CardHeader>Live Stake</CardHeader>
                                                             <CardBody>
 
-                                                                <h2>{this.props.pool.live_stake}₳</h2>
+                                                                <h2>{this.addCommas(this.props.pool.live_stake)}₳</h2>
                                                                 <small>Live amount of ADA staked to the pool.</small>
 
                                                             </CardBody>
