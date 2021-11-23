@@ -1,7 +1,5 @@
 import Page from 'components/Page';
-import ProductMedia from 'components/ProductMedia';
 import { IconWidget, NumberWidget } from 'components/Widget';
-import PoolSearchWizard from 'components/PoolSearchWizard';
 import {
   teamPeekData,
 } from 'demos/dashboardPage';
@@ -11,9 +9,7 @@ import {
   FaTwitter,
   FaTelegram,
   FaMobile,
-  FaMobileAlt,
-  FaTelegramPlane,
-  FaWizardsOfTheCoast
+  FaMobileAlt
 } from 'react-icons/fa';
 import {
   Table,
@@ -28,7 +24,8 @@ import {
   ModalFooter,
   ModalHeader,
   CardText,
-  Button
+  Button,
+  Input
 } from 'reactstrap';
 import googleAppStore from 'assets/img/google_plays.png';
 import appAppStore from 'assets/img/apple_store.png';
@@ -38,14 +35,10 @@ import { css } from "@emotion/core";
 import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
 import CardanoImage from 'assets/img/cardanoIcon.png';
-import ReactHtmlParser from 'react-html-parser';
 import { Link } from 'react-router-dom';
-import SearchInput from 'components/SearchInput';
 import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
 import Favorite from '@material-ui/icons/Favorite';
 import { red } from '@material-ui/core/colors';
-
-import Iframe from 'react-iframe'
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -58,29 +51,6 @@ const override = css`
   margin: 0 auto;
   border-color: red;
 `;
-
-// const cardheaderStyle = {
-//   borderBottom: 'solid 1px green',
-//   borderTop: 'solid 1px green',
-//   borderRight: 'solid 1px green',
-//   borderLeft: 'solid 1px green',
-//   // background: 'green',
-//   // color: 'white',
-//   paddingBottom: 0
-// };
-
-// const cardBodyStyle = {
-//   borderBottom: 'solid 1px green',
-//   // borderTop: 'solid 1px green',
-//   borderRight: 'solid 1px green',
-//   borderLeft: 'solid 1px green',
-//   // background: 'green',
-//   // color: 'white',
-//   paddingBottom: 0,
-//   paddingTop: 5,
-//   paddingLeft: 20,
-//   paddingRight: 10
-// };
 
 
 function checkIsImageUrl(url) {
@@ -118,8 +88,10 @@ class DashboardPage extends React.Component {
     modalImageWidth: 450,
     percentageOfSupplyStaked: 0,
     allpools: null,
+    filteredPools: null,
     favouritepools: [],
     epochSecondsRemaining: 0,
+    searchInput: null
   };
 
   toggle = modalType => () => {
@@ -188,6 +160,7 @@ class DashboardPage extends React.Component {
     var data = await response.json();
     //console.log(data);
     this.setState({ allpools: data.pools });
+    this.setState({ filteredPools: data.pools });
   }
 
   async getPoolList() {
@@ -238,6 +211,14 @@ class DashboardPage extends React.Component {
 
       this.setState({ favouritepools: obj.favouritepools });
     }
+  }
+
+  handleChange = (query) => (e) => {
+    var input = e.target.value;
+    var poolsToDisplay = this.state.allpools;
+    poolsToDisplay = poolsToDisplay.filter(pool => pool.name.toLowerCase().includes(input.toLowerCase()) ||
+      pool.ticker.toLowerCase().includes(input.toLowerCase()));
+    this.setState({ filteredPools: poolsToDisplay, searchInput: input });
   }
 
   render() {
@@ -321,7 +302,7 @@ class DashboardPage extends React.Component {
                   {this.state.averageStakePerPool}
                 </CardTitle>
                 <CardText>
-                  Average Stake Per Pool
+                  Average Per Pool
                 </CardText>
               </CardBody>
             </Card>
@@ -330,30 +311,18 @@ class DashboardPage extends React.Component {
         </Row>
 
         <Row>
-          <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-            <a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">
-              <IconWidget
-                bgColor="white"
-                inverse={false}
-                icon={FaTwitter}
-                title="Our Twitter"
-                subtitle=""
-              />
-            </a>
-          </Col>
-
-          <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+          <Col lg={4} md={12} sm={12} xs={4} className="mb-3">
             <IconWidget
               bgColor="white"
               inverse={false}
               icon={FaMobileAlt}
-              title="Mobile APP"
+              title="Mob APP"
               subtitle=""
               onClick={this.toggle()}
             />
           </Col>
 
-          <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+          <Col lg={4} md={6} sm={6} xs={4} className="mb-3">
             <a href="https://t.me/poolpeek" target="_blank" rel="noreferrer"> <IconWidget
               bgColor="white"
               inverse={false}
@@ -361,6 +330,18 @@ class DashboardPage extends React.Component {
               title="Telegram"
               subtitle=""
             /></a>
+          </Col>
+
+          <Col lg={4} md={6} sm={6} xs={4} className="mb-3">
+            <a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">
+              <IconWidget
+                bgColor="white"
+                inverse={false}
+                icon={FaTwitter}
+                title="Twitter"
+                subtitle=""
+              />
+            </a>
           </Col>
         </Row>
 
@@ -395,80 +376,77 @@ class DashboardPage extends React.Component {
           :
           <Row>
 
-            <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+            <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
 
               <Card>
                 <CardHeader >
-                  <p><h6><b>Pool Selection Wizard</b></h6></p><small>Use the below wizard to help you find your pool.</small>
-
-
+                  <p><h6><b>Pool Search</b></h6></p>
                 </CardHeader>
                 <CardBody body >
-{/* 
-                  <Iframe url="https://pool-peek.web.app/#/wizard"
-                    // width="450px"
-                    height="700px"
-                    // id="myId"
-                    // className="myClassname"
-                    display="initial"
-                    position="relative" /> */}
-                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"> <IconWidget
-                    bgColor="white"
-                    inverse={false}
-                    // icon={FaWizardsOfTheCoast}
-                    title="Pool Wizard"
-                    subtitle=""
-                  /></a>
-                </CardBody>
-              </Card>
 
-              <Card>
-                <CardHeader >
-                  <p><h6><b>Favourite Pools</b></h6></p><small>Click the favourite icon  on pools.</small>
-                  <Favorite style={{ color: red }}></Favorite>
-                </CardHeader>
-                <CardBody body >
-                  <Row>
-                    <Col>
-                      {this.state.favouritepools.map(function (item, index) {
+                  <Input
+                    style={{
+                      fontSize: 14, alignContent: 'center', justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                    }}
+                    type="text"
+                    className="cr-search-form__input"
+                    placeholder="Search with Ticker or Pool Name"
+                    onChange={this.handleChange()}
+                    value={this.state.searchInput}
+                  />
+
+                  <br />
+                  {width < 600 ?
+
+                    <Row>
+                      {this.state.filteredPools.map(function (item, index) {
 
                         return (
-                          <div style={{ display: 'inline-block', paddingRight: '5px' }}>
-                            <Link to={`/pool/${item.pool_id}`}>
-                              <h6>
-                                {checkIsImageUrl(item.url_png_logo) ? (
-                                  <ReactImageFallback
-                                    src={item.url_png_logo}
-                                    width="60"
-                                    height="60"
-                                    fallbackImage={CardanoImage} />
-                                ) : (<img
-                                  src={CardanoImage}
-                                  className="pr-2"
-                                  width="38"
-                                  height="32"
-                                />)}
-                                <b>&nbsp;{item.name}</b>
-                              </h6>
-
-                              {/* <p>{item.description}</p> */}
-                            </Link>
-                          </div>
+                          index < 6 &&
+                          <Col lg={3} md={4} sm={4} xs={6}>
+                            <Card>
+                              <CardBody>
+                                <Link to={`/pool/${item.pool_id}`}>
+                                  <h6>
+                                    <b>&nbsp;{item.ticker}</b>
+                                  </h6>
+                                </Link>
+                              </CardBody>
+                            </Card>
+                          </Col>
                         )
-
                       })
                       }
-                    </Col>
-                  </Row>
+                    </Row>
+                    :
+                    <Row>
+                      {this.state.filteredPools.map(function (item, index) {
+
+                        return (
+                          index < 12 &&
+                          <Col lg={3} md={4} sm={4} xs={4}>
+                            <Card>
+                              <CardBody>
+                                <Link to={`/pool/${item.pool_id}`}>
+                                  <h6>
+                                    <b>&nbsp;{item.ticker}</b>
+                                  </h6>
+                                </Link>
+                              </CardBody>
+                            </Card>
+                          </Col>
+                        )
+                      })
+                      }
+                    </Row>
+                  }
+
                 </CardBody>
               </Card>
-
-
-
-
-
             </Col>
-            <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
+            <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
               {/* <PoolSearchWizard />
                */}
 
@@ -534,7 +512,66 @@ class DashboardPage extends React.Component {
               </Timer>
             </Col>
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+
               <Card>
+                <CardHeader >
+                  <p><h6><b>Pool Selection Wizard</b></h6></p><small>Use the below wizard to help you find your pool.</small>
+
+
+                </CardHeader>
+                <CardBody body >
+                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"> <IconWidget
+                    bgColor="white"
+                    inverse={false}
+                    // icon={FaWizardsOfTheCoast}
+                    title="Pool Wizard"
+                    subtitle=""
+                  /></a>
+                </CardBody>
+              </Card>
+
+              <Card>
+                <CardHeader >
+                  <p><h6><b>Favourite Pools</b></h6></p><small>Click the favourite icon  on pools.</small>
+                  <Favorite style={{ color: red }}></Favorite>
+                </CardHeader>
+                <CardBody body >
+                  <Row>
+                    <Col>
+                      {this.state.favouritepools.map(function (item, index) {
+
+                        return (
+                          <div style={{ display: 'inline-block', paddingRight: '5px' }}>
+                            <Link to={`/pool/${item.pool_id}`}>
+                              <h6>
+                                {checkIsImageUrl(item.url_png_logo) ? (
+                                  <ReactImageFallback
+                                    src={item.url_png_logo}
+                                    width="60"
+                                    height="60"
+                                    fallbackImage={CardanoImage} />
+                                ) : (<img
+                                  src={CardanoImage}
+                                  className="pr-2"
+                                  width="38"
+                                  height="32"
+                                />)}
+                                <b>&nbsp;{item.name}</b>
+                              </h6>
+
+                              {/* <p>{item.description}</p> */}
+                            </Link>
+                          </div>
+                        )
+
+                      })
+                      }
+                    </Col>
+                  </Row>
+                </CardBody>
+              </Card>
+
+              {/* <Card>
                 <CardHeader><h6><b>Random Quality Pools</b></h6><small>A randomising list of pools we recommend!</small></CardHeader>
                 <CardBody body style={{ minHeight: 350 }}>
 
@@ -542,7 +579,6 @@ class DashboardPage extends React.Component {
                     if (index <= 2) {
                       return (
                         <Row style={{ display: 'inline-block' }}>
-                          {/* <a href={`https://poolpeek.com/#/pool/${item.pool_id}`} target="_blank" rel="noreferrer"> */}
                           <Link to={`/pool/${item.pool_id}`}>
                             <h6>
                               {checkIsImageUrl(item.extended_meta.url_png_logo) ? (
@@ -570,7 +606,7 @@ class DashboardPage extends React.Component {
                   })
                   }
                 </CardBody>
-              </Card>
+              </Card> */}
             </Col>
 
           </Row>

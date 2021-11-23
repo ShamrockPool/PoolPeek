@@ -70,7 +70,7 @@ class Header extends React.Component {
   }
 
   async componentDidMount() {
-
+    window.scrollTo(0, 0);
     //await this.getAllPools();
 
     this.getCurrentAdaUSDPrice();

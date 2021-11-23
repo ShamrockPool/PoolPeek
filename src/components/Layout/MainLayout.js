@@ -1,12 +1,14 @@
 import { Content, Footer, Header, Sidebar } from 'components/Layout';
 import React from 'react';
-import NotificationSystem from 'react-notification-system';
+// import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 import {
   MdImportantDevices,
   // MdCardGiftcard,
   MdLoyalty,
 } from 'react-icons/md';
+
+const width = window.innerWidth;
 
 class MainLayout extends React.Component {
   static isSidebarOpen() {
@@ -37,17 +39,19 @@ class MainLayout extends React.Component {
     //     level: 'info',
     //   });
     // }, 1500);
+
+    if (width < 600) {
+      this.openSidebar('close');
+    }
+
+
   }
 
   // close sidebar when
   handleContentClick = event => {
     // close sidebar if sidebar is open and screen size is less than `md`
-    if (
-      MainLayout.isSidebarOpen() &&
-      (this.props.breakpoint === 'xs' ||
-        this.props.breakpoint === 'sm' ||
-        this.props.breakpoint === 'md')
-    ) {
+    if
+      (width < 600) {
       this.openSidebar('close');
     }
   };
@@ -86,13 +90,13 @@ class MainLayout extends React.Component {
           <Footer />
         </Content>
 
-        <NotificationSystem
+        {/* <NotificationSystem
           dismissible={false}
           ref={notificationSystem =>
             (this.notificationSystem = notificationSystem)
           }
           style={NOTIFICATION_SYSTEM_STYLE}
-        />
+        /> */}
       </main>
     );
   }

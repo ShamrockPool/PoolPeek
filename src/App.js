@@ -3,7 +3,7 @@ import GAListener from 'components/GAListener';
 import { MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import React from 'react';
-import componentQueries from 'react-component-queries';
+// import componentQueries from 'react-component-queries';
 import { BrowserRouter, Redirect, Route, Switch, HashRouter } from 'react-router-dom';
 
 import DashboardPage from 'pages/DashboardPage';
@@ -114,4 +114,5 @@ const query = ({ width }) => {
   return { breakpoint: 'xs' };
 };
 
-export default componentQueries(query)(App);
+// export default componentQueries(query)(App);
+export default App;

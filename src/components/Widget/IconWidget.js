@@ -21,11 +21,14 @@ const IconWidget = ({
 
 
     <Card inverse className={classes} {...restProps}>
-      <CardBody style={{minHeight: 0}} className="cr-widget__icon">
-        <Icon size={4} {...iconProps} />
-      </CardBody>
+
       <CardBody>
-        <CardTitle>{title}</CardTitle>
+      <Icon size={4} {...iconProps} />
+        <CardTitle style={{
+                      alignContent: 'center', justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                    }}><small>{title}</small></CardTitle>
         <CardSubtitle>{subtitle}</CardSubtitle>
       </CardBody>
     </Card>
@@ -46,7 +49,7 @@ IconWidget.propTypes = {
 IconWidget.defaultProps = {
   bgColor: 'primary',
   icon: 'span',
-  iconProps: { size: 30 },
+  iconProps: { size: 28 },
 };
 
 export default IconWidget;

@@ -8,7 +8,8 @@ import {
   CardTitle,
   CardText,
   Row,
-  Table
+  Table,
+  Button
 } from 'reactstrap';
 
 import CircleLoader
@@ -18,9 +19,12 @@ import { baseUrlPoolPeekService, getSundaeInfo } from '../assets/services';
 import "../styles/styles.css";
 import { isEmpty } from 'utils/stringutil.js';
 // import SearchBar from "material-ui-search-bar";
-import { DataGrid } from '@material-ui/data-grid';
+// import { DataGrid } from '@material-ui/data-grid';
+// import { DataGrid } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
+
+import JoinPool from 'components/nami/JoinPool';
 
 const override = css`
   display: block;
@@ -99,19 +103,19 @@ class SundaePools extends React.Component {
   };
 
   componentDidMount() {
-    window.scrollTo(0, 0);
+
     if (width < 600) {
       this.setState({ smallScreen: true });
     }
 
     this.getSundaePools();
+    window.scrollTo(0, 0);
   }
 
   async getSundaePools() {
     try {
       var response = await fetch(baseUrlPoolPeekService + getSundaeInfo);
       const data = await response.json();
-      console.log(data);
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO })
       this.createRows(data);
@@ -146,6 +150,21 @@ class SundaePools extends React.Component {
     return x1 + x2;
   }
 
+  onSort(event, sortKey) {
+    if (sortKey == 'name' || sortKey == 'ticker') {
+      const data = this.state.filterAblePools;
+      data.sort((a, b) => a[sortKey].localeCompare(b[sortKey]))
+      this.setState({ loading: false, filterAblePools: data })
+    } else {
+      const data = this.state.filterAblePools;
+      data.sort((a, b) => Number(a[sortKey]) - (Number(b[sortKey])))
+      this.setState({ loading: false, filterAblePools: data })
+    }
+
+  }
+
+
+
   render() {
 
     return (
@@ -162,7 +181,7 @@ class SundaePools extends React.Component {
               <Col>
                 <Row>
                   <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
+                    <Card inverse color='primary' style={{ margin: '0px' }}>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
                           Active SPO's
@@ -174,12 +193,11 @@ class SundaePools extends React.Component {
                     </Card>
                   </Col>
 
-
                   <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
                     <Card inverse color='secondary'>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
-                          Waiting List SPO's
+                          Waiting SPO's
                         </CardTitle>
                         <CardText>
                           10
@@ -223,11 +241,11 @@ class SundaePools extends React.Component {
 
                 <Row>
 
-                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+                  <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
                     <Card inverse color='secondary'>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
-                          Total Pools
+                          Pools
                         </CardTitle>
                         <CardText>
                           74
@@ -240,7 +258,7 @@ class SundaePools extends React.Component {
                     <Card inverse color='primary'>
                       <CardBody>
                         <CardTitle className="text-capitalize">
-                          Total Stake
+                          Stake
                         </CardTitle>
                         <CardText>
                           {this.addCommas(Number(1.8646080739E9))}
@@ -253,7 +271,7 @@ class SundaePools extends React.Component {
                     <Card inverse color='secondary'>
                       <CardBody>
                         <CardTitle className="text-capitalize">
-                          Total Delegates
+                          Delegates
                         </CardTitle>
                         <CardText>
                           {this.addCommas(120131)}
@@ -277,7 +295,7 @@ class SundaePools extends React.Component {
                   </Col> */}
 
 
-{/* 5 are saturated after vote */}
+                {/* 5 are saturated after vote */}
 
                 <Row>
                   <h2>Live Stats</h2>
@@ -286,11 +304,11 @@ class SundaePools extends React.Component {
 
                 <Row>
 
-                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+                  <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
                     <Card inverse color='secondary'>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
-                          Live Total Pools
+                          Pools
                         </CardTitle>
                         <CardText>
                           {this.state.stats.total_pools}
@@ -303,7 +321,7 @@ class SundaePools extends React.Component {
                     <Card inverse color='primary'>
                       <CardBody>
                         <CardTitle className="text-capitalize">
-                          Live Total Stake
+                          Stake
                         </CardTitle>
                         <CardText>
                           {this.addCommas(this.state.stats.total_live_stake)}
@@ -316,7 +334,7 @@ class SundaePools extends React.Component {
                     <Card inverse color='secondary'>
                       <CardBody>
                         <CardTitle className="text-capitalize">
-                          Live Total Delegates
+                          Delegates
                         </CardTitle>
                         <CardText>
                           {this.addCommas(this.state.stats.live_stake_delegator_count)}
@@ -330,35 +348,177 @@ class SundaePools extends React.Component {
             </Row>
 
             <Row>
-              <small>Table ordered by saturation</small>
-              <Table {...{ ['striped']: true }}>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Ticker</th>
-                    <th>Delegates</th>
-                    <th>Live Stake</th>
-                    <th>Saturation</th>
+              <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
+                <Card>
+                  <CardBody body style={{
+                    padding: '5px', margin: '0px',
+                  }}>
+                    <CardTitle className="text-capitalize">
+                      <b>Single Pool Operator Pools</b>
+                    </CardTitle>
+                    <small>Table ordered by saturation.</small>
 
-                  </tr>
-                </thead>
+                    {this.state.smallScreen == false ?
+                      <Table {...{ ['striped']: true }}>
+                        <thead>
+                          <tr>
+                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
+                            <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th>
+                            {/* <th onClick={e => this.onSort(e, 'margin')}>Margin</th>
+                            <th onClick={e => this.onSort(e, 'fixedcost')}>Fixed Cost</th> */}
+                            <th onClick={e => this.onSort(e, 'live_stake_delegator_count')}>Delegates</th>
+                            <th onClick={e => this.onSort(e, 'live_stake')}>Live Stake</th>
+                            <th onClick={e => this.onSort(e, 'saturation')}>Filled</th>
+                            <th></th>
 
-                {this.state.filterAblePools.map((item) => (
-                  <tbody>
+                          </tr>
+                        </thead>
 
-                    <tr onClick={() => this.handleRowClick(item)}>
-                      <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
-                      <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
-                      <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
-                      <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                      <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
-                    </tr>
+                        {this.state.filterAblePools.map((item) => (
 
-                  </tbody>
+                          item.pool_splitter == 'N' &&
+                          <tbody>
 
-                ))}
+                            <tr>
+                              <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
+                              {/* <td style={tableRowStyle} scope="row"><p>{item.margin_pct}%</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
+                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
 
-              </Table>
+                              <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
+                                <p><Button variant="outline-light" size="sm">View Pool</Button></p>
+                              </Link>
+                                {/* <JoinPool pool={item}/> */}
+                              </Row>
+                            </tr>
+
+                          </tbody>
+
+                        ))}
+
+                      </Table>
+                      :
+                      <Table {...{ ['striped']: true }}>
+                        <thead>
+                          <tr>
+                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
+                            {/* <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th> */}
+                            <th onClick={e => this.onSort(e, 'live_stake')}>Stake</th>
+                            <th onClick={e => this.onSort(e, 'saturation')}>Filled</th>
+
+                          </tr>
+                        </thead>
+
+                        {this.state.filterAblePools.map((item) => (
+                          item.pool_splitter == 'N' &&
+                          <tbody>
+
+                            <tr onClick={() => this.handleRowClick(item)}>
+                              <td style={tableRowStyle} scope="row" ><p>{item.name}<br/>({item.ticker})</p></td>
+                              {/* <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td> */}
+                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
+                            </tr>
+
+                          </tbody>
+
+                        ))}
+
+                      </Table>
+                    }
+                  </CardBody>
+                </Card>
+              </Col>
+
+
+            </Row>
+
+            <Row>
+
+              <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
+                <Card>
+                  <CardBody>
+                    <CardTitle className="text-capitalize">
+                      <b>Multiple Pool Operator Pools</b>
+                    </CardTitle>
+
+
+                    <small>Table ordered by saturation.</small>
+
+                    {this.state.smallScreen == false ?
+                      <Table {...{ ['striped']: true }}>
+                        <thead>
+                          <tr>
+                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
+                            <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th>
+                            {/* <th onClick={e => this.onSort(e, 'margin')}>Margin</th>
+                            <th onClick={e => this.onSort(e, 'fixedcost')}>Fixed Cost</th> */}
+                            <th onClick={e => this.onSort(e, 'live_stake_delegator_count')}>Delegates</th>
+                            <th onClick={e => this.onSort(e, 'live_stake')}>Live Stake</th>
+                            <th onClick={e => this.onSort(e, 'saturation')}>Filled</th>
+                            <th></th>
+                          </tr>
+                        </thead>
+
+                        {this.state.filterAblePools.map((item) => (
+                          item.pool_splitter == 'Y' &&
+                          <tbody>
+
+                            <tr>
+                              <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
+                              {/* <td style={tableRowStyle} scope="row"><p>{item.margin_pct}%</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
+                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{item.pct_saturated}%</p></td>
+                              <td style={tableRowStyle} scope="row">
+                                <Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
+                                  <p><Button variant="outline-light">View Pool</Button></p>
+                                </Link>
+                              </td>
+                            </tr>
+
+                          </tbody>
+
+                        ))}
+
+                      </Table>
+                      :
+                      <Table {...{ ['striped']: true }}>
+                        <thead>
+                          <tr>
+                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
+                            {/* <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th> */}
+                            <th onClick={e => this.onSort(e, 'live_stake')}>Stake</th>
+                            <th onClick={e => this.onSort(e, 'saturation')}>Filled</th>
+
+                          </tr>
+                        </thead>
+
+                        {this.state.filterAblePools.map((item) => (
+                          item.pool_splitter == 'Y' &&
+                          <tbody>
+
+                            <tr onClick={() => this.handleRowClick(item)}>
+                            <td style={tableRowStyle} scope="row" ><p>{item.name}<br/>({item.ticker})</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
+                            </tr>
+
+                          </tbody>
+
+                        ))}
+
+                      </Table>
+                    }
+
+                  </CardBody>
+                </Card>
+              </Col>
             </Row>
 
           </Col>

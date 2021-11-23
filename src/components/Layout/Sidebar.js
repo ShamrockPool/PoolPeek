@@ -70,8 +70,8 @@ const navItems = [
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
   { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
   { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff },
-  { to: '/sundaeiso', name: 'SundaeSwap ISO Pools', exact: true, Icon: MdSearch },
-  { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
+  { to: '/sundaeiso', name: 'SundaeSwap ISO Pools', exact: true, Icon: MdSearch }
+  // { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
 ];
 
@@ -88,18 +88,8 @@ class Sidebar extends React.Component {
     navAdaFolio: [],
   };
 
-  //get adafolio groups and map to nav options
-  async getAdafolioGroups(){
-    const response = await fetch('https://poolpeek.com/api.asp?k=838967e9-940b-42db-8485-5f82a72a7e17&op=afgroups');
-    const data = await response.json();
-    var dataMap = data.poolpeek.adafolioGroups.map((rec, index) => (
-      {to:'adafolio?adafolioid=' + rec.id + "&qname=" + encodeURIComponent(rec.name), name:ReactHtmlParser(rec.name), exact:false, Icon: MdRadioButtonChecked}  
-    ));
-    this.setState({ navAdaFolio: dataMap});
-  }
-
-  async componentDidMount() {
-   // this.getAdafolioGroups();    
+  componentDidMount() {  
+   window.scrollTo(0, 0); 
   };
 
   handleClick = name => () => {
@@ -129,7 +119,7 @@ class Sidebar extends React.Component {
             </Col>
             <Col style={{backgroundColor:'black', padding:'0px'}}>
               
-              A different kind of Cardano Stake Pool Explorer
+              <h3>Cardano Stake Pool Explorer</h3>
              
             </Col>
           </Row>
