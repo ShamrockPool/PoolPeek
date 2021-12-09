@@ -104,14 +104,20 @@ class HoskyPools extends React.Component {
 
     this.getPools();
 
-    await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
+try {
+  await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
 
-    if (!this.state.walletConnected) {
-      // Connects nami wallet to current website 
-      await window.cardano.enable()
-        .then(result => this.setState({ walletConnected: result }))
-        .catch(e => console.log(e))
-    }
+  if (!this.state.walletConnected) {
+    // Connects nami wallet to current website 
+    await window.cardano.enable()
+      .then(result => this.setState({ walletConnected: result }))
+      .catch(e => console.log(e))
+  }
+
+} catch (error) {
+  
+}
+
 
     window.scrollTo(0, 0);
   }
@@ -407,7 +413,7 @@ class HoskyPools extends React.Component {
                               <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
 
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
-                                <p><Button variant="outline-light" size="sm">View Pool</Button></p>
+                                <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
                               {this.state.walletConnected && <JoinPool pool={item} />}
                               </Row>

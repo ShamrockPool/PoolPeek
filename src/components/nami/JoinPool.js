@@ -33,7 +33,7 @@ var user;
 var stakeKeyHash;
 
 export default class JoinPool extends React.Component {
-
+    // https://github.com/Felippo001/nami-wallet-api
     state = {
         loading: true,
         walletAddress: "thisisthewalletaddress",
@@ -47,10 +47,21 @@ export default class JoinPool extends React.Component {
         modal_backdrop: false,
         modal_nested_parent: false,
         modal_nested: false,
+
+        namiEnabled: false,
     };
 
     async componentDidMount() {
         window.scrollTo(0, 0);
+
+        try {
+            var namiEnabled = await cardano.enable();
+            this.setState({ namiEnabled: namiEnabled });
+        } catch (error) {
+
+        }
+
+
     }
 
     toggle = modalType => () => {
@@ -109,7 +120,7 @@ export default class JoinPool extends React.Component {
         Loader = await import('@emurgo/cardano-serialization-lib-browser');
 
 
-        await cardano.enable();
+
         user = await cardano.getUsedAddresses();
 
         //get stake key hash
@@ -183,38 +194,36 @@ export default class JoinPool extends React.Component {
 
     render() {
         return (
-            <p><Button variant="outline-light" size="sm" onClick={() => this.joinPool()}>Join</Button>
+            <div>
+                {this.state.namiEnabled &&
+                    <p><Button variant="outline-light" size="sm" onClick={() => this.joinPool()}>Join</Button>
+                        <Modal
+                            isOpen={this.state.modal}
+                            toggle={false}
+                            contentClassName="custom-modal-style"
+                        >
+                            <ModalHeader toggle={this.toggle()}>Join Pool</ModalHeader>
+                            <ModalBody style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                textAlign: 'center',
+                            }}>
+                                <Row>
+                                    <div>
+                                        <p>You have selected to join Pool: <Link to={`/pool/${this.props.pool.pool_id}`}>{this.props.pool.name}</Link></p>
+                                        <p>A Nami Wallet screen will appear to sign the transaction.</p>
+                                        <p>Once complete your Nami Wallet will update to the new pool within 30 seconds.</p>
+                                        <br></br>
+                                        <p>Happy staking.</p>
+                                    </div>
 
-                <Modal
-                    isOpen={this.state.modal}
-                    toggle={false}
-                    contentClassName="custom-modal-style"
-                >
-                    <ModalHeader toggle={this.toggle()}>Join Pool</ModalHeader>
-                    <ModalBody style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                    }}>
-                        <Row>
-                            <div>                                
-                                <p>You have selected to join Pool: <Link to={`/pool/${this.props.pool.pool_id}`}>{this.props.pool.name}</Link></p>
-                                <p>A Nami Wallet screen will appear to sign the transaction.</p>
-                                <p>Once complete your Nami Wallet will update to the new pool within 30 seconds.</p>
-                                <br></br>
-                                <p>Happy staking.</p>
-                            </div>
+                                </Row>
 
-                        </Row>
+                            </ModalBody>
+                        </Modal>
+                    </p>}
+            </div>
 
-                    </ModalBody>
-                </Modal>
-
-
-
-
-
-            </p>
         );
     }
 }
