@@ -25,7 +25,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { baseUrlPoolPeekService, getPoolDelegates, getStakeFeedHistory } from 'assets/services';
 import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
 import Chart from '../Chart';
-import { Link } from 'react-router-dom';
+import JoinPool from 'components/nami/JoinPool';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -342,6 +342,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <small>Favourite pool</small>
                                                         </div>
                                                     }
+                                                    <JoinPool pool={this.props.pool} />
                                                 </Col>
                                                 <Col xl={2} lg={2} md={12} sm={12} >
                                                     <ReactImageFallback

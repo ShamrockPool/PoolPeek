@@ -1,18 +1,36 @@
 import React from "react";
 import {
-    Button
+    Button,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader,
+    Row
 } from 'reactstrap';
-import { getPoolId, delegationTx, signTx, submitTx, getDelegation, blockfrostRequest } from "./Transactions";
-
-//import Loader from "./loader";
-
-// const S = import('@emurgo/cardano-serialization-lib-browser/cardano_serialization_lib.js');
+import { getDelegation, blockfrostRequest, getUtxos, getAddress, getProtocolParameters, txBuilder, signSubmitTx } from "./Transactions";
+import { Link } from 'react-router-dom';
 
 const cardano = window.cardano;
 
 const renderer = ({ hours, minutes, seconds, completed }) => {
     return <span>{minutes} Minutes {seconds} Seconds</span>;
 };
+
+// Helper functions
+const hexToAscii = (hex) => {
+    // connverts hex to ascii string
+    var _hex = hex.toString();
+    var str = "";
+    for (var i = 0; i < _hex.length && _hex.substr(i, 2) !== "00"; i += 2)
+        str += String.fromCharCode(parseInt(_hex.substr(i, 2), 16));
+    return str;
+};
+
+var Loader;
+var protocolParameter;
+var delegation;
+var user;
+var stakeKeyHash;
 
 export default class JoinPool extends React.Component {
 
@@ -23,14 +41,29 @@ export default class JoinPool extends React.Component {
         paymentReceived: false,
         nftReserved: null,
         planetName: null,
-        refreshedScreen: false
+        refreshedScreen: false,
+
+        modal: false,
+        modal_backdrop: false,
+        modal_nested_parent: false,
+        modal_nested: false,
     };
 
     async componentDidMount() {
         window.scrollTo(0, 0);
-
-
     }
+
+    toggle = modalType => () => {
+        if (!modalType) {
+            return this.setState({
+                modal: !this.state.modal,
+            });
+        }
+
+        this.setState({
+            [`modal_${modalType}`]: !this.state[`modal_${modalType}`],
+        });
+    };
 
 
     async getProtocolParameters() {
@@ -70,31 +103,118 @@ export default class JoinPool extends React.Component {
     };
 
     async joinPool() {
+        this.setState({ modal: true });
+        //initialize loader
+        // Loader = await import('@emurgo/cardano-serialization-lib-asmjs');
+        Loader = await import('@emurgo/cardano-serialization-lib-browser');
+
+
         await cardano.enable();
-        var user = await cardano.getUsedAddresses();
-        console.log(user)
+        user = await cardano.getUsedAddresses();
 
+        //get stake key hash
+        stakeKeyHash = Loader.RewardAddress.from_address(
+            Loader.Address.from_bytes(
+                Buffer.from(
+                    await cardano.getRewardAddress(),
+                    'hex'
+                )
+            )
+        ).payment_cred().to_keyhash().to_bytes();
 
-        const delegation = await getDelegation(); // you can also use this one to check for current deleagation status (for the UI, like if the user is already delegate in the pool you just selected)
-        // console.log('delegation', delegation)
+        //get protocol params
+        protocolParameter = await getProtocolParameters(Loader);
+
+        //current delegation
+        delegation = await getDelegation(Loader);
+
+        //target pool id
         const targetPoolId = this.props.pool.pool_id;
-        // console.log(`delegate to: ${targetPoolId}`)
-        const tx = await delegationTx(delegation, targetPoolId);
-        const signedTx = await signTx(tx);
 
-        const txHash = await submitTx(signedTx);
-        window.gtag('event', 'delegate', {
-            pool_addr: targetPoolId,
-            transaction_id: txHash,
-            value: 1
-        })
-        console.log(`transaction submitted: ${txHash}`)
+        //get utxos
+        //var utxos = await getUtxos();//.map(u => S.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')))
+        //        var utxosMap = utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')));       
+        var Utxos = await cardano.getUtxos();
+        var UtxosHex = Utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(
+            Buffer.from(
+                u,
+                'hex'
+            )
+        )
+        );
+
+        //paymentAddress
+        var PaymentAddress = await getAddress(Loader);
+
+        //outputs
+        let outputs = Loader.TransactionOutputs.new()
+        outputs.add(
+            Loader.TransactionOutput.new(
+                Loader.Address.from_bech32(PaymentAddress),
+                Loader.Value.new(
+                    Loader.BigNum.from_str(protocolParameter.keyDeposit)
+                )
+            )
+        )
+
+        //transaction
+        let transaction = await txBuilder(Loader, {
+            PaymentAddress,
+            Utxos: UtxosHex,
+            ProtocolParameter: protocolParameter,
+            Outputs: outputs,
+            Delegation: {
+                poolHex: targetPoolId,
+                stakeKeyHash: stakeKeyHash,
+                delegation: delegation
+            },
+            Metadata: null,
+            MetadataLabel: '721'
+        });
+
+        //submit trx
+
+        let txHash = await signSubmitTx(Loader, transaction);
+
+
+
+        var success = false;
     }
 
     render() {
         return (
+            <p><Button variant="outline-light" size="sm" onClick={() => this.joinPool()}>Join</Button>
 
-            <p><Button variant="outline-light" size="sm" onClick={() => this.joinPool()}>Join Pool</Button></p>
+                <Modal
+                    isOpen={this.state.modal}
+                    toggle={false}
+                    contentClassName="custom-modal-style"
+                >
+                    <ModalHeader toggle={this.toggle()}>Join Pool</ModalHeader>
+                    <ModalBody style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                    }}>
+                        <Row>
+                            <div>                                
+                                <p>You have selected to join Pool: <Link to={`/pool/${this.props.pool.pool_id}`}>{this.props.pool.name}</Link></p>
+                                <p>A Nami Wallet screen will appear to sign the transaction.</p>
+                                <p>Once complete your Nami Wallet will update to the new pool within 30 seconds.</p>
+                                <br></br>
+                                <p>Happy staking.</p>
+                            </div>
+
+                        </Row>
+
+                    </ModalBody>
+                </Modal>
+
+
+
+
+
+            </p>
         );
     }
 }

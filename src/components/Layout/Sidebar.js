@@ -70,7 +70,8 @@ const navItems = [
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
   { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
   { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff },
-  { to: '/sundaeiso', name: 'SundaeSwap ISO Pools', exact: true, Icon: MdSearch }
+  { to: '/sundaeiso', name: 'SundaeSwap ISO Pools', exact: true, Icon: MdSearch },
+  { to: '/hoskypools', name: 'Hosky Pools', exact: true, Icon: MdSearch }
   // { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
 ];
