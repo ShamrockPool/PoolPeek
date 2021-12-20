@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Card, CardBody, CardHeader, Col, Row, Table } from 'reactstrap';
 import { isEmpty } from 'utils/stringutil.js';
-import PoolBlocksList from 'components/pool/PoolBlocksList';
-import CircleLoader from "react-spinners/CircleLoader";
+
+import PoolCostsList from './PoolCostsList';
+
 import { css } from "@emotion/core";
 
 import "react-tabs/style/react-tabs.css";
@@ -20,7 +21,7 @@ const override = css`
   border-color: red;
 `;
 
-export default class PoolBlocks extends React.Component {
+export default class PoolCosts extends React.Component {
 
     constructor(props) {
         super(props);
@@ -38,23 +39,15 @@ export default class PoolBlocks extends React.Component {
             <div style={{ width: "100%", alignItems: "left" }}>
                 <Table {...{ ['striped']: true }}>
                     <thead>
-                    {width > 700 &&<tr>
-                            <th>Epoch</th>
-                            <th>Active Stake</th>
-                            <th>Expected Blocks</th>
-                            <th>Blocks Minted</th>
-                            <th>Luck</th>
-                        </tr>}
-                        {width < 700 &&<tr>
-                            <th>Epoch</th>
-                            
-                            <th>Expected</th>
-                            <th>Minted</th>
-                            <th>Luck</th>
+                        {width > 700 && <tr>
+                            <th>Active Epoch</th>
+                            <th>Margin</th>
+                            <th>Fixed Cost</th>
+
                         </tr>}
                     </thead>
-                    {this.props.pool.block_history != null &&
-                    <PoolBlocksList block_history={this.props.pool.block_history} currentEpoch={this.props.pool.active_stake_epoch} />}
+                    {this.props.pool.costs_history != null &&
+                        <PoolCostsList costs_history={this.props.pool.costs_history} />}
                 </Table>
             </div >
         )

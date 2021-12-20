@@ -15,20 +15,17 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getSundaeInfo } from '../assets/services';
+import { baseUrlPoolPeekService, getSaturatedPools, getPoolsAtRiskOfSaturation } from '../assets/services';
 import "../styles/styles.css";
-import { isEmpty } from 'utils/stringutil.js';
-// import SearchBar from "material-ui-search-bar";
-// import { DataGrid } from '@material-ui/data-grid';
-// import { DataGrid } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 
-import Tooltip from "@material-ui/core/Tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTwitter, faTelegram, faYoutube, faFacebook, faDiscord, faGithub, faReddit, faGitlab } from "@fortawesome/free-brands-svg-icons";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
 import JoinPool from 'components/nami/JoinPool';
+
+const cardano = window.cardano;
 
 const override = css`
   display: block;
@@ -88,15 +85,7 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, name: 2, ticker: 'item.ticker', livestake: 'item.live_stake', saturation: 1 },
-  { id: 2, name: 3, ticker: 'item.ticker', livestake: 'item.live_stake', saturation: 1 },
-
-];
-
-const cardano = window.cardano;
-
-class SundaePools extends React.Component {
+class SaturatedPools extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -104,7 +93,9 @@ class SundaePools extends React.Component {
     smallScreen: false,
     searched: "",
     filterAblepools: [],
+    poolsAtRiskOfSaturation: [],
     stats: null,
+    walletConnected: false,
     namiEnabled: false,
   };
 
@@ -114,26 +105,38 @@ class SundaePools extends React.Component {
       this.setState({ smallScreen: true });
     }
 
-    this.getSundaePools();
-    window.scrollTo(0, 0);
-
     try {
       var namiEnabled = await cardano.enable();
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
-      
+
     }
 
+    this.getPoolsAtRiskOfSaturation();
+
+
+
+    window.scrollTo(0, 0);
   }
 
-  async getSundaePools() {
+  async getPools() {
     try {
-      var response = await fetch(baseUrlPoolPeekService + getSundaeInfo);
+      var response = await fetch(baseUrlPoolPeekService + getSaturatedPools);
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO })
       this.createRows(data);
-      //this.setState({ loading: false, filterAblePools: rows })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async getPoolsAtRiskOfSaturation() {
+    try {
+      var response = await fetch(baseUrlPoolPeekService + getPoolsAtRiskOfSaturation);
+      const data = await response.json();
+      this.setState({ poolsAtRiskOfSaturation: data.pools });
+      this.getPools()
     } catch (error) {
       console.log(error)
     }
@@ -184,207 +187,27 @@ class SundaePools extends React.Component {
     return (
       <Page
         className="SundaeISOPools"
-        title="SundaeSwap ISO Pools"
+        title="Saturated Pools"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           :
 
 
           <Col>
-
-            <Row>
-              <Col>
-                <Row>
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary' style={{ margin: '0px' }}>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Active SPO's
-                        </CardTitle>
-                        <CardText>
-                          30
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Waiting SPO's
-                        </CardTitle>
-                        <CardText>
-                          10
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          ISO Start Date
-                        </CardTitle>
-                        <CardText>
-                          Not released
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          ISO End Date
-                        </CardTitle>
-                        <CardText>
-                          Not released
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                </Row>
-
-                <Row>
-                  <h3>End of Vote Stats</h3>
-                </Row>
-
-
-                <Row>
-
-                  <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Pools
-                        </CardTitle>
-                        <CardText>
-                          74
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Stake
-                        </CardTitle>
-                        <CardText>
-                          {this.addCommas(Number(1.8646080739E9))}
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Delegates
-                        </CardTitle>
-                        <CardText>
-                          {this.addCommas(120131)}
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
-
-                {/* <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Total Saturated
-                        </CardTitle>
-                        <CardText>
-                          5
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col> */}
-
-
-                {/* 5 are saturated after vote */}
-
-                <Row>
-                  <h3>Live Stats</h3>
-                </Row>
-
-
-                <Row>
-
-                  <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Pools
-                        </CardTitle>
-                        <CardText>
-                          {this.state.stats.total_pools}
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Stake
-                        </CardTitle>
-                        <CardText>
-                          {this.addCommas(this.state.stats.total_live_stake)}
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Delegates
-                        </CardTitle>
-                        <CardText>
-                          {this.addCommas(this.state.stats.live_stake_delegator_count)}
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
-
-              </Col>
-            </Row>
-
+            <h5>Saturation is used to indicate that a stake pool has more stake than is ideal for the network.</h5>
+            <h5>Once a pool reaches the point of saturation, it will offer diminishing rewards.</h5>
             <Row>
 
-              <Col style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-              }}>
-                <a href='https://discord.gg/6nZh34ZBkH' target="_blank" rel="noreferrer" >
-                  <p>SundaeSwap Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
-              </Col>
 
               <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
-
-
                 <Card>
 
                   <CardBody body style={{
                     padding: '5px', margin: '0px',
                   }}>
                     <CardTitle className="text-capitalize">
-                      <b>Single Pool Operator Pools</b>
+                      <b>Saturated Pools</b>
                     </CardTitle>
-                    <small>Table ordered by filled %.</small>
 
                     {this.state.smallScreen == false ?
                       <Table {...{ ['striped']: true }}>
@@ -403,8 +226,6 @@ class SundaePools extends React.Component {
                         </thead>
 
                         {this.state.filterAblePools.map((item) => (
-
-                          item.pool_splitter == 'N' &&
                           <tbody>
 
                             <tr>
@@ -419,7 +240,6 @@ class SundaePools extends React.Component {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                              <JoinPool pool={item} namiEnabled={this.state.namiEnabled}/>
                               </Row>
                             </tr>
 
@@ -441,16 +261,13 @@ class SundaePools extends React.Component {
                         </thead>
 
                         {this.state.filterAblePools.map((item) => (
-                          item.pool_splitter == 'N' &&
                           <tbody>
-
                             <tr onClick={() => this.handleRowClick(item)}>
                               <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
                               {/* <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td> */}
                               <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
                               <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
                             </tr>
-
                           </tbody>
 
                         ))}
@@ -459,22 +276,17 @@ class SundaePools extends React.Component {
                     }
                   </CardBody>
                 </Card>
-              </Col>
 
+                <br></br>
 
-            </Row>
-
-            <Row>
-
-              <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
                 <Card>
-                  <CardBody>
+
+                  <CardBody body style={{
+                    padding: '5px', margin: '0px',
+                  }}>
                     <CardTitle className="text-capitalize">
-                      <b>Multiple Pool Operator Pools</b>
+                      <b>Risk of Saturation</b>
                     </CardTitle>
-
-
-                    <small>Table ordered by saturation.</small>
 
                     {this.state.smallScreen == false ?
                       <Table {...{ ['striped']: true }}>
@@ -488,11 +300,12 @@ class SundaePools extends React.Component {
                             <th onClick={e => this.onSort(e, 'live_stake')}>Live Stake</th>
                             <th onClick={e => this.onSort(e, 'pct_saturated')}>Filled</th>
                             <th></th>
+
                           </tr>
                         </thead>
 
-                        {this.state.filterAblePools.map((item) => (
-                          item.pool_splitter == 'Y' &&
+                        {this.state.poolsAtRiskOfSaturation.map((item) => (
+                          item.pct_saturated < 100 &&
                           <tbody>
 
                             <tr>
@@ -502,13 +315,12 @@ class SundaePools extends React.Component {
                               {/* <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
                               <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
                               <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.pct_saturated}%</p></td>
-                              <td style={tableRowStyle} scope="row">
+                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
+
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
-                                  <p><Button variant="outline-light" size="sm">View</Button></p>
-                                </Link>
-                                <JoinPool pool={item} namiEnabled={this.state.namiEnabled}/></Row>
-                              </td>
+                                <p><Button variant="outline-light" size="sm">View</Button></p>
+                              </Link>
+                              </Row>
                             </tr>
 
                           </tbody>
@@ -528,28 +340,26 @@ class SundaePools extends React.Component {
                           </tr>
                         </thead>
 
-                        {this.state.filterAblePools.map((item) => (
-                          item.pool_splitter == 'Y' &&
+                        {this.state.poolsAtRiskOfSaturation.map((item) => (
                           <tbody>
-
                             <tr onClick={() => this.handleRowClick(item)}>
                               <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
+                              {/* <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td> */}
                               <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
                               <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
                             </tr>
-
                           </tbody>
 
                         ))}
 
                       </Table>
                     }
-
                   </CardBody>
                 </Card>
               </Col>
-            </Row>
 
+
+            </Row>
           </Col>
 
 
@@ -559,4 +369,4 @@ class SundaePools extends React.Component {
     );
   }
 }
-export default SundaePools;
+export default SaturatedPools;

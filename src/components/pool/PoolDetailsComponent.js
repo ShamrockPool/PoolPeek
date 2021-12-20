@@ -5,6 +5,7 @@ import ShareProject from '../../components/ShareProject';
 import PoolDelagates from 'components/pool/PoolDelagates';
 import PoolBadges from 'components/pool/PoolBadges';
 import PoolBlocks from 'components/pool/PoolBlocks';
+import PoolCosts from './PoolCosts';
 import { css } from "@emotion/core";
 import { isEmpty } from 'utils/stringutil.js';
 import "react-tabs/style/react-tabs.css";
@@ -15,10 +16,9 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactImageFallback from "react-image-fallback";
 import SocialMedia from '../SocialMedia';
 import ReactHtmlParser from 'react-html-parser';
-import { faInfo, faDatabase, faPeopleCarry, faHistory, faCube, faAward } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faDatabase, faPeopleCarry, faHistory, faCube, faAward, faClipboard, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faClipboard } from '@fortawesome/free-solid-svg-icons';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Favorite from "@material-ui/icons/Favorite";
 import IconButton from '@material-ui/core/IconButton';
@@ -71,6 +71,8 @@ function checkIsImageUrl(url) {
     return false;
 }
 
+const cardano = window.cardano;
+
 export default class PoolDetailsComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -81,15 +83,24 @@ export default class PoolDetailsComponent extends React.Component {
             delegatesList: null,
             twitterUrl: null,
             favourite: false,
-            stakeFeed: null
+            stakeFeed: null,
+            namiEnabled: false,
         };
 
     }
-    componentDidMount() {
+
+    async componentDidMount() {
         this.getTwitterName();
         this.getDelegates();
         // this.getStakeFeed();
         this.isPoolFavourite(ReactHtmlParser(this.props.pool.name));
+
+        try {
+            var namiEnabled = await cardano.enable();
+            this.setState({ namiEnabled: namiEnabled });
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async getDelegates() {
@@ -272,10 +283,10 @@ export default class PoolDetailsComponent extends React.Component {
         var x2 = x.length > 1 ? '.' + x[1] : '';
         var rgx = /(\d+)(\d{3})/;
         while (rgx.test(x1)) {
-          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
         }
         return x1 + x2;
-      }
+    }
 
     render() {
         return (
@@ -342,7 +353,8 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <small>Favourite pool</small>
                                                         </div>
                                                     }
-                                                    <JoinPool pool={this.props.pool} />
+                                                    {this.state.namiEnabled &&
+                                                        <JoinPool pool={this.props.pool} namiEnabled={this.state.namiEnabled} />}
                                                 </Col>
                                                 <Col xl={2} lg={2} md={12} sm={12} >
                                                     <ReactImageFallback
@@ -368,6 +380,7 @@ export default class PoolDetailsComponent extends React.Component {
                                             <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
                                             {/* <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab> */}
                                             {width > 700 && <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>}
+                                            <Tab><FontAwesomeIcon icon={faDollarSign} /> Costs History</Tab>
                                             <Tab><FontAwesomeIcon icon={faCube} /> Block History</Tab>
                                             {width > 700 && <Tab><FontAwesomeIcon icon={faHistory} /> Stake History</Tab>}
                                             <Tab><FontAwesomeIcon icon={faAward} /> Badges</Tab>
@@ -521,6 +534,26 @@ export default class PoolDetailsComponent extends React.Component {
                                                 </div>}
                                             {/* END DELEGATES */}
                                         </TabPanel>}
+                                        <TabPanel>
+                                            {/* Start Costs history */}
+                                            <Card>
+                                                < CardHeader>Costs History
+                                                    <br></br>
+                                                    <small>Cost history keeps a track of the margin and fixed cost of a pool</small><br></br>
+                                                    <small>Margin is the % amount a stake pool takes from the rewards - the lower the better</small>
+                                                    <br></br>
+                                                    <small>Fixed Cost is the minimum amount a pool owner earns - 340 is the minimum</small>
+                                                    <br></br>
+                                                    <br></br>
+                                                    <small>Honest and well run pools shouldnt change very often, unless they have stated otherwise.</small>
+                                                </CardHeader>
+                                                <CardBody>
+                                                    {this.props.pool && <PoolCosts pool={this.props.pool} />}
+                                                </CardBody>
+
+                                            </Card>
+                                            {/* End Costs history */}
+                                        </TabPanel>
                                         <TabPanel>
                                             {/* Start Block history */}
                                             <Card>

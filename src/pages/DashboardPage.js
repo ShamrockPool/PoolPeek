@@ -46,6 +46,9 @@ var linkifyHtml = require('linkifyjs/html');
 
 const width = window.innerWidth;
 
+const cardano = window.cardano;
+
+
 const override = css`
   display: block;
   margin: 0 auto;
@@ -110,6 +113,8 @@ class DashboardPage extends React.Component {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
 
+   
+
     this.getFavouritePools();
     this.generateEpochEvents();
 
@@ -121,6 +126,8 @@ class DashboardPage extends React.Component {
 
     await this.getDashboardData();
 
+    
+    var namiEnabled = await cardano.enable();
   }
 
   async getDashboardData() {

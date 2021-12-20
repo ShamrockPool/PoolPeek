@@ -55,11 +55,12 @@ export default class JoinPool extends React.Component {
         window.scrollTo(0, 0);
 
         try {
-            var namiEnabled = await cardano.enable();
-            this.setState({ namiEnabled: namiEnabled });
+            var enabled = this.props.namiEnabled;
+            this.setState({ namiEnabled:  enabled});
         } catch (error) {
 
         }
+
 
 
     }

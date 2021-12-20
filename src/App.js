@@ -20,6 +20,8 @@ import StakingCalculator from 'pages/StakingCalculator';
 
 import SundaePools from './pages/SundaePools';
 import HoskyPools from 'pages/HoskyPools';
+import HoskyInuPools from 'pages/HoskyInuPools';
+import SaturatedPools from 'pages/SaturatedPools';
 
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
@@ -52,6 +54,10 @@ class App extends React.Component {
 
                 <Route exact path="/sundaeiso" render={(props) => <SundaePools {...props}/>} />
                 <Route exact path="/hoskypools" render={(props) => <HoskyPools {...props}/>} />
+                <Route exact path="/hoskyinupools" render={(props) => <HoskyInuPools {...props}/>} />
+                
+                
+                <Route exact path="/saturatedpools" render={(props) => <SaturatedPools {...props}/>} />
                 
 
                 <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} multiPoolOperators={true} pageDescription={queries.baremetalpoolsqueryDesc} />} />

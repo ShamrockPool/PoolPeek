@@ -22,14 +22,16 @@ export const getallmobile = "/pooldetails/getallmobile";//getallmobile
 export const getPoolForSearchList = "/pooldetails/getallsearchlist";//
 export const getPoolDelegates = "/pooldelegates/get/";//
 export const getStakeFeedHistory = "/pooldelegates/get/history/"
-export const getPoolForRecommendedList = "/pooldetails/getrecommendedpools"
+export const getPoolForRecommendedList = "/pooldetails/getrecommendedpools";
+export const getSaturatedPools = "/pooldetails/getSaturatedPools"
+export const getPoolsAtRiskOfSaturation = "/pooldetails/getPoolsAtRiskOfSaturation"
 
 
-//sundae
+
+//isos
 export const getSundaeInfo = "/pooldetails/getsundaepools";
-
-//hosky
 export const gethoskypools = "/pooldetails/gethoskypools";
+export const gethoskyinupools = "/pooldetails/gethoskyinupools";
 
 export const mintNFT = "/nft/mint/";//{nftId}
 

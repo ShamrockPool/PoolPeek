@@ -25,6 +25,7 @@ import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
 import JoinPool from 'components/nami/JoinPool';
 
+const cardano = window.cardano;
 
 const override = css`
   display: block;
@@ -93,13 +94,21 @@ class HoskyPools extends React.Component {
     searched: "",
     filterAblepools: [],
     stats: null,
-    walletConnected: false
+    walletConnected: false,
+    namiEnabled: false,
   };
 
   async componentDidMount() {
 
     if (width < 600) {
       this.setState({ smallScreen: true });
+    }
+
+    try {
+      var namiEnabled = await cardano.enable();
+      this.setState({ namiEnabled: namiEnabled });
+    } catch (error) {
+      
     }
 
     this.getPools();

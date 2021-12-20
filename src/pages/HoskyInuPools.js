@@ -15,20 +15,17 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getSundaeInfo } from '../assets/services';
+import { baseUrlPoolPeekService, gethoskyinupools } from '../assets/services';
 import "../styles/styles.css";
-import { isEmpty } from 'utils/stringutil.js';
-// import SearchBar from "material-ui-search-bar";
-// import { DataGrid } from '@material-ui/data-grid';
-// import { DataGrid } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 
-import Tooltip from "@material-ui/core/Tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTwitter, faTelegram, faYoutube, faFacebook, faDiscord, faGithub, faReddit, faGitlab } from "@fortawesome/free-brands-svg-icons";
+import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
 import JoinPool from 'components/nami/JoinPool';
+
+const cardano = window.cardano;
 
 const override = css`
   display: block;
@@ -88,15 +85,7 @@ const columns = [
   },
 ];
 
-const rows = [
-  { id: 1, name: 2, ticker: 'item.ticker', livestake: 'item.live_stake', saturation: 1 },
-  { id: 2, name: 3, ticker: 'item.ticker', livestake: 'item.live_stake', saturation: 1 },
-
-];
-
-const cardano = window.cardano;
-
-class SundaePools extends React.Component {
+class HoskyInuPools extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -105,6 +94,7 @@ class SundaePools extends React.Component {
     searched: "",
     filterAblepools: [],
     stats: null,
+    walletConnected: false,
     namiEnabled: false,
   };
 
@@ -114,9 +104,6 @@ class SundaePools extends React.Component {
       this.setState({ smallScreen: true });
     }
 
-    this.getSundaePools();
-    window.scrollTo(0, 0);
-
     try {
       var namiEnabled = await cardano.enable();
       this.setState({ namiEnabled: namiEnabled });
@@ -124,11 +111,29 @@ class SundaePools extends React.Component {
       
     }
 
+    this.getPools();
+
+try {
+  await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
+
+  if (!this.state.walletConnected) {
+    // Connects nami wallet to current website 
+    await window.cardano.enable()
+      .then(result => this.setState({ walletConnected: result }))
+      .catch(e => console.log(e))
   }
 
-  async getSundaePools() {
+} catch (error) {
+  
+}
+
+
+    window.scrollTo(0, 0);
+  }
+
+  async getPools() {
     try {
-      var response = await fetch(baseUrlPoolPeekService + getSundaeInfo);
+      var response = await fetch(baseUrlPoolPeekService + gethoskyinupools);
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO })
@@ -184,7 +189,7 @@ class SundaePools extends React.Component {
     return (
       <Page
         className="SundaeISOPools"
-        title="SundaeSwap ISO Pools"
+        title="Hosky Inu Pools"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           :
@@ -194,7 +199,7 @@ class SundaePools extends React.Component {
 
             <Row>
               <Col>
-                <Row>
+                {/* <Row>
                   <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
                     <Card inverse color='primary' style={{ margin: '0px' }}>
                       <CardBody body>
@@ -247,10 +252,10 @@ class SundaePools extends React.Component {
                     </Card>
                   </Col>
 
-                </Row>
+                </Row> */}
 
-                <Row>
-                  <h3>End of Vote Stats</h3>
+                {/* <Row>
+                  <h3>Starting Stats</h3>
                 </Row>
 
 
@@ -263,7 +268,7 @@ class SundaePools extends React.Component {
                           Pools
                         </CardTitle>
                         <CardText>
-                          74
+                          8
                         </CardText>
                       </CardBody>
                     </Card>
@@ -276,7 +281,7 @@ class SundaePools extends React.Component {
                           Stake
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(Number(1.8646080739E9))}
+                          {this.addCommas(Number(46035871.01))}
                         </CardText>
                       </CardBody>
                     </Card>
@@ -289,12 +294,12 @@ class SundaePools extends React.Component {
                           Delegates
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(120131)}
+                          {this.addCommas(458)}
                         </CardText>
                       </CardBody>
                     </Card>
                   </Col>
-                </Row>
+                </Row> */}
 
                 {/* <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
                     <Card inverse color='primary'>
@@ -369,8 +374,8 @@ class SundaePools extends React.Component {
                 alignItems: 'center',
                 textAlign: 'center',
               }}>
-                <a href='https://discord.gg/6nZh34ZBkH' target="_blank" rel="noreferrer" >
-                  <p>SundaeSwap Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
+                <a href='https://discord.gg/2s3bNdqdfP' target="_blank" rel="noreferrer" >
+                  <p>Hosky Inu Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
               </Col>
 
               <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
@@ -382,7 +387,7 @@ class SundaePools extends React.Component {
                     padding: '5px', margin: '0px',
                   }}>
                     <CardTitle className="text-capitalize">
-                      <b>Single Pool Operator Pools</b>
+                      <b>Pools</b>
                     </CardTitle>
                     <small>Table ordered by filled %.</small>
 
@@ -419,7 +424,7 @@ class SundaePools extends React.Component {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                              <JoinPool pool={item} namiEnabled={this.state.namiEnabled}/>
+                              {this.state.walletConnected && <JoinPool pool={item} />}
                               </Row>
                             </tr>
 
@@ -463,93 +468,6 @@ class SundaePools extends React.Component {
 
 
             </Row>
-
-            <Row>
-
-              <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
-                <Card>
-                  <CardBody>
-                    <CardTitle className="text-capitalize">
-                      <b>Multiple Pool Operator Pools</b>
-                    </CardTitle>
-
-
-                    <small>Table ordered by saturation.</small>
-
-                    {this.state.smallScreen == false ?
-                      <Table {...{ ['striped']: true }}>
-                        <thead>
-                          <tr>
-                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
-                            <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th>
-                            <th onClick={e => this.onSort(e, 'margin_pct')}>Margin</th>
-                            {/* <th onClick={e => this.onSort(e, 'cost_per_epoch')}>Fixed Cost</th> */}
-                            <th onClick={e => this.onSort(e, 'live_stake_delegator_count')}>Delegates</th>
-                            <th onClick={e => this.onSort(e, 'live_stake')}>Live Stake</th>
-                            <th onClick={e => this.onSort(e, 'pct_saturated')}>Filled</th>
-                            <th></th>
-                          </tr>
-                        </thead>
-
-                        {this.state.filterAblePools.map((item) => (
-                          item.pool_splitter == 'Y' &&
-                          <tbody>
-
-                            <tr>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.margin_pct}%</p></td>
-                              {/* <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.pct_saturated}%</p></td>
-                              <td style={tableRowStyle} scope="row">
-                              <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
-                                  <p><Button variant="outline-light" size="sm">View</Button></p>
-                                </Link>
-                                <JoinPool pool={item} namiEnabled={this.state.namiEnabled}/></Row>
-                              </td>
-                            </tr>
-
-                          </tbody>
-
-                        ))}
-
-                      </Table>
-                      :
-                      <Table {...{ ['striped']: true }}>
-                        <thead>
-                          <tr>
-                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
-                            {/* <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th> */}
-                            <th onClick={e => this.onSort(e, 'live_stake')}>Stake</th>
-                            <th onClick={e => this.onSort(e, 'pct_saturated')}>Filled</th>
-
-                          </tr>
-                        </thead>
-
-                        {this.state.filterAblePools.map((item) => (
-                          item.pool_splitter == 'Y' &&
-                          <tbody>
-
-                            <tr onClick={() => this.handleRowClick(item)}>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
-                            </tr>
-
-                          </tbody>
-
-                        ))}
-
-                      </Table>
-                    }
-
-                  </CardBody>
-                </Card>
-              </Col>
-            </Row>
-
           </Col>
 
 
@@ -559,4 +477,4 @@ class SundaePools extends React.Component {
     );
   }
 }
-export default SundaePools;
+export default HoskyInuPools;

@@ -4,6 +4,7 @@ import PoolShare from 'components/pool/PoolShare';
 import PoolStats from 'components/pool/PoolStats';
 import PoolDelagates from 'components/pool/PoolDelagates';
 import PoolBlocks from 'components/pool/PoolBlocks';
+import PoolCosts from './PoolCosts';
 
 import { isEmpty } from 'utils/stringutil.js';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'; // eslint-disable-line
@@ -110,6 +111,7 @@ export default class Pool extends React.Component {
                         <TabList>
                             <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
                             <Tab><FontAwesomeIcon icon={faDatabase} /> Stats</Tab>
+                            <Tab><FontAwesomeIcon icon={faCube} /> Costs</Tab>
                             <Tab><FontAwesomeIcon icon={faCube} /> Blocks</Tab>
                             {width > 700 &&<Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>}
                             <Tab><FontAwesomeIcon icon={faShare} /> Promote</Tab>
@@ -120,6 +122,9 @@ export default class Pool extends React.Component {
                         </TabPanel>
                         <TabPanel>
                             {this.props.pool && <PoolStats pool={this.props.pool} />}
+                        </TabPanel>
+                        <TabPanel>
+                            {this.props.pool && <PoolCosts pool={this.props.pool} />}
                         </TabPanel>
                         <TabPanel>
                             {this.props.pool && <PoolBlocks pool={this.props.pool} />}
