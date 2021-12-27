@@ -268,7 +268,7 @@ try {
                           Pools
                         </CardTitle>
                         <CardText>
-                          6
+                          7
                         </CardText>
                       </CardBody>
                     </Card>
@@ -281,7 +281,7 @@ try {
                           Stake
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(Number(31139145.86))}
+                          {this.addCommas(Number(44826706))}
                         </CardText>
                       </CardBody>
                     </Card>
@@ -294,7 +294,7 @@ try {
                           Delegates
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(855)}
+                          {this.addCommas(1410)}
                         </CardText>
                       </CardBody>
                     </Card>

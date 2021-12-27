@@ -25,6 +25,7 @@ export const getStakeFeedHistory = "/pooldelegates/get/history/"
 export const getPoolForRecommendedList = "/pooldetails/getrecommendedpools";
 export const getSaturatedPools = "/pooldetails/getSaturatedPools"
 export const getPoolsAtRiskOfSaturation = "/pooldetails/getPoolsAtRiskOfSaturation"
+export const getRetiredPools = "/pooldetails/getRetiredPools"
 
 
 

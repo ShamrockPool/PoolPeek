@@ -92,7 +92,7 @@ class SaturatedPools extends React.Component {
     totalPools: '',
     smallScreen: false,
     searched: "",
-    filterAblepools: [],
+    poolsSaturated: [],
     poolsAtRiskOfSaturation: [],
     stats: null,
     walletConnected: false,
@@ -119,36 +119,31 @@ class SaturatedPools extends React.Component {
     window.scrollTo(0, 0);
   }
 
-  async getPools() {
-    try {
-      var response = await fetch(baseUrlPoolPeekService + getSaturatedPools);
-      const data = await response.json();
-
-      this.setState({ stats: data.poolDetailsSundaeStatsVO })
-      this.createRows(data);
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   async getPoolsAtRiskOfSaturation() {
     try {
       var response = await fetch(baseUrlPoolPeekService + getPoolsAtRiskOfSaturation);
-      const data = await response.json();
-      this.setState({ poolsAtRiskOfSaturation: data.pools });
-      this.getPools()
+      const riskOfSatData = await response.json();
+
+      var response2 = await fetch(baseUrlPoolPeekService + getSaturatedPools);
+      const satData = await response2.json();
+
+      this.setState({ poolsSaturated: satData.pools, poolsAtRiskOfSaturation: riskOfSatData.pools, loading: false  })
+    } catch (error) {
+      console.log(error)
+    }
+
+    try {
+
     } catch (error) {
       console.log(error)
     }
   }
 
-  createRows(sundaeData) {
-    var rows = [];
 
-    var poolsList = [];
-    poolsList = sundaeData.pools;
-    this.setState({ loading: false, filterAblePools: poolsList })
-  }
+
+
+
+
 
   handleRowClick(rowData) {
     var url = '/pool/' + rowData.pool_id;
@@ -225,7 +220,7 @@ class SaturatedPools extends React.Component {
                           </tr>
                         </thead>
 
-                        {this.state.filterAblePools.map((item) => (
+                        {this.state.poolsSaturated.map((item) => (
                           <tbody>
 
                             <tr>
@@ -260,7 +255,7 @@ class SaturatedPools extends React.Component {
                           </tr>
                         </thead>
 
-                        {this.state.filterAblePools.map((item) => (
+                        {this.state.poolsSaturated.map((item) => (
                           <tbody>
                             <tr onClick={() => this.handleRowClick(item)}>
                               <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>

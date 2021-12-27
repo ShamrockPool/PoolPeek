@@ -144,18 +144,22 @@ export default class PoolDetailsComponent extends React.Component {
         }
     }
 
-    calculateLuck() {
-        try {
-            var lastEpochStakeString = this.props.pool.active_stake_history[0].active_stake.replaceAll(",", "");
-            var lastEpochStake = Number(lastEpochStakeString);
-            var divider = lastEpochStake / 1062037;
-            var blockEpoch = this.props.pool.block_history[1].blocks;
-            var blocksLuck = blockEpoch / divider;
+    // calculateLuck() {
+    //     try {
+    //         var lastEpochStakeString = this.props.pool.active_stake_history[0].active_stake.replaceAll(",", "");
+    //         var lastEpochStake = Number(lastEpochStakeString);
+    //         var divider = lastEpochStake / 1062037;
+    //         var blockEpoch = this.props.pool.block_history[1].blocks;
+    //         var blocksLuck = blockEpoch / divider;
 
-            return Math.round(blocksLuck * 100, 0);
-        } catch (error) {
-            return 0;
-        }
+    //         return Math.round(blocksLuck * 100, 0);
+    //     } catch (error) {
+    //         return 0;
+    //     }
+    // }
+
+    calculateLuck() {
+        return this.props.pool.block_history[1].luck;
     }
 
     calculateTotalLuck() {
@@ -317,9 +321,20 @@ export default class PoolDetailsComponent extends React.Component {
                                                 </Col>
                                                 <Col xl={8} lg={10} md={12} sm={12} >
                                                     <h1>{ReactHtmlParser(this.props.pool.name)}({ReactHtmlParser(this.props.pool.ticker)})</h1>
-                                                    <h3>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
-                                                        defaultProtocol: 'https'
-                                                    }))}</h3>
+
+                                                    {this.props.pool.retired != 'Y' ?
+
+                                                        <h3>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
+                                                            defaultProtocol: 'https'
+                                                        }))}</h3>
+
+                                                        :
+                                                        <div>
+                                                            <h1 style={{ color: 'red' }}>THIS POOL IS RETIRED!</h1>
+                                                            <h3 style={{ color: 'red' }}>If staking with this pool, move your ADA to another pool.</h3>
+                                                        </div>
+                                                    }
+
                                                     {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}> */}
                                                     <small>PoolID:  {this.props.pool.pool_id}          </small>
                                                     <Tooltip
@@ -353,7 +368,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <small>Favourite pool</small>
                                                         </div>
                                                     }
-                                                    {this.state.namiEnabled &&
+                                                    {this.state.namiEnabled && this.props.pool.retired != 'Y' &&
                                                         <JoinPool pool={this.props.pool} namiEnabled={this.state.namiEnabled} />}
                                                 </Col>
                                                 <Col xl={2} lg={2} md={12} sm={12} >

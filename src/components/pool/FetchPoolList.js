@@ -236,7 +236,7 @@ export default class FetchPoolList extends React.Component {
         }
 
         if (this.state.multiPoolOperators == true) {
-            poolsToDisplay = poolsToDisplay.filter(pool => pool.pool_splitter == "0");
+            poolsToDisplay = poolsToDisplay.filter(pool => pool.pool_splitter == "N");
         }
 
         if (this.state.saturatedPools == true) {

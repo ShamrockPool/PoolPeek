@@ -9,7 +9,7 @@ import ReactHtmlParser from 'react-html-parser';
 import {
   MdExtension,
   MdKeyboardArrowDown,
-  MdRadioButtonChecked,
+  MdRemoveCircleOutline,
   MdHourglassFull,
   MdPool,
   MdSearch,
@@ -36,17 +36,16 @@ const sidebarBackground = {
 };
 
 const navComponents = [
-  // { to: '/marchsaturatedpools', name: 'March Saturated', exact: false, Icon: MdPool },
   { to: '/charitypools', name: 'Charity', exact: false, Icon: MdPool },
   { to: '/baremetalpools', name: 'Bare Metal', exact: false, Icon: MdPool },
   { to: '/educationpools', name: 'Education', exact: false, Icon: MdPool },
   { to: '/twitterpools', name: 'Small Pools w/Twitter Handles', exact: false, Icon: MdPool },
-  
+
   { to: '/zeroblockpools', name: 'Zero Block Small Pools', exact: false, Icon: MdPool },
   { to: '/onetotenblockpools', name: 'One to Ten Block Small Pools', exact: false, Icon: MdPool },
   { to: '/likelytoproduceblocks', name: 'Small Pools Likely to Mint Blocks', exact: false, Icon: MdPool },
   { to: '/retiringpools', name: 'Soon Retiring', exact: false, Icon: MdPool },
-  { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdPool }  
+  { to: '/retiredpools', name: 'Retired', exact: false, Icon: MdPool }
 ];
 
 const navFunQueries = [
@@ -62,15 +61,16 @@ const navSaturation = [
   { to: '/8milto16mil', name: '8M to < 16M', exact: false, Icon: MdFormatListBulleted },
 ];
 
-const isos = [
-  { to: '/sundaeiso', name: 'SundaeSwap ISO Pools', exact: true, Icon: MdSearch }
-  // { to: '/hoskyinupools', name: 'Hosky Inu Pools', exact: true, Icon: MdSearch },
-  // { to: '/hoskypools', name: 'Hosky Pools', exact: true, Icon: MdSearch }
+const poolQueries = [
+  { to: '/retiredpools', name: 'Retired With Stake', exact: true, Icon: MdRemoveCircleOutline },
+  { to: '/saturatedpools', name: 'Saturated', exact: true, Icon: MdHourglassFull }
 ];
 
-//   { to: '/sundaeiso', name: 'SundaeSwap ISO Pools', exact: true, Icon: MdSearch },
-  // { to: '/hoskyinupools', name: 'Hosky Inu Pools', exact: true, Icon: MdSearch },
-    // { to: '/hoskypools', name: 'Hosky Pools', exact: true, Icon: MdSearch }
+const isos = [
+  { to: '/sundaeiso', name: 'SundaeSwap', exact: true, Icon: MdSearch },
+  // { to: '/hoskyinupools', name: 'Hosky Inu', exact: true, Icon: MdSearch },
+  { to: '/hoskypools', name: 'Hosky', exact: true, Icon: MdSearch }
+];
 
 const navItems = [
   { to: '/', name: 'Dashboard', exact: true, Icon: MdBuild },
@@ -79,11 +79,7 @@ const navItems = [
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
   { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
-  { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff },
-  // { to: '/sundaeiso', name: 'SundaeSwap ISO Pools', exact: true, Icon: MdSearch },
-  // { to: '/hoskyinupools', name: 'Hosky Inu Pools', exact: true, Icon: MdSearch },
-    // { to: '/hoskypools', name: 'Hosky Pools', exact: true, Icon: MdSearch }
-  { to: '/saturatedpools', name: 'Saturated Pools', exact: true, Icon: MdHourglassFull }
+  { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff }
   // { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
 ];
@@ -98,11 +94,12 @@ class Sidebar extends React.Component {
     isOpenAdafolio: false,
     isOpenFunQuery: false,
     isOpenSaturation: false,
+    isOpenQueries: false,
     navAdaFolio: [],
   };
 
-  componentDidMount() {  
-   window.scrollTo(0, 0); 
+  componentDidMount() {
+    window.scrollTo(0, 0);
   };
 
   handleClick = name => () => {
@@ -116,29 +113,29 @@ class Sidebar extends React.Component {
   };
 
   render() {
-    return (  
+    return (
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} style={sidebarBackground} />
-        <div className={bem.e('content')} style={{alignItems: "center" }}>
-      
-        <Container>
-          <Row className="justify-content-md-center">
-            <Col  style={{backgroundColor: 'black', width:'115px', padding:'0px'}}>
-              <img src={logo}
-                            width="115"
-                            height="100"
-                            className="pr-2"
-                            title="Welcome to PoolPeek.com"/>
-            </Col>
-            <Col style={{backgroundColor:'black', padding:'0px'}}>
-              
-              <h3>Cardano Stake Pool Explorer</h3>
-             
-            </Col>
-          </Row>
-        </Container>
+        <div className={bem.e('content')} style={{ alignItems: "center" }}>
 
-         
+          <Container>
+            <Row className="justify-content-md-center">
+              <Col style={{ backgroundColor: 'black', width: '115px', padding: '0px' }}>
+                <img src={logo}
+                  width="115"
+                  height="100"
+                  className="pr-2"
+                  title="Welcome to PoolPeek.com" />
+              </Col>
+              <Col style={{ backgroundColor: 'black', padding: '0px' }}>
+
+                <h3>Cardano Stake Pool Explorer</h3>
+
+              </Col>
+            </Row>
+          </Container>
+
+
           <Nav vertical>
             {navItems.map(({ to, name, exact, Icon }, index) => (
               <NavItem key={index} className={bem.e('nav-item')}>
@@ -156,7 +153,48 @@ class Sidebar extends React.Component {
               </NavItem>
             ))}
 
-<NavItem
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('Queries')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  <MdExtension className={bem.e('nav-item-icon')} />
+                  <b><span className=" align-self-start">POOL QUERIES</span></b>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenQueries
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenQueries}>
+              {poolQueries.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    <Icon className={bem.e('nav-item-icon')} />
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+
+            <NavItem
               className={bem.e('nav-item')}
               onClick={this.handleClick('Saturation')}
             >
