@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col'
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import logo from 'assets/img/logo/logo-144x144.png';
 import React from 'react';
-import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { faTwitter, faTelegram } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   MdExtension,
@@ -404,13 +404,25 @@ class Sidebar extends React.Component {
               <Col xs={12} sm={4} md={4}>
                 <br></br>
                 <a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">
-                  <Row icon={faTwitter} style={{
+                  <Row style={{
                     color: "white", justifyContent: 'center',
                     alignItems: 'center',
                     textAlign: 'center'
                   }}>
                     <FontAwesomeIcon size="2x" icon={faTwitter} style={{ color: "white" }} />
                     <p style={{ color: '#FFFFFF' }}>Follow Us</p>
+                  </Row></a>
+              </Col>
+              <Col xs={12} sm={4} md={4}>
+                <br></br>
+                <a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">
+                  <Row style={{
+                    color: "white", justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center'
+                  }}>
+                    <FontAwesomeIcon size="2x" icon={faTelegram} style={{ color: "white" }} />
+                    <p style={{ color: '#FFFFFF' }}>Telegram</p>
                   </Row></a>
               </Col>
             </Row>

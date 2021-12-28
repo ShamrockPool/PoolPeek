@@ -424,7 +424,7 @@ try {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                              {this.state.walletConnected && <JoinPool pool={item} />}
+                              {this.state.namiEnabled && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} /> }
                               </Row>
                             </tr>
 

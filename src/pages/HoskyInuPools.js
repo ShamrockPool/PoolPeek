@@ -108,24 +108,24 @@ class HoskyInuPools extends React.Component {
       var namiEnabled = await cardano.enable();
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
-
+      
     }
 
     this.getPools();
 
-    try {
-      await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
+    // try {
+    //   await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
 
-      if (!this.state.walletConnected) {
-        // Connects nami wallet to current website 
-        await window.cardano.enable()
-          .then(result => this.setState({ walletConnected: result }))
-          .catch(e => console.log(e))
-      }
+    //   if (!this.state.walletConnected) {
+    //     // Connects nami wallet to current website 
+    //     await window.cardano.enable()
+    //       .then(result => this.setState({ walletConnected: result }))
+    //       .catch(e => console.log(e))
+    //   }
 
-    } catch (error) {
+    // } catch (error) {
 
-    }
+    // }
 
 
     window.scrollTo(0, 0);
@@ -296,7 +296,7 @@ class HoskyInuPools extends React.Component {
                 alignItems: 'center',
                 textAlign: 'center',
               }}>
-                <a href='https://discord.gg/2s3bNdqdfP' target="_blank" rel="noreferrer" >
+                <a href='https://discord.gg/hYj8bv7Dw6' target="_blank" rel="noreferrer" >
                   <p>Hosky Inu Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
               </Col>
 
@@ -341,7 +341,7 @@ class HoskyInuPools extends React.Component {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                                {this.state.walletConnected && <JoinPool pool={item} />}
+                                {this.state.namiEnabled && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} /> }
                               </Row>
                             </tr>
                           </tbody>
