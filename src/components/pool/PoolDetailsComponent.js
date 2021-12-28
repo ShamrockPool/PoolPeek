@@ -477,15 +477,16 @@ export default class PoolDetailsComponent extends React.Component {
                                                 </Row>
                                                 {this.props.pool.block_history != null && this.props.pool.block_history.length > 0 &&
                                                     <Row>
-                                                        <Col xl={4} lg={4} md={12} sm={12}>
-                                                            <Card>
-                                                                <CardHeader>Luck Last Epoch</CardHeader>
-                                                                <CardBody>
-                                                                    <h2>{"" + this.calculateLuck()}%</h2>
-                                                                    <small>This is the amount of luck this pool recieved last Epoch.</small>
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Col>
+                                                        {this.calculateLuck() != null &&
+                                                            <Col xl={4} lg={4} md={12} sm={12}>
+                                                                <Card>
+                                                                    <CardHeader>Luck Last Epoch</CardHeader>
+                                                                    <CardBody>
+                                                                        <h2>{"" + this.calculateLuck()}%</h2>
+                                                                        <small>This is the amount of luck this pool recieved last Epoch.</small>
+                                                                    </CardBody>
+                                                                </Card>
+                                                            </Col>}
 
                                                         <Col xl={4} lg={4} md={12} sm={12}>
                                                             <Card>

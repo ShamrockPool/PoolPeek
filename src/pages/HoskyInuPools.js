@@ -108,24 +108,24 @@ class HoskyInuPools extends React.Component {
       var namiEnabled = await cardano.enable();
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
-      
+
     }
 
     this.getPools();
 
-try {
-  await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
+    try {
+      await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
 
-  if (!this.state.walletConnected) {
-    // Connects nami wallet to current website 
-    await window.cardano.enable()
-      .then(result => this.setState({ walletConnected: result }))
-      .catch(e => console.log(e))
-  }
+      if (!this.state.walletConnected) {
+        // Connects nami wallet to current website 
+        await window.cardano.enable()
+          .then(result => this.setState({ walletConnected: result }))
+          .catch(e => console.log(e))
+      }
 
-} catch (error) {
-  
-}
+    } catch (error) {
+
+    }
 
 
     window.scrollTo(0, 0);
@@ -135,18 +135,14 @@ try {
     try {
       var response = await fetch(baseUrlPoolPeekService + gethoskyinupools);
       const data = await response.json();
-
       this.setState({ stats: data.poolDetailsSundaeStatsVO })
       this.createRows(data);
-      //this.setState({ loading: false, filterAblePools: rows })
     } catch (error) {
       console.log(error)
     }
   }
 
   createRows(sundaeData) {
-    var rows = [];
-
     var poolsList = [];
     poolsList = sundaeData.pools;
     this.setState({ loading: false, filterAblePools: poolsList })
@@ -188,77 +184,18 @@ try {
 
     return (
       <Page
-        className="SundaeISOPools"
+        className="HoskyInuISOPools"
         title="Hosky Inu Pools"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           :
-
-
           <Col>
 
             <Row>
               <Col>
-                {/* <Row>
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary' style={{ margin: '0px' }}>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Active SPO's
-                        </CardTitle>
-                        <CardText>
-                          30
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Waiting SPO's
-                        </CardTitle>
-                        <CardText>
-                          10
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          ISO Start Date
-                        </CardTitle>
-                        <CardText>
-                          Not released
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          ISO End Date
-                        </CardTitle>
-                        <CardText>
-                          Not released
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                </Row> */}
-
-                {/* <Row>
+                <Row>
                   <h3>Starting Stats</h3>
                 </Row>
-
-
                 <Row>
 
                   <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
@@ -268,7 +205,7 @@ try {
                           Pools
                         </CardTitle>
                         <CardText>
-                          8
+                          14
                         </CardText>
                       </CardBody>
                     </Card>
@@ -281,7 +218,7 @@ try {
                           Stake
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(Number(46035871.01))}
+                          {this.addCommas(Number(80774483))}
                         </CardText>
                       </CardBody>
                     </Card>
@@ -294,28 +231,13 @@ try {
                           Delegates
                         </CardTitle>
                         <CardText>
-                          {this.addCommas(458)}
+                          {this.addCommas(2207)}
                         </CardText>
                       </CardBody>
                     </Card>
                   </Col>
-                </Row> */}
+                </Row>
 
-                {/* <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Total Saturated
-                        </CardTitle>
-                        <CardText>
-                          5
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col> */}
-
-
-                {/* 5 are saturated after vote */}
 
                 <Row>
                   <h3>Live Stats</h3>
@@ -379,8 +301,6 @@ try {
               </Col>
 
               <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
-
-
                 <Card>
 
                   <CardBody body style={{
@@ -408,10 +328,7 @@ try {
                         </thead>
 
                         {this.state.filterAblePools.map((item) => (
-
-                          item.pool_splitter == 'N' &&
                           <tbody>
-
                             <tr>
                               <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
                               <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
@@ -424,10 +341,9 @@ try {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                              {this.state.walletConnected && <JoinPool pool={item} />}
+                                {this.state.walletConnected && <JoinPool pool={item} />}
                               </Row>
                             </tr>
-
                           </tbody>
 
                         ))}
@@ -446,16 +362,13 @@ try {
                         </thead>
 
                         {this.state.filterAblePools.map((item) => (
-                          item.pool_splitter == 'N' &&
                           <tbody>
-
                             <tr onClick={() => this.handleRowClick(item)}>
                               <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
                               {/* <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td> */}
                               <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
                               <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
                             </tr>
-
                           </tbody>
 
                         ))}

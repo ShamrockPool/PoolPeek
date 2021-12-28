@@ -1,11 +1,12 @@
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
+// import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
 import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
 import logo from 'assets/img/logo/logo-144x144.png';
 import React from 'react';
-import ReactHtmlParser from 'react-html-parser';
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   MdExtension,
   MdKeyboardArrowDown,
@@ -66,9 +67,9 @@ const poolQueries = [
   { to: '/saturatedpools', name: 'Saturated', exact: true, Icon: MdHourglassFull }
 ];
 
-const isos = [
+const isos = [  
+  { to: '/hoskyinupools', name: 'Hosky Inu', exact: true, Icon: MdSearch },
   { to: '/sundaeiso', name: 'SundaeSwap', exact: true, Icon: MdSearch },
-  // { to: '/hoskyinupools', name: 'Hosky Inu', exact: true, Icon: MdSearch },
   { to: '/hoskypools', name: 'Hosky', exact: true, Icon: MdSearch }
 ];
 
@@ -398,6 +399,22 @@ class Sidebar extends React.Component {
                 </NavItem>
               ))}
             </Collapse> */}
+
+            <Row className="justify-content-md-center">
+              <Col xs={12} sm={4} md={4}>
+                <br></br>
+                <a href="https://twitter.com/CardanoPoolPeek" target="_blank" rel="noreferrer">
+                  <Row icon={faTwitter} style={{
+                    color: "white", justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center'
+                  }}>
+                    <FontAwesomeIcon size="2x" icon={faTwitter} style={{ color: "white" }} />
+                    <p style={{ color: '#FFFFFF' }}>Follow Us</p>
+                  </Row></a>
+              </Col>
+            </Row>
+
           </Nav>
 
         </div>
