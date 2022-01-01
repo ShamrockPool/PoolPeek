@@ -105,7 +105,7 @@ class HoskyInuPools extends React.Component {
     }
 
     try {
-      var namiEnabled = await cardano.enable();
+      var namiEnabled = await cardano.isEnabled()
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
       
@@ -113,20 +113,12 @@ class HoskyInuPools extends React.Component {
 
     this.getPools();
 
-    // try {
-    //   await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
-
-    //   if (!this.state.walletConnected) {
-    //     // Connects nami wallet to current website 
-    //     await window.cardano.enable()
-    //       .then(result => this.setState({ walletConnected: result }))
-    //       .catch(e => console.log(e))
-    //   }
-
-    // } catch (error) {
-
-    // }
-
+    try {
+      var namiEnabled = await cardano.isEnabled()
+      this.setState({ namiEnabled: namiEnabled });
+    } catch (error) {
+      
+    }
 
     window.scrollTo(0, 0);
   }

@@ -33,6 +33,9 @@ export const getRetiredPools = "/pooldetails/getRetiredPools"
 export const getSundaeInfo = "/pooldetails/getsundaepools";
 export const gethoskypools = "/pooldetails/gethoskypools";
 export const gethoskyinupools = "/pooldetails/gethoskyinupools";
+export const getpoolpeekcoinpools = "/pooldetails/getpoolpeekcoinpools";
+export const getbisonpools = "/pooldetails/getbisonpools";
+
 
 export const mintNFT = "/nft/mint/";//{nftId}
 

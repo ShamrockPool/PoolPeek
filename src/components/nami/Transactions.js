@@ -15,7 +15,7 @@ export const getDelegation = async (Loader) => {
 
   var rewardAddress = Loader.RewardAddress.from_address(addressFromBytes)?.to_address().to_bech32();
 
-  const response = await fetch("https://api.koios.rest/api/v0/rpc/account_info?_address=" + rewardAddress);
+  const response = await fetch("https://api.koios.rest/api/v0/account_info?_address=" + rewardAddress);
   const stake = await response.json();
   if (!stake || stake.error || !stake[0] || !stake[0].delegated_pool) return {};
   return {
@@ -95,12 +95,12 @@ export const getAddress = async (Loader) => {
 
 export const getProtocolParameters = async () => {
 
-  const tipResponse = await fetch("https://api.koios.rest/api/v0/rpc/tip");
+  const tipResponse = await fetch("https://api.koios.rest/api/v0/tip");
   const tipData = await tipResponse.json();
 
   var epochNo = tipData[0].epoch;
 
-  const epochResponse = await fetch("https://api.koios.rest/api/v0/rpc/epoch_params?_epoch_no=" + epochNo);
+  const epochResponse = await fetch("https://api.koios.rest/api/v0/epoch_params?_epoch_no" + epochNo);
   const epochData = await epochResponse.json();
 
   return {

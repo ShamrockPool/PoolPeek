@@ -96,10 +96,10 @@ export default class PoolDetailsComponent extends React.Component {
         this.isPoolFavourite(ReactHtmlParser(this.props.pool.name));
 
         try {
-            var namiEnabled = await cardano.enable();
+            var namiEnabled = await cardano.isEnabled()
             this.setState({ namiEnabled: namiEnabled });
         } catch (error) {
-            console.log(error)
+
         }
     }
 

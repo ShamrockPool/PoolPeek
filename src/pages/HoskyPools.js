@@ -105,27 +105,21 @@ class HoskyPools extends React.Component {
     }
 
     try {
-      var namiEnabled = await cardano.enable();
+      var namiEnabled = await cardano.isEnabled()
+      this.setState({ namiEnabled: namiEnabled });
+    } catch (error) {
+
+    }
+
+    this.getPools();
+
+    try {
+      var namiEnabled = await cardano.isEnabled()
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
       
     }
 
-    this.getPools();
-
-try {
-  await window.cardano.isEnabled().then(result => { this.setState({ walletConnected: result }); });
-
-  if (!this.state.walletConnected) {
-    // Connects nami wallet to current website 
-    await window.cardano.enable()
-      .then(result => this.setState({ walletConnected: result }))
-      .catch(e => console.log(e))
-  }
-
-} catch (error) {
-  
-}
 
 
     window.scrollTo(0, 0);
@@ -424,7 +418,7 @@ try {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                              {this.state.namiEnabled && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} /> }
+                                {this.state.namiEnabled && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} />}
                               </Row>
                             </tr>
 

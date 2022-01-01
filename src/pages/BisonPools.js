@@ -15,7 +15,7 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getSaturatedPools, getPoolsAtRiskOfSaturation } from '../assets/services';
+import { baseUrlPoolPeekService, getbisonpools } from '../assets/services';
 import "../styles/styles.css";
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
@@ -85,15 +85,14 @@ const columns = [
   },
 ];
 
-class SaturatedPools extends React.Component {
+class BisonPools extends React.Component {
   state = {
     pools: null,
     loading: true,
     totalPools: '',
     smallScreen: false,
     searched: "",
-    poolsSaturated: [],
-    poolsAtRiskOfSaturation: [],
+    filterAblepools: [],
     stats: null,
     walletConnected: false,
     namiEnabled: false,
@@ -105,45 +104,34 @@ class SaturatedPools extends React.Component {
       this.setState({ smallScreen: true });
     }
 
-    // try {
-    //   var namiEnabled = await cardano.enable();
-    //   this.setState({ namiEnabled: namiEnabled });
-    // } catch (error) {
+    try {
+      var namiEnabled = await cardano.isEnabled()
+      this.setState({ namiEnabled: namiEnabled });
+    } catch (error) {
+      
+    }
 
-    // }
-
-    this.getPoolsAtRiskOfSaturation();
-
-
+    this.getPools();
 
     window.scrollTo(0, 0);
   }
 
-  async getPoolsAtRiskOfSaturation() {
+  async getPools() {
     try {
-      var response = await fetch(baseUrlPoolPeekService + getPoolsAtRiskOfSaturation);
-      const riskOfSatData = await response.json();
-
-      var response2 = await fetch(baseUrlPoolPeekService + getSaturatedPools);
-      const satData = await response2.json();
-
-      this.setState({ poolsSaturated: satData.pools, poolsAtRiskOfSaturation: riskOfSatData.pools, loading: false  })
-    } catch (error) {
-      console.log(error)
-    }
-
-    try {
-
+      var response = await fetch(baseUrlPoolPeekService + getbisonpools);
+      const data = await response.json();
+      this.setState({ stats: data.poolDetailsSundaeStatsVO })
+      this.createRows(data);
     } catch (error) {
       console.log(error)
     }
   }
 
-
-
-
-
-
+  createRows(sundaeData) {
+    var poolsList = [];
+    poolsList = sundaeData.pools;
+    this.setState({ loading: false, filterAblePools: poolsList })
+  }
 
   handleRowClick(rowData) {
     var url = '/pool/' + rowData.pool_id;
@@ -181,18 +169,121 @@ class SaturatedPools extends React.Component {
 
     return (
       <Page
-        className="SundaeISOPools"
-        title="Saturated Pools"
+        className="BisonPools"
+        title="Bison Pools"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           :
-
-
           <Col>
-            <h5>Saturation is used to indicate that a stake pool has more stake than is ideal for the network.</h5>
-            <h5>Once a pool reaches the point of saturation, it will offer diminishing rewards.</h5>
+
+            <Row>
+              <Col>
+                <Row>
+                  <h3>Starting Stats</h3>
+                </Row>
+                <Row>
+
+                  <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                          Pools
+                        </CardTitle>
+                        <CardText>
+                          17
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='primary'>
+                      <CardBody>
+                        <CardTitle className="text-capitalize">
+                          Stake
+                        </CardTitle>
+                        <CardText>
+                          {this.addCommas(Number(36545111))}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody>
+                        <CardTitle className="text-capitalize">
+                          Delegates
+                        </CardTitle>
+                        <CardText>
+                          {this.addCommas(3304)}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+
+
+                <Row>
+                  <h3>Live Stats</h3>
+                </Row>
+
+
+                <Row>
+
+                  <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                          Pools
+                        </CardTitle>
+                        <CardText>
+                          {this.state.stats.total_pools}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='primary'>
+                      <CardBody>
+                        <CardTitle className="text-capitalize">
+                          Stake
+                        </CardTitle>
+                        <CardText>
+                          {this.addCommas(this.state.stats.total_live_stake)}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody>
+                        <CardTitle className="text-capitalize">
+                          Delegates
+                        </CardTitle>
+                        <CardText>
+                          {this.addCommas(this.state.stats.live_stake_delegator_count)}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+
+              </Col>
+            </Row>
+
             <Row>
 
+              {/* <Col style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}>
+                <a href='https://discord.gg/hYj8bv7Dw6' target="_blank" rel="noreferrer" >
+                  <p>Hosky Inu Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
+              </Col> */}
 
               <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
                 <Card>
@@ -201,8 +292,9 @@ class SaturatedPools extends React.Component {
                     padding: '5px', margin: '0px',
                   }}>
                     <CardTitle className="text-capitalize">
-                      <b>Saturated Pools</b>
+                      <b>Pools</b>
                     </CardTitle>
+                    <small>Table ordered by filled %.</small>
 
                     {this.state.smallScreen == false ?
                       <Table {...{ ['striped']: true }}>
@@ -220,9 +312,8 @@ class SaturatedPools extends React.Component {
                           </tr>
                         </thead>
 
-                        {this.state.poolsSaturated.map((item) => (
+                        {this.state.filterAblePools.map((item) => (
                           <tbody>
-
                             <tr>
                               <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
                               <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
@@ -235,9 +326,9 @@ class SaturatedPools extends React.Component {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
+                                {this.state.namiEnabled && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} /> }
                               </Row>
                             </tr>
-
                           </tbody>
 
                         ))}
@@ -255,87 +346,7 @@ class SaturatedPools extends React.Component {
                           </tr>
                         </thead>
 
-                        {this.state.poolsSaturated.map((item) => (
-                          <tbody>
-                            <tr onClick={() => this.handleRowClick(item)}>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
-                              {/* <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td> */}
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
-                            </tr>
-                          </tbody>
-
-                        ))}
-
-                      </Table>
-                    }
-                  </CardBody>
-                </Card>
-
-                <br></br>
-
-                <Card>
-
-                  <CardBody body style={{
-                    padding: '5px', margin: '0px',
-                  }}>
-                    <CardTitle className="text-capitalize">
-                      <b>Risk of Saturation</b>
-                    </CardTitle>
-
-                    {this.state.smallScreen == false ?
-                      <Table {...{ ['striped']: true }}>
-                        <thead>
-                          <tr>
-                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
-                            <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th>
-                            <th onClick={e => this.onSort(e, 'margin_pct')}>Margin</th>
-                            {/* <th onClick={e => this.onSort(e, 'cost_per_epoch')}>Fixed Cost</th> */}
-                            <th onClick={e => this.onSort(e, 'live_stake_delegator_count')}>Delegates</th>
-                            <th onClick={e => this.onSort(e, 'live_stake')}>Live Stake</th>
-                            <th onClick={e => this.onSort(e, 'pct_saturated')}>Filled</th>
-                            <th></th>
-
-                          </tr>
-                        </thead>
-
-                        {this.state.poolsAtRiskOfSaturation.map((item) => (
-                          item.pct_saturated < 100 &&
-                          <tbody>
-
-                            <tr>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.margin_pct}%</p></td>
-                              {/* <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
-
-                              <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
-                                <p><Button variant="outline-light" size="sm">View</Button></p>
-                              </Link>
-                              </Row>
-                            </tr>
-
-                          </tbody>
-
-                        ))}
-
-                      </Table>
-                      :
-                      <Table {...{ ['striped']: true }}>
-                        <thead>
-                          <tr>
-                            <th onClick={e => this.onSort(e, 'name')}>Name</th>
-                            {/* <th onClick={e => this.onSort(e, 'ticker')}>Ticker</th> */}
-                            <th onClick={e => this.onSort(e, 'live_stake')}>Stake</th>
-                            <th onClick={e => this.onSort(e, 'pct_saturated')}>Filled</th>
-
-                          </tr>
-                        </thead>
-
-                        {this.state.poolsAtRiskOfSaturation.map((item) => (
+                        {this.state.filterAblePools.map((item) => (
                           <tbody>
                             <tr onClick={() => this.handleRowClick(item)}>
                               <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
@@ -364,4 +375,4 @@ class SaturatedPools extends React.Component {
     );
   }
 }
-export default SaturatedPools;
+export default BisonPools;

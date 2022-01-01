@@ -68,9 +68,11 @@ const poolQueries = [
 ];
 
 const isos = [  
+  { to: '/poolpeekcoinpools', name: 'PoolPeek Coin', exact: true, Icon: MdSearch },
   { to: '/hoskyinupools', name: 'Hosky Inu', exact: true, Icon: MdSearch },
   { to: '/sundaeiso', name: 'SundaeSwap', exact: true, Icon: MdSearch },
-  { to: '/hoskypools', name: 'Hosky', exact: true, Icon: MdSearch }
+  { to: '/hoskypools', name: 'Hosky', exact: true, Icon: MdSearch },
+  { to: '/bisonpools', name: 'Bison', exact: true, Icon: MdSearch }
 ];
 
 const navItems = [

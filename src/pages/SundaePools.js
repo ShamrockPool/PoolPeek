@@ -118,10 +118,10 @@ class SundaePools extends React.Component {
     window.scrollTo(0, 0);
 
     try {
-      var namiEnabled = await cardano.enable();
+      var namiEnabled = await cardano.isEnabled();
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
-      
+
     }
 
   }
@@ -419,7 +419,7 @@ class SundaePools extends React.Component {
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                              <JoinPool pool={item} namiEnabled={this.state.namiEnabled}/>
+                                <JoinPool pool={item} namiEnabled={this.state.namiEnabled} />
                               </Row>
                             </tr>
 
@@ -504,10 +504,10 @@ class SundaePools extends React.Component {
                               <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
                               <td style={tableRowStyle} scope="row"><p>{item.pct_saturated}%</p></td>
                               <td style={tableRowStyle} scope="row">
-                              <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
+                                <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                   <p><Button variant="outline-light" size="sm">View</Button></p>
                                 </Link>
-                                <JoinPool pool={item} namiEnabled={this.state.namiEnabled}/></Row>
+                                  <JoinPool pool={item} namiEnabled={this.state.namiEnabled} /></Row>
                               </td>
                             </tr>
 

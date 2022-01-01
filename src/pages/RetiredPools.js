@@ -103,12 +103,12 @@ class RetiredPools extends React.Component {
       this.setState({ smallScreen: true });
     }
 
-    try {
-      var namiEnabled = await cardano.enable();
-      this.setState({ namiEnabled: namiEnabled });
-    } catch (error) {
+    // try {
+    //   var namiEnabled = await cardano.enable();
+    //   this.setState({ namiEnabled: namiEnabled });
+    // } catch (error) {
 
-    }
+    // }
 
     this.getRetiredPools();
 

@@ -22,7 +22,9 @@ import SundaePools from './pages/SundaePools';
 import HoskyPools from 'pages/HoskyPools';
 import HoskyInuPools from 'pages/HoskyInuPools';
 import SaturatedPools from 'pages/SaturatedPools';
-import RetiredPools from 'pages/RetiredPools';
+import PoolPeekCoinPools from 'pages/PoolPeekCoinPools';
+import BisonPools from 'pages/BisonPools';
+
 import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
 
 import GA4React from "ga-4-react";
@@ -54,9 +56,12 @@ class App extends React.Component {
                 <Route exact path="/stakingcalculator" render={(props) => <StakingCalculator />} />
                 <Route exact path="/aboutus" render={(props) => <AboutUsPage />} />
 
+                <Route exact path="/poolpeekcoinpools" render={(props) => <PoolPeekCoinPools {...props}/>} />
                 <Route exact path="/sundaeiso" render={(props) => <SundaePools {...props}/>} />
                 <Route exact path="/hoskypools" render={(props) => <HoskyPools {...props}/>} />
                 <Route exact path="/hoskyinupools" render={(props) => <HoskyInuPools {...props}/>} />
+                <Route exact path="/bisonpools" render={(props) => <BisonPools {...props}/>} />
+
                 
                 
                 <Route exact path="/saturatedpools" render={(props) => <SaturatedPools {...props}/>} />
