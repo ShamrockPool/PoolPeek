@@ -16,14 +16,14 @@ import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactImageFallback from "react-image-fallback";
 import SocialMedia from '../SocialMedia';
 import ReactHtmlParser from 'react-html-parser';
-import { faInfo, faDatabase, faPeopleCarry, faHistory, faCube, faAward, faClipboard, faDollarSign } from '@fortawesome/free-solid-svg-icons';
+import { faInfo, faPeopleCarry, faHistory, faCube, faAward, faClipboard, faDollarSign } from '@fortawesome/free-solid-svg-icons';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import Favorite from "@material-ui/icons/Favorite";
 import IconButton from '@material-ui/core/IconButton';
-import { baseUrlPoolPeekService, getPoolDelegates, getStakeFeedHistory } from 'assets/services';
-import { TwitterTimelineEmbed, TwitterShareButton, TwitterFollowButton, TwitterHashtagButton, TwitterMentionButton, TwitterTweetEmbed, TwitterMomentShare, TwitterDMButton, TwitterVideoEmbed, TwitterOnAirButton } from 'react-twitter-embed';
+import { baseUrlPoolPeekService, getPoolDelegates, getPoolDelegatesHistory, requestPoolAdvertising } from 'assets/services';
+import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import Chart from '../Chart';
 import JoinPool from 'components/nami/JoinPool';
 var linkify = require('linkifyjs');
@@ -81,6 +81,7 @@ export default class PoolDetailsComponent extends React.Component {
             selectedTab: 0,
             loading: true,
             delegatesList: null,
+            delegateHistory: [],
             twitterUrl: null,
             favourite: false,
             stakeFeed: null,
@@ -92,6 +93,7 @@ export default class PoolDetailsComponent extends React.Component {
     async componentDidMount() {
         this.getTwitterName();
         this.getDelegates();
+        //this.loopingDelegateHistory();
         // this.getStakeFeed();
         this.isPoolFavourite(ReactHtmlParser(this.props.pool.name));
 
@@ -104,35 +106,29 @@ export default class PoolDetailsComponent extends React.Component {
     }
 
     async getDelegates() {
-        // if (!isEmpty(this.state.stakingAddress)) {
         const response = await fetch(baseUrlPoolPeekService + getPoolDelegates + this.props.pool.pool_id);
         const data = await response.json();
         this.setState({ delegatesList: data });
-        return data;
-        // }
     }
 
-    // async getStakeFeed() {
-    //     // if (!isEmpty(this.state.stakingAddress)) {
-    //         var url = baseUrlPoolPeekService + getStakeFeedHistory + this.props.pool.pool_id;
-    //     const response = await fetch(url);
-    //     const data = await response.json();
-    //     this.setState({ stakeFeed: data });
-    //     this.setState({ loading: false });
-    //     return data;
-    //     // }
-    // }
+    async loopingDelegateHistory() {
+        while (true) {
+            await this.getDelegatesHistory();
+            await this.sleep(30000);
+            console.log('fetching stake feed');
+        }
+    }
 
+    async getDelegatesHistory() {
+        const response = await fetch(baseUrlPoolPeekService + getPoolDelegatesHistory + this.props.pool.pool_id);
+        const data = await response.json();
+        this.setState({ delegateHistory: data });
+    }
 
-    // getTwitterName() {
-    //     var handle = this.props.pool.extended_meta.twitter_handle;
-    //     if (handle != null && !isEmpty(handle)) {
-    //         var name = handle.replace('https://twitter.com/', '');
-    //         name = name.replace('@', '');
-    //         var url = "https://twitter.com/" + name + "?ref_src=twsrc%5Etfw";
-    //         this.setState({ twitterUrl: url });
-    //     }
-    // }
+    async sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
 
     getTwitterName() {
         var handle = this.props.pool.extended_meta.twitter_handle;
@@ -143,20 +139,6 @@ export default class PoolDetailsComponent extends React.Component {
             this.setState({ twitterUrl: name });
         }
     }
-
-    // calculateLuck() {
-    //     try {
-    //         var lastEpochStakeString = this.props.pool.active_stake_history[0].active_stake.replaceAll(",", "");
-    //         var lastEpochStake = Number(lastEpochStakeString);
-    //         var divider = lastEpochStake / 1062037;
-    //         var blockEpoch = this.props.pool.block_history[1].blocks;
-    //         var blocksLuck = blockEpoch / divider;
-
-    //         return Math.round(blocksLuck * 100, 0);
-    //     } catch (error) {
-    //         return 0;
-    //     }
-    // }
 
     calculateLuck() {
         return this.props.pool.block_history[1].luck;
@@ -201,6 +183,14 @@ export default class PoolDetailsComponent extends React.Component {
             total += parseInt(element.blocks);
         });
         return total;
+    }
+
+    async requestPoolPromotion(poolId){
+        console.log(poolId);
+
+        const response = await fetch(baseUrlPoolPeekService + requestPoolAdvertising + this.props.pool.pool_id);
+        const data = await response.json();
+
     }
 
     handleFavourite(isFav) {
@@ -257,12 +247,6 @@ export default class PoolDetailsComponent extends React.Component {
     }
 
     isPoolFavourite(poolName) {
-
-        // var jsonStr = '{"favouritepools":[]}';
-        // var obj = JSON.parse(jsonStr);
-        // var jsonStr = JSON.stringify(obj);
-        // localStorage.setItem('favouritepools', jsonStr);
-
         var poolNameString = poolName[0];
         var storage = localStorage.getItem('favouritepools');
         if (storage != null) {
@@ -336,12 +320,24 @@ export default class PoolDetailsComponent extends React.Component {
                                                     }
 
                                                     {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}> */}
-                                                    <small>PoolID:  {this.props.pool.pool_id}          </small>
+                                                    <small><b>PoolID:</b>  {this.props.pool.pool_id}          </small>
                                                     <Tooltip
                                                         title="Copy Pool ID"
                                                         placement="left"
                                                     >
                                                         <CopyToClipboard text={this.props.pool.pool_id}
+                                                            onCopy={() => this.setState({ copied: true })}
+                                                        >
+                                                            <FontAwesomeIcon icon={faClipboard} />
+                                                        </CopyToClipboard>
+                                                    </Tooltip>
+                                                    <br></br>
+                                                    <small><b>PoolView: </b> {this.props.pool.pool_view}          </small>
+                                                    <Tooltip
+                                                        title="Copy Pool View"
+                                                        placement="left"
+                                                    >
+                                                        <CopyToClipboard text={this.props.pool.pool_view}
                                                             onCopy={() => this.setState({ copied: true })}
                                                         >
                                                             <FontAwesomeIcon icon={faClipboard} />
@@ -619,13 +615,6 @@ export default class PoolDetailsComponent extends React.Component {
                         <Col xl={3} lg={3} md={12} sm={12}>
                             <Row>
                                 <Col>
-                                    {/* <Card>
-                                        <CardHeader>Stake Feed</CardHeader>
-                                        <CardBody>
-                                           
-                                        </CardBody>
-                                    </Card> */}
-
                                     <Card>
                                         <CardHeader>Pool Links</CardHeader>
                                         <CardBody>
@@ -639,12 +628,74 @@ export default class PoolDetailsComponent extends React.Component {
                                         </CardBody>
                                     </Card>
 
+                                    {/* {this.state.delegateHistory != null &&
+                                        <Card>
+                                            <CardHeader>
+                                                <h6>Stake Feed</h6><small>Tracking delegate changes, currently in Beta</small></CardHeader>
+                                            <CardBody style={{
+                                                height: 300,
+                                                overflow: 'auto'
+                                            }}>
+
+                                                <Col>
+                                                    {
+                                                        this.state.delegateHistory.map(function (delegate, index) {
+                                                            return (
+                                                                <Row style={{
+                                                                    alignContent: 'center', justifyContent: 'center',
+                                                                    alignItems: 'center',
+                                                                    textAlign: 'center',
+                                                                    marginBottom: '5px'
+                                                                }}>
+                                                                    <Col>
+                                                                        {delegate.movedpool == 'Y' ?
+                                                                            <div>
+                                                                                <h6 style={{ marginBottom: '0px', paddingBottom: '0px', color: 'red' }}>-{delegate.stake_amount}</h6>
+                                                                                <small>{delegate.stake_address.substring(0, 20)}</small>
+                                                                                <h6 style={{ marginBottom: '0px', paddingBottom: '0px', color: 'red' }}><b>{ReactHtmlParser(delegate.pool_ticker)} - {delegate.new_pool_ticker}</b></h6>
+                                                                            </div>
+                                                                            :
+                                                                            delegate.stake_amount_change != null && delegate.stake_amount_change.includes("-") ?
+                                                                                <div>
+                                                                                    <small style={{ marginBottom: '0px', paddingBottom: '0px', color: 'red' }}>{delegate.stake_amount_change}</small><br></br>
+                                                                                    <small>{delegate.stake_address.substring(0, 20)}</small>
+                                                                                    <h6 style={{ marginBottom: '0px', paddingBottom: '0px' }}><b>{delegate.stake_amount}</b></h6>
+
+                                                                                </div>
+                                                                                :
+                                                                                delegate.stake_amount_change == null ?
+                                                                                    <div>
+                                                                                        <h6 style={{ marginBottom: '0px', paddingBottom: '0px', color: 'green' }}>+{delegate.stake_amount}</h6>
+                                                                                        <small>{delegate.stake_address.substring(0, 20)}</small>
+                                                                                        <h6 style={{ marginBottom: '0px', paddingBottom: '0px', color: 'green' }}><b>{delegate.previous_pool_ticker} - {ReactHtmlParser(delegate.pool_ticker)}</b></h6>
+
+                                                                                    </div>
+                                                                                    :
+                                                                                    <div>
+                                                                                        <small style={{ color: 'green' }}>+{delegate.stake_amount_change}</small><br></br>
+                                                                                        <small>{delegate.stake_address.substring(0, 20)}</small>
+                                                                                        <h6 style={{ marginBottom: '0px', paddingBottom: '0px' }}><b>{delegate.stake_amount}</b></h6>
+
+                                                                                    </div>
+                                                                        }
+                                                                    </Col>
+                                                                </Row>
+                                                            )
+                                                        })
+
+                                                    }</Col>
+
+
+                                            </CardBody>
+                                        </Card>} */}
+
+
                                     {!isEmpty(this.props.pool.extended_meta.twitter_handle) &&
                                         <Card>
                                             <CardHeader>
                                                 Twitter Feed</CardHeader>
                                             <CardBody style={{
-                                                height: 400,
+                                                height: 350,
                                                 overflow: 'auto'
                                             }}>
 
@@ -686,6 +737,10 @@ export default class PoolDetailsComponent extends React.Component {
                                             Share Pool</CardHeader>
                                         <CardBody>
                                             <ShareProject name={this.props.pool.pool_id} />
+                                            <p><Button variant="outline-light" size="sm" onClick={() => {
+                                                this.requestPoolPromotion(this.props.pool.pool_id)
+                                            }}
+                                            >Request Promotion</Button></p>
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -730,7 +785,7 @@ export default class PoolDetailsComponent extends React.Component {
                             </Col>
                         </Row> */}
 
-                </Page>
+                </Page >
 
             </div >
         );

@@ -27,6 +27,8 @@ import BisonPools from 'pages/BisonPools';
 
 import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
 
+import NamiJoinPool from 'pages/tools/NamiJoinPool';
+
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
 ga4react.initialize();
@@ -44,6 +46,9 @@ class App extends React.Component {
       <HashRouter basename={getBasename()}>
         <GAListener>
           <Switch>
+
+          <Route exact path="/namiwalletconnect" render={(props) => <NamiJoinPool />} />
+
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" render={(props) => <DashboardPage />} />

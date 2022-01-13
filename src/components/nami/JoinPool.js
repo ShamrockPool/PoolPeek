@@ -79,7 +79,7 @@ export default class JoinPool extends React.Component {
 
 
     async getProtocolParameters() {
-        var HOST = "https://api.koios.rest:8453/rpc";
+        var HOST = "https://api.koios.rest/api/v0/";
         const tip = await fetch(HOST + '/tip', {
             headers: {
                 'Accept': 'application/json',
@@ -216,6 +216,7 @@ export default class JoinPool extends React.Component {
                                         <p>Once complete your Nami Wallet will update to the new pool within 30 seconds.</p>
                                         <br></br>
                                         <p>Happy staking.</p>
+                                        <p>You can close this window.</p>
                                     </div>
 
                                 </Row>

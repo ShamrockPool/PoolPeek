@@ -79,7 +79,7 @@ rewardDate: "2020-09-22"
 
                             {/* {copied ? <span style={{color: 'red'}}>Copied.</span> : null} */}
                         </td>
-                        <td style={tableRowStyleStake} scope="row"><p>{Number(item.stake_amount).toFixed(2)}</p></td>
+                        <td style={tableRowStyleStake} scope="row"><p>{item.stake_amount}</p></td>
 
                         <td style={tableRowStyle} scope="row" >
                             <Row>

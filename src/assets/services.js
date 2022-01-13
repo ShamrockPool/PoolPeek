@@ -2,8 +2,8 @@
 //export const baseUrl = "http://localhost:8081";
 export const baseUrl = "https://smashpeek.com/services";
 
-//export const baseUrlPoolPeekService = "http://localhost:8087";
-export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
+export const baseUrlPoolPeekService = "http://localhost:8087";
+//export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
 
 
 
@@ -27,7 +27,12 @@ export const getSaturatedPools = "/pooldetails/getSaturatedPools"
 export const getPoolsAtRiskOfSaturation = "/pooldetails/getPoolsAtRiskOfSaturation"
 export const getRetiredPools = "/pooldetails/getRetiredPools"
 
+export const getPoolByStakeAddress = "/pooldetails/getone/stakeaddress/";//{stakeaddress}
 
+export const getPoolDelegatesHistory= "/pooldelegates/get/history/";//
+
+export const getPoolAdvertising = "/pooladvert/requested";
+export const requestPoolAdvertising = "/pooladvert/request/";//{poolId}
 
 //isos
 export const getSundaeInfo = "/pooldetails/getsundaepools";

@@ -37,7 +37,7 @@ import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import { Link } from 'react-router-dom';
-import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from '../assets/services';
+import { baseUrl, baseUrlPoolPeekService, dashboardData, getPoolByStakeAddress, getPoolAdvertising, getPoolForSearchList } from '../assets/services';
 import Favorite from '@material-ui/icons/Favorite';
 import { red } from '@material-ui/core/colors';
 
@@ -87,7 +87,6 @@ class DashboardPage extends React.Component {
     modal_nested: false,
     backdrop: true,
     loading: true,
-    pools: null,
     liveStake: '',
     totalWalletsStaked: '',
     totalAdaSupply: '',
@@ -98,7 +97,9 @@ class DashboardPage extends React.Component {
     favouritepools: [],
     epochSecondsRemaining: 0,
     searchInput: null,
-    namiEnabled: null
+    namiEnabled: false,
+    namiPool: null,
+    advertisingpool: null
   };
 
   toggle = modalType => () => {
@@ -117,11 +118,25 @@ class DashboardPage extends React.Component {
     console.log("Connect Nami");
     var namiEnabled = await cardano.enable();
     this.setState({ namiEnabled: namiEnabled });
+    await this.getNamiPool();
   };
 
   async componentDidMount() {
     // this is needed, because InfiniteCalendar forces window scroll
     window.scrollTo(0, 0);
+
+    await this.getDashboardData();
+
+    try {
+      var namiEnabled = await cardano.isEnabled();
+      this.setState({ namiEnabled: namiEnabled });
+
+      if (this.state.namiEnabled) {
+        await this.getNamiPool();
+      }
+
+    } catch (error) {
+    }
 
     this.getFavouritePools();
     this.generateEpochEvents();
@@ -132,17 +147,37 @@ class DashboardPage extends React.Component {
 
     this.teamPeekData = teamPeekData;//shuffle(teamPeekData);
 
-    await this.getDashboardData();
 
 
+  }
 
+  async getNamiPool() {
+    try {
+      const walletAddress = await cardano.getRewardAddress();
+      console.log(walletAddress);
+      const Loader = await import('@emurgo/cardano-serialization-lib-browser');
+      var walletAddressHex = Buffer.from(
+        walletAddress,
+        'hex'
+      );
+      var addressFromBytes = Loader.Address.from_bytes(walletAddressHex);
+      var rewardAddress = Loader.RewardAddress.from_address(addressFromBytes)?.to_address().to_bech32();
+
+      var response = await fetch(baseUrlPoolPeekService + getPoolByStakeAddress + rewardAddress);
+      var data = await response.json();
+      var pool = data.pools[0];
+      this.setState({ namiPool: pool });
+      this.state.namiPool = pool;
+    } catch (error) {
+
+    }
 
   }
 
   async getDashboardData() {
     this.getDashboardStatsData();
     await this.getAllPools();
-    await this.getPoolList();
+    await this.getAdvertisingPool();
     this.setState({
       loading: false
     });
@@ -179,12 +214,21 @@ class DashboardPage extends React.Component {
     this.setState({ filteredPools: data.pools });
   }
 
-  async getPoolList() {
-    var response = await fetch(baseUrlPoolPeekService + getPoolForRecommendedList);
+  // async getPoolList() {
+  //   var response = await fetch(baseUrlPoolPeekService + getPoolForRecommendedList);
+  //   var data = await response.json();
+  //   //console.log(data);
+  //   this.setState({ pools: data.pools });
+  // }
+
+  async getAdvertisingPool() {
+    var response = await fetch(baseUrlPoolPeekService + getPoolAdvertising);
     var data = await response.json();
-    //console.log(data);
-    this.setState({ pools: data.pools });
+    if (response.status == 200) {
+      this.setState({ advertisingpool: data });
+    }
   }
+
 
   async getDashboardStatsData() {
     var response = await fetch(baseUrl + dashboardData);
@@ -208,12 +252,12 @@ class DashboardPage extends React.Component {
 
 
   isLoading() {
-    if (this.state.loading || this.state.allpools == null || this.state.pools == null) {
+    if (this.state.loading || this.state.allpools == null) {
       return true;
     }
     else {
       return false;
-    }
+    };
   }
 
   startWizard() {
@@ -408,9 +452,8 @@ class DashboardPage extends React.Component {
 
                     <Link to={`/epochcalendar`}>
                       <h6>
-                        <b>View Epoch Calendar</b>
+                        <p><Button variant="outline-light" size="sm">View Epoch Calendar</Button></p>
                       </h6>
-                      {/* <p>{item.description}</p> */}
                     </Link>
 
                   </CardBody>
@@ -423,7 +466,7 @@ class DashboardPage extends React.Component {
                 <div>
                   <Card>
                     <CardHeader >
-                      <p><h6><b>Favourite Pools</b></h6></p><small>Click the favourite icon  on pools.</small>
+                      <h6><b>Favourite Pools</b></h6><small>Click the favourite icon  on pools.</small>
                       <Favorite style={{ color: red }}></Favorite>
                     </CardHeader>
                     <CardBody body >
@@ -532,7 +575,31 @@ class DashboardPage extends React.Component {
             </Col>
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
 
-              {width > 600 &&
+              {width > 600 && this.state.namiEnabled === true ?
+                <Card>
+                  <CardHeader><h6><b>Nami Wallet - Connected</b></h6></CardHeader>
+                  {this.state.namiPool != null && <CardBody body >
+
+                    <div style={{ display: 'inline-block', paddingRight: '10px' }}>
+                      <h6><b>Your Currently staking with</b></h6>
+                      <Link to={`/pool/${this.state.namiPool.pool_id}`}>
+                        <h6>
+                          <ReactImageFallback
+                            src={this.state.namiPool.url_png_logo}
+                            width="80"
+                            height="70"
+                            fallbackImage={CardanoImage} />
+                        </h6>
+                        <Row style={{
+                          alignContent: 'center', justifyContent: 'center',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                        }}><b>&nbsp;{this.state.namiPool.name}</b></Row>
+                      </Link>
+                    </div>
+                  </CardBody>}
+                </Card>
+                :
                 <Card>
                   <CardHeader><h6><b>Connect Nami Wallet</b></h6><small>Click Image To Connect</small></CardHeader>
                   <CardBody body >
@@ -543,7 +610,8 @@ class DashboardPage extends React.Component {
                       onClick={() => this.connectWallet()}
                     />
                   </CardBody>
-                </Card>}
+                </Card>
+              }
 
 
               <br></br>
@@ -553,7 +621,7 @@ class DashboardPage extends React.Component {
                 <CardBody body>
                   <Link to={`/poolpeekcoinpools`}>
                     <h6>
-                      <b>View Pools</b>
+                      <p><Button variant="outline-light" size="sm">View Pools</Button></p>
                     </h6>
                     <video loop autoPlay muted style={{ width: "12vw" }}>
                       <source src={ppc} type='video/mp4' />
@@ -654,7 +722,7 @@ class DashboardPage extends React.Component {
                 </CardHeader>
                 <CardBody body >
                   <br></br>
-                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"><b>Pool Wizard</b>                   <br></br></a>
+                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"><p><Button variant="outline-light" size="sm">Pool Wizard</Button></p>                   <br></br></a>
                 </CardBody>
               </Card>
 
@@ -674,7 +742,7 @@ class DashboardPage extends React.Component {
 
               <br></br>
 
-              <Card>
+              {/* <Card>
                 <CardHeader><h6><b>Random Pools</b></h6><small>A randomising pool list</small></CardHeader>
                 <CardBody body >
 
@@ -707,7 +775,7 @@ class DashboardPage extends React.Component {
                                 alignContent: 'center', justifyContent: 'center',
                                 alignItems: 'center',
                                 textAlign: 'center',
-                              }}><h7><b>{ReactHtmlParser(item.name)}({item.ticker})</b></h7></Row>
+                              }}><h6><b>{ReactHtmlParser(item.name)}({item.ticker})</b></h6></Row>
                             </h6>
                             <small>{ReactHtmlParser(linkifyHtml(item.description, {
                               defaultProtocol: 'https'
@@ -721,8 +789,53 @@ class DashboardPage extends React.Component {
                   })
                   }
                 </CardBody>
-              </Card>
+              </Card> */}
 
+              {this.state.advertisingpool != null &&
+                <Card>
+                  <CardHeader><h6><b>Pool Advert</b></h6></CardHeader>
+                  <CardBody body >
+
+                    <Row style={{
+                      fontSize: 14, alignContent: 'center', justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      margin: "10px"
+                    }}>
+                      <Link to={`/pool/${this.state.advertisingpool.pool_id}`}>
+                        <h6>
+
+                          {checkIsImageUrl(this.state.advertisingpool.extended_meta.url_png_logo) ? (
+                            <ReactImageFallback
+                              src={this.state.advertisingpool.extended_meta.url_png_logo}
+                              width="60"
+                              height="50"
+                              fallbackImage={CardanoImage} />
+                          ) : (<img
+                            src={CardanoImage}
+                            className="pr-2"
+                            width="60"
+                            height="60"
+                          />)}
+
+                          <Row style={{
+                            alignContent: 'center', justifyContent: 'center',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                          }}><h6><b>{ReactHtmlParser(this.state.advertisingpool.name)}({this.state.advertisingpool.ticker})</b></h6></Row>
+                        </h6>
+                        <p>{ReactHtmlParser(linkifyHtml(this.state.advertisingpool.description, {
+                          defaultProtocol: 'https'
+                        }))}</p>
+
+
+                        <p><Button variant="outline-light" size="sm">More Info</Button></p>
+
+                      </Link>
+                      <br></br>
+                    </Row>
+                  </CardBody>
+                </Card>}
 
 
 
