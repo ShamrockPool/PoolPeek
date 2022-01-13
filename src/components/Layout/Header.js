@@ -9,7 +9,8 @@ import {
 } from 'reactstrap';
 import bn from 'utils/bemnames';
 import SearchInput from 'components/SearchInput';
-import { baseUrl, baseUrlPoolPeekService, dashboardData, recommendedPools, getPoolForRecommendedList, getPoolForSearchList } from 'assets/services';
+
+import Timer from "react-compound-timer";
 
 
 const bem = bn.create('header');
@@ -23,7 +24,7 @@ class Header extends React.Component {
       adaEuroPrice: "",
       adaGbpPrice: "",
       adaBtcPrice: "",
-      allpools: null
+      epochSecondsRemaining: 0,
     };
   }
 
@@ -71,7 +72,7 @@ class Header extends React.Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    //await this.getAllPools();
+    await this.generateEpochEvents();
 
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
@@ -84,12 +85,28 @@ class Header extends React.Component {
 
   }
 
-  // async getAllPools() {
-  //   var response = await fetch(baseUrlPoolPeekService + getPoolForSearchList);
-  //   var data = await response.json();
-  //   //console.log(data);
-  //   this.setState({ allpools: data.pools });
-  // }
+  async generateEpochEvents() {
+    var epochDate = new Date(2017, 8, 23, 21, 44, 59);
+    var today = new Date(new Date().toUTCString());
+    var endDate = new Date(today.getFullYear(), 12, 31, 21, 45);
+
+    var epoch = 0;
+    var epochLength = 5;
+
+    while (epochDate.getTime() < endDate.getTime()) {
+      var epochEndDate = new Date(epochDate);
+      epochEndDate.setDate(epochEndDate.getDate() + epochLength);
+
+      if (today > epochDate && today < epochEndDate) {
+        var timeInEpoch = epochEndDate.getTime() - new Date(Date.now() + (new Date().getTimezoneOffset() * 60000)).getTime();
+        //  this.state.epochSecondsRemaining = timeInEpoch;
+        this.setState({ epochSecondsRemaining: timeInEpoch });
+        this.state.epochSecondsRemaining = timeInEpoch;
+      }
+      epoch++;
+      epochDate = new Date(epochEndDate);
+    }
+  }
 
   render() {
 
@@ -105,8 +122,16 @@ class Header extends React.Component {
           <div>
             <p><b>ADA Price:</b>  <b>   $</b>  {this.state.adaUsdPrice} <b>  €</b> {this.state.adaEuroPrice}
               <b>  £</b> {this.state.adaGbpPrice} <b>  ₿</b> {this.state.adaBtcPrice} </p>
-            <p></p>
-            <p></p>
+            {this.state.epochSecondsRemaining != 0 &&
+              <Timer
+                initialTime={this.state.epochSecondsRemaining}
+                direction="backward"
+              >
+                <h6><b>Epoch Change:</b>  <b>Days:</b>  <Timer.Days />  <b>Hours:</b> <Timer.Hours />   <b>Mins:</b> <Timer.Minutes /> </h6>
+              </Timer>}
+
+              {/* //<b>Sec:</b> <Timer.Seconds />< */}
+              
           </div>
         </Nav>
         {/* <Nav navbar className={bem.e('nav-right')}>
@@ -114,7 +139,7 @@ class Header extends React.Component {
             <SearchInput allpools={this.state.allpools} />
           }
         </Nav> */}
-      </Navbar>
+      </Navbar >
     );
   }
 }

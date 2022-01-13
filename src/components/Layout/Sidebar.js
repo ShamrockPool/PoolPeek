@@ -98,6 +98,7 @@ class Sidebar extends React.Component {
     isOpenFunQuery: false,
     isOpenSaturation: false,
     isOpenQueries: false,
+    isOpenOfferings: true,
     navAdaFolio: [],
   };
 
@@ -210,7 +211,7 @@ class Sidebar extends React.Component {
                   className={bem.e('nav-item-icon')}
                   style={{
                     padding: 0,
-                    transform: this.state.isOpenSaturation
+                    transform: this.state.isOpenOfferings
                       ? 'rotate(0deg)'
                       : 'rotate(-90deg)',
                     transitionDuration: '0.3s',
@@ -219,7 +220,7 @@ class Sidebar extends React.Component {
                 />
               </BSNavLink>
             </NavItem>
-            <Collapse isOpen={this.state.isOpenSaturation}>
+            <Collapse isOpen={this.state.isOpenOfferings}>
               {isos.map(({ to, name, exact, Icon }, index) => (
                 <NavItem key={index} className={bem.e('nav-item')}>
                   <BSNavLink

@@ -5,12 +5,6 @@ import {
 } from 'demos/dashboardPage';
 import Timer from "react-compound-timer";
 import React from 'react';
-import {
-  FaTwitter,
-  FaTelegram,
-  FaMobile,
-  FaMobileAlt
-} from 'react-icons/fa';
 import ReactHtmlParser from 'react-html-parser';
 import {
   Table,
@@ -139,7 +133,7 @@ class DashboardPage extends React.Component {
     }
 
     this.getFavouritePools();
-    this.generateEpochEvents();
+    //this.generateEpochEvents();
 
     if (width < 600) {
       this.setState({ modal: false, modalImageWidth: width / 1.2 });
@@ -223,9 +217,12 @@ class DashboardPage extends React.Component {
 
   async getAdvertisingPool() {
     var response = await fetch(baseUrlPoolPeekService + getPoolAdvertising);
-    var data = await response.json();
+
     if (response.status == 200) {
-      this.setState({ advertisingpool: data });
+      var data = await response.json();
+      if (data != null) {
+        this.setState({ advertisingpool: data });
+      }
     }
   }
 
@@ -439,7 +436,7 @@ class DashboardPage extends React.Component {
 
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
 
-              <Timer
+              {/* <Timer
                 initialTime={this.state.epochSecondsRemaining}
                 direction="backward"
               >
@@ -458,16 +455,17 @@ class DashboardPage extends React.Component {
 
                   </CardBody>
                 </Card>
-              </Timer>
+              </Timer> 
+              <br></br>*/}
 
-              <br></br>
+              
 
-              {this.state.favouritepools.length > 0 &&
+              {/* {this.state.favouritepools.length > 0 && */}
                 <div>
                   <Card>
                     <CardHeader >
-                      <h6><b>Favourite Pools</b></h6><small>Click the favourite icon  on pools.</small>
-                      <Favorite style={{ color: red }}></Favorite>
+                      <h6><b>Favourite Pools</b></h6><small>Click the favourite icon within pools to display here.</small>
+                      <Favorite style={{ color: red, fill: '#FF0000' }}></Favorite>
                     </CardHeader>
                     <CardBody body >
                       <Row>
@@ -475,7 +473,7 @@ class DashboardPage extends React.Component {
                           {this.state.favouritepools.map(function (item, index) {
 
                             return (
-                              <div style={{ display: 'inline-block', paddingRight: '5px' }}>
+                              <div style={{ display: 'inline-block', paddingRight: '5px', paddingTop: '20px' }}>
                                 <Link to={`/pool/${item.pool_id}`}>
                                   <h6>
                                     {checkIsImageUrl(item.url_png_logo) ? (
@@ -501,7 +499,7 @@ class DashboardPage extends React.Component {
                       </Row>
                     </CardBody>
                   </Card>
-                  <br></br></div>}
+                  <br></br></div>
 
 
 
@@ -552,7 +550,7 @@ class DashboardPage extends React.Component {
                       {this.state.filteredPools.map(function (item, index) {
 
                         return (
-                          index < 12 &&
+                          index < 24 &&
                           <Col lg={3} md={4} sm={4} xs={4}>
                             <Card>
                               <CardBody>
@@ -616,21 +614,52 @@ class DashboardPage extends React.Component {
 
               <br></br>
 
-              <Card>
-                <CardHeader><h6><b>PoolPeekCoin Pools</b></h6><small>Stake with one of the PoolPeekCoin Pools to earn PPC</small></CardHeader>
-                <CardBody body>
-                  <Link to={`/poolpeekcoinpools`}>
-                    <h6>
-                      <p><Button variant="outline-light" size="sm">View Pools</Button></p>
-                    </h6>
-                    <video loop autoPlay muted style={{ width: "12vw" }}>
-                      <source src={ppc} type='video/mp4' />
-                    </video>
-                  </Link>
-                </CardBody>
-              </Card>
+              {this.state.advertisingpool != null &&
+                <Card>
+                  <CardHeader><h6><b>Pool Advert</b></h6></CardHeader>
+                  <CardBody body >
 
-              <br></br>
+                    <Row style={{
+                      fontSize: 14, alignContent: 'center', justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                      margin: "10px"
+                    }}>
+                      <Link to={`/pool/${this.state.advertisingpool.pool_id}`}>
+                        <h6>
+
+                          {checkIsImageUrl(this.state.advertisingpool.extended_meta.url_png_logo) ? (
+                            <ReactImageFallback
+                              src={this.state.advertisingpool.extended_meta.url_png_logo}
+                              width="60"
+                              height="50"
+                              fallbackImage={CardanoImage} />
+                          ) : (<img
+                            src={CardanoImage}
+                            className="pr-2"
+                            width="60"
+                            height="60"
+                          />)}
+
+                          <Row style={{
+                            alignContent: 'center', justifyContent: 'center',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                          }}><h6><b>{ReactHtmlParser(this.state.advertisingpool.name)}({this.state.advertisingpool.ticker})</b></h6></Row>
+                        </h6>
+                        <p>{ReactHtmlParser(linkifyHtml(this.state.advertisingpool.description, {
+                          defaultProtocol: 'https'
+                        }))}</p>
+
+
+                        <p><Button variant="outline-light" size="sm">More Info</Button></p>
+
+                      </Link>
+                      <br></br>
+                    </Row>
+                  </CardBody>
+                </Card>}
+
 
               <Card>
                 <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
@@ -791,51 +820,21 @@ class DashboardPage extends React.Component {
                 </CardBody>
               </Card> */}
 
-              {this.state.advertisingpool != null &&
-                <Card>
-                  <CardHeader><h6><b>Pool Advert</b></h6></CardHeader>
-                  <CardBody body >
-
-                    <Row style={{
-                      fontSize: 14, alignContent: 'center', justifyContent: 'center',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      margin: "10px"
-                    }}>
-                      <Link to={`/pool/${this.state.advertisingpool.pool_id}`}>
-                        <h6>
-
-                          {checkIsImageUrl(this.state.advertisingpool.extended_meta.url_png_logo) ? (
-                            <ReactImageFallback
-                              src={this.state.advertisingpool.extended_meta.url_png_logo}
-                              width="60"
-                              height="50"
-                              fallbackImage={CardanoImage} />
-                          ) : (<img
-                            src={CardanoImage}
-                            className="pr-2"
-                            width="60"
-                            height="60"
-                          />)}
-
-                          <Row style={{
-                            alignContent: 'center', justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                          }}><h6><b>{ReactHtmlParser(this.state.advertisingpool.name)}({this.state.advertisingpool.ticker})</b></h6></Row>
-                        </h6>
-                        <p>{ReactHtmlParser(linkifyHtml(this.state.advertisingpool.description, {
-                          defaultProtocol: 'https'
-                        }))}</p>
+              <Card>
+                <CardHeader><h6><b>PoolPeekCoin Pools</b></h6><small>Stake with one of the PoolPeekCoin Pools to earn PPC</small></CardHeader>
+                <CardBody body>
+                  <Link to={`/poolpeekcoinpools`}>
+                    <h6>
+                      <p><Button variant="outline-light" size="sm">View Pools</Button></p>
+                    </h6>
+                    <video loop autoPlay muted style={{ width: "12vw" }}>
+                      <source src={ppc} type='video/mp4' />
+                    </video>
+                  </Link>
+                </CardBody>
+              </Card>
 
 
-                        <p><Button variant="outline-light" size="sm">More Info</Button></p>
-
-                      </Link>
-                      <br></br>
-                    </Row>
-                  </CardBody>
-                </Card>}
 
 
 

@@ -10,7 +10,13 @@ import { css } from "@emotion/core";
 import { isEmpty } from 'utils/stringutil.js';
 import "react-tabs/style/react-tabs.css";
 import "../../styles/components/Table.css";
-import { Card, CardBody, CardHeader, Col, Row, Button } from 'reactstrap';
+import {
+    Card, CardBody, CardHeader, Col, Row, Button,
+    Modal,
+    ModalBody,
+    ModalFooter,
+    ModalHeader
+} from 'reactstrap';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'; // eslint-disable-line
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import ReactImageFallback from "react-image-fallback";
@@ -86,9 +92,23 @@ export default class PoolDetailsComponent extends React.Component {
             favourite: false,
             stakeFeed: null,
             namiEnabled: false,
+            modal: false,
+            modal_backdrop: false,
+            modal_nested_parent: false,
+            modal_nested: false,
+            requestpromotion_status: null,
+            requestpromotion_response: null,
+            requestpromotion_start: null,
+            requestpromotion_end: null
         };
 
     }
+
+    toggle() {
+        return this.setState({
+            modal: !this.state.modal,
+        });
+    };
 
     async componentDidMount() {
         this.getTwitterName();
@@ -185,11 +205,34 @@ export default class PoolDetailsComponent extends React.Component {
         return total;
     }
 
-    async requestPoolPromotion(poolId){
+    async requestPoolPromotion(poolId) {
         console.log(poolId);
-
+        this.toggle();
         const response = await fetch(baseUrlPoolPeekService + requestPoolAdvertising + this.props.pool.pool_id);
         const data = await response.json();
+
+        if (data != null) {
+
+            try {
+                if (data.start_date_time && data.end_date_time) {
+                    var startDateTime = null;
+                    startDateTime = data.start_date_time.replace("T", " ");
+                    startDateTime = startDateTime.substring(0, 16)
+
+                    var endDateTime = null;
+                    endDateTime = data.end_date_time.replace("T", " ");
+                    endDateTime = endDateTime.substring(0, 16);
+                    this.setState({ requestpromotion_start: startDateTime, requestpromotion_end: endDateTime });
+                }
+            } catch (error) {
+
+            }
+
+
+        }
+        this.setState({ requestpromotion_status: response.status, requestpromotion_response: data });
+
+
 
     }
 
@@ -749,7 +792,6 @@ export default class PoolDetailsComponent extends React.Component {
                     </Row>
 
 
-
                     {/* <Row>
                             <Col>
                                 {this.state.project.relatedProjects != null && this.state.project.relatedProjects.length > 0 &&
@@ -784,6 +826,37 @@ export default class PoolDetailsComponent extends React.Component {
                                 </Card>
                             </Col>
                         </Row> */}
+
+                    <Modal
+                        isOpen={this.state.modal}
+                        toggle={false}
+                    >
+                        <ModalHeader toggle={() => this.toggle()}>Request Pool Promotion</ModalHeader>
+                        <ModalBody>
+                            <Row>
+                                <p>Hello {this.props.pool.ticker} thanks for your request for promotion.</p>
+                            </Row>
+
+                            <Row>
+                                {this.state.requestpromotion_status == 200 ?
+                                    <div>
+                                        <p>Your request has been <b>successful</b> your advert is in the queue.</p>
+                                        <p><b>Start Time:</b> {this.state.requestpromotion_start} UTC</p>
+                                        <p><b>End Time:</b> {this.state.requestpromotion_end} UTC</p>
+
+                                        {/* {this.props.pool.live_stake < 10000000 &&
+                                            <p>As your live stake is lower than 10Mil we will add your to our twitter promotion lottery where we randomly select 3 pools to promote.</p>
+                                        } */}
+                                        <br></br>
+                                    </div>
+                                    :
+                                    <p>Your request has been <b>unsuccessful</b>, its likely your already in the queue.</p>
+                                }
+                            </Row>
+
+                        </ModalBody>
+
+                    </Modal>
 
                 </Page >
 
