@@ -5,8 +5,8 @@
   "homepage": ".",
   "main": "src/index.js",
   "dependencies": {
-    "@emurgo/cardano-serialization-lib-asmjs": "^9.1.2",
-    "@emurgo/cardano-serialization-lib-browser": "^9.1.2",
+    "@emurgo/cardano-serialization-lib-asmjs": "^9.1.4",
+    "@emurgo/cardano-serialization-lib-browser": "^9.1.4",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",

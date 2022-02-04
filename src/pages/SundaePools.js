@@ -49,8 +49,18 @@ const useStyles = makeStyles({
 const tableRowStyle = {
   // borderBottom: 'solid 3px blue',
   // background: 'green',
-  // color: 'white',
+  color: 'green',
   fontWeight: 'bold',
+  // padding: 0,
+};
+
+const tableRowStyleBad = {
+  // borderBottom: 'solid 3px blue',
+  // background: 'green',
+  color: 'red',
+  fontWeight: 'bold',
+  // textDecoration: 'line-through'
+
   // padding: 0,
 };
 
@@ -115,7 +125,7 @@ class SundaePools extends React.Component {
     }
 
     this.getSundaePools();
-    window.scrollTo(0, 0);
+    //window.scrollTo(0, 0);
 
     try {
       var namiEnabled = await cardano.isEnabled();
@@ -194,7 +204,11 @@ class SundaePools extends React.Component {
 
             <Row>
               <Col>
-                <Row>
+                <Row style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
                   <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
                     <Card inverse color='primary' style={{ margin: '0px' }}>
                       <CardBody body>
@@ -202,13 +216,13 @@ class SundaePools extends React.Component {
                           Active SPO's
                         </CardTitle>
                         <CardText>
-                          30
+                          39
                         </CardText>
                       </CardBody>
                     </Card>
                   </Col>
 
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+                  {/* <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
                     <Card inverse color='secondary'>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
@@ -219,29 +233,29 @@ class SundaePools extends React.Component {
                         </CardText>
                       </CardBody>
                     </Card>
-                  </Col>
+                  </Col> */}
 
                   <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
+                    <Card inverse color='secondary'>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
                           ISO Start Date
                         </CardTitle>
                         <CardText>
-                          Not released
+                          January 25th (21:45 UTC)
                         </CardText>
                       </CardBody>
                     </Card>
                   </Col>
 
                   <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
+                    <Card inverse color='primary'>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
                           ISO End Date
                         </CardTitle>
                         <CardText>
-                          Not released
+                          February 14th (21:45 UTC)
                         </CardText>
                       </CardBody>
                     </Card>
@@ -249,6 +263,7 @@ class SundaePools extends React.Component {
 
                 </Row>
 
+<hr></hr>
                 <Row>
                   <h3>End of Vote Stats</h3>
                 </Row>
@@ -311,7 +326,90 @@ class SundaePools extends React.Component {
 
 
                 {/* 5 are saturated after vote */}
+                <hr></hr>
+                <Row>
+                  <h3>Epoch Snapshots</h3>
+                </Row>
 
+                <Row style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+
+                  <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+                    <Card inverse color='primary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                        Epoch 317 - Jan 25th 
+                          <br></br><small>Stake</small>
+                        </CardTitle>
+                        <CardText>
+                        {this.addCommas(5585812184)}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                        Epoch 318 - Jan 30th 
+                          <br></br><small>Stake</small>
+                        </CardTitle>
+                        <CardText>
+                        {this.addCommas(6466635712)}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+                    <Card inverse color='primary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                        Epoch 319 - Feb 4th 
+                          <br></br><small>Stake</small>
+                        </CardTitle>
+                        <CardText>
+                        TBC
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                        Epoch 320 - Feb 9th 
+                          <br></br><small>Stake</small>
+                        </CardTitle>
+                        <CardText>
+                        TBC
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+                    <Card inverse color='primary'>
+                      <CardBody body>
+                        <CardTitle className="text-capitalize">
+                        Epoch 321 - Feb 14th
+                          <br></br><small>Stake</small>
+                        </CardTitle>
+                        <CardText>
+                        TBC
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                 
+                </Row>
+
+                <hr></hr>
                 <Row>
                   <h3>Live Stats</h3>
                 </Row>
@@ -361,6 +459,14 @@ class SundaePools extends React.Component {
 
               </Col>
             </Row>
+            <hr></hr>
+            <Row style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <p>More info on ISO: <a href='https://sundaeswap-finance.medium.com/wen-sundae-thursday-9389e4439530' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
+            </Row>
 
             <Row>
 
@@ -407,19 +513,25 @@ class SundaePools extends React.Component {
                           item.pool_splitter == 'N' &&
                           <tbody>
 
-                            <tr>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.margin_pct}%</p></td>
+                            <tr style={
+                              Number(item.pct_saturated) > 100
+                                ? tableRowStyleBad
+                                : tableRowStyle
+                            }>
+
+
+                              <td scope="row" ><p>{item.name}</p></td>
+                              <td scope="row"><p>{item.ticker}</p></td>
+                              <td scope="row"><p>{item.margin_pct}%</p></td>
                               {/* <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
+                              <td scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
+                              <td scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
 
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                 <p><Button variant="outline-light" size="sm">View</Button></p>
                               </Link>
-                                <JoinPool pool={item} namiEnabled={this.state.namiEnabled} />
+                                {Number(item.pct_saturated) < 100 && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} />}
                               </Row>
                             </tr>
 
@@ -444,11 +556,15 @@ class SundaePools extends React.Component {
                           item.pool_splitter == 'N' &&
                           <tbody>
 
-                            <tr onClick={() => this.handleRowClick(item)}>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
+                            <tr style={
+                              Number(item.pct_saturated) > 100
+                                ? tableRowStyleBad
+                                : tableRowStyle
+                            } onClick={() => this.handleRowClick(item)}>
+                              <td scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
                               {/* <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td> */}
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
+                              <td scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
                             </tr>
 
                           </tbody>
@@ -474,7 +590,7 @@ class SundaePools extends React.Component {
                     </CardTitle>
 
 
-                    <small>Table ordered by saturation.</small>
+                    <small>Table ordered by filled %.</small>
 
                     {this.state.smallScreen == false ?
                       <Table {...{ ['striped']: true }}>
@@ -495,19 +611,24 @@ class SundaePools extends React.Component {
                           item.pool_splitter == 'Y' &&
                           <tbody>
 
-                            <tr>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.margin_pct}%</p></td>
+                            <tr style={
+                              Number(item.pct_saturated) > 100
+                                ? tableRowStyleBad
+                                : tableRowStyle
+                            }>
+                              <td scope="row" ><p>{item.name}</p></td>
+                              <td scope="row"><p>{item.ticker}</p></td>
+                              <td scope="row"><p>{item.margin_pct}%</p></td>
                               {/* <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{item.pct_saturated}%</p></td>
-                              <td style={tableRowStyle} scope="row">
+                              <td scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
+                              <td scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td scope="row"><p>{item.pct_saturated}%</p></td>
+                              <td scope="row">
                                 <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                   <p><Button variant="outline-light" size="sm">View</Button></p>
                                 </Link>
-                                  <JoinPool pool={item} namiEnabled={this.state.namiEnabled} /></Row>
+                                  {Number(item.pct_saturated) < 100 && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} />}
+                                </Row>
                               </td>
                             </tr>
 
@@ -532,10 +653,14 @@ class SundaePools extends React.Component {
                           item.pool_splitter == 'Y' &&
                           <tbody>
 
-                            <tr onClick={() => this.handleRowClick(item)}>
-                              <td style={tableRowStyle} scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
-                              <td style={tableRowStyle} scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
+                            <tr style={
+                              Number(item.pct_saturated) > 100
+                                ? tableRowStyleBad
+                                : tableRowStyle
+                            } onClick={() => this.handleRowClick(item)}>
+                              <td scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
+                              <td scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
                             </tr>
 
                           </tbody>

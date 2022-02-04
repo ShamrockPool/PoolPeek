@@ -30,7 +30,6 @@ class PoolDetailsPage extends React.Component {
   componentDidMount() {
     window.scrollTo(0, 0);
     this.getPool();
-    console.log(this.state.pool);
   }
 
   async getPool() {
@@ -38,7 +37,6 @@ class PoolDetailsPage extends React.Component {
     console.log(this.props.match.params.poolid);
     var response = await fetch(baseUrlPoolPeekService + getPoolById + this.props.match.params.poolid);
     var data = await response.json();
-    console.log(data);
     this.setState({ pool: data.pools[0], loading: false });
   }
 

@@ -6,15 +6,15 @@ import {
   Button,
   Nav,
   Navbar,
+  Row
 } from 'reactstrap';
 import bn from 'utils/bemnames';
-import SearchInput from 'components/SearchInput';
-
+import nami from 'assets/img/namiicon.jpg';
 import Timer from "react-compound-timer";
 
-
+const width = window.innerWidth;
 const bem = bn.create('header');
-
+const cardano = window.cardano;
 
 class Header extends React.Component {
   constructor(props) {
@@ -25,6 +25,7 @@ class Header extends React.Component {
       adaGbpPrice: "",
       adaBtcPrice: "",
       epochSecondsRemaining: 0,
+      currentEpoch: 0
     };
   }
 
@@ -70,9 +71,29 @@ class Header extends React.Component {
     return data.price;
   }
 
+  async getCurrentEpoch() {
+    let response = await
+      fetch('https://api.koios.rest/api/v0/tip');
+    let data = await response.json();
+    var epoch = data[0].epoch;
+    this.setState({ currentEpoch: epoch });
+  }
+
   async componentDidMount() {
     window.scrollTo(0, 0);
     await this.generateEpochEvents();
+    await this.getCurrentEpoch();
+
+    try {
+      var namiEnabled = await cardano.isEnabled();
+      this.setState({ namiEnabled: namiEnabled });
+
+      if (this.state.namiEnabled) {
+        await this.getNamiPool();
+      }
+
+    } catch (error) {
+    }
 
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
@@ -108,6 +129,12 @@ class Header extends React.Component {
     }
   }
 
+  async connectWallet() {
+    console.log("Connect Nami");
+    var namiEnabled = await cardano.enable();
+    this.setState({ namiEnabled: namiEnabled });
+  };
+
   render() {
 
     return (
@@ -122,23 +149,54 @@ class Header extends React.Component {
           <div>
             <p><b>ADA Price:</b>  <b>   $</b>  {this.state.adaUsdPrice} <b>  €</b> {this.state.adaEuroPrice}
               <b>  £</b> {this.state.adaGbpPrice} <b>  ₿</b> {this.state.adaBtcPrice} </p>
-            {this.state.epochSecondsRemaining != 0 &&
-              <Timer
-                initialTime={this.state.epochSecondsRemaining}
-                direction="backward"
-              >
-                <h6><b>Epoch Change:</b>  <b>Days:</b>  <Timer.Days />  <b>Hours:</b> <Timer.Hours />   <b>Mins:</b> <Timer.Minutes /> </h6>
-              </Timer>}
 
-              {/* //<b>Sec:</b> <Timer.Seconds />< */}
-              
+            <div>
+              <p><b>Current Epoch: {this.state.currentEpoch}</b></p>
+              {this.state.epochSecondsRemaining != 0 &&
+                <Timer
+                  initialTime={this.state.epochSecondsRemaining}
+                  direction="backward"
+                >
+                  <h6><b>Epoch Change: </b>    <Timer.Days /> <b>Days</b>   <Timer.Hours />  <b>Hours</b>  <Timer.Minutes /> <b>Mins</b> </h6>
+                </Timer>}
+            </div>
+
+            {/* //<b>Sec:</b> <Timer.Seconds />< */}
+
           </div>
         </Nav>
-        {/* <Nav navbar className={bem.e('nav-right')}>
-          {this.state.allpools != null &&
-            <SearchInput allpools={this.state.allpools} />
-          }
-        </Nav> */}
+        <Nav navbar className={bem.e('nav-right')}>
+
+          {width > 800 && this.state.namiEnabled === true ?
+            <Row><p>Wallet Connected.</p></Row>
+            :
+            <div style={{
+              alignContent: 'center', justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <Row style={{
+              alignContent: 'center', justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+                <img
+                  src={nami}
+                  width="100"
+                  height="70"
+                  onClick={() => this.connectWallet()}
+                />
+              </Row>
+              <Row style={{
+                alignContent: 'center', justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}>
+                <Button variant="outline-light" size="sm" onClick={() => this.connectWallet()}>Connect Wallet</Button>
+              </Row>
+            </div>}
+
+        </Nav>
       </Navbar >
     );
   }

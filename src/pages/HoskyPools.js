@@ -383,7 +383,7 @@ class HoskyPools extends React.Component {
                     <CardTitle className="text-capitalize">
                       <b>Pools</b>
                     </CardTitle>
-                    <small>Table ordered by filled %.</small>
+                    <small>Table ordered by filled %</small>
 
                     {this.state.smallScreen == false ?
                       <Table {...{ ['striped']: true }}>

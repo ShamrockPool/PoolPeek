@@ -30,7 +30,7 @@ export const getRetiredPools = "/pooldetails/getRetiredPools"
 export const getPoolByStakeAddress = "/pooldetails/getone/stakeaddress/";//{stakeaddress}
 
 export const getPoolDelegatesHistory= "/pooldelegates/get/history/";//
-
+export const getPoolsRetiringAcrossEpoch = "/pool/retiring/acrossepochs";
 export const getPoolAdvertising = "/pooladvert/requested";
 export const requestPoolAdvertising = "/pooladvert/request/";//{poolId}
 
@@ -44,6 +44,7 @@ export const getbisonpools = "/pooldetails/getbisonpools";
 
 export const mintNFT = "/nft/mint/";//{nftId}
 
+export const chainLoadData = "/chainload/website";
 
 
 

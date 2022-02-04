@@ -1,6 +1,6 @@
 import { Content, Footer, Header, Sidebar } from 'components/Layout';
 import React from 'react';
-// import NotificationSystem from 'react-notification-system';
+import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
 import {
   MdImportantDevices,
@@ -34,8 +34,8 @@ class MainLayout extends React.Component {
     //   this.notificationSystem.addNotification({
     //     title: <MdLoyalty />,
     //     message:
-    //       'Poolpeek is brought to you by SHA, EAGLE and Brave pool, please consider staking with us to help cover the costs of running this service'
-    //       ,
+    //       'Checkout the available Pool Offerings to Earn extra coins while staking your ADA!'
+    //     ,
     //     level: 'info',
     //   });
     // }, 1500);
@@ -89,14 +89,14 @@ class MainLayout extends React.Component {
           {children}
           <Footer />
         </Content>
-
-        {/* <NotificationSystem
-          dismissible={false}
-          ref={notificationSystem =>
-            (this.notificationSystem = notificationSystem)
-          }
-          style={NOTIFICATION_SYSTEM_STYLE}
-        /> */}
+        {width > 700 &&
+          <NotificationSystem
+            dismissible={false}
+            ref={notificationSystem =>
+              (this.notificationSystem = notificationSystem)
+            }
+            style={NOTIFICATION_SYSTEM_STYLE}
+          />}
       </main>
     );
   }

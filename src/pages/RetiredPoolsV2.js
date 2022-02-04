@@ -14,11 +14,11 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getRetiredPools } from '../assets/services';
+import { baseUrlPoolPeekService, getRetiredPools, baseUrl, getPoolsRetiringAcrossEpoch } from '../assets/services';
 import "../styles/styles.css";
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
-
+import RetiredChart from 'components/RetiredChart';
 
 const cardano = window.cardano;
 
@@ -96,6 +96,7 @@ class RetiredPoolsV2 extends React.Component {
     stats: null,
     walletConnected: false,
     namiEnabled: false,
+    retiringData: null
   };
 
   async componentDidMount() {
@@ -112,19 +113,26 @@ class RetiredPoolsV2 extends React.Component {
     // }
 
     this.getRetiredPools();
-
+    this.getRetiringData();
 
 
     window.scrollTo(0, 0);
   }
 
+  async getRetiringData() {
+    var response = await fetch(baseUrl + getPoolsRetiringAcrossEpoch);
+    var data = await response.json();
+    this.setState({ retiringData: data });
+  }
 
   async getRetiredPools() {
     try {
       var response = await fetch(baseUrlPoolPeekService + getRetiredPools);
       const data = await response.json();
-      this.setState({ loading: false, retiredPools: data.pools, retiredPoolsBkUp: data.pools, 
-        totalPools: data.poolsCount, totalLiveStake: data.totalLiveStake, totalDelegates: data.totalDelegates });
+      this.setState({
+        loading: false, retiredPools: data.pools, retiredPoolsBkUp: data.pools,
+        totalPools: data.poolsCount, totalLiveStake: data.totalLiveStake, totalDelegates: data.totalDelegates
+      });
 
     } catch (error) {
       console.log(error)
@@ -151,9 +159,9 @@ class RetiredPoolsV2 extends React.Component {
   handleChange = (query) => (e) => {
     var input = e.target.value;
 
-    if(input == ""){
+    if (input == "") {
       this.setState({ retiredPools: this.state.retiredPoolsBkUp, searchInput: input });
-    }else{
+    } else {
       var poolsToDisplay = this.state.retiredPools;
       poolsToDisplay = poolsToDisplay.filter(pool => pool.name.toLowerCase().includes(input.toLowerCase()) ||
         pool.ticker.toLowerCase().includes(input.toLowerCase()));
@@ -248,12 +256,24 @@ class RetiredPoolsV2 extends React.Component {
               </Col>
 
             </Row>
+
+            {width > 800 && this.state.retiringData &&
+              <Row style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}>
+                <RetiredChart retiringData={this.state.retiringData.poolRetire} />
+
+              </Row>
+
+            }
             <Row style={{
               justifyContent: 'center',
               alignItems: 'center',
               textAlign: 'center',
             }}>
-
+              <br></br>
               <h4 style={{ color: 'red' }}>Retired pools move your ADA to another pool if with one of the below.</h4>
             </Row>
             <Row style={{
@@ -350,7 +370,7 @@ class RetiredPoolsV2 extends React.Component {
                               <h6 style={{ color: 'red' }}>Live Stake: {this.addCommas(item.live_stake)}₳</h6>
                               <br></br>
                               <Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
-                                <p><Button size="sm" style={{ color: '#040404', backgroundColor: "#040404" }}>View</Button></p>
+                                <p><Button size="sm" style={{ color: '#040404', backgroundColor: "#040404" }}><small>View</small></Button></p>
                               </Link>
 
 

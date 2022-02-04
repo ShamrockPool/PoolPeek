@@ -329,7 +329,7 @@ export default class PoolDetailsComponent extends React.Component {
                 // breadcrumbs={[{ name: 'Project Details' + ' / ' + this.props.match.params.projectname, active: true }]}
                 >
                     <Row>
-                        <Col xl={8} lg={8} md={12} sm={12} >
+                        <Col xl={9} lg={9} md={12} sm={12} >
                             <Row>
                                 <Col xl={12} lg={12} md={12} sm={12} >
                                     <Card>

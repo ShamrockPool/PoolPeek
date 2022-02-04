@@ -31,12 +31,15 @@ import { isEmpty } from 'utils/stringutil.js';
 import ReactImageFallback from "react-image-fallback";
 import CardanoImage from 'assets/img/cardanoIcon.png';
 import { Link } from 'react-router-dom';
-import { baseUrl, baseUrlPoolPeekService, dashboardData, getPoolByStakeAddress, getPoolAdvertising, getPoolForSearchList } from '../assets/services';
+import {
+  baseUrl, baseUrlPoolPeekService, dashboardData, getPoolByStakeAddress, getPoolAdvertising, getPoolForSearchList,
+  chainLoadData
+} from '../assets/services';
 import Favorite from '@material-ui/icons/Favorite';
 import { red } from '@material-ui/core/colors';
 
 import ppc from 'assets/img/PKCoin2.m4v';
-import nami from 'assets/img/nami.png';
+import LoadChart from 'components/LoadChart';
 
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
@@ -93,7 +96,8 @@ class DashboardPage extends React.Component {
     searchInput: null,
     namiEnabled: false,
     namiPool: null,
-    advertisingpool: null
+    advertisingpool: null,
+    chainLoadData: null
   };
 
   toggle = modalType => () => {
@@ -120,6 +124,7 @@ class DashboardPage extends React.Component {
     window.scrollTo(0, 0);
 
     await this.getDashboardData();
+    await this.getChainLoadData();
 
     try {
       var namiEnabled = await cardano.isEnabled();
@@ -166,6 +171,12 @@ class DashboardPage extends React.Component {
 
     }
 
+  }
+
+  async getChainLoadData() {
+    var response = await fetch(baseUrl + chainLoadData);
+    var data = await response.json();
+    this.setState({ chainLoadData: data });
   }
 
   async getDashboardData() {
@@ -228,23 +239,28 @@ class DashboardPage extends React.Component {
 
 
   async getDashboardStatsData() {
-    var response = await fetch(baseUrl + dashboardData);
-    const data = await response.json();
-    //console.log(data);
+    try {
+      var response = await fetch(baseUrl + dashboardData);
+      const data = await response.json();
+      //console.log(data);
 
-    this.setState({
-      liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply,
-      totalPools: data.totalPools, averageStakePerPool: data.averageStakePerPool
-    });
-    this.state.liveStake = data.liveStake;
-    this.state.totalAdaSupply = data.totalAdaSupply;
+      this.setState({
+        liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply,
+        totalPools: data.totalPools, averageStakePerPool: data.averageStakePerPool
+      });
+      this.state.liveStake = data.liveStake;
+      this.state.totalAdaSupply = data.totalAdaSupply;
 
-    var adaSupply = parseFloat(data.liveStake.replace(/,/g, ''));
-    var liveStake = parseFloat(data.totalAdaSupply.replace(/,/g, ''));
-    var percentage = ((adaSupply / liveStake) * 100).toFixed(2)
-    this.setState({
-      percentageOfSupplyStaked: percentage
-    });
+      var adaSupply = parseFloat(data.liveStake.replace(/,/g, ''));
+      var liveStake = parseFloat(data.totalAdaSupply.replace(/,/g, ''));
+      var percentage = ((adaSupply / liveStake) * 100).toFixed(2)
+      this.setState({
+        percentageOfSupplyStaked: percentage
+      });
+    } catch (error) {
+
+    }
+
   }
 
 
@@ -273,8 +289,27 @@ class DashboardPage extends React.Component {
   handleChange = (query) => (e) => {
     var input = e.target.value;
     var poolsToDisplay = this.state.allpools;
-    poolsToDisplay = poolsToDisplay.filter(pool => pool.name.toLowerCase().includes(input.toLowerCase()) ||
-      pool.ticker.toLowerCase().includes(input.toLowerCase()));
+    // poolsToDisplay = this.state.allpools.filter(pool => pool.name.toLowerCase().includes(input.toLowerCase()) ||
+    //   pool.ticker.toLowerCase().includes(input.toLowerCase()));
+
+    //  poolsToDisplay = this.state.allpools.filter(pool => pool.ticker.toLowerCase() == (input.toLowerCase()) ||
+    //   pool.ticker.toLowerCase().includes(input.toLowerCase()) ||
+    //   pool.name.toLowerCase().includes(input.toLowerCase()) );
+
+    if (input.length > 5) {
+      poolsToDisplay = this.state.allpools.filter(pool => pool.name.toLowerCase().includes(input.toLowerCase()));
+    } else {
+      poolsToDisplay = this.state.allpools.filter(pool => pool.ticker.toLowerCase() == (input.toLowerCase()));
+      if (poolsToDisplay.length == 0) {
+        poolsToDisplay = poolsToDisplay.concat(this.state.allpools.filter(pool => pool.ticker.toLowerCase().startsWith(input.toLowerCase())));
+      }
+    }
+
+
+
+    // poolsToDisplay = poolsToDisplay.concat(this.state.allpools.filter(pool => pool.ticker.toLowerCase().includes(input.toLowerCase())));
+    // poolsToDisplay = poolsToDisplay.concat(this.state.allpools.filter(pool => pool.name.toLowerCase().includes(input.toLowerCase())));
+
     this.setState({ filteredPools: poolsToDisplay, searchInput: input });
   }
 
@@ -458,48 +493,48 @@ class DashboardPage extends React.Component {
               </Timer> 
               <br></br>*/}
 
-              
+
 
               {/* {this.state.favouritepools.length > 0 && */}
-                <div>
-                  <Card>
-                    <CardHeader >
-                      <h6><b>Favourite Pools</b></h6><small>Click the favourite icon within pools to display here.</small>
-                      <Favorite style={{ color: red, fill: '#FF0000' }}></Favorite>
-                    </CardHeader>
-                    <CardBody body >
-                      <Row>
-                        <Col>
-                          {this.state.favouritepools.map(function (item, index) {
+              <div>
+                <Card>
+                  <CardHeader >
+                    <h6><b>Favourite Pools</b></h6><small>Click the favourite icon within pools to display here.</small>
+                    <Favorite style={{ color: red, fill: '#FF0000' }}></Favorite>
+                  </CardHeader>
+                  <CardBody body >
+                    <Row>
+                      <Col>
+                        {this.state.favouritepools.map(function (item, index) {
 
-                            return (
-                              <div style={{ display: 'inline-block', paddingRight: '5px', paddingTop: '20px' }}>
-                                <Link to={`/pool/${item.pool_id}`}>
-                                  <h6>
-                                    {checkIsImageUrl(item.url_png_logo) ? (
-                                      <ReactImageFallback
-                                        src={item.url_png_logo}
-                                        width="60"
-                                        height="60"
-                                        fallbackImage={CardanoImage} />
-                                    ) : (<img
-                                      src={CardanoImage}
-                                      className="pr-2"
-                                      width="38"
-                                      height="32"
-                                    />)}
-                                    <b>&nbsp;{item.name}</b>
-                                  </h6>
-                                </Link>
-                              </div>
-                            )
-                          })
-                          }
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                  <br></br></div>
+                          return (
+                            <div style={{ display: 'inline-block', paddingRight: '5px', paddingTop: '20px' }}>
+                              <Link to={`/pool/${item.pool_id}`}>
+                                <h6>
+                                  {checkIsImageUrl(item.url_png_logo) ? (
+                                    <ReactImageFallback
+                                      src={item.url_png_logo}
+                                      width="60"
+                                      height="60"
+                                      fallbackImage={CardanoImage} />
+                                  ) : (<img
+                                    src={CardanoImage}
+                                    className="pr-2"
+                                    width="38"
+                                    height="32"
+                                  />)}
+                                  <b>&nbsp;{item.name}</b>
+                                </h6>
+                              </Link>
+                            </div>
+                          )
+                        })
+                        }
+                      </Col>
+                    </Row>
+                  </CardBody>
+                </Card>
+                <br></br></div>
 
 
 
@@ -573,7 +608,7 @@ class DashboardPage extends React.Component {
             </Col>
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
 
-              {width > 600 && this.state.namiEnabled === true ?
+              {/* {width > 700 && this.state.namiEnabled === true ?
                 <Card>
                   <CardHeader><h6><b>Nami Wallet - Connected</b></h6></CardHeader>
                   {this.state.namiPool != null && <CardBody body >
@@ -601,22 +636,40 @@ class DashboardPage extends React.Component {
                 <Card>
                   <CardHeader><h6><b>Connect Nami Wallet</b></h6><small>Click Image To Connect</small></CardHeader>
                   <CardBody body >
-                    <img
-                      src={nami}
-                      width="200"
-                      height="120"
-                      onClick={() => this.connectWallet()}
-                    />
+                    <Row style={{
+                      alignContent: 'center', justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                    }}>
+                      <img
+                        src={nami}
+                        width="160"
+                        height="100"
+                        onClick={() => this.connectWallet()}
+                      />
+                    </Row>
+                    <Row style={{
+                      alignContent: 'center', justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                    }}>
+                      <Button variant="outline-light" size="sm" onClick={() => this.connectWallet()}>Connect Wallet</Button>
+                    </Row>
                   </CardBody>
                 </Card>
-              }
+              } */}
 
-
+              {this.state.chainLoadData &&
+                <Card>
+                  <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days.</small></CardHeader>
+                  <CardBody body>
+                    <LoadChart chainLoadData={this.state.chainLoadData} />
+                  </CardBody>
+                </Card>}
               <br></br>
-
               {this.state.advertisingpool != null &&
                 <Card>
-                  <CardHeader><h6><b>Pool Advert</b></h6></CardHeader>
+                  <CardHeader><h6><b>Pool Promo</b></h6></CardHeader>
                   <CardBody body >
 
                     <Row style={{
@@ -661,38 +714,6 @@ class DashboardPage extends React.Component {
                 </Card>}
 
 
-              <Card>
-                <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
-                <CardBody body>
-
-                  {teamPeekData.map(
-                    ({ id, image, title, description, poolid, imgWidth, imgHeight, right }) => (
-                      //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
-
-                      <div style={{ display: 'inline-block', paddingRight: '10px' }}>
-                        <Link to={`/pool/${poolid}`}>
-                          <h6>
-                            <ReactImageFallback
-                              src={image}
-                              width="80"
-                              height="70"
-                              fallbackImage={null} />
-
-                          </h6>
-                          <Row style={{
-                            alignContent: 'center', justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                          }}><b>&nbsp;{title}</b></Row>
-                          {/* <p>{item.description}</p> */}
-                        </Link>
-                      </div>
-
-                    ),
-                  )}
-
-                </CardBody>
-              </Card>
 
             </Col>
             <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
@@ -834,9 +855,40 @@ class DashboardPage extends React.Component {
                 </CardBody>
               </Card>
 
+              <br></br>
 
+              <Card>
+                <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
+                <CardBody body>
 
+                  {teamPeekData.map(
+                    ({ id, image, title, description, poolid, imgWidth, imgHeight, right }) => (
+                      //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
 
+                      <div style={{ display: 'inline-block', paddingRight: '10px' }}>
+                        <Link to={`/pool/${poolid}`}>
+                          <h6>
+                            <ReactImageFallback
+                              src={image}
+                              width="80"
+                              height="70"
+                              fallbackImage={null} />
+
+                          </h6>
+                          <Row style={{
+                            alignContent: 'center', justifyContent: 'center',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                          }}><b>&nbsp;{title}</b></Row>
+                          {/* <p>{item.description}</p> */}
+                        </Link>
+                      </div>
+
+                    ),
+                  )}
+
+                </CardBody>
+              </Card>
 
 
 
