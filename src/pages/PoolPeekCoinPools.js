@@ -312,7 +312,30 @@ class PoolPeekCoinPools extends React.Component {
 
             </Row>
 
+            <Row style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <p>Token Policy ID: d0af056c509b6b1133cd83a750b7245e561169281fde3df1cb6e2d96</p></Row>
+              <Row style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}>
+                <p><b>Description:</b> PoolPeekCoin is a rewards coin that has been created as an incentive reward that will be given to loyal delegators of the #TeamPeek pool offering. </p>
+              </Row>
+
+              <Row style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}>
+                <p><b>Tokenomics:</b> 21Million coins have been created. There is 10Million allocated to the DripDrops token distribution project with a further 5Million in reserve. There will be 3Million allocated to the three creator pools & 3Million allocated for future giveaways & incentive stuctures. </p>
+              </Row>
             <Row>
+
+
 
               <Col style={{
                 justifyContent: 'center',
@@ -331,8 +354,6 @@ class PoolPeekCoinPools extends React.Component {
                     <video loop autoPlay muted style={{ width: "6vw" }}>
                       <source src={ppc} type='video/mp4' />
                     </video>} */}
-
-
 
                   <a href='https://discord.gg/nzSR3rFkef' target="_blank" rel="noreferrer" >
                     <p>PoolPeek Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>

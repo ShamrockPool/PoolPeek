@@ -327,7 +327,7 @@ class SundaePools extends React.Component {
 
                 {/* 5 are saturated after vote */}
                 <hr></hr>
-                <Row>
+                {/* <Row>
                   <h3>Epoch Snapshots</h3>
                 </Row>
 
@@ -407,9 +407,9 @@ class SundaePools extends React.Component {
                     </Card>
                   </Col>
                  
-                </Row>
+                </Row> */}
 
-                <hr></hr>
+                {/* <hr></hr> */}
                 <Row>
                   <h3>Live Stats</h3>
                 </Row>

@@ -514,8 +514,8 @@ class DashboardPage extends React.Component {
                                   {checkIsImageUrl(item.url_png_logo) ? (
                                     <ReactImageFallback
                                       src={item.url_png_logo}
-                                      width="60"
-                                      height="60"
+                                      width="40"
+                                      height="40"
                                       fallbackImage={CardanoImage} />
                                   ) : (<img
                                     src={CardanoImage}
@@ -659,13 +659,13 @@ class DashboardPage extends React.Component {
                 </Card>
               } */}
 
-              {this.state.chainLoadData &&
+              {/* {this.state.chainLoadData &&
                 <Card>
-                  <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days.</small></CardHeader>
+                  <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days. </small></CardHeader>
                   <CardBody body>
                     <LoadChart chainLoadData={this.state.chainLoadData} />
                   </CardBody>
-                </Card>}
+                </Card>} */}
               <br></br>
               {this.state.advertisingpool != null &&
                 <Card>

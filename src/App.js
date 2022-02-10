@@ -26,7 +26,7 @@ import PoolPeekCoinPools from 'pages/PoolPeekCoinPools';
 import BisonPools from 'pages/BisonPools';
 
 import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
-
+import PoolMapV3 from 'pages/PoolMapV3';
 import NamiJoinPool from 'pages/tools/NamiJoinPool';
 
 import GA4React from "ga-4-react";
@@ -54,7 +54,7 @@ class App extends React.Component {
                 <Route exact path="/" render={(props) => <DashboardPage />} />
                 <Route exact path="/teampeek" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="We are the Creators of PoolPeek.com and PoolPeek Mobile!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc} />} />
                 <Route exact path="/poolsearch" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false}/>} />
-                <Route exact path="/poolsearchmap" render={(props) => <PoolMapV2 />} />
+                <Route exact path="/poolsearchmap" render={(props) => <PoolMapV3 {...props}/>} />
 
                 <Route exact path="/epochcalendar" render={(props) => <EpochCalendar />} />
                 <Route exact path="/stakingrewards" render={(props) => <StakingRewards />} />
@@ -104,10 +104,13 @@ class App extends React.Component {
                 <Route exact path="/poolsearch/:location" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
                 <Route exact path="/stakingrewards/:stakeAddress" render={(props) => <StakingRewards  {...props}/>} />
 
+                {/* <Route exact path="/*" render={(props) => <DashboardPage />} /> */}
+
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />
           </Switch>
+
         </GAListener>
       </HashRouter>
     );

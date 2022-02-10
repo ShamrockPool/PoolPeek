@@ -11,6 +11,7 @@ import {
 import bn from 'utils/bemnames';
 import nami from 'assets/img/namiicon.jpg';
 import Timer from "react-compound-timer";
+import { isMobile } from 'react-device-detect';
 
 const width = window.innerWidth;
 const bem = bn.create('header');
@@ -165,9 +166,10 @@ class Header extends React.Component {
 
           </div>
         </Nav>
+        {!isMobile &&
         <Nav navbar className={bem.e('nav-right')}>
 
-          {width > 800 && this.state.namiEnabled === true ?
+          { this.state.namiEnabled === true ?
             <Row><p>Wallet Connected.</p></Row>
             :
             <div style={{
@@ -196,7 +198,7 @@ class Header extends React.Component {
               </Row>
             </div>}
 
-        </Nav>
+        </Nav>}
       </Navbar >
     );
   }

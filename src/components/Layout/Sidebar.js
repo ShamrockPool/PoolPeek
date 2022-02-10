@@ -79,7 +79,7 @@ const navItems = [
   { to: '/', name: 'Dashboard', exact: true, Icon: MdBuild },
   // { to: '/teampeek', name: 'Team Peek', exact: true, Icon: MdBuild },
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
-  // { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
+  { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
   { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
   { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff }
