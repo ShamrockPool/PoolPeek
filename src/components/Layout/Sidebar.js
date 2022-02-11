@@ -55,19 +55,19 @@ const navFunQueries = [
   { to: '/fabulousdescriptions', name: 'Descriptions', exact: false, Icon: MdFormatListBulleted },
 ];
 
-const navSaturation = [
-  { to: '/64milorgreater', name: '64M or Greater', exact: false, Icon: MdFormatListBulleted },
-  { to: '/32milto64mil', name: '32M to < 64M', exact: false, Icon: MdFormatListBulleted },
-  { to: '/16milto32mil', name: '16M to < 32M', exact: false, Icon: MdFormatListBulleted },
-  { to: '/8milto16mil', name: '8M to < 16M', exact: false, Icon: MdFormatListBulleted },
+
+const stakeTools = [
+  { to: '/stakingcalculator', name: 'Calculator', exact: true, Icon: MdAccountBalance },
+  { to: '/stakingrewards', name: 'Rewards History', exact: true, Icon: MdMoneyOff }
 ];
 
 const poolQueries = [
   { to: '/retiredpools', name: 'Retired With Stake', exact: true, Icon: MdRemoveCircleOutline },
-  { to: '/saturatedpools', name: 'Saturated', exact: true, Icon: MdHourglassFull }
+  { to: '/saturatedpools', name: 'Saturated', exact: true, Icon: MdHourglassFull },
+
 ];
 
-const isos = [  
+const isos = [
   { to: '/poolpeekcoinpools', name: 'PoolPeek Coin', exact: true, Icon: MdSearch },
   { to: '/hoskyinupools', name: 'Hosky Inu', exact: true, Icon: MdSearch },
   { to: '/sundaeiso', name: 'SundaeSwap', exact: true, Icon: MdSearch },
@@ -75,14 +75,26 @@ const isos = [
   { to: '/bisonpools', name: 'Bison', exact: true, Icon: MdSearch }
 ];
 
+const poolSearch = [
+  { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
+  { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
+  { to: '/tickers', name: 'Ticker Search', exact: false, Icon: MdFormatListBulleted },
+  { to: '/zeroblocks', name: 'Zero Blocks', exact: false, Icon: MdFormatListBulleted },
+];
+
+const poolTools = [
+
+
+];
+
 const navItems = [
   { to: '/', name: 'Dashboard', exact: true, Icon: MdBuild },
   // { to: '/teampeek', name: 'Team Peek', exact: true, Icon: MdBuild },
-  { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
-  { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
+  // { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
+  // { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
-  { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
-  { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff }
+  // { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
+  // { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff }
   // { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
 ];
@@ -98,7 +110,9 @@ class Sidebar extends React.Component {
     isOpenFunQuery: false,
     isOpenSaturation: false,
     isOpenQueries: false,
-    isOpenOfferings: true,
+    isOpenOfferings: false,
+    isOpenSearch: false,
+    isOpenStakeTools: false,
     navAdaFolio: [],
   };
 
@@ -159,11 +173,92 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
+              onClick={this.handleClick('Search')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
+                  <b><span className=" align-self-start">POOL SEARCH</span></b>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenOfferings
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenSearch}>
+              {poolSearch.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    {/* <Icon className={bem.e('nav-item-icon')} /> */}
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            <NavItem
+              className={bem.e('nav-item')}
+              onClick={this.handleClick('StakeTools')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
+                  <b><span className=" align-self-start">STAKING TOOLS</span></b>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenStakeTools
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenStakeTools}>
+              {stakeTools.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    {/* <Icon className={bem.e('nav-item-icon')} /> */}
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+
+            <NavItem
+              className={bem.e('nav-item')}
               onClick={this.handleClick('Queries')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  <MdExtension className={bem.e('nav-item-icon')} />
+                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
                   <b><span className=" align-self-start">POOL QUERIES</span></b>
                 </div>
                 <MdKeyboardArrowDown
@@ -200,11 +295,11 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('Saturation')}
+              onClick={this.handleClick('Offerings')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  <MdExtension className={bem.e('nav-item-icon')} />
+                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
                   <b><span className=" align-self-start">POOL OFFERINGS</span></b>
                 </div>
                 <MdKeyboardArrowDown
@@ -231,7 +326,7 @@ class Sidebar extends React.Component {
                     activeClassName="active"
                     exact={exact}
                   >
-                    <Icon className={bem.e('nav-item-icon')} />
+                    {/* <Icon className={bem.e('nav-item-icon')} /> */}
                     <span className="">{name}</span>
                   </BSNavLink>
                 </NavItem>

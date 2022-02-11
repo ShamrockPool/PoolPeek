@@ -10,14 +10,14 @@ import DashboardPage from 'pages/DashboardPage';
 import PoolSearchPage from 'pages/PoolSearchPage';
 import QuickQueriesPage from 'pages/QuickQueriesPage';
 import AdaFoliosPage from 'pages/AdaFoliosPage';
-import FunDumpPage from 'pages/FunDumpPage';
+import TickerPage from 'pages/TickerPage';
 import AboutUsPage from 'pages/AboutUsPage';
 import PoolMapV2 from 'pages/PoolMapV2';
 import EpochCalendar from 'pages/EpochCalendar';
 import StakingRewards from 'pages/StakingRewards';
 import PoolDetailsPage from 'pages/PoolDetailsPage';
 import StakingCalculator from 'pages/StakingCalculator';
-
+import ZeroBlocksPage from 'pages/ZeroBlocksPage';
 import SundaePools from './pages/SundaePools';
 import HoskyPools from 'pages/HoskyPools';
 import HoskyInuPools from 'pages/HoskyInuPools';
@@ -89,9 +89,11 @@ class App extends React.Component {
 
                 <Route exact path="/adafolio" render={(props) => <AdaFoliosPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="adafolio Portfolio" query="" />} />
 
-                <Route exact path="/fabuloustickers" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Tickers" query={queries.funtickersquery} />} />
-                <Route exact path="/fabulousnames" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Names" query={queries.funnamesquery} />} />
-                <Route exact path="/fabulousdescriptions" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Descriptions" query={queries.fundescriptionsquery} />} />
+                <Route exact path="/tickers" render={(props) => <TickerPage {...props} title="Pool Tickers" query={"tickers"} />} />
+                <Route exact path="/zeroblocks" render={(props) => <ZeroBlocksPage {...props} title="Zero Blocks Pools" query={"zeroblocks"} />} />
+                
+                {/* <Route exact path="/fabulousnames" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Names" query={queries.funnamesquery} />} />
+                <Route exact path="/fabulousdescriptions" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Descriptions" query={queries.fundescriptionsquery} />} /> */}
 
                 <Route exact path="/twitterpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Small Pools w/Twitter Handles" query={queries.twitterpoolsquery} multiPoolOperators={true} pageDescription={queries.twitterpoolsqueryDesc} />} />
 

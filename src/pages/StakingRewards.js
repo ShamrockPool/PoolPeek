@@ -104,8 +104,8 @@ class StakingRewards extends React.Component {
             <h4><b>Staking rewards</b></h4>
             <h7>Staking rewards are earnings you receive for staking your ADA to a pool.</h7>
             <h7>This tool is here to help you track your staking rewards from each Epoch.</h7>
-            <br></br>
-            <h7>Register with our Staking Rewards <a href={"http://t.me/poolpeek_bot"} target="_blank" rel="noreferrer">Telegram BOT!!</a></h7>
+            {/* <br></br>
+            <h7>Register with our Staking Rewards <a href={"http://t.me/poolpeek_bot"} target="_blank" rel="noreferrer">Telegram BOT!!</a></h7> */}
 
             <br></br>
 

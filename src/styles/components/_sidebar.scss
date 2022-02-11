@@ -82,10 +82,10 @@
   }
 
   &__nav-item-icon {
-    // @include media-breakpoint-down(md) {
-    //   padding: 0;
-    //   margin: 0 auto;
-    // }
+    @include media-breakpoint-down(md) {
+      padding: 0;
+      margin: 0 auto;
+    }
     width: 1.5rem;
     height: 1.5rem;
     padding-right: 0.5rem;
