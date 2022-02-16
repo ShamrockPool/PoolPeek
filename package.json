@@ -7,7 +7,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@emurgo/cardano-serialization-lib-browser": "^10.0.4",
+    "@emurgo/cardano-serialization-lib-browser": "^9.1.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-brands-svg-icons": "^5.15.2",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",

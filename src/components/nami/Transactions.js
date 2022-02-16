@@ -1,7 +1,7 @@
 import CoinSelection from "./coinSelection";
 import { Buffer } from 'buffer';
 
-const cardano = window.cardano;
+var cardano = window.cardano;
 
 export const getDelegation = async (Loader) => {
   const walletAddress = await cardano.getRewardAddress();
@@ -294,7 +294,7 @@ export const txBuilder = async (Loader, { PaymentAddress, Utxos, Outputs, Protoc
 
 export const signSubmitTx = async (Loader, transactionRaw) => {
   let transaction = Loader.Transaction.from_bytes(transactionRaw)
-  const witneses = await cardano.signTx(
+  const witneses = await window.cardano.signTx(
     Buffer.from(
       transaction.to_bytes()
     ).toString('hex')
@@ -317,12 +317,11 @@ export const signSubmitTx = async (Loader, transactionRaw) => {
 
   var txhash = null;
   try {
-    txhash = await cardano.submitTx(signedTxHexBytes);
+    txhash = await window.cardano.submitTx(signedTxHexBytes);
+    console.log(txhash);
+    return "Success your tx hash is: " + txhash;
   } catch (error) {
     console.log(error);
+    return "Error try again later!"
   }
-
-
-  return txhash
-
 }

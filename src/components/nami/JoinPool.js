@@ -9,12 +9,21 @@ import {
 } from 'reactstrap';
 import { getDelegation, blockfrostRequest, getUtxos, getAddress, getProtocolParameters, txBuilder, signSubmitTx } from "./Transactions";
 import { Link } from 'react-router-dom';
+import CircleLoader
+    from "react-spinners/CircleLoader";
+import { css } from "@emotion/core";
 
-const cardano = window.cardano;
+var cardano = window.cardano;
 
 const renderer = ({ hours, minutes, seconds, completed }) => {
     return <span>{minutes} Minutes {seconds} Seconds</span>;
 };
+
+const override = css`
+  display: block;
+  margin: 0 auto;
+  border-color: red;
+`;
 
 // Helper functions
 const hexToAscii = (hex) => {
@@ -42,7 +51,7 @@ export default class JoinPool extends React.Component {
         nftReserved: null,
         planetName: null,
         refreshedScreen: false,
-
+        joinPoolResponse: "",
         modal: false,
         modal_backdrop: false,
         modal_nested_parent: false,
@@ -56,14 +65,9 @@ export default class JoinPool extends React.Component {
 
         try {
             var enabled = this.props.namiEnabled;
-            console.log("Name is enabled: " + enabled);
-            this.setState({ namiEnabled:  enabled});
+            this.setState({ namiEnabled: enabled });
         } catch (error) {
-
         }
-
-
-
     }
 
     toggle = modalType => () => {
@@ -116,17 +120,18 @@ export default class JoinPool extends React.Component {
     };
 
     async joinPool() {
-        this.setState({ modal: true });
+        try {
+            this.setState({ modal: true });
         //initialize loader
         Loader = await import('@emurgo/cardano-serialization-lib-browser');
 
-        user = await cardano.getUsedAddresses();
+        user = await window.cardano.getUsedAddresses();
 
         //get stake key hash
         stakeKeyHash = Loader.RewardAddress.from_address(
             Loader.Address.from_bytes(
                 Buffer.from(
-                    await cardano.getRewardAddress(),
+                    await window.cardano.getRewardAddress(),
                     'hex'
                 )
             )
@@ -144,7 +149,7 @@ export default class JoinPool extends React.Component {
         //get utxos
         //var utxos = await getUtxos();//.map(u => S.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')))
         //        var utxosMap = utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')));       
-        var Utxos = await cardano.getUtxos();
+        var Utxos = await window.cardano.getUtxos();
         var UtxosHex = Utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(
             Buffer.from(
                 u,
@@ -184,11 +189,16 @@ export default class JoinPool extends React.Component {
 
         //submit trx
 
-        let txHash = await signSubmitTx(Loader, transaction);
+        let response = await signSubmitTx(Loader, transaction);
 
-
+        this.setState({ joinPoolResponse: response, loading: false });
 
         var success = false;
+        } catch (error) {
+            console.log(error);
+            this.setState({ joinPoolResponse: "Unable to submit at this time.", loading: false });
+        }
+        
     }
 
     render() {
@@ -213,8 +223,11 @@ export default class JoinPool extends React.Component {
                                         <p>A Nami Wallet screen will appear to sign the transaction.</p>
                                         <p>Once complete your Nami Wallet will update to the new pool within a couple of minutes.</p>
                                         <br></br>
-                                        <p>Happy staking.</p>
-                                        <p>You can close this window.</p>
+                                        
+
+
+                                        {this.state.loading ? <div> <p>Waiting on confirmation.</p><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
+                                            : <div><small>{this.state.joinPoolResponse}</small></div>}
                                     </div>
 
                                 </Row>

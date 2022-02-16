@@ -72,10 +72,6 @@ const tableRowStyleWarning = {
   // padding: 0,
 };
 
-
-
-const cardano = window.cardano;
-
 class SundaePoolsReverse extends React.Component {
   state = {
     pools: null,
@@ -91,17 +87,26 @@ class SundaePoolsReverse extends React.Component {
     refreshAmount: 60000
   };
 
+  async componentDidUpdate() {
+    if (!this.state.namiEnabled) {
+      try {
+        var namiEnabled = await window.cardano.nami.isEnabled();
+        this.setState({ namiEnabled: namiEnabled });
+      } catch (error) {
+      }
+    }
+  }
+
   async componentDidMount() {
 
     if (width < 600) {
-      this.setState({ smallScreen: true }); 
+      this.setState({ smallScreen: true });
     }
 
     try {
-      var namiEnabled = await cardano.nami.isEnabled();
+      var namiEnabled = await window.cardano.nami.isEnabled();
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
-
     }
 
     await this.getSundaePools();
@@ -110,7 +115,6 @@ class SundaePoolsReverse extends React.Component {
 
   async refresher() {
     while (true) {
-      console.log("Refreshing data");
       await this.sleep(this.state.refreshAmount);
       this.getSundaePools();
 
@@ -450,7 +454,7 @@ class SundaePoolsReverse extends React.Component {
                                   <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                     <p><Button variant="outline-light" size="sm">View</Button></p>
                                   </Link>
-                                    {Number(item.pct_saturated) < 100 && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} />}
+                                    {this.state.namiEnabled && Number(item.pct_saturated) < 100 && <JoinPool pool={item} namiEnabled={this.state.namiEnabled} />}
                                   </Row>
                                 </tr>
 

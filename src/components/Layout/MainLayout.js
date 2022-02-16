@@ -40,6 +40,8 @@ class MainLayout extends React.Component {
     //   });
     // }, 1500);
 
+    
+
     if (width < 600) {
       this.openSidebar('close');
     }

@@ -35,6 +35,8 @@ class Header extends React.Component {
       modal_backdrop: false,
       modal_nested_parent: false,
       modal_nested: false,
+      connectedWallet: "",
+      namiEnabled: false
     };
   }
 
@@ -97,9 +99,9 @@ class Header extends React.Component {
       var namiEnabled = await window.cardano.nami.isEnabled();
       this.setState({ namiEnabled: namiEnabled });
 
-      if (this.state.namiEnabled) {
-        await this.getNamiPool();
-      }
+      // if (this.state.namiEnabled) {
+      //   await this.getNamiPool();
+      // }
 
     } catch (error) {
     }
@@ -140,7 +142,6 @@ class Header extends React.Component {
 
   async connectWallet(wallet) {
     try {
-      console.log("Connect Nami");
       var walletEnabled = false;
       var cardano = window.cardano;
       if (wallet == "nami") {
@@ -148,8 +149,10 @@ class Header extends React.Component {
       } else if (wallet == "flint") {
         walletEnabled = await cardano.flint.enable();
       }
-      this.setState({ namiEnabled: walletEnabled });
-      window.location.reload(false);
+      if(walletEnabled){
+        this.setState({ connectedWallet: 'Nami', namiEnabled: walletEnabled });
+        window.location.reload(true);
+      }
     } catch (error) {
       console.log(error)
     }
@@ -164,7 +167,7 @@ class Header extends React.Component {
   };
 
   render() {
-
+    const { text } = this.state.connectedWallet
     return (
       // <Navbar light expand className={bem.b('bg-white')}>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -197,7 +200,7 @@ class Header extends React.Component {
           <Nav navbar className={bem.e('nav-right')}>
 
             {this.state.namiEnabled === true ?
-              <Row><Button variant="outline-light" size="sm">Wallet Connected</Button></Row>
+              <Row><Button variant="outline-light" size="sm">{this.state.connectedWallet} Wallet Connected</Button></Row>
               :
               <div style={{
                 alignContent: 'center', justifyContent: 'center',
@@ -234,7 +237,7 @@ class Header extends React.Component {
 
             <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("nami")}>Nami</Button>
             <p></p>
-            <Button variant="outline-light" size="sm" >Flint - Coming Soon</Button> 
+            <Button variant="outline-light" size="sm" >Flint - Coming Soon</Button>
             {/* onClick={() => this.connectWallet("flint")} */}
           </ModalBody>
           <ModalFooter>
