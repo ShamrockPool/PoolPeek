@@ -128,7 +128,7 @@ class SundaePools extends React.Component {
     //window.scrollTo(0, 0);
 
     try {
-      var namiEnabled = await cardano.isEnabled();
+      var namiEnabled = await cardano.nami.isEnabled()
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
 
@@ -205,11 +205,11 @@ class SundaePools extends React.Component {
             <Row>
               <Col>
                 <Row style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                  {/* <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
                     <Card inverse color='primary' style={{ margin: '0px' }}>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
@@ -222,20 +222,7 @@ class SundaePools extends React.Component {
                     </Card>
                   </Col>
 
-                  {/* <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Waiting SPO's
-                        </CardTitle>
-                        <CardText>
-                          10
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col> */}
-
-                  <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
+                    <Col lg={3} md={6} sm={6} xs={6} className="mb-3">
                     <Card inverse color='secondary'>
                       <CardBody body>
                         <CardTitle className="text-capitalize">
@@ -259,11 +246,16 @@ class SundaePools extends React.Component {
                         </CardText>
                       </CardBody>
                     </Card>
-                  </Col>
+                  </Col> */}
+
+                  <div>
+                    <h1 style={{ color: 'red' }}>THIS ISO HAS ENDED!</h1>
+                    <h3 style={{ color: 'red' }}>To continue earning Sundae you can Stake with one of these pool: <Link to={`sundaeriso`}>LINK </Link></h3>
+                  </div>
 
                 </Row>
 
-<hr></hr>
+                <hr></hr>
                 <Row>
                   <h3>End of Vote Stats</h3>
                 </Row>

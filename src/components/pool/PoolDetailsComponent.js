@@ -118,7 +118,7 @@ export default class PoolDetailsComponent extends React.Component {
         this.isPoolFavourite(ReactHtmlParser(this.props.pool.name));
 
         try {
-            var namiEnabled = await cardano.isEnabled()
+            var namiEnabled = await cardano.nami.isEnabled()
             this.setState({ namiEnabled: namiEnabled });
         } catch (error) {
 
@@ -161,7 +161,13 @@ export default class PoolDetailsComponent extends React.Component {
     }
 
     calculateLuck() {
-        return this.props.pool.block_history[1].luck;
+        try {
+
+            return this.props.pool.block_history[1].luck;
+
+        } catch (error) {
+            return null;
+        }
     }
 
     calculateTotalLuck() {
@@ -347,7 +353,12 @@ export default class PoolDetailsComponent extends React.Component {
                                                         fallbackImage={CardanoImage} />
                                                 </Col>
                                                 <Col xl={8} lg={10} md={12} sm={12} >
-                                                    <h1>{ReactHtmlParser(this.props.pool.name)}({ReactHtmlParser(this.props.pool.ticker)})</h1>
+                                                    <Row style={{
+                                                        justifyContent: 'center',
+                                                        alignItems: 'center',
+                                                        textAlign: 'center',
+                                                    }}><h1>{ReactHtmlParser(this.props.pool.ticker)}</h1></Row>
+                                                    <h1>{ReactHtmlParser(this.props.pool.name)}</h1>
 
                                                     {this.props.pool.retired != 'Y' ?
 
@@ -363,6 +374,9 @@ export default class PoolDetailsComponent extends React.Component {
                                                     }
 
                                                     {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}> */}
+
+                                                    <h1>{this.addCommas(this.props.pool.live_stake)}₳</h1>
+                                                    {/* </div> */}
                                                     <small><b>PoolID:</b>  {this.props.pool.pool_id}          </small>
                                                     <Tooltip
                                                         title="Copy Pool ID"
@@ -386,9 +400,6 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <FontAwesomeIcon icon={faClipboard} />
                                                         </CopyToClipboard>
                                                     </Tooltip>
-                                                    <br></br>
-                                                    <h2>{this.addCommas(this.props.pool.live_stake)}₳</h2>
-                                                    {/* </div> */}
                                                     {this.state.favourite == false &&
                                                         <div>
                                                             <IconButton onClick={() => {

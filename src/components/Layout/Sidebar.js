@@ -71,6 +71,7 @@ const isos = [
   { to: '/poolpeekcoinpools', name: 'PoolPeek Coin', exact: true, Icon: MdSearch },
   { to: '/hoskyinupools', name: 'Hosky Inu', exact: true, Icon: MdSearch },
   { to: '/sundaeiso', name: 'SundaeSwap', exact: true, Icon: MdSearch },
+  { to: '/sundaeriso', name: 'Reverse SundaeSwap', exact: true, Icon: MdSearch },
   { to: '/hoskypools', name: 'Hosky', exact: true, Icon: MdSearch },
   { to: '/bisonpools', name: 'Bison', exact: true, Icon: MdSearch }
 ];
@@ -78,6 +79,7 @@ const isos = [
 const poolSearch = [
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
+  // { to: '/randompool', name: 'Random Pool', exact: false, Icon: MdFormatListBulleted },
   { to: '/tickers', name: 'Ticker Search', exact: false, Icon: MdFormatListBulleted },
   { to: '/zeroblocks', name: 'Zero Blocks', exact: false, Icon: MdFormatListBulleted },
 ];

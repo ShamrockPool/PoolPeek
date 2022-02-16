@@ -69,7 +69,7 @@ class TickerPage extends React.Component {
             }}
             type="text"
             className="cr-search-form__input"
-            placeholder="Search with Ticker or Pool Name"
+            placeholder="Search with Ticker"
             onChange={this.handleChange()}
             value={this.state.searchInput}
           />

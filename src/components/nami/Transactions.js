@@ -135,21 +135,22 @@ export const txBuilder = async (Loader, { PaymentAddress, Utxos, Outputs, Protoc
   const selection = CoinSelection.randomImprove(
     Utxos,
     Outputs,
-    20 + totalAssets,
-    //ProtocolParameter.minUtxo.to_str()
+    20 + totalAssets
   )
   const inputs = selection.input;
+
+
   const txBuilder = Loader.TransactionBuilder.new(
     Loader.LinearFee.new(
-      Loader.BigNum.from_str(ProtocolParameter.linearFee.minFeeA),
-      Loader.BigNum.from_str(ProtocolParameter.linearFee.minFeeB)
+      Loader.BigNum.from_str(ProtocolParameter.linearFee.minFeeA.toString()),
+      Loader.BigNum.from_str(ProtocolParameter.linearFee.minFeeB.toString())
     ),
     Loader.BigNum.from_str(ProtocolParameter.minUtxo.toString()),
     Loader.BigNum.from_str(ProtocolParameter.poolDeposit.toString()),
     Loader.BigNum.from_str(ProtocolParameter.keyDeposit.toString()),
     MULTIASSET_SIZE,
     MULTIASSET_SIZE
-  );
+   );
 
   for (let i = 0; i < inputs.length; i++) {
     const utxo = inputs[i];

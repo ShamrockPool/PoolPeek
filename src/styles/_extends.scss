@@ -52,7 +52,25 @@
   // min-height: 9rem;
 }
 
+.card-body h6 {
+  font-weight: 700;
+ font-size: 1.4vh;
+ letter-spacing: 0.02em;
+ text-transform: uppercase;
+}
 
+.card-header h6 {
+  font-weight: 700;
+ font-size: 1.6vh;
+ letter-spacing: 0.02em;
+ text-transform: uppercase;
+}
+
+.card-header p{
+ font-size: 13px;
+ font-size: 1.0vh;
+ text-transform: none;
+}
 
 .ProjectCards {
   display: flex;

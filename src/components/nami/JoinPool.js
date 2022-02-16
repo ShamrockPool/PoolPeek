@@ -117,10 +117,7 @@ export default class JoinPool extends React.Component {
     async joinPool() {
         this.setState({ modal: true });
         //initialize loader
-        // Loader = await import('@emurgo/cardano-serialization-lib-asmjs');
         Loader = await import('@emurgo/cardano-serialization-lib-browser');
-
-
 
         user = await cardano.getUsedAddresses();
 
@@ -213,7 +210,7 @@ export default class JoinPool extends React.Component {
                                     <div>
                                         <p>You have selected to join Pool: <Link to={`/pool/${this.props.pool.pool_id}`}>{this.props.pool.name}</Link></p>
                                         <p>A Nami Wallet screen will appear to sign the transaction.</p>
-                                        <p>Once complete your Nami Wallet will update to the new pool within 30 seconds.</p>
+                                        <p>Once complete your Nami Wallet will update to the new pool within a couple of minutes.</p>
                                         <br></br>
                                         <p>Happy staking.</p>
                                         <p>You can close this window.</p>

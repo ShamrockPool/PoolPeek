@@ -6,7 +6,11 @@ import {
   Button,
   Nav,
   Navbar,
-  Row
+  Row,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
 } from 'reactstrap';
 import bn from 'utils/bemnames';
 import nami from 'assets/img/namiicon.jpg';
@@ -26,7 +30,11 @@ class Header extends React.Component {
       adaGbpPrice: "",
       adaBtcPrice: "",
       epochSecondsRemaining: 0,
-      currentEpoch: 0
+      currentEpoch: 0,
+      modal: false,
+      modal_backdrop: false,
+      modal_nested_parent: false,
+      modal_nested: false,
     };
   }
 
@@ -86,7 +94,7 @@ class Header extends React.Component {
     await this.getCurrentEpoch();
 
     try {
-      var namiEnabled = await cardano.isEnabled();
+      var namiEnabled = await cardano.nami.isEnabled();
       this.setState({ namiEnabled: namiEnabled });
 
       if (this.state.namiEnabled) {
@@ -130,10 +138,23 @@ class Header extends React.Component {
     }
   }
 
-  async connectWallet() {
+  async connectWallet(wallet) {
     console.log("Connect Nami");
-    var namiEnabled = await cardano.enable();
-    this.setState({ namiEnabled: namiEnabled });
+    var walletEnabled = false;
+    if (wallet == "nami") {
+      walletEnabled = await cardano.nami.enable();
+    } else if (wallet == "flint") {
+      walletEnabled = await cardano.flint.enable();
+    }
+    this.setState({ namiEnabled: walletEnabled });
+    window.location.reload(false);
+  };
+
+  toggle = modalType => () => {
+    console.log("Connect Wallet")
+    return this.setState({
+      modal: !this.state.modal,
+    });
   };
 
   render() {
@@ -167,38 +188,58 @@ class Header extends React.Component {
           </div>
         </Nav>
         {!isMobile &&
-        <Nav navbar className={bem.e('nav-right')}>
+          <Nav navbar className={bem.e('nav-right')}>
 
-          { this.state.namiEnabled === true ?
-            <Row><p>Wallet Connected.</p></Row>
-            :
-            <div style={{
-              alignContent: 'center', justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <Row style={{
-              alignContent: 'center', justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-                <img
-                  src={nami}
-                  width="100"
-                  height="70"
-                  onClick={() => this.connectWallet()}
-                />
-              </Row>
-              <Row style={{
+            {this.state.namiEnabled === true ?
+              <Row><Button variant="outline-light" size="sm">Wallet Connected</Button></Row>
+              :
+              <div style={{
                 alignContent: 'center', justifyContent: 'center',
                 alignItems: 'center',
                 textAlign: 'center',
               }}>
-                <Button variant="outline-light" size="sm" onClick={() => this.connectWallet()}>Connect Wallet</Button>
-              </Row>
-            </div>}
+                <Row style={{
+                  alignContent: 'center', justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                </Row>
+                <Row style={{
+                  alignContent: 'center', justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                  <Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallet</Button>
+                </Row>
+              </div>}
 
-        </Nav>}
+          </Nav>}
+
+        <Modal
+          isOpen={this.state.modal}
+          toggle={false}
+        >
+          <ModalHeader toggle={this.toggle()}>Select Wallet Type</ModalHeader>
+          <ModalBody style={{
+            alignContent: 'center', justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+          }}>
+
+            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("nami")}>Nami</Button>
+            <p></p>
+            <Button variant="outline-light" size="sm" >Flint - Coming Soon</Button> 
+            {/* onClick={() => this.connectWallet("flint")} */}
+          </ModalBody>
+          <ModalFooter>
+            {' '}
+            <Button color="secondary" onClick={this.toggle()}>
+              Close
+            </Button>
+          </ModalFooter>
+        </Modal>
+
+
       </Navbar >
     );
   }

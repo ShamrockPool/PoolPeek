@@ -127,7 +127,7 @@ class DashboardPage extends React.Component {
     await this.getChainLoadData();
 
     try {
-      var namiEnabled = await cardano.isEnabled();
+      var namiEnabled = await cardano.nami.isEnabled()
       this.setState({ namiEnabled: namiEnabled });
 
       if (this.state.namiEnabled) {

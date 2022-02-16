@@ -105,7 +105,7 @@ class HoskyInuPools extends React.Component {
     }
 
     try {
-      var namiEnabled = await cardano.isEnabled()
+      var namiEnabled = await cardano.nami.isEnabled()
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
       
@@ -114,7 +114,7 @@ class HoskyInuPools extends React.Component {
     this.getPools();
 
     try {
-      var namiEnabled = await cardano.isEnabled()
+      var namiEnabled = await cardano.nami.isEnabled()
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
       

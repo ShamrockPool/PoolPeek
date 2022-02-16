@@ -249,7 +249,7 @@ const CoinSelection = {
     //await Loader.load();
 
     const _minUTxOValue =
-    Number(outputs.len()) * Number(protocolParameters.minUTxO);
+      Number(outputs.len()) * Number(protocolParameters.minUTxO);
 
     /** @type {UTxOSelection} */
     let utxoSelection = {
@@ -302,36 +302,36 @@ const CoinSelection = {
       );
     }
 
-    // Insure change hold enough Ada to cover included native assets and fees
-    const change = utxoSelection.amount.checked_sub(mergedOutputsAmounts);
+    // // Insure change hold enough Ada to cover included native assets and fees
+    // const change = utxoSelection.amount.checked_sub(mergedOutputsAmounts);
 
-    let minAmount = Loader.Cardano.Value.new(
-      Loader.Cardano.min_ada_required(
-        change,
-        Loader.Cardano.BigNum.from_str(protocolParameters.minUTxO)
-      )
-    );
+    // let minAmount = Loader.Cardano.Value.new(
+    //   Loader.Cardano.min_ada_required(
+    //     change,
+    //     Loader.Cardano.BigNum.from_str(protocolParameters.minUTxO)
+    //   )
+    // );
 
-    let maxFee =
-    Number(protocolParameters.minFeeA) *
-    Number(protocolParameters.maxTxSize) +
-    Number(protocolParameters.minFeeB);
+    // let maxFee =
+    //   Number(protocolParameters.minFeeA) *
+    //   Number(protocolParameters.maxTxSize) +
+    //   Number(protocolParameters.minFeeB);
 
-    maxFee = Loader.Cardano.Value.new(
-      Loader.Cardano.BigNum.from_str(maxFee.toString())
-    );
+    // maxFee = Loader.Cardano.Value.new(
+    //   Loader.Cardano.BigNum.from_str(maxFee.toString())
+    // );
 
-    minAmount = minAmount.checked_add(maxFee);
+    // minAmount = minAmount.checked_add(maxFee);
 
-    if (compare(change, minAmount) < 0) {
-      // Not enough, add missing amount and run select one last time
-      const minAda = minAmount
-        .checked_sub(Loader.Cardano.Value.new(change.coin()))
-        .checked_add(Loader.Cardano.Value.new(utxoSelection.amount.coin()));
+    // if (compare(change, minAmount) < 0) {
+    //   // Not enough, add missing amount and run select one last time
+    //   const minAda = minAmount
+    //     .checked_sub(Loader.Cardano.Value.new(change.coin()))
+    //     .checked_add(Loader.Cardano.Value.new(utxoSelection.amount.coin()));
 
-      createSubSet(utxoSelection, minAda);
-      utxoSelection = select(utxoSelection, minAda, limit, _minUTxOValue);
-    }
+    //   createSubSet(utxoSelection, minAda);
+    //   utxoSelection = select(utxoSelection, minAda, limit, _minUTxOValue);
+    // }
 
     return {
       input: utxoSelection.selection,
@@ -445,7 +445,7 @@ function descSelect(utxoSelection, outputAmount, limit, minUTxOValue) {
   utxoSelection.subset = utxoSelection.subset.sort((a, b) => {
     return Number(
       searchAmountValue(outputAmount, b.output().amount()) -
-        searchAmountValue(outputAmount, a.output().amount())
+      searchAmountValue(outputAmount, a.output().amount())
     );
   });
 
@@ -528,7 +528,7 @@ function improve(utxoSelection, outputAmount, limit, range) {
 
   if (
     abs(getAmountValue(range.ideal) - getAmountValue(newAmount)) <
-      abs(getAmountValue(range.ideal) - getAmountValue(outputAmount)) &&
+    abs(getAmountValue(range.ideal) - getAmountValue(outputAmount)) &&
     compare(newAmount, range.maximum) <= 0
   ) {
     utxoSelection.selection.push(utxo);
@@ -733,38 +733,45 @@ function isQtyFulfilled(
   let amount = outputAmount;
 
   if (minUTxOValue && Number(outputAmount.coin().to_str()) > 0) {
-    let minAmount = Loader.Cardano.Value.new(
-      Loader.Cardano.min_ada_required(
-        cumulatedAmount,
-        Loader.Cardano.BigNum.from_str(minUTxOValue.toString())
-      )
-    );
 
-    // Lovelace min amount to cover assets and number of output need to be met
-    if (compare(cumulatedAmount, minAmount) < 0) return false;
-
-    // If requested Lovelace lower than minAmount, plan for change
-    if (compare(outputAmount, minAmount) < 0) {
-      amount = minAmount.checked_add(
-        Loader.Cardano.Value.new(
-          Loader.Cardano.BigNum.from_str(protocolParameters.minUTxO)
+    try {
+      let minAmount = Loader.Cardano.Value.new(
+        Loader.Cardano.min_ada_required(
+          cumulatedAmount,
+          Loader.Cardano.BigNum.from_str(minUTxOValue.toString())
         )
       );
+
+      // Lovelace min amount to cover assets and number of output need to be met
+      if (compare(cumulatedAmount, minAmount) < 0) return false;
+
+      // If requested Lovelace lower than minAmount, plan for change
+      if (compare(outputAmount, minAmount) < 0) {
+        amount = minAmount.checked_add(
+          Loader.Cardano.Value.new(
+            Loader.Cardano.BigNum.from_str(protocolParameters.minUTxO)
+          )
+        );
+      }
+
+      // Try covering the max fees
+      if (nbFreeUTxO > 0) {
+        let maxFee =
+          Number(protocolParameters.minFeeA) *
+          Number(protocolParameters.maxTxSize) +
+          Number(protocolParameters.minFeeB);
+
+        maxFee = Loader.Cardano.Value.new(
+          Loader.Cardano.BigNum.from_str(maxFee.toString())
+        );
+
+        amount = amount.checked_add(maxFee);
+      }
+    } catch (error) {
+      console.log(error)
     }
 
-    // Try covering the max fees
-    if (nbFreeUTxO > 0) {
-      let maxFee =
-      Number(protocolParameters.minFeeA) *
-      Number(protocolParameters.maxTxSize) +
-      Number(protocolParameters.minFeeB);
 
-      maxFee = Loader.Cardano.Value.new(
-        Loader.Cardano.BigNum.from_str(maxFee.toString())
-      );
-
-      amount = amount.checked_add(maxFee);
-    }
   }
 
   return compare(cumulatedAmount, amount) >= 0;
