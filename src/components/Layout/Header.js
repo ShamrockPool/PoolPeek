@@ -16,8 +16,8 @@ import bn from 'utils/bemnames';
 import nami from 'assets/img/namiicon.jpg';
 import Timer from "react-compound-timer";
 import { isMobile } from 'react-device-detect';
+// 9.1.2
 
-const width = window.innerWidth;
 const bem = bn.create('header');
 const cardano = window.cardano;
 
@@ -94,7 +94,7 @@ class Header extends React.Component {
     await this.getCurrentEpoch();
 
     try {
-      var namiEnabled = await cardano.nami.isEnabled();
+      var namiEnabled = await window.cardano.nami.isEnabled();
       this.setState({ namiEnabled: namiEnabled });
 
       if (this.state.namiEnabled) {
@@ -139,15 +139,21 @@ class Header extends React.Component {
   }
 
   async connectWallet(wallet) {
-    console.log("Connect Nami");
-    var walletEnabled = false;
-    if (wallet == "nami") {
-      walletEnabled = await cardano.nami.enable();
-    } else if (wallet == "flint") {
-      walletEnabled = await cardano.flint.enable();
+    try {
+      console.log("Connect Nami");
+      var walletEnabled = false;
+      var cardano = window.cardano;
+      if (wallet == "nami") {
+        walletEnabled = await cardano.nami.enable();
+      } else if (wallet == "flint") {
+        walletEnabled = await cardano.flint.enable();
+      }
+      this.setState({ namiEnabled: walletEnabled });
+      window.location.reload(false);
+    } catch (error) {
+      console.log(error)
     }
-    this.setState({ namiEnabled: walletEnabled });
-    window.location.reload(false);
+
   };
 
   toggle = modalType => () => {

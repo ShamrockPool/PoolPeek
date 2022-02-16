@@ -56,6 +56,7 @@ export default class JoinPool extends React.Component {
 
         try {
             var enabled = this.props.namiEnabled;
+            console.log("Name is enabled: " + enabled);
             this.setState({ namiEnabled:  enabled});
         } catch (error) {
 

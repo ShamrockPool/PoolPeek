@@ -94,26 +94,18 @@ class SundaePoolsReverse extends React.Component {
   async componentDidMount() {
 
     if (width < 600) {
-      this.setState({ smallScreen: true });
+      this.setState({ smallScreen: true }); 
     }
-    await this.getSundaePools();
-    this.refresher();
-
-    // ADA Staked
-    // 1,253,652,144
-
-    // Wallets Delegated
-    // 69,666
-    //     Wallets Delegated
-    // 69,933
 
     try {
-      var namiEnabled = await cardano.nami.isEnabled()
+      var namiEnabled = await cardano.nami.isEnabled();
       this.setState({ namiEnabled: namiEnabled });
     } catch (error) {
 
     }
 
+    await this.getSundaePools();
+    this.refresher();
   }
 
   async refresher() {
