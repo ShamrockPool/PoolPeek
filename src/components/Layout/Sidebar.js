@@ -8,7 +8,7 @@ import React from 'react';
 import { faTwitter, faTelegram, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  MdExtension,
+  MdOutlineFindInPage,
   MdKeyboardArrowDown,
   MdRemoveCircleOutline,
   MdHourglassFull,
@@ -19,7 +19,9 @@ import {
   MdFormatListBulleted,
   MdAccountBalance,
   MdDateRange,
-  MdMoneyOff
+  MdMoneyOff,
+  MdOutlineDashboard,
+  MdAttachMoney
 } from 'react-icons/md';
 import { NavLink } from 'react-router-dom';
 import {
@@ -73,7 +75,8 @@ const isos = [
   { to: '/sundaeiso', name: 'SundaeSwap', exact: true, Icon: MdSearch },
   { to: '/sundaeriso', name: 'Reverse SundaeSwap', exact: true, Icon: MdSearch },
   { to: '/hoskypools', name: 'Hosky', exact: true, Icon: MdSearch },
-  { to: '/bisonpools', name: 'Bison', exact: true, Icon: MdSearch }
+  { to: '/bisonpools', name: 'Bison', exact: true, Icon: MdSearch },
+  // { to: '/ardanaiso', name: 'Ardana', exact: true, Icon: MdSearch },
 ];
 
 const poolSearch = [
@@ -90,7 +93,7 @@ const poolTools = [
 ];
 
 const navItems = [
-  { to: '/', name: 'Dashboard', exact: true, Icon: MdBuild },
+  { to: '/', name: 'Dashboard', exact: true, Icon: MdOutlineDashboard },
   // { to: '/teampeek', name: 'Team Peek', exact: true, Icon: MdBuild },
   // { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   // { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
@@ -99,6 +102,10 @@ const navItems = [
   // { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff }
   // { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
+];
+
+const bottomNavItems = [
+  { to: '/isos', name: 'ISO\'s', exact: true, Icon: MdAttachMoney }
 ];
 
 const bem = bn.create('sidebar');
@@ -179,7 +186,7 @@ class Sidebar extends React.Component {
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
+                  <MdSearch className={bem.e('nav-item-icon')} />
                   <b><span className=" align-self-start">POOL SEARCH</span></b>
                 </div>
                 <MdKeyboardArrowDown
@@ -215,52 +222,11 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
-              onClick={this.handleClick('StakeTools')}
-            >
-              <BSNavLink className={bem.e('nav-item-collapse')}>
-                <div className="d-flex">
-                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
-                  <b><span className=" align-self-start">STAKING TOOLS</span></b>
-                </div>
-                <MdKeyboardArrowDown
-                  className={bem.e('nav-item-icon')}
-                  style={{
-                    padding: 0,
-                    transform: this.state.isOpenStakeTools
-                      ? 'rotate(0deg)'
-                      : 'rotate(-90deg)',
-                    transitionDuration: '0.3s',
-                    transitionProperty: 'transform',
-                  }}
-                />
-              </BSNavLink>
-            </NavItem>
-            <Collapse isOpen={this.state.isOpenStakeTools}>
-              {stakeTools.map(({ to, name, exact, Icon }, index) => (
-                <NavItem key={index} className={bem.e('nav-item')}>
-                  <BSNavLink
-                    id={`navItem-${name}-${index}`}
-                    className="text-uppercase"
-                    tag={NavLink}
-                    to={to}
-                    activeClassName="active"
-                    exact={exact}
-                  >
-                    {/* <Icon className={bem.e('nav-item-icon')} /> */}
-                    <span className="">{name}</span>
-                  </BSNavLink>
-                </NavItem>
-              ))}
-            </Collapse>
-
-
-            <NavItem
-              className={bem.e('nav-item')}
               onClick={this.handleClick('Queries')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
+                  <MdOutlineFindInPage className={bem.e('nav-item-icon')} />
                   <b><span className=" align-self-start">POOL QUERIES</span></b>
                 </div>
                 <MdKeyboardArrowDown
@@ -297,12 +263,51 @@ class Sidebar extends React.Component {
 
             <NavItem
               className={bem.e('nav-item')}
+              onClick={this.handleClick('StakeTools')}
+            >
+              <BSNavLink className={bem.e('nav-item-collapse')}>
+                <div className="d-flex">
+                <MdBuild className={bem.e('nav-item-icon')} />
+                  <b><span className=" align-self-start">STAKING TOOLS</span></b>
+                </div>
+                <MdKeyboardArrowDown
+                  className={bem.e('nav-item-icon')}
+                  style={{
+                    padding: 0,
+                    transform: this.state.isOpenStakeTools
+                      ? 'rotate(0deg)'
+                      : 'rotate(-90deg)',
+                    transitionDuration: '0.3s',
+                    transitionProperty: 'transform',
+                  }}
+                />
+              </BSNavLink>
+            </NavItem>
+            <Collapse isOpen={this.state.isOpenStakeTools}>
+              {stakeTools.map(({ to, name, exact, Icon }, index) => (
+                <NavItem key={index} className={bem.e('nav-item')}>
+                  <BSNavLink
+                    id={`navItem-${name}-${index}`}
+                    className="text-uppercase"
+                    tag={NavLink}
+                    to={to}
+                    activeClassName="active"
+                    exact={exact}
+                  >
+                    {/* <Icon className={bem.e('nav-item-icon')} /> */}
+                    <span className="">{name}</span>
+                  </BSNavLink>
+                </NavItem>
+              ))}
+            </Collapse>
+
+            {/* <NavItem
+              className={bem.e('nav-item')}
               onClick={this.handleClick('Offerings')}
             >
               <BSNavLink className={bem.e('nav-item-collapse')}>
                 <div className="d-flex">
-                  {/* <MdExtension className={bem.e('nav-item-icon')} /> */}
-                  <b><span className=" align-self-start">POOL OFFERINGS</span></b>
+                  <b><span className=" align-self-start">ISO's</span></b>
                 </div>
                 <MdKeyboardArrowDown
                   className={bem.e('nav-item-icon')}
@@ -328,12 +333,27 @@ class Sidebar extends React.Component {
                     activeClassName="active"
                     exact={exact}
                   >
-                    {/* <Icon className={bem.e('nav-item-icon')} /> */}
                     <span className="">{name}</span>
                   </BSNavLink>
                 </NavItem>
               ))}
-            </Collapse>
+            </Collapse> */}
+
+            {bottomNavItems.map(({ to, name, exact, Icon }, index) => (
+              <NavItem key={index} className={bem.e('nav-item')}>
+                <BSNavLink
+                  id={`navItem-${name}-${index}`}
+
+                  tag={NavLink}
+                  to={to}
+                  activeClassName="active"
+                  exact={exact}
+                >
+                  <Icon className={bem.e('nav-item-icon')} />
+                  <b><span className="">{name}</span></b>
+                </BSNavLink>
+              </NavItem>
+            ))}
 
             {/* <NavItem
               className={bem.e('nav-item')}

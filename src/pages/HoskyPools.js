@@ -15,7 +15,7 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, gethoskypools } from '../assets/services';
+import { baseUrlPoolPeekService, getisopools } from '../assets/services';
 import "../styles/styles.css";
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
@@ -127,7 +127,7 @@ class HoskyPools extends React.Component {
 
   async getPools() {
     try {
-      var response = await fetch(baseUrlPoolPeekService + gethoskypools);
+      var response = await fetch(baseUrlPoolPeekService + getisopools + 'hoskypools');
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO })

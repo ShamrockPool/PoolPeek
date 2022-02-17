@@ -15,7 +15,7 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getpoolpeekcoinpools } from '../assets/services';
+import { baseUrlPoolPeekService, getisopools } from '../assets/services';
 import "../styles/styles.css";
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
@@ -130,7 +130,7 @@ class PoolPeekCoinPools extends React.Component {
 
   async getPools() {
     try {
-      var response = await fetch(baseUrlPoolPeekService + getpoolpeekcoinpools);
+      var response = await fetch(baseUrlPoolPeekService + getisopools + 'poolpeekcoinpools');
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO })

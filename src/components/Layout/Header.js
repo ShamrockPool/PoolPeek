@@ -6,6 +6,7 @@ import {
   Button,
   Nav,
   Navbar,
+  Col,
   Row,
   Modal,
   ModalBody,
@@ -13,13 +14,14 @@ import {
   ModalHeader,
 } from 'reactstrap';
 import bn from 'utils/bemnames';
-import nami from 'assets/img/namiicon.jpg';
 import Timer from "react-compound-timer";
 import { isMobile } from 'react-device-detect';
-// 9.1.2
+import { Provider, connect } from 'react-redux';
+import { Container } from 'components/Layout/container';
 
 const bem = bn.create('header');
-const cardano = window.cardano;
+
+const Component = ({ count }) => <h1>Helloworld React & Redux! {count}</h1>;
 
 class Header extends React.Component {
   constructor(props) {
@@ -142,17 +144,37 @@ class Header extends React.Component {
 
   async connectWallet(wallet) {
     try {
+      console.log("Connecting wallet")
       var walletEnabled = false;
       var cardano = window.cardano;
-      if (wallet == "nami") {
+      if (wallet === "nami") {
         walletEnabled = await cardano.nami.enable();
-      } else if (wallet == "flint") {
+        if (walletEnabled != null) {
+          this.props.setWallet(wallet, walletEnabled);
+          this.setState({ connectedWallet: 'Nami', namiEnabled: true });
+
+        }
+      } else if (wallet === "flint") {
+        console.log("flint")
         walletEnabled = await cardano.flint.enable();
+        console.log(walletEnabled)
+        if (walletEnabled != null) {
+          this.props.setWallet(wallet, walletEnabled);
+          this.setState({ connectedWallet: 'Flint', namiEnabled: true });
+        }
       }
-      if(walletEnabled){
-        this.setState({ connectedWallet: 'Nami', namiEnabled: walletEnabled });
-        window.location.reload(true);
+      else if (wallet === "ccvault") {
+        console.log("ccvault")
+        walletEnabled = await cardano.ccvault.enable();
+        console.log(walletEnabled)
+        if (walletEnabled != null) {
+          this.props.setWallet(wallet, walletEnabled);
+          this.setState({ connectedWallet: 'ccvault', namiEnabled: true });
+        }
       }
+
+
+
     } catch (error) {
       console.log(error)
     }
@@ -165,6 +187,10 @@ class Header extends React.Component {
       modal: !this.state.modal,
     });
   };
+
+  changeUserDetails = (field, value) => {
+    this.props.updateCurrentUserData({ field: field, value: value });
+  }
 
   render() {
     const { text } = this.state.connectedWallet
@@ -198,30 +224,10 @@ class Header extends React.Component {
         </Nav>
         {!isMobile &&
           <Nav navbar className={bem.e('nav-right')}>
-
-            {this.state.namiEnabled === true ?
-              <Row><Button variant="outline-light" size="sm">{this.state.connectedWallet} Wallet Connected</Button></Row>
-              :
-              <div style={{
-                alignContent: 'center', justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-              }}>
-                <Row style={{
-                  alignContent: 'center', justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}>
-                </Row>
-                <Row style={{
-                  alignContent: 'center', justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}>
-                  <Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallet</Button>
-                </Row>
-              </div>}
-
+            <Col>
+              <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Manage Wallets</Button></Row>
+              <Row><p>Connected: {this.props.count}</p></Row>
+            </Col>
           </Nav>}
 
         <Modal
@@ -235,10 +241,11 @@ class Header extends React.Component {
             textAlign: 'center',
           }}>
 
-            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("nami")}>Nami</Button>
+            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("nami")}>Nami </Button>
             <p></p>
-            <Button variant="outline-light" size="sm" >Flint - Coming Soon</Button>
-            {/* onClick={() => this.connectWallet("flint")} */}
+            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("flint")}>Flint</Button>
+            {/* <p></p>
+            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("ccvault")}>CCVault</Button> */}
           </ModalBody>
           <ModalFooter>
             {' '}
@@ -247,11 +254,21 @@ class Header extends React.Component {
             </Button>
           </ModalFooter>
         </Modal>
-
-
       </Navbar >
     );
   }
 }
 
-export default Header;
+const mapStateToProps = state => {
+  return {
+    count: state
+  };
+};
+const mapDispatchToProps = dispatch => {
+  return {
+    setWallet: (walletType, wallet) => dispatch({ type: walletType, wallet: wallet }),
+  }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

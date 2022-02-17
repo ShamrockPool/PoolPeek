@@ -17,17 +17,13 @@ import CircleLoader
 import { css } from "@emotion/core";
 import { baseUrlPoolPeekService, getisopools } from '../assets/services';
 import "../styles/styles.css";
-import { isEmpty } from 'utils/stringutil.js';
-// import SearchBar from "material-ui-search-bar";
-// import { DataGrid } from '@material-ui/data-grid';
-// import { DataGrid } from '@mui/x-data-grid';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Timer from "react-compound-timer";
 import JoinPool from 'components/nami/JoinPool';
-import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
+import { FormControlLabel, Switch } from '@material-ui/core';
 
 const override = css`
   display: block;
@@ -73,7 +69,7 @@ const tableRowStyleWarning = {
   // padding: 0,
 };
 
-class SundaePoolsReverse extends React.Component {
+class ArdanaISOPools extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -111,7 +107,7 @@ class SundaePoolsReverse extends React.Component {
   async getSundaePools() {
     try {
       this.setState({ timerReset: null })
-      var response = await fetch(baseUrlPoolPeekService + getisopools + 'reversesundaepools');
+      var response = await fetch(baseUrlPoolPeekService + getisopools + 'ardanaiso');
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO, timerReset: this.state.refreshAmount })
@@ -203,18 +199,11 @@ class SundaePoolsReverse extends React.Component {
 
     return (
       <Page
-        className="SundaeRISOPools"
-        title="SundaeSwap RISO"
+        className="ArdanaISO"
+        title="Ardana ISO"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           : <Col>
-            <Row style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <h3 style={{ color: 'red' }}>To Participate in this RISO move you ADA to one of the below pools before 19th Feb 9.45PM UTC</h3>
-            </Row>
 
             <Row style={{
               justifyContent: 'center',
@@ -262,10 +251,10 @@ class SundaePoolsReverse extends React.Component {
                       <Card inverse color='primary'>
                         <CardBody body>
                           <CardTitle className="text-capitalize">
-                            RISO Start Date
+                            ISO Start Date
                           </CardTitle>
                           <CardText>
-                            February 19th
+                            TBD
                           </CardText>
                         </CardBody>
                       </Card>
@@ -275,10 +264,10 @@ class SundaePoolsReverse extends React.Component {
                       <Card inverse color='secondary'>
                         <CardBody body>
                           <CardTitle className="text-capitalize">
-                            RISO End Date
+                            ISO End Date
                           </CardTitle>
                           <CardText>
-                            February 24
+                            TBD
                           </CardText>
                         </CardBody>
                       </Card>
@@ -307,7 +296,7 @@ class SundaePoolsReverse extends React.Component {
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <h3>Starting Stats</h3>
+                  <h3>ISO Announced Stats</h3>
                 </Row>
 
                 <Row style={{
@@ -323,7 +312,7 @@ class SundaePoolsReverse extends React.Component {
                           ADA Staked
                         </CardTitle>
                         <CardText>
-                          595,634,073
+                          495,485,016
                         </CardText>
                       </CardBody>
                     </Card>
@@ -336,7 +325,7 @@ class SundaePoolsReverse extends React.Component {
                           Wallets Delegated
                         </CardTitle>
                         <CardText>
-                          59,255
+                          32,545
                         </CardText>
                       </CardBody>
                     </Card>
@@ -389,7 +378,7 @@ class SundaePoolsReverse extends React.Component {
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <p>More info on RISO: <a href='https://sundaeswap-finance.medium.com/the-reverse-iso-proposal-promoting-cardanos-decentralization-5bbd2b290485' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
+                   <p>More info: <a href='https://medium.com/ardana-hub/cardano-start-up-ardana-set-to-launch-highly-anticipated-ispo-9597cd4c8d42' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
                 </Row>
 
                 <hr></hr>
@@ -398,7 +387,7 @@ class SundaePoolsReverse extends React.Component {
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <a href='https://discord.gg/6nZh34ZBkH' target="_blank" rel="noreferrer" >
+                  <a href='https://discord.gg/c9skrZvsqH' target="_blank" rel="noreferrer" >
                     <p>SundaeSwap Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
                 </Col>
               </Col>
@@ -511,13 +500,8 @@ class SundaePoolsReverse extends React.Component {
             </Row>
           </Col>}
 
-
-
-
-
-
       </Page>
     );
   }
 }
-export default SundaePoolsReverse;
+export default ArdanaISOPools;

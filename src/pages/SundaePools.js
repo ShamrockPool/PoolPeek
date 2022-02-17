@@ -15,7 +15,7 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getSundaeInfo } from '../assets/services';
+import { baseUrlPoolPeekService, getisopools } from '../assets/services';
 import "../styles/styles.css";
 import { isEmpty } from 'utils/stringutil.js';
 // import SearchBar from "material-ui-search-bar";
@@ -138,7 +138,7 @@ class SundaePools extends React.Component {
 
   async getSundaePools() {
     try {
-      var response = await fetch(baseUrlPoolPeekService + getSundaeInfo);
+      var response = await fetch(baseUrlPoolPeekService + getisopools + 'sundaepools');
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO })

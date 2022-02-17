@@ -2,11 +2,6 @@ import { Content, Footer, Header, Sidebar } from 'components/Layout';
 import React from 'react';
 import NotificationSystem from 'react-notification-system';
 import { NOTIFICATION_SYSTEM_STYLE } from 'utils/constants';
-import {
-  MdImportantDevices,
-  // MdCardGiftcard,
-  MdLoyalty,
-} from 'react-icons/md';
 
 const width = window.innerWidth;
 
@@ -40,7 +35,7 @@ class MainLayout extends React.Component {
     //   });
     // }, 1500);
 
-    
+
 
     if (width < 600) {
       this.openSidebar('close');
@@ -88,7 +83,7 @@ class MainLayout extends React.Component {
         <Sidebar />
         <Content fluid onClick={this.handleContentClick}>
           <Header />
-          {children}
+            {children}
           <Footer />
         </Content>
         {width > 700 &&

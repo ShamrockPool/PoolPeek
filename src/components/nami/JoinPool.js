@@ -12,8 +12,7 @@ import { Link } from 'react-router-dom';
 import CircleLoader
     from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-
-var cardano = window.cardano;
+import { connect } from 'react-redux';
 
 const renderer = ({ hours, minutes, seconds, completed }) => {
     return <span>{minutes} Minutes {seconds} Seconds</span>;
@@ -41,7 +40,7 @@ var delegation;
 var user;
 var stakeKeyHash;
 
-export default class JoinPool extends React.Component {
+class JoinPool extends React.Component {
     // https://github.com/Felippo001/nami-wallet-api
     state = {
         loading: true,
@@ -57,15 +56,15 @@ export default class JoinPool extends React.Component {
         modal_nested_parent: false,
         modal_nested: false,
 
-        namiEnabled: false,
+        wallet: "",
     };
 
     async componentDidMount() {
         window.scrollTo(0, 0);
 
         try {
-            var enabled = this.props.namiEnabled;
-            this.setState({ namiEnabled: enabled });
+            var wallet = this.props.wallet;
+            this.setState({ wallet: wallet });
         } catch (error) {
         }
     }
@@ -192,8 +191,6 @@ export default class JoinPool extends React.Component {
         let response = await signSubmitTx(Loader, transaction);
 
         this.setState({ joinPoolResponse: response, loading: false });
-
-        var success = false;
         } catch (error) {
             console.log(error);
             this.setState({ joinPoolResponse: "Unable to submit at this time.", loading: false });
@@ -204,7 +201,7 @@ export default class JoinPool extends React.Component {
     render() {
         return (
             <div>
-                {this.state.namiEnabled &&
+                {this.props.wallet !== "" &&
                     <p><Button variant="outline-light" size="sm" onClick={() => this.joinPool()}>Join</Button>
                         <Modal
                             isOpen={this.state.modal}
@@ -240,4 +237,12 @@ export default class JoinPool extends React.Component {
         );
     }
 }
+
+const mapStateToProps = state => {
+    return {
+      wallet: state
+    };
+  };
+  
+  export default connect(mapStateToProps)(JoinPool);
 

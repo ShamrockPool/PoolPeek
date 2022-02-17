@@ -25,10 +25,13 @@ import HoskyInuPools from 'pages/HoskyInuPools';
 import SaturatedPools from 'pages/SaturatedPools';
 import PoolPeekCoinPools from 'pages/PoolPeekCoinPools';
 import BisonPools from 'pages/BisonPools';
+import ArdanaISOPools from 'pages/ArdanaISOPools';
 
 import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
 import PoolMapV3 from 'pages/PoolMapV3';
 import NamiJoinPool from 'pages/tools/NamiJoinPool';
+
+import ISOPage from 'pages/ISOPage';
 
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
@@ -40,10 +43,11 @@ const getBasename = () => {
   return `/${process.env.PUBLIC_URL.split('/').pop()}`;
 };
 
-class App extends React.Component {
+export default class App extends React.Component {
+  
   render() {
+    console.log("props = " + this.props);
     return (
-      // <BrowserRouter basename={getBasename()}>
       <HashRouter basename={getBasename()}>
         <GAListener>
           <Switch>
@@ -68,8 +72,9 @@ class App extends React.Component {
                 <Route exact path="/hoskypools" render={(props) => <HoskyPools {...props}/>} />
                 <Route exact path="/hoskyinupools" render={(props) => <HoskyInuPools {...props}/>} />
                 <Route exact path="/bisonpools" render={(props) => <BisonPools {...props}/>} />
-
+                <Route exact path="/ardanaiso" render={(props) => <ArdanaISOPools {...props}/>} />
                 
+                <Route exact path="/isos" render={(props) => <ISOPage {...props}/>} />
                 
                 <Route exact path="/saturatedpools" render={(props) => <SaturatedPools {...props}/>} />
                 <Route exact path="/retiredpools" render={(props) => <RetiredPoolsV2 {...props}/>} />
@@ -109,8 +114,6 @@ class App extends React.Component {
                 <Route exact path="/poolsearch/:location" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
                 <Route exact path="/stakingrewards/:stakeAddress" render={(props) => <StakingRewards  {...props}/>} />
 
-                {/* <Route exact path="/*" render={(props) => <DashboardPage />} /> */}
-
               </React.Suspense>
             </MainLayout>
             <Redirect to="/" />
@@ -146,5 +149,3 @@ const query = ({ width }) => {
   return { breakpoint: 'xs' };
 };
 
-// export default componentQueries(query)(App);
-export default App;

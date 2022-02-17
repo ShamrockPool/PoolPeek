@@ -37,7 +37,7 @@ import {
 } from '../assets/services';
 import Favorite from '@material-ui/icons/Favorite';
 import { red } from '@material-ui/core/colors';
-
+import { connect } from 'react-redux';
 import ppc from 'assets/img/PKCoin2.m4v';
 import LoadChart from 'components/LoadChart';
 
@@ -116,7 +116,7 @@ class DashboardPage extends React.Component {
     console.log("Connect Nami");
     var namiEnabled = await cardano.enable();
     this.setState({ namiEnabled: namiEnabled });
-    await this.getNamiPool();
+    // await this.getNamiPool();
   };
 
   async componentDidMount() {
@@ -150,28 +150,28 @@ class DashboardPage extends React.Component {
 
   }
 
-  async getNamiPool() {
-    try {
-      const walletAddress = await cardano.getRewardAddress();
-      console.log(walletAddress);
-      const Loader = await import('@emurgo/cardano-serialization-lib-browser');
-      var walletAddressHex = Buffer.from(
-        walletAddress,
-        'hex'
-      );
-      var addressFromBytes = Loader.Address.from_bytes(walletAddressHex);
-      var rewardAddress = Loader.RewardAddress.from_address(addressFromBytes)?.to_address().to_bech32();
+  // async getNamiPool() {
+  //   try {
+  //     const walletAddress = await window.cardano.getRewardAddress();
+  //     console.log(walletAddress);
+  //     const Loader = await import('@emurgo/cardano-serialization-lib-browser');
+  //     var walletAddressHex = Buffer.from(
+  //       walletAddress,
+  //       'hex'
+  //     );
+  //     var addressFromBytes = Loader.Address.from_bytes(walletAddressHex);
+  //     var rewardAddress = Loader.RewardAddress.from_address(addressFromBytes)?.to_address().to_bech32();
 
-      var response = await fetch(baseUrlPoolPeekService + getPoolByStakeAddress + rewardAddress);
-      var data = await response.json();
-      var pool = data.pools[0];
-      this.setState({ namiPool: pool });
-      this.state.namiPool = pool;
-    } catch (error) {
+  //     var response = await fetch(baseUrlPoolPeekService + getPoolByStakeAddress + rewardAddress);
+  //     var data = await response.json();
+  //     var pool = data.pools[0];
+  //     this.setState({ namiPool: pool });
+  //     this.state.namiPool = pool;
+  //   } catch (error) {
 
-    }
+  //   }
 
-  }
+  // }
 
   async getChainLoadData() {
     var response = await fetch(baseUrl + chainLoadData);
@@ -321,7 +321,6 @@ class DashboardPage extends React.Component {
       // breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
         <Row>
-
           <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
@@ -936,4 +935,12 @@ class DashboardPage extends React.Component {
     );
   }
 }
-export default DashboardPage;
+
+
+const mapStateToProps = state => {
+  return {
+    wallet: state
+  };
+};
+
+export default connect(mapStateToProps)(DashboardPage);

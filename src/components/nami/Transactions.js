@@ -4,7 +4,7 @@ import { Buffer } from 'buffer';
 var cardano = window.cardano;
 
 export const getDelegation = async (Loader) => {
-  const walletAddress = await cardano.getRewardAddress();
+  const walletAddress = await window.cardano.getRewardAddress();
 
   var walletAddressHex = Buffer.from(
     walletAddress,

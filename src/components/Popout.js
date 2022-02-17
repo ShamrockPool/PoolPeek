@@ -58,11 +58,11 @@ export default class Popout extends React.Component {
     }
 
     // Make sure the window closes when the component unmounts
-    componentWillUnmount() {
-        if (this.state.externalWindow) {
-            this.state.externalWindow.close();
-        }
-    }
+    // componentWillUnmount() {
+    //     if (this.state.externalWindow) {
+    //         this.state.externalWindow.close();
+    //     }
+    // }
 
     render() {
         if (!this.state.containerElement) {

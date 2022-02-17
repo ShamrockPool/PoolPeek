@@ -2,8 +2,8 @@
 //export const baseUrl = "http://localhost:8081";
 export const baseUrl = "https://smashpeek.com/services";
 
-//export const baseUrlPoolPeekService = "http://localhost:8087";
-export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
+export const baseUrlPoolPeekService = "http://localhost:8087";
+//export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
 
 
 
@@ -35,12 +35,14 @@ export const getPoolAdvertising = "/pooladvert/requested";
 export const requestPoolAdvertising = "/pooladvert/request/";//{poolId}
 
 //isos
-export const getSundaeInfo = "/pooldetails/getsundaepools";
-export const getSundaeInfoReverse = "/pooldetails/getreversesundaepools";
-export const gethoskypools = "/pooldetails/gethoskypools";
-export const gethoskyinupools = "/pooldetails/gethoskyinupools";
-export const getpoolpeekcoinpools = "/pooldetails/getpoolpeekcoinpools";
-export const getbisonpools = "/pooldetails/getbisonpools";
+// export const getSundaeInfo = "/pooldetails/getsundaepools";
+// export const getSundaeInfoReverse = "/pooldetails/getreversesundaepools";
+// export const gethoskypools = "/pooldetails/gethoskypools";
+// export const gethoskyinupools = "/pooldetails/gethoskyinupools";
+// export const getpoolpeekcoinpools = "/pooldetails/getpoolpeekcoinpools";
+// export const getbisonpools = "/pooldetails/getbisonpools";
+
+export const getisopools = "/pooldetails/getisopools/"//{isoname}
 
 
 export const mintNFT = "/nft/mint/";//{nftId}

@@ -533,7 +533,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                                     <CardHeader>Luck Last Epoch</CardHeader>
                                                                     <CardBody>
                                                                         <h2>{"" + this.calculateLuck()}%</h2>
-                                                                        <small>This is the amount of luck this pool recieved last Epoch.</small>
+                                                                        <small>This is the amount of luck this pool received last Epoch.</small>
                                                                     </CardBody>
                                                                 </Card>
                                                             </Col>}
