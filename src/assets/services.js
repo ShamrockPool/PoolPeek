@@ -2,8 +2,8 @@
 //export const baseUrl = "http://localhost:8081";
 export const baseUrl = "https://smashpeek.com/services";
 
-export const baseUrlPoolPeekService = "http://localhost:8087";
-//export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
+//export const baseUrlPoolPeekService = "http://localhost:8087";
+export const baseUrlPoolPeekService = "https://smashpeek.com/ppservices";
 
 
 

@@ -20,11 +20,13 @@ import StakingCalculator from 'pages/StakingCalculator';
 import ZeroBlocksPage from 'pages/ZeroBlocksPage';
 import SundaePools from './pages/SundaePools';
 import SundaePoolsReverse from 'pages/SundaePoolsReverse';
-import HoskyPools from 'pages/HoskyPools';
-import HoskyInuPools from 'pages/HoskyInuPools';
+import HoskyPoolsV2 from 'pages/HoskyPoolsV2';
+import HoskyInuPoolsV2 from 'pages/HoskyInuPoolsV2';
 import SaturatedPools from 'pages/SaturatedPools';
-import PoolPeekCoinPools from 'pages/PoolPeekCoinPools';
-import BisonPools from 'pages/BisonPools';
+
+import PoolPeekCoinPoolsV2 from 'pages/PoolPeekCoinPoolsV2';
+
+import BisonPoolsV2 from 'pages/BisonPoolsV2';
 import ArdanaISOPools from 'pages/ArdanaISOPools';
 
 import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
@@ -66,12 +68,12 @@ export default class App extends React.Component {
                 <Route exact path="/stakingcalculator" render={(props) => <StakingCalculator />} />
                 <Route exact path="/aboutus" render={(props) => <AboutUsPage />} />
 
-                <Route exact path="/poolpeekcoinpools" render={(props) => <PoolPeekCoinPools {...props}/>} />
+                <Route exact path="/poolpeekcoinpools" render={(props) => <PoolPeekCoinPoolsV2 {...props}/>} />
                 <Route exact path="/sundaeiso" render={(props) => <SundaePools {...props}/>} />
                 <Route exact path="/sundaeriso" render={(props) => <SundaePoolsReverse {...props}/>} />
-                <Route exact path="/hoskypools" render={(props) => <HoskyPools {...props}/>} />
-                <Route exact path="/hoskyinupools" render={(props) => <HoskyInuPools {...props}/>} />
-                <Route exact path="/bisonpools" render={(props) => <BisonPools {...props}/>} />
+                <Route exact path="/hoskypools" render={(props) => <HoskyPoolsV2 {...props}/>} />
+                <Route exact path="/hoskyinupools" render={(props) => <HoskyInuPoolsV2 {...props}/>} />
+                <Route exact path="/bisonpools" render={(props) => <BisonPoolsV2 {...props}/>} />
                 <Route exact path="/ardanaiso" render={(props) => <ArdanaISOPools {...props}/>} />
                 
                 <Route exact path="/isos" render={(props) => <ISOPage {...props}/>} />
