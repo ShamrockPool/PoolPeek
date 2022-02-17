@@ -225,7 +225,7 @@ class Header extends React.Component {
         {!isMobile &&
           <Nav navbar className={bem.e('nav-right')}>
             <Col>
-              <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Manage Wallets</Button></Row>
+              <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallets</Button></Row>
               <Row><p>Connected: {this.props.count}</p></Row>
             </Col>
           </Nav>}

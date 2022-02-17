@@ -17,6 +17,7 @@ import bison from 'assets/img/iso/bison.png';
 import hoskyinu from 'assets/img/iso/hoskyinu.webp';
 import sundaeswapiso from 'assets/img/iso/sundaeswapiso.jfif';
 import ppc from 'assets/img/iso/ppc.png';
+import geniusyieldiso from 'assets/img/iso/geniusyieldisov2.png'
 class ISOPage extends React.Component {
   state = {
     loading: true,
@@ -155,6 +156,28 @@ class ISOPage extends React.Component {
                   <h2>Hosky Inu</h2>
                   <h3>Community ISO</h3>
                   <h4>LIVE</h4>
+                </div>
+              </div>
+            </div>
+          </Link >
+
+          <Link to={{ pathname: '/geniusyieldiso' }}>
+            <div className="ProjectCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+
+                <img
+                  src={geniusyieldiso}
+                  width="70vh" height="200vh"
+                />
+
+                <div className="ProjectCard-body">
+                  <h2>Genius Yield ISO</h2>
+                  <h3>Project Funding ISO</h3>
+                  <h4>Live</h4>
                 </div>
               </div>
             </div>

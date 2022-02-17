@@ -15,7 +15,7 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getisopools } from '../assets/services';
+import { baseUrlPoolPeekService, getisopoolsPost } from '../assets/services';
 import "../styles/styles.css";
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
@@ -69,7 +69,15 @@ const tableRowStyleWarning = {
   // padding: 0,
 };
 
-class ArdanaISOPools extends React.Component {
+const isoPools = {
+  isoName: 'geniusyieldiso',
+  pool_idsArr: ['c485ab20bd3f105e59f3c50a0d3fbaf615a51f70a1c6d29d00a1fd27',
+    '6ec2284f8e312b5b122d85b97db828ff364d49e3c51c449bfc8889bf',
+    '126f84b8f88fd0f65de921ef521f2aa637e5e465cea06042c103fe22',
+    'c80d3b1f64feed0697bb97c97867a63ff1c33cb8b472bc33fdfa457e']
+}
+
+class GeniusYieldISOPools extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -107,7 +115,14 @@ class ArdanaISOPools extends React.Component {
   async getSundaePools() {
     try {
       this.setState({ timerReset: null })
-      var response = await fetch(baseUrlPoolPeekService + getisopools + 'ardanaiso');
+      // var response = await fetch(baseUrlPoolPeekService + getisopoolsPost);
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(isoPools)
+      };
+      var response = await fetch(baseUrlPoolPeekService + getisopoolsPost, requestOptions);
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO, timerReset: this.state.refreshAmount })
@@ -199,8 +214,8 @@ class ArdanaISOPools extends React.Component {
 
     return (
       <Page
-        className="ArdanaISO"
-        title="Ardana ISPO"
+        className="GeniusYieldISPO"
+        title="Genius Yield ISPO"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           : <Col>
@@ -233,104 +248,6 @@ class ArdanaISOPools extends React.Component {
 
 
               <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
-
-                <Col>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                    <h3>Dates</h3>
-                  </Row>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                    <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                      <Card inverse color='primary'>
-                        <CardBody body>
-                          <CardTitle className="text-capitalize">
-                            ISO Start Date
-                          </CardTitle>
-                          <CardText>
-                            TBD
-                          </CardText>
-                        </CardBody>
-                      </Card>
-                    </Col>
-
-                    <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                      <Card inverse color='secondary'>
-                        <CardBody body>
-                          <CardTitle className="text-capitalize">
-                            ISO End Date
-                          </CardTitle>
-                          <CardText>
-                            TBD
-                          </CardText>
-                        </CardBody>
-                      </Card>
-                    </Col>
-
-                    {/* <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Pools Involved
-                        </CardTitle>
-                        <CardText>
-                          {this.state.stats.total_pools}
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col> */}
-
-
-                  </Row>
-                </Col>
-
-                <hr></hr>
-                <Row style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}>
-                  <h3>ISO Announced Stats</h3>
-                </Row>
-
-                <Row style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}>
-
-                  <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          ADA Staked
-                        </CardTitle>
-                        <CardText>
-                          495,485,016
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Wallets Delegated
-                        </CardTitle>
-                        <CardText>
-                          32,545
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
                 <hr></hr>
                 <Row style={{
                   justifyContent: 'center',
@@ -378,7 +295,7 @@ class ArdanaISOPools extends React.Component {
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                   <p>More info: <a href='https://medium.com/ardana-hub/cardano-start-up-ardana-set-to-launch-highly-anticipated-ispo-9597cd4c8d42' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
+                  <p>More info: <a href='https://discord.com/channels/@me/937487387318169690/943957608656683018' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
                 </Row>
 
                 <hr></hr>
@@ -387,8 +304,8 @@ class ArdanaISOPools extends React.Component {
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <a href='https://discord.gg/c9skrZvsqH' target="_blank" rel="noreferrer" >
-                    <p>SundaeSwap Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
+                  <a href='https://discord.gg/TNHf4fs626' target="_blank" rel="noreferrer" >
+                    <p>Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
                 </Col>
               </Col>
               <Col lg={8} md={12} sm={12} xs={12} className="mb-3" style={{
@@ -504,4 +421,4 @@ class ArdanaISOPools extends React.Component {
     );
   }
 }
-export default ArdanaISOPools;
+export default GeniusYieldISOPools;

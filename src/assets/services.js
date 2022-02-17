@@ -42,8 +42,8 @@ export const requestPoolAdvertising = "/pooladvert/request/";//{poolId}
 // export const getpoolpeekcoinpools = "/pooldetails/getpoolpeekcoinpools";
 // export const getbisonpools = "/pooldetails/getbisonpools";
 
-export const getisopools = "/pooldetails/getisopools/"//{isoname}
-
+export const getisopools = "/pooldetails/getisopools/"//{isoname} GET
+export const getisopoolsPost = "/pooldetails/getisopools/"// POST
 
 export const mintNFT = "/nft/mint/";//{nftId}
 

@@ -23,7 +23,7 @@ import SundaePoolsReverse from 'pages/SundaePoolsReverse';
 import HoskyPoolsV2 from 'pages/HoskyPoolsV2';
 import HoskyInuPoolsV2 from 'pages/HoskyInuPoolsV2';
 import SaturatedPools from 'pages/SaturatedPools';
-
+import GeniusYieldISOPools from 'pages/GeniusYieldISOPools';
 import PoolPeekCoinPoolsV2 from 'pages/PoolPeekCoinPoolsV2';
 
 import BisonPoolsV2 from 'pages/BisonPoolsV2';
@@ -75,6 +75,8 @@ export default class App extends React.Component {
                 <Route exact path="/hoskyinupools" render={(props) => <HoskyInuPoolsV2 {...props}/>} />
                 <Route exact path="/bisonpools" render={(props) => <BisonPoolsV2 {...props}/>} />
                 <Route exact path="/ardanaiso" render={(props) => <ArdanaISOPools {...props}/>} />
+                <Route exact path="/geniusyieldiso" render={(props) => <GeniusYieldISOPools {...props}/>} />
+                
                 
                 <Route exact path="/isos" render={(props) => <ISOPage {...props}/>} />
                 
