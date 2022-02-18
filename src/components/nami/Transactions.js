@@ -3,11 +3,11 @@ import { Buffer } from 'buffer';
 
 var cardano = window.cardano;
 
-export const getDelegation = async (Loader) => {
-  const walletAddress = await window.cardano.getRewardAddress();
+export const getDelegation = async (wallet, Loader) => {
+  const walletAddress = await wallet.getRewardAddresses();
 
   var walletAddressHex = Buffer.from(
-    walletAddress,
+    walletAddress[0],
     'hex'
   );
 
@@ -83,8 +83,8 @@ function _utxoToAssets(utxo) {
 }
 
 
-export const getAddress = async (Loader) => {
-  var changedAddress = await cardano.getChangeAddress();
+export const getAddress = async (wallet, Loader) => {
+  var changedAddress = await wallet.getChangeAddress();
   return Loader.Address.from_bytes(
     Buffer.from(
       changedAddress,
@@ -124,7 +124,6 @@ export const txBuilder = async (Loader, { PaymentAddress, Utxos, Outputs, Protoc
   const MULTIASSET_SIZE = 5000;
   const VALUE_SIZE = 5000;
   const totalAssets = 0
-  CoinSelection.setLoader(Loader)
   CoinSelection.setProtocolParameters(
     ProtocolParameter.minUtxo.toString(),
     ProtocolParameter.linearFee.minFeeA.toString(),
@@ -132,11 +131,12 @@ export const txBuilder = async (Loader, { PaymentAddress, Utxos, Outputs, Protoc
     ProtocolParameter.maxTxSize.toString()
   )
 
-  const selection = CoinSelection.randomImprove(
+  const selection = await CoinSelection.randomImprove(
     Utxos,
     Outputs,
     20 + totalAssets
   )
+  console.log(selection)
   const inputs = selection.input;
 
 
@@ -292,9 +292,9 @@ export const txBuilder = async (Loader, { PaymentAddress, Utxos, Outputs, Protoc
 }
 
 
-export const signSubmitTx = async (Loader, transactionRaw) => {
+export const signSubmitTx = async (wallet, Loader, transactionRaw) => {
   let transaction = Loader.Transaction.from_bytes(transactionRaw)
-  const witneses = await window.cardano.signTx(
+  const witneses = await wallet.signTx(
     Buffer.from(
       transaction.to_bytes()
     ).toString('hex')
@@ -317,7 +317,7 @@ export const signSubmitTx = async (Loader, transactionRaw) => {
 
   var txhash = null;
   try {
-    txhash = await window.cardano.submitTx(signedTxHexBytes);
+    txhash = await wallet.submitTx(signedTxHexBytes);
     console.log(txhash);
     return "Success your tx hash is: " + txhash;
   } catch (error) {

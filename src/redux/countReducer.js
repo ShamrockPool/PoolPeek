@@ -6,6 +6,8 @@ const countReducer = function (state = "", action) {
       return "flint";
     case "ccvault":
       return "ccvault";
+    case "typhon":
+      return "typhon";
     default:
       return state;
   }

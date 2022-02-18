@@ -118,84 +118,135 @@ class JoinPool extends React.Component {
         return value;
     };
 
-    async joinPool() {
+    async getWallet() {
+        console.log('Wallet selected: ' + this.props.wallet)
+        if (this.props.wallet === "nami") {
+            console.log("ccvault")
+            return await window.cardano.nami.enable();
+
+        } else if (this.props.wallet === "flint") {
+            console.log("flint")
+            return await window.cardano.flint.enable();
+        }
+        else if (this.props.wallet === "ccvault") {
+            console.log("ccvault")
+            return await window.cardano.ccvault.enable();
+        }
+        else if (this.props.wallet === "typhon") {
+            console.log("typhon")
+            return await window.cardano.typhon.enable();
+        }
+    }
+
+
+
+    async joinPool(wallet) {
+        console.log('Wallet selected: ' + this.props.wallet)
+
+        if (this.props.wallet === "typhon") {
+            await this.joinPoolTyphon();
+        } else {
+            await this.joinPoolCIP30();
+        }
+    }
+
+    async joinPoolTyphon() {
+        const targetPoolId = this.props.pool.pool_id;
+        const delegationResponse = window.cardano.typhon.delegationTransaction({ poolId: targetPoolId });
+
+        if (delegationResponse.status) {
+            this.setState({ joinPoolResponse: delegationResponse.data.transactionId, loading: false });
+        } else {
+            console.log("delegateResponse: ", delegationResponse);
+        }
+    }
+
+    async joinPoolCIP30() {
         try {
             this.setState({ modal: true });
-        //initialize loader
-        Loader = await import('@emurgo/cardano-serialization-lib-browser');
+            //initialize loader
+            Loader = await import('@emurgo/cardano-serialization-lib-browser');
+            // Loader = await import('@emurgo/cardano-serialization-lib-asmjs');
 
-        user = await window.cardano.getUsedAddresses();
+            var wallet = await this.getWallet();
+            console.log(wallet);
 
-        //get stake key hash
-        stakeKeyHash = Loader.RewardAddress.from_address(
-            Loader.Address.from_bytes(
+            user = await wallet.getUsedAddresses();
+            console.log(user);
+
+            var rewardAddressesList = await wallet.getRewardAddresses();
+            console.log(rewardAddressesList);
+            //get stake key hash
+            stakeKeyHash = Loader.RewardAddress.from_address(
+                Loader.Address.from_bytes(
+                    Buffer.from(
+                        rewardAddressesList[0],
+                        'hex'
+                    )
+                )
+            ).payment_cred().to_keyhash().to_bytes();
+            console.log(stakeKeyHash);
+            //get protocol params
+            protocolParameter = await getProtocolParameters(wallet, Loader);
+            console.log(protocolParameter)
+            //current delegation
+            delegation = await getDelegation(wallet, Loader);
+            console.log(delegation)
+            //target pool id
+            const targetPoolId = this.props.pool.pool_id;
+            console.log(targetPoolId)
+            //get utxos
+            //var utxos = await getUtxos();//.map(u => S.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')))
+            //        var utxosMap = utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')));       
+            var Utxos = await wallet.getUtxos();
+            console.log(Utxos)
+            var UtxosHex = Utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(
                 Buffer.from(
-                    await window.cardano.getRewardAddress(),
+                    u,
                     'hex'
                 )
             )
-        ).payment_cred().to_keyhash().to_bytes();
+            );
+            console.log(UtxosHex)
+            //paymentAddress
+            var PaymentAddress = await getAddress(wallet, Loader);
 
-        //get protocol params
-        protocolParameter = await getProtocolParameters(Loader);
-
-        //current delegation
-        delegation = await getDelegation(Loader);
-
-        //target pool id
-        const targetPoolId = this.props.pool.pool_id;
-
-        //get utxos
-        //var utxos = await getUtxos();//.map(u => S.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')))
-        //        var utxosMap = utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(Buffer.from(u, 'hex')));       
-        var Utxos = await window.cardano.getUtxos();
-        var UtxosHex = Utxos.map(u => Loader.TransactionUnspentOutput.from_bytes(
-            Buffer.from(
-                u,
-                'hex'
-            )
-        )
-        );
-
-        //paymentAddress
-        var PaymentAddress = await getAddress(Loader);
-
-        //outputs
-        let outputs = Loader.TransactionOutputs.new()
-        outputs.add(
-            Loader.TransactionOutput.new(
-                Loader.Address.from_bech32(PaymentAddress),
-                Loader.Value.new(
-                    Loader.BigNum.from_str(protocolParameter.keyDeposit)
+            //outputs
+            let outputs = Loader.TransactionOutputs.new()
+            outputs.add(
+                Loader.TransactionOutput.new(
+                    Loader.Address.from_bech32(PaymentAddress),
+                    Loader.Value.new(
+                        Loader.BigNum.from_str(protocolParameter.keyDeposit)
+                    )
                 )
             )
-        )
 
-        //transaction
-        let transaction = await txBuilder(Loader, {
-            PaymentAddress,
-            Utxos: UtxosHex,
-            ProtocolParameter: protocolParameter,
-            Outputs: outputs,
-            Delegation: {
-                poolHex: targetPoolId,
-                stakeKeyHash: stakeKeyHash,
-                delegation: delegation
-            },
-            Metadata: null,
-            MetadataLabel: '721'
-        });
+            //transaction
+            let transaction = await txBuilder(Loader, {
+                PaymentAddress,
+                Utxos: UtxosHex,
+                ProtocolParameter: protocolParameter,
+                Outputs: outputs,
+                Delegation: {
+                    poolHex: targetPoolId,
+                    stakeKeyHash: stakeKeyHash,
+                    delegation: delegation
+                },
+                Metadata: null,
+                MetadataLabel: '721'
+            });
 
-        //submit trx
+            //submit trx
 
-        let response = await signSubmitTx(Loader, transaction);
+            let response = await signSubmitTx(wallet, Loader, transaction);
 
-        this.setState({ joinPoolResponse: response, loading: false });
+            this.setState({ joinPoolResponse: response, loading: false });
         } catch (error) {
             console.log(error);
             this.setState({ joinPoolResponse: "Unable to submit at this time.", loading: false });
         }
-        
+
     }
 
     render() {
@@ -220,7 +271,7 @@ class JoinPool extends React.Component {
                                         <p>A Nami Wallet screen will appear to sign the transaction.</p>
                                         <p>Once complete your Nami Wallet will update to the new pool within a couple of minutes.</p>
                                         <br></br>
-                                        
+
 
 
                                         {this.state.loading ? <div> <p>Waiting on confirmation.</p><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
@@ -240,9 +291,9 @@ class JoinPool extends React.Component {
 
 const mapStateToProps = state => {
     return {
-      wallet: state
+        wallet: state
     };
-  };
-  
-  export default connect(mapStateToProps)(JoinPool);
+};
+
+export default connect(mapStateToProps)(JoinPool);
 

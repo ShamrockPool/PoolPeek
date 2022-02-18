@@ -17,7 +17,10 @@ import bn from 'utils/bemnames';
 import Timer from "react-compound-timer";
 import { isMobile } from 'react-device-detect';
 import { Provider, connect } from 'react-redux';
-import { Container } from 'components/Layout/container';
+import nami from 'assets/img/wallet/nami.svg';
+import flint from 'assets/img/wallet/flint.svg';
+import ccvault from 'assets/img/wallet/ccvault.png';
+import typhon from 'assets/img/wallet/typhon.png'; 
 
 const bem = bn.create('header');
 
@@ -97,17 +100,6 @@ class Header extends React.Component {
     await this.generateEpochEvents();
     await this.getCurrentEpoch();
 
-    try {
-      var namiEnabled = await window.cardano.nami.isEnabled();
-      this.setState({ namiEnabled: namiEnabled });
-
-      // if (this.state.namiEnabled) {
-      //   await this.getNamiPool();
-      // }
-
-    } catch (error) {
-    }
-
     this.getCurrentAdaUSDPrice();
     this.getCurrentAdaEuroPrice();
     this.getCurrentAdaBTCPrice();
@@ -145,14 +137,14 @@ class Header extends React.Component {
   async connectWallet(wallet) {
     try {
       console.log("Connecting wallet")
-      var walletEnabled = false;
+      var walletEnabled = null;
       var cardano = window.cardano;
       if (wallet === "nami") {
         walletEnabled = await cardano.nami.enable();
         if (walletEnabled != null) {
           this.props.setWallet(wallet, walletEnabled);
-          this.setState({ connectedWallet: 'Nami', namiEnabled: true });
-
+          this.setState({ namiEnabled: true, connectedWallet: wallet });
+          this.toggle()
         }
       } else if (wallet === "flint") {
         console.log("flint")
@@ -160,7 +152,8 @@ class Header extends React.Component {
         console.log(walletEnabled)
         if (walletEnabled != null) {
           this.props.setWallet(wallet, walletEnabled);
-          this.setState({ connectedWallet: 'Flint', namiEnabled: true });
+          this.setState({ namiEnabled: true, connectedWallet: wallet });
+          this.toggle()
         }
       }
       else if (wallet === "ccvault") {
@@ -169,11 +162,21 @@ class Header extends React.Component {
         console.log(walletEnabled)
         if (walletEnabled != null) {
           this.props.setWallet(wallet, walletEnabled);
-          this.setState({ connectedWallet: 'ccvault', namiEnabled: true });
+          this.toggle()
+          this.setState({ namiEnabled: true, connectedWallet: wallet });
         }
       }
+      else if (wallet === "typhon") {
+        console.log("typhon")
+        walletEnabled = await cardano.typhon.enable();
 
-
+        if (walletEnabled !== null) {
+          console.log(walletEnabled)
+          this.props.setWallet(wallet, walletEnabled);
+          this.toggle()
+          this.setState({ namiEnabled: true, connectedWallet: wallet });
+        }
+      }
 
     } catch (error) {
       console.log(error)
@@ -193,7 +196,6 @@ class Header extends React.Component {
   }
 
   render() {
-    const { text } = this.state.connectedWallet
     return (
       // <Navbar light expand className={bem.b('bg-white')}>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -225,7 +227,7 @@ class Header extends React.Component {
         {!isMobile &&
           <Nav navbar className={bem.e('nav-right')}>
             <Col>
-              <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallets</Button></Row>
+              <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallet</Button></Row>
               <Row><p>Connected: {this.props.count}</p></Row>
             </Col>
           </Nav>}
@@ -240,12 +242,38 @@ class Header extends React.Component {
             alignItems: 'center',
             textAlign: 'center',
           }}>
-
-            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("nami")}>Nami </Button>
-            <p></p>
-            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("flint")}>Flint</Button>
+            <Row style={{
+              alignContent: 'center', justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <img
+                src={nami} width="100vh" height="100vh" onClick={() => this.connectWallet("nami")}
+              />
+              <p></p>
+              <img
+                src={flint} width="100vh" height="100vh" onClick={() => this.connectWallet("flint")}
+              />
+              <p></p>
+              <img
+                src={ccvault} width="100vh" height="100vh" onClick={() => this.connectWallet("ccvault")}
+              />
+              <img
+                src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
+              />
+            </Row>
+            <Row style={{
+              alignContent: 'center', justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              {this.state.connectedWallet !== '' && <p>Wallet enabled: <b>{this.state.connectedWallet}</b></p>}
+            </Row>
+            {/* <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("ccvault")}>CCVault</Button> */}
             {/* <p></p>
-            <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("ccvault")}>CCVault</Button> */}
+            <img
+                  src={window.cardano.yoroi.icon} onClick={() => this.connectWallet("yoroi")}
+                /> */}
           </ModalBody>
           <ModalFooter>
             {' '}
