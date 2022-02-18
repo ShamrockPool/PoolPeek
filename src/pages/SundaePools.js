@@ -493,7 +493,9 @@ class SundaePools extends React.Component {
                             <th onClick={e => this.onSort(e, 'margin_pct')}>Margin</th>
                             {/* <th onClick={e => this.onSort(e, 'cost_per_epoch')}>Fixed Cost</th> */}
                             <th onClick={e => this.onSort(e, 'live_stake_delegator_count')}>Delegates</th>
+                            <th onClick={e => this.onSort(e, 'active_stake')}>Active Stake</th>
                             <th onClick={e => this.onSort(e, 'live_stake')}>Live Stake</th>
+                            <th onClick={e => this.onSort(e, 'stake_lost')}>Stake Lost %</th>
                             <th onClick={e => this.onSort(e, 'pct_saturated')}>Filled</th>
                             <th></th>
 
@@ -516,8 +518,11 @@ class SundaePools extends React.Component {
                               <td scope="row"><p>{item.ticker}</p></td>
                               <td scope="row"><p>{item.margin_pct}%</p></td>
                               {/* <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
+                              
                               <td scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
+                              <td scope="row"><p>{this.addCommas(item.active_stake)}</p></td>
                               <td scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td scope="row"><p>{Number(Number(item.live_stake) / Number(item.active_stake) * 100 - 100).toFixed(2)}</p></td>
                               <td scope="row"><p>{Number(item.pct_saturated).toFixed(2)}%</p></td>
 
                               <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
@@ -593,7 +598,9 @@ class SundaePools extends React.Component {
                             <th onClick={e => this.onSort(e, 'margin_pct')}>Margin</th>
                             {/* <th onClick={e => this.onSort(e, 'cost_per_epoch')}>Fixed Cost</th> */}
                             <th onClick={e => this.onSort(e, 'live_stake_delegator_count')}>Delegates</th>
+                            <th onClick={e => this.onSort(e, 'active_stake')}>Active Stake</th>
                             <th onClick={e => this.onSort(e, 'live_stake')}>Live Stake</th>
+                            <th onClick={e => this.onSort(e, 'stake_lost')}>Stake Lost %</th>
                             <th onClick={e => this.onSort(e, 'pct_saturated')}>Filled</th>
                             <th></th>
                           </tr>
@@ -613,7 +620,9 @@ class SundaePools extends React.Component {
                               <td scope="row"><p>{item.margin_pct}%</p></td>
                               {/* <td style={tableRowStyle} scope="row"><p>{item.cost_per_epoch}₳</p></td> */}
                               <td scope="row"><p>{this.addCommas(item.live_stake_delegator_count)}</p></td>
+                              <td scope="row"><p>{this.addCommas(item.active_stake)}</p></td>
                               <td scope="row"><p>{this.addCommas(item.live_stake)}</p></td>
+                              <td scope="row"><p>{Number(Number(item.live_stake) / Number(item.active_stake) * 100 - 100).toFixed(2)}</p></td>
                               <td scope="row"><p>{item.pct_saturated}%</p></td>
                               <td scope="row">
                                 <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
