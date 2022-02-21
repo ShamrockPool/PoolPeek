@@ -15,12 +15,7 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getisopools } from '../assets/services';
-import "../styles/styles.css";
-import { isEmpty } from 'utils/stringutil.js';
-// import SearchBar from "material-ui-search-bar";
-// import { DataGrid } from '@material-ui/data-grid';
-// import { DataGrid } from '@mui/x-data-grid';
+import { baseUrlPoolPeekService, getisopools } from 'assets/services';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -28,6 +23,8 @@ import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Timer from "react-compound-timer";
 import JoinPool from 'components/nami/JoinPool';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
+import dd from 'assets/img/dripdropz.svg';
+
 
 const override = css`
   display: block;
@@ -73,7 +70,7 @@ const tableRowStyleWarning = {
   // padding: 0,
 };
 
-class SundaePoolsReverse extends React.Component {
+class PoolPeekCoinPoolsV2 extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -111,7 +108,7 @@ class SundaePoolsReverse extends React.Component {
   async getSundaePools() {
     try {
       this.setState({ timerReset: null })
-      var response = await fetch(baseUrlPoolPeekService + getisopools + 'reversesundaepools');
+      var response = await fetch(baseUrlPoolPeekService + getisopools + 'poolpeekcoinpools');
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO, timerReset: this.state.refreshAmount })
@@ -120,33 +117,12 @@ class SundaePoolsReverse extends React.Component {
       console.log(error)
     }
   }
-  shuffle(array) {
-    let currentIndex = array.length,  randomIndex;
-  
-    // While there remain elements to shuffle...
-    while (currentIndex != 0) {
-  
-      // Pick a remaining element...
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
-  
-      // And swap it with the current element.
-      [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex], array[currentIndex]];
-    }
-  
-    return array;
-  }
-  
 
   createRows(sundaeData) {
     var rows = [];
 
     var poolsList = [];
-    poolsList = this.shuffle(sundaeData.pools);
-
-
-
+    poolsList = sundaeData.pools;
     this.setState({ loading: false, filterAblePools: poolsList })
   }
 
@@ -224,17 +200,26 @@ class SundaePoolsReverse extends React.Component {
 
     return (
       <Page
-        className="SundaeRISOPools"
-        title="SundaeSwap RISO"
+        className="PoolPeekCoinPools"
+        title="PoolPeek Coin Pools"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           : <Col>
-            <Row style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <h3 style={{ color: 'red' }}>To Participate in this RISO move you ADA to one of the below pools before 19th Feb 9.45PM UTC</h3>
+            <Row>
+              <Col style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                textAlign: 'center',
+              }}>
+
+                <h3 style={{ color: 'green' }}><b>To Earn PoolPeekCoins (PPC) stake your #ADA with any of the
+                  below pools this will enable you to collect PPC tokens from:  <a href='https://dripdropz.io/' target="_blank" rel="noreferrer" >
+                    <img
+                      src={dd}
+                      width="100"
+                      height="60"
+                    /></a></b></h3>
+              </Col>
             </Row>
 
             <Row style={{
@@ -265,64 +250,6 @@ class SundaePoolsReverse extends React.Component {
 
 
               <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
-
-                <Col>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                    <h3>Dates</h3>
-                  </Row>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                    <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                      <Card inverse color='primary'>
-                        <CardBody body>
-                          <CardTitle className="text-capitalize">
-                            RISO Start Date
-                          </CardTitle>
-                          <CardText>
-                            February 19th
-                          </CardText>
-                        </CardBody>
-                      </Card>
-                    </Col>
-
-                    <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                      <Card inverse color='secondary'>
-                        <CardBody body>
-                          <CardTitle className="text-capitalize">
-                            RISO End Date
-                          </CardTitle>
-                          <CardText>
-                            February 24
-                          </CardText>
-                        </CardBody>
-                      </Card>
-                    </Col>
-
-                    {/* <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody body>
-                        <CardTitle className="text-capitalize">
-                          Pools Involved
-                        </CardTitle>
-                        <CardText>
-                          {this.state.stats.total_pools}
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col> */}
-
-
-                  </Row>
-                </Col>
-
-                <hr></hr>
                 <Row style={{
                   justifyContent: 'center',
                   alignItems: 'center',
@@ -344,7 +271,7 @@ class SundaePoolsReverse extends React.Component {
                           ADA Staked
                         </CardTitle>
                         <CardText>
-                          595,634,073
+                          {this.addCommas(Number(74877286))}
                         </CardText>
                       </CardBody>
                     </Card>
@@ -357,7 +284,7 @@ class SundaePoolsReverse extends React.Component {
                           Wallets Delegated
                         </CardTitle>
                         <CardText>
-                          59,255
+                          {this.addCommas(1152)}
                         </CardText>
                       </CardBody>
                     </Card>
@@ -405,22 +332,38 @@ class SundaePoolsReverse extends React.Component {
                   </Col>
                 </Row>
                 <hr></hr>
-                <Row style={{
+                {/* <Row style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
                   <p>More info on RISO: <a href='https://sundaeswap-finance.medium.com/the-reverse-iso-proposal-promoting-cardanos-decentralization-5bbd2b290485' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
+                </Row> */}
+
+                <Row style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                  <p><b>Description:</b> PoolPeekCoin is a rewards coin that has been created as an incentive reward that will be given to loyal delegators of the #TeamPeek pool offering. </p>
                 </Row>
 
-                <hr></hr>
+                <Row style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                  <p><b>Tokenomics:</b> 21Million coins have been created. There is 10Million allocated to the DripDrops token distribution project with a further 5Million in reserve. There will be 3Million allocated to the three creator pools & 3Million allocated for future giveaways & incentive stuctures. </p>
+                </Row>
+
                 <Col style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <a href='https://discord.gg/6nZh34ZBkH' target="_blank" rel="noreferrer" >
-                    <p>SundaeSwap Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
+                  <a href='https://discord.gg/nzSR3rFkef' target="_blank" rel="noreferrer" >
+                    <p>Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
+                  <p>Token Policy ID: d0af056c509b6b1133cd83a750b7245e561169281fde3df1cb6e2d96</p>
                 </Col>
               </Col>
               <Col lg={8} md={12} sm={12} xs={12} className="mb-3" style={{
@@ -541,4 +484,4 @@ class SundaePoolsReverse extends React.Component {
     );
   }
 }
-export default SundaePoolsReverse;
+export default PoolPeekCoinPoolsV2;

@@ -15,8 +15,7 @@ import {
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getisopools } from '../assets/services';
-import "../styles/styles.css";
+import { baseUrlPoolPeekService, getisopools } from '../../assets/services';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

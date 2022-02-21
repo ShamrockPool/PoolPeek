@@ -18,10 +18,11 @@ import Timer from "react-compound-timer";
 import { isMobile } from 'react-device-detect';
 import { Provider, connect } from 'react-redux';
 import nami from 'assets/img/wallet/nami.svg';
-import flint from 'assets/img/wallet/flint.svg';
+import flint from 'assets/img/wallet/flint2.png';
 import ccvault from 'assets/img/wallet/ccvault.png';
-import typhon from 'assets/img/wallet/typhon.png'; 
-
+import typhon from 'assets/img/wallet/typhon.png';
+import yoroi from 'assets/img/wallet/yoroi.png';
+import gero from 'assets/img/wallet/gerowallet.ico';
 const bem = bn.create('header');
 
 const Component = ({ count }) => <h1>Helloworld React & Redux! {count}</h1>;
@@ -177,6 +178,30 @@ class Header extends React.Component {
           this.setState({ namiEnabled: true, connectedWallet: wallet });
         }
       }
+      else if (wallet === "gero") {
+        console.log("gero")
+        walletEnabled = await cardano.yoroi.enable();
+        console.log(walletEnabled)
+        console.log("gero enabled")
+        if (walletEnabled !== null) {
+          console.log(walletEnabled)
+          this.props.setWallet(wallet, walletEnabled);
+          this.toggle()
+          this.setState({ namiEnabled: true, connectedWallet: wallet });
+        }
+      }
+      else if (wallet === "yoroi") {
+        console.log("yoroi")
+        walletEnabled = await cardano.yoroi.enable();
+        console.log(walletEnabled)
+        console.log("yoroi enabled")
+        if (walletEnabled !== null) {
+          console.log(walletEnabled)
+          this.props.setWallet(wallet, walletEnabled);
+          this.toggle()
+          this.setState({ namiEnabled: true, connectedWallet: wallet });
+        }
+      }
 
     } catch (error) {
       console.log(error)
@@ -262,6 +287,19 @@ class Header extends React.Component {
                 src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
               />
             </Row>
+            {/* <br></br>
+            <Row style={{
+              alignContent: 'center', justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <img
+                src={yoroi} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
+              />
+              <img
+                src={gero} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
+              />
+            </Row> */}
             <Row style={{
               alignContent: 'center', justifyContent: 'center',
               alignItems: 'center',

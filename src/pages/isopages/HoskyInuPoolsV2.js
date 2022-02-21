@@ -11,19 +11,17 @@ import {
   Table,
   Button
 } from 'reactstrap';
-
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getisopoolsPost } from '../assets/services';
-import "../styles/styles.css";
+import { baseUrlPoolPeekService, getisopools } from 'assets/services';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Timer from "react-compound-timer";
 import JoinPool from 'components/nami/JoinPool';
-import { FormControlLabel, Switch } from '@material-ui/core';
+import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 
 const override = css`
   display: block;
@@ -69,15 +67,7 @@ const tableRowStyleWarning = {
   // padding: 0,
 };
 
-const isoPools = {
-  isoName: 'geniusyieldiso',
-  pool_idsArr: ['c485ab20bd3f105e59f3c50a0d3fbaf615a51f70a1c6d29d00a1fd27',
-    '6ec2284f8e312b5b122d85b97db828ff364d49e3c51c449bfc8889bf',
-    '126f84b8f88fd0f65de921ef521f2aa637e5e465cea06042c103fe22',
-    'c80d3b1f64feed0697bb97c97867a63ff1c33cb8b472bc33fdfa457e']
-}
-
-class GeniusYieldISOPools extends React.Component {
+class HoskyInuPoolsV2 extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -115,14 +105,7 @@ class GeniusYieldISOPools extends React.Component {
   async getSundaePools() {
     try {
       this.setState({ timerReset: null })
-      // var response = await fetch(baseUrlPoolPeekService + getisopoolsPost);
-
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(isoPools)
-      };
-      var response = await fetch(baseUrlPoolPeekService + getisopoolsPost, requestOptions);
+      var response = await fetch(baseUrlPoolPeekService + getisopools + 'hoskyinupools');
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO, timerReset: this.state.refreshAmount })
@@ -214,11 +197,18 @@ class GeniusYieldISOPools extends React.Component {
 
     return (
       <Page
-        className="GeniusYieldISPO"
-        title="Genius Yield ISPO"
+        className="HoskyInuPools"
+        title="Hosky Inu Pools"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           : <Col>
+            {/* <Row style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <h3 style={{ color: 'red' }}>To Participate in this RISO move you ADA to one of the below pools before 19th Feb 9.45PM UTC</h3>
+            </Row> */}
 
             <Row style={{
               justifyContent: 'center',
@@ -248,6 +238,47 @@ class GeniusYieldISOPools extends React.Component {
 
 
               <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+
+                <Row style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+                  <h3>Starting Stats</h3>
+                </Row>
+
+                <Row style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  textAlign: 'center',
+                }}>
+
+                  <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='secondary'>
+                      <CardBody>
+                        <CardTitle className="text-capitalize">
+                          ADA Staked
+                        </CardTitle>
+                        <CardText>
+                          {this.addCommas(Number(80774483))}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+
+                  <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
+                    <Card inverse color='primary'>
+                      <CardBody>
+                        <CardTitle className="text-capitalize">
+                          Wallets Delegated
+                        </CardTitle>
+                        <CardText>
+                          {this.addCommas(2207)}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
                 <hr></hr>
                 <Row style={{
                   justifyContent: 'center',
@@ -290,22 +321,21 @@ class GeniusYieldISOPools extends React.Component {
                   </Col>
                 </Row>
                 <hr></hr>
-                <Row style={{
+                {/* <Row style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <p>More info: <a href='https://discord.com/channels/@me/937487387318169690/943957608656683018' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
-                </Row>
+                  <p>More info on RISO: <a href='https://sundaeswap-finance.medium.com/the-reverse-iso-proposal-promoting-cardanos-decentralization-5bbd2b290485' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
+                </Row> */}
 
-                <hr></hr>
                 <Col style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <a href='https://discord.gg/TNHf4fs626' target="_blank" rel="noreferrer" >
-                    <p>Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
+                  <a href='https://discord.gg/hYj8bv7Dw6' target="_blank" rel="noreferrer" >
+                    <p>Hosky Inu Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
                 </Col>
               </Col>
               <Col lg={8} md={12} sm={12} xs={12} className="mb-3" style={{
@@ -417,8 +447,13 @@ class GeniusYieldISOPools extends React.Component {
             </Row>
           </Col>}
 
+
+
+
+
+
       </Page>
     );
   }
 }
-export default GeniusYieldISOPools;
+export default HoskyInuPoolsV2;

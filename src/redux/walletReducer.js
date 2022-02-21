@@ -8,6 +8,8 @@ const walletReducer = function (state = "", action) {
       return state + "ccvault";
     case "typhon":
       return state + "typhon";
+    case "yoroi":
+      return state + "yoroi";
     default:
       return state;
   }

@@ -11,20 +11,12 @@ import {
   Table,
   Button
 } from 'reactstrap';
-
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getisopools } from '../assets/services';
-import "../styles/styles.css";
-import { isEmpty } from 'utils/stringutil.js';
-// import SearchBar from "material-ui-search-bar";
-// import { DataGrid } from '@material-ui/data-grid';
-// import { DataGrid } from '@mui/x-data-grid';
+import { baseUrlPoolPeekService, getisopools } from 'assets/services';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Timer from "react-compound-timer";
 import JoinPool from 'components/nami/JoinPool';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';

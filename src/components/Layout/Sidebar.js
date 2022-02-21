@@ -2,7 +2,7 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 // import logo115_91Image from 'assets/img/logo/logo_115_91.jpg';
-import sidebarBgImage from 'assets/img/sidebar/sidebar-4.jpg';
+import sidebarBgImage from 'assets/img/sidebar/sidebar.jpg';
 import logo from 'assets/img/logo/logo-144x144.png';
 import React from 'react';
 import { faTwitter, faTelegram, faDiscord } from "@fortawesome/free-brands-svg-icons";
@@ -143,7 +143,7 @@ class Sidebar extends React.Component {
     return (
       <aside className={bem.b()} data-image={sidebarBgImage}>
         <div className={bem.e('background')} style={sidebarBackground} />
-        <div className={bem.e('content')} style={{ alignItems: "center" }}>
+        <div className={bem.e('content')} style={{ alignItems: "left" }}>
 
           <Container>
             <Row className="justify-content-md-center">
@@ -163,9 +163,17 @@ class Sidebar extends React.Component {
           </Container>
 
 
-          <Nav vertical>
+          <Nav vertical style={{
+                color: "white", justifyContent: 'left',
+                alignItems: 'left',
+                textAlign: 'left'
+              }}>
             {navItems.map(({ to, name, exact, Icon }, index) => (
-              <NavItem key={index} className={bem.e('nav-item')}>
+              <NavItem key={index} className={bem.e('nav-item')} style={{
+                color: "white", justifyContent: 'left',
+                alignItems: 'left',
+                textAlign: 'left'
+              }}>
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
                   className="text-uppercase"
@@ -173,6 +181,11 @@ class Sidebar extends React.Component {
                   to={to}
                   activeClassName="active"
                   exact={exact}
+                  style={{
+                    color: "white", justifyContent: 'left',
+                    alignItems: 'left',
+                    textAlign: 'left'
+                  }}
                 >
                   <Icon className={bem.e('nav-item-icon')} />
                   <b><span className="">{name}</span></b>
@@ -340,7 +353,11 @@ class Sidebar extends React.Component {
             </Collapse> */}
 
             {bottomNavItems.map(({ to, name, exact, Icon }, index) => (
-              <NavItem key={index} className={bem.e('nav-item')}>
+              <NavItem key={index} className={bem.e('nav-item')} style={{
+                color: "white", justifyContent: 'left',
+                alignItems: 'left',
+                textAlign: 'left'
+              }}>
                 <BSNavLink
                   id={`navItem-${name}-${index}`}
 
@@ -348,6 +365,7 @@ class Sidebar extends React.Component {
                   to={to}
                   activeClassName="active"
                   exact={exact}
+                  
                 >
                   <Icon className={bem.e('nav-item-icon')} />
                   <b><span className="">{name}</span></b>

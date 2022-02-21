@@ -136,6 +136,10 @@ class JoinPool extends React.Component {
             console.log("typhon")
             return await window.cardano.typhon.enable();
         }
+        else if (this.props.wallet === "yoroi") {
+            console.log("yoroi")
+            return await window.cardano.yoroi.enable();
+        }
     }
 
 
@@ -268,8 +272,8 @@ class JoinPool extends React.Component {
                                 <Row>
                                     <div>
                                         <p>You have selected to join Pool: <Link to={`/pool/${this.props.pool.pool_id}`}>{this.props.pool.name}</Link></p>
-                                        <p>A Nami Wallet screen will appear to sign the transaction.</p>
-                                        <p>Once complete your Nami Wallet will update to the new pool within a couple of minutes.</p>
+                                        <p>A Wallet screen will appear to sign the transaction.</p>
+                                        <p>Once complete your Wallet will update to the new pool within a few minutes.</p>
                                         <br></br>
 
 

@@ -8,6 +8,8 @@ const countReducer = function (state = "", action) {
       return "ccvault";
     case "typhon":
       return "typhon";
+    case "yoroi":
+      return "yoroi";
     default:
       return state;
   }

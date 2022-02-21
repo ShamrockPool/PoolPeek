@@ -418,8 +418,7 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <small>Favourite pool</small>
                                                         </div>
                                                     }
-                                                    {this.state.namiEnabled && this.props.pool.retired != 'Y' &&
-                                                        <JoinPool pool={this.props.pool} namiEnabled={this.state.namiEnabled} />}
+                                                    {this.props.pool.retired != 'Y' && <JoinPool pool={this.props.pool} />}
                                                 </Col>
                                                 <Col xl={2} lg={2} md={12} sm={12} >
                                                     <ReactImageFallback
@@ -639,7 +638,7 @@ export default class PoolDetailsComponent extends React.Component {
                                         {width > 700 && <TabPanel>
                                             {/* Start Stake history */}
                                             <Card>
-                                                <CardHeader>Active Stake - History</CardHeader>
+                                                <CardHeader>Active Stake - History<br></br><small>We are aware of a small bug on this data with missing stake.</small></CardHeader>
                                                 <CardBody>
                                                     {(width > 600 && this.props.pool.active_stake_history != null && this.props.pool.active_stake_history.length > 0) &&
                                                         <Chart data={this.props.pool.active_stake_history} currentEpoch={this.props.pool.active_stake_epoch} currentActiveStake={this.props.pool.active_stake} />

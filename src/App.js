@@ -18,22 +18,23 @@ import StakingRewards from 'pages/StakingRewards';
 import PoolDetailsPage from 'pages/PoolDetailsPage';
 import StakingCalculator from 'pages/StakingCalculator';
 import ZeroBlocksPage from 'pages/ZeroBlocksPage';
-import SundaePools from './pages/SundaePools';
-import SundaePoolsReverse from 'pages/SundaePoolsReverse';
-import HoskyPoolsV2 from 'pages/HoskyPoolsV2';
-import HoskyInuPoolsV2 from 'pages/HoskyInuPoolsV2';
+import SundaePools from './pages/isopages/SundaePools';
+import SundaePoolsReverse from 'pages/isopages/SundaePoolsReverse';
+import HoskyPoolsV2 from 'pages/isopages/HoskyPoolsV2';
+import HoskyInuPoolsV2 from 'pages/isopages/HoskyInuPoolsV2';
 import SaturatedPools from 'pages/SaturatedPools';
-import GeniusYieldISOPools from 'pages/GeniusYieldISOPools';
-import PoolPeekCoinPoolsV2 from 'pages/PoolPeekCoinPoolsV2';
-
-import BisonPoolsV2 from 'pages/BisonPoolsV2';
-import ArdanaISOPools from 'pages/ArdanaISOPools';
+import GeniusYieldISOPools from 'pages/isopages/GeniusYieldISOPools';
+import PoolPeekCoinPoolsV2 from 'pages/isopages/PoolPeekCoinPoolsV2';
+import AnetaBtcISOPools from 'pages/isopages/AnetaBtcISOPools';
+import FlicktoISOPools from 'pages/isopages/FlicktoISOPools';
+import BisonPoolsV2 from 'pages/isopages/BisonPoolsV2';
+import ArdanaISOPools from 'pages/isopages/ArdanaISOPools';
 
 import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
 import PoolMapV3 from 'pages/PoolMapV3';
 import NamiJoinPool from 'pages/tools/NamiJoinPool';
 
-import ISOPage from 'pages/ISOPage';
+import ISOPage from 'pages/isopages/ISOPage';
 
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
@@ -76,8 +77,9 @@ export default class App extends React.Component {
                 <Route exact path="/bisonpools" render={(props) => <BisonPoolsV2 {...props}/>} />
                 <Route exact path="/ardanaiso" render={(props) => <ArdanaISOPools {...props}/>} />
                 <Route exact path="/geniusyieldiso" render={(props) => <GeniusYieldISOPools {...props}/>} />
-                
-                
+                <Route exact path="/anetabtciso" render={(props) => <AnetaBtcISOPools {...props}/>} />
+                <Route exact path="/flicktoiso" render={(props) => <FlicktoISOPools {...props}/>} />
+                 
                 <Route exact path="/isos" render={(props) => <ISOPage {...props}/>} />
                 
                 <Route exact path="/saturatedpools" render={(props) => <SaturatedPools {...props}/>} />

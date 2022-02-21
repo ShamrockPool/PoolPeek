@@ -11,23 +11,17 @@ import {
   Table,
   Button
 } from 'reactstrap';
-
 import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
-import { baseUrlPoolPeekService, getisopools } from '../assets/services';
-import "../styles/styles.css";
-import { isEmpty } from 'utils/stringutil.js';
-// import SearchBar from "material-ui-search-bar";
-// import { DataGrid } from '@material-ui/data-grid';
-// import { DataGrid } from '@mui/x-data-grid';
+import { baseUrlPoolPeekService, getisopoolsPost } from '../../assets/services';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Timer from "react-compound-timer";
 import JoinPool from 'components/nami/JoinPool';
-import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
+import { FormControlLabel, Switch } from '@material-ui/core';
 
 const override = css`
   display: block;
@@ -73,7 +67,13 @@ const tableRowStyleWarning = {
   // padding: 0,
 };
 
-class HoskyPoolsV2 extends React.Component {
+const isoPools = {
+  isoName: 'anetabtciso',
+  pool_idsArr: ['f5f50f91a3d0da560380ec4e1a612530261c2aaed74a51dfffc485f9',
+    'a5cc5b8b27e7f1076b3ec673f12839da911e170a2b819ae602b5e019']
+}
+
+class AnetaBtcISOPools extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -111,7 +111,14 @@ class HoskyPoolsV2 extends React.Component {
   async getSundaePools() {
     try {
       this.setState({ timerReset: null })
-      var response = await fetch(baseUrlPoolPeekService + getisopools + 'hoskypools');
+      // var response = await fetch(baseUrlPoolPeekService + getisopoolsPost);
+
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(isoPools)
+      };
+      var response = await fetch(baseUrlPoolPeekService + getisopoolsPost, requestOptions);
       const data = await response.json();
 
       this.setState({ stats: data.poolDetailsSundaeStatsVO, timerReset: this.state.refreshAmount })
@@ -203,18 +210,11 @@ class HoskyPoolsV2 extends React.Component {
 
     return (
       <Page
-        className="HoskyPools"
-        title="Hosky Pools"
+        className="AnetaBtcISO"
+        title="AnetaBtc ISO"
       >
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           : <Col>
-            {/* <Row style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <h3 style={{ color: 'red' }}>To Participate in this RISO move you ADA to one of the below pools before 19th Feb 9.45PM UTC</h3>
-            </Row> */}
 
             <Row style={{
               justifyContent: 'center',
@@ -244,47 +244,6 @@ class HoskyPoolsV2 extends React.Component {
 
 
               <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
-
-                <Row style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}>
-                  <h3>Starting Stats</h3>
-                </Row>
-
-                <Row style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                }}>
-
-                  <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='secondary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          ADA Staked
-                        </CardTitle>
-                        <CardText>
-                          44,826,706
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-
-                  <Col lg={6} md={6} sm={6} xs={6} className="mb-3">
-                    <Card inverse color='primary'>
-                      <CardBody>
-                        <CardTitle className="text-capitalize">
-                          Wallets Delegated
-                        </CardTitle>
-                        <CardText>
-                          1,410
-                        </CardText>
-                      </CardBody>
-                    </Card>
-                  </Col>
-                </Row>
                 <hr></hr>
                 <Row style={{
                   justifyContent: 'center',
@@ -327,21 +286,22 @@ class HoskyPoolsV2 extends React.Component {
                   </Col>
                 </Row>
                 <hr></hr>
-                {/* <Row style={{
+                <Row style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <p>More info on RISO: <a href='https://sundaeswap-finance.medium.com/the-reverse-iso-proposal-promoting-cardanos-decentralization-5bbd2b290485' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
-                </Row> */}
+                  <p>More info: <a href='https://docs.anetabtc.io/docs/user-guides/Liso/liso-faq' target="_blank" rel="noreferrer" ><b>HERE</b></a></p>
+                </Row>
 
+                <hr></hr>
                 <Col style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   textAlign: 'center',
                 }}>
-                  <a href='https://discord.gg/hosky' target="_blank" rel="noreferrer" >
-                    <p>Hosky Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
+                  <a href='http://discord.gg/anetabtc' target="_blank" rel="noreferrer" >
+                    <p>Discord</p> <FontAwesomeIcon size="2x" icon={faDiscord} /> </a>
                 </Col>
               </Col>
               <Col lg={8} md={12} sm={12} xs={12} className="mb-3" style={{
@@ -453,13 +413,8 @@ class HoskyPoolsV2 extends React.Component {
             </Row>
           </Col>}
 
-
-
-
-
-
       </Page>
     );
   }
 }
-export default HoskyPoolsV2;
+export default AnetaBtcISOPools;
