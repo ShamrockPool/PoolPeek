@@ -34,19 +34,14 @@ export const getPoolsRetiringAcrossEpoch = "/pool/retiring/acrossepochs";
 export const getPoolAdvertising = "/pooladvert/requested";
 export const requestPoolAdvertising = "/pooladvert/request/";//{poolId}
 
-//isos
-// export const getSundaeInfo = "/pooldetails/getsundaepools";
-// export const getSundaeInfoReverse = "/pooldetails/getreversesundaepools";
-// export const gethoskypools = "/pooldetails/gethoskypools";
-// export const gethoskyinupools = "/pooldetails/gethoskyinupools";
-// export const getpoolpeekcoinpools = "/pooldetails/getpoolpeekcoinpools";
-// export const getbisonpools = "/pooldetails/getbisonpools";
-
+//ISOS
 export const getisopools = "/pooldetails/getisopools/"//{isoname} GET
 export const getisopoolsPost = "/pooldetails/getisopools/"// POST
 
-export const mintNFT = "/nft/mint/";//{nftId}
+//Alliances
+export const getAlliancePools = "/alliance/details/";
 
+export const mintNFT = "/nft/mint/";//{nftId}
 export const chainLoadData = "/chainload/website";
 
 

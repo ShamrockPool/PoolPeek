@@ -287,8 +287,8 @@ class Header extends React.Component {
                 src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
               />
             </Row>
-            {/* <br></br>
-            <Row style={{
+            <br></br>
+            {/* <Row style={{
               alignContent: 'center', justifyContent: 'center',
               alignItems: 'center',
               textAlign: 'center',
@@ -300,6 +300,7 @@ class Header extends React.Component {
                 src={gero} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
               />
             </Row> */}
+
             <Row style={{
               alignContent: 'center', justifyContent: 'center',
               alignItems: 'center',

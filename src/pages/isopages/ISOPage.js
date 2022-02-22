@@ -251,7 +251,7 @@ class ISOPage extends React.Component {
             </div>
           </Link >
 
-          <Link to={{ pathname: '/flicktoiso' }}>
+          <Link to={{ pathname: '/sundaeiso' }}>
             <div className="IsoCard" style={{
               justifyContent: 'center',
               alignItems: 'center',

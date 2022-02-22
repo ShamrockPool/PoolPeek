@@ -36,10 +36,10 @@ export default class PoolCard extends React.Component {
         return (
             <Link to={{ pathname: '/pool/' + this.props.pool.pool_id, state: { projectDetails: this.props.projectDetails } }}>
                 <div className="ProjectCard" style={{
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            textAlign: 'center',
-                                        }}>
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                }}>
                     <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
                         {this.checkIsImageUrl(this.props.pool.extended_meta.url_png_logo) ? (
                             <ReactImageFallback
@@ -52,8 +52,8 @@ export default class PoolCard extends React.Component {
                             width="70vh" height="70vh"
                         />)}
                         <div className="ProjectCard-body">
-                            <h2>{ReactHtmlParser(this.props.pool.name)}</h2>
                             <h5>{ReactHtmlParser(this.props.pool.ticker)}</h5>
+                            <h2>{ReactHtmlParser(this.props.pool.name)}</h2>
                             <h4>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
                                 defaultProtocol: 'https'
                             }))}</h4>

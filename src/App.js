@@ -36,6 +36,9 @@ import NamiJoinPool from 'pages/tools/NamiJoinPool';
 
 import ISOPage from 'pages/isopages/ISOPage';
 
+import AlliancesPage from 'pages/alliancepages/AlliancesPage';
+import AllianceDetailsPage from 'pages/alliancepages/AllianceDetailsPage';
+
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
 ga4react.initialize();
@@ -86,7 +89,9 @@ export default class App extends React.Component {
                 <Route exact path="/retiredpools" render={(props) => <RetiredPoolsV2 {...props}/>} />
                 {/* <Route exact path="/retiredpoolsv2" render={(props) => <RetiredPoolsV2 {...props}/>} /> */}
                 
-                
+                <Route exact path="/alliances" render={(props) => <AlliancesPage {...props}/>} />
+                <Route exact path="/alliances/xspo" render={(props) => <AllianceDetailsPage {...props} title="XSPO Alliance" alliancename="xspo" url="https://raw.githubusercontent.com/xSPO-Alliance/adapools-xspo-alliance/main/xspo-alliance-members.json" />}/>
+                <Route exact path="/alliances/cspa" render={(props) => <AllianceDetailsPage {...props} title="CSPA Alliance" alliancename="cspa" url="https://raw.githubusercontent.com/SinglePoolAlliance/Registration/master/adapools.json" />}/>
 
                 <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} multiPoolOperators={true} pageDescription={queries.baremetalpoolsqueryDesc} />} />
                 <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Education" query={queries.educationquery} multiPoolOperators={true} pageDescription={queries.educationpoolsqueryDesc} />} />

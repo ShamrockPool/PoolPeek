@@ -82,7 +82,7 @@ const isos = [
 const poolSearch = [
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
-  // { to: '/randompool', name: 'Random Pool', exact: false, Icon: MdFormatListBulleted },
+  { to: '/alliances', name: 'Alliances', exact: false, Icon: MdFormatListBulleted },
   { to: '/tickers', name: 'Ticker Search', exact: false, Icon: MdFormatListBulleted },
   { to: '/zeroblocks', name: 'Zero Blocks', exact: false, Icon: MdFormatListBulleted },
 ];
