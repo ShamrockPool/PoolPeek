@@ -3,6 +3,11 @@ import {
   MdClearAll,
 } from 'react-icons/md';
 import {
+  Card,
+  CardBody,
+  CardHeader,
+  CardTitle,
+  CardText,
   Button,
   Nav,
   Navbar,
@@ -180,7 +185,7 @@ class Header extends React.Component {
       }
       else if (wallet === "gero") {
         console.log("gero")
-        walletEnabled = await cardano.yoroi.enable();
+        walletEnabled = await cardano.gerowallet.enable();
         console.log(walletEnabled)
         console.log("gero enabled")
         if (walletEnabled !== null) {
@@ -251,10 +256,36 @@ class Header extends React.Component {
         </Nav>
         {!isMobile &&
           <Nav navbar className={bem.e('nav-right')}>
-            <Col>
-              <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallet</Button></Row>
-              <Row><p>Connected: {this.props.count}</p></Row>
-            </Col>
+            {this.state.namiEnabled == false ? <div>
+              <Col>
+                <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallet</Button></Row>
+              </Col>
+            </div>
+              :
+              <div>
+                {this.state.connectedWallet === 'nami' &&
+                  <Col>
+                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Nami Connected</Button></Row>
+                  </Col>}
+                {this.state.connectedWallet === 'flint' &&
+                  <Col>
+                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Flint Connected</Button></Row>
+                  </Col>}
+                {this.state.connectedWallet === 'ccvault' &&
+                  <Col>
+                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>CCVault Connected</Button></Row>
+                  </Col>}
+                {this.state.connectedWallet === 'typhon' &&
+                  <Col>
+                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Typhon Connected</Button></Row>
+                  </Col>}
+                {this.state.connectedWallet === 'gero' &&
+                  <Col>
+                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Gero Connected</Button></Row>
+                  </Col>}
+              </div>
+            }
+
           </Nav>}
 
         <Modal
@@ -283,23 +314,23 @@ class Header extends React.Component {
               <img
                 src={ccvault} width="100vh" height="100vh" onClick={() => this.connectWallet("ccvault")}
               />
-              <img
-                src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
-              />
             </Row>
             <br></br>
-            {/* <Row style={{
+            <Row style={{
               alignContent: 'center', justifyContent: 'center',
               alignItems: 'center',
               textAlign: 'center',
             }}>
               <img
+                src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
+              />
+              {/* <img
                 src={yoroi} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
-              />
+              /> */}
               <img
-                src={gero} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
+                src={gero} width="100vh" height="100vh" onClick={() => this.connectWallet("gero")}
               />
-            </Row> */}
+            </Row>
 
             <Row style={{
               alignContent: 'center', justifyContent: 'center',

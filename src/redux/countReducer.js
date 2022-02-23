@@ -10,6 +10,8 @@ const countReducer = function (state = "", action) {
       return "typhon";
     case "yoroi":
       return "yoroi";
+      case "gero":
+        return "gero";      
     default:
       return state;
   }

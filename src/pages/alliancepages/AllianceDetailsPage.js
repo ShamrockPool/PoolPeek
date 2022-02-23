@@ -305,7 +305,7 @@ class AllianceDetailsPage extends React.Component {
                         }}>
                           <Col xl={4} lg={4} md={12} sm={12} >
                             <h3>Live Stake</h3>
-                            <h3><b>₳{this.state.allianceData.total_live_stake}</b></h3>
+                            <h3><b>{this.state.allianceData.total_live_stake}₳</b></h3>
                           </Col>
 
                           <Col xl={4} lg={4} md={12} sm={12} >
@@ -379,7 +379,7 @@ class AllianceDetailsPage extends React.Component {
 
                       {this.state.allianceData.twitter_handle !== "" &&
                         <Tooltip
-                          title="Pool Twitter"
+                          title="Alliance Twitter"
                           placement="left"
                         >
                           <a href={"https://twitter.com/@" + this.state.allianceData.twitter_handle} target="_blank" rel="noreferrer">
@@ -391,7 +391,7 @@ class AllianceDetailsPage extends React.Component {
 
                       {this.state.allianceData.telegram_handle != "" &&
                         <Tooltip
-                          title="Pool Telegram"
+                          title="Alliance Telegram"
                           placement="left"
                         >
                           <a href={"https://t.me/" + this.state.allianceData.telegram_handle} target="_blank" rel="noreferrer">
@@ -402,7 +402,7 @@ class AllianceDetailsPage extends React.Component {
 
                       {this.state.allianceData.youtube_handle != "" &&
                         <Tooltip
-                          title="Pool Youtube"
+                          title="Alliance Youtube"
                           placement="left"
                         >
                           <a href={"https://www.youtube.com/channel/" + this.state.allianceData.youtube_handle} target="_blank" rel="noreferrer">
@@ -413,7 +413,7 @@ class AllianceDetailsPage extends React.Component {
 
                       {this.state.allianceData.facebook_handle != "" &&
                         <Tooltip
-                          title="Pool Facebook"
+                          title="Alliance Facebook"
                           placement="left"
                         >
                           <a href={"https://www.facebook.com/" + this.state.allianceData.facebook_handle} target="_blank" rel="noreferrer">
@@ -424,7 +424,7 @@ class AllianceDetailsPage extends React.Component {
 
                       {this.state.allianceData.discord_handle != "" &&
                         <Tooltip
-                          title="Pool Discord"
+                          title="Alliance Discord"
                           placement="left"
                         >
                           <a href={"https://discord.com/invite/" + this.state.allianceData.discord_handle} target="_blank" rel="noreferrer">
@@ -441,7 +441,7 @@ class AllianceDetailsPage extends React.Component {
                       <CardHeader>
                         Allience Twitter Feed</CardHeader>
                       <CardBody style={{
-                        height: 350,
+                        height: 450,
                         overflow: 'auto'
                       }}>
                         <TwitterTimelineEmbed

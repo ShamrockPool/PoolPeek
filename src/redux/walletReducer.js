@@ -10,6 +10,8 @@ const walletReducer = function (state = "", action) {
       return state + "typhon";
     case "yoroi":
       return state + "yoroi";
+    case "gero":
+      return state + "gero";
     default:
       return state;
   }

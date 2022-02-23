@@ -136,6 +136,10 @@ class JoinPool extends React.Component {
             console.log("typhon")
             return await window.cardano.typhon.enable();
         }
+        else if (this.props.wallet === "gero") {
+            console.log("gero")
+            return await window.cardano.gerowallet.enable();
+        }
         else if (this.props.wallet === "yoroi") {
             console.log("yoroi")
             return await window.cardano.yoroi.enable();

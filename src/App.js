@@ -92,6 +92,7 @@ export default class App extends React.Component {
                 <Route exact path="/alliances" render={(props) => <AlliancesPage {...props}/>} />
                 <Route exact path="/alliances/xspo" render={(props) => <AllianceDetailsPage {...props} title="XSPO Alliance" alliancename="xspo" url="https://raw.githubusercontent.com/xSPO-Alliance/adapools-xspo-alliance/main/xspo-alliance-members.json" />}/>
                 <Route exact path="/alliances/cspa" render={(props) => <AllianceDetailsPage {...props} title="CSPA Alliance" alliancename="cspa" url="https://raw.githubusercontent.com/SinglePoolAlliance/Registration/master/adapools.json" />}/>
+                <Route exact path="/alliances/mdp" render={(props) => <AllianceDetailsPage {...props} title="MDP Alliance" alliancename="mdp" url="https://raw.githubusercontent.com/CardanoMDP/CardanoMDP-adapools-org-alliance/main/cardano-mdp.json" />}/>
 
                 <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} multiPoolOperators={true} pageDescription={queries.baremetalpoolsqueryDesc} />} />
                 <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Education" query={queries.educationquery} multiPoolOperators={true} pageDescription={queries.educationpoolsqueryDesc} />} />
