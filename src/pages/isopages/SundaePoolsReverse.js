@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Timer from "react-compound-timer";
-import JoinPool from 'components/nami/JoinPool';
+import JoinPool from 'components/wallet/JoinPool';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 import dd from 'assets/img/dripdropz.svg';
 
@@ -230,7 +230,7 @@ class SundaePoolsReverse extends React.Component {
               alignItems: 'center',
               textAlign: 'center',
             }}>
-              <h3 style={{ color: 'red' }}>To Participate in this RISO move you ADA to one of the below pools before 24th Feb 9.45PM UTC</h3>
+                   <h1 style={{ color: 'red' }}>THIS ISO HAS ENDED!</h1>
             </Row>
 
             <Row style={{
@@ -282,7 +282,7 @@ class SundaePoolsReverse extends React.Component {
                             RISO Start Date
                           </CardTitle>
                           <CardText>
-                            February 24th
+                            February 19th
                           </CardText>
                         </CardBody>
                       </Card>
@@ -295,7 +295,7 @@ class SundaePoolsReverse extends React.Component {
                             RISO End Date
                           </CardTitle>
                           <CardText>
-                            March 1st
+                          February 24th
                           </CardText>
                         </CardBody>
                       </Card>

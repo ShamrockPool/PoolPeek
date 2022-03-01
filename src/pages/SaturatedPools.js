@@ -23,7 +23,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDiscord } from "@fortawesome/free-brands-svg-icons";
 
-import JoinPool from 'components/nami/JoinPool';
+import JoinPool from 'components/wallet/JoinPool';
 
 const cardano = window.cardano;
 

@@ -9,7 +9,7 @@ const Footer = () => {
     <Navbar>
       <Nav navbar>
         <NavItem>
-          2021 Paddy Productions.
+          2022 Paddy - Shamrock Pool Productions.
           <a href="https://shamrock-pool.com/" target="_blank">
             <img
               src={shamrock}

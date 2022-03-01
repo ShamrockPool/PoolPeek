@@ -30,8 +30,6 @@ import yoroi from 'assets/img/wallet/yoroi.png';
 import gero from 'assets/img/wallet/gerowallet.ico';
 const bem = bn.create('header');
 
-const Component = ({ count }) => <h1>Helloworld React & Redux! {count}</h1>;
-
 class Header extends React.Component {
   constructor(props) {
     super(props);
@@ -106,14 +104,14 @@ class Header extends React.Component {
     await this.generateEpochEvents();
     await this.getCurrentEpoch();
 
-    this.getCurrentAdaUSDPrice();
-    this.getCurrentAdaEuroPrice();
-    this.getCurrentAdaBTCPrice();
-    this.getCurrentAdaGBPPrice();
-    this.interval = setInterval(() => this.getCurrentAdaUSDPrice(), 30000);
-    this.interval = setInterval(() => this.getCurrentAdaEuroPrice(), 30000);
-    this.interval = setInterval(() => this.getCurrentAdaBTCPrice(), 30000);
-    this.interval = setInterval(() => this.getCurrentAdaGBPPrice(), 30000);
+    // this.getCurrentAdaUSDPrice();
+    // this.getCurrentAdaEuroPrice();
+    // this.getCurrentAdaBTCPrice();
+    // this.getCurrentAdaGBPPrice();
+    // this.interval = setInterval(() => this.getCurrentAdaUSDPrice(), 30000);
+    // this.interval = setInterval(() => this.getCurrentAdaEuroPrice(), 30000);
+    // this.interval = setInterval(() => this.getCurrentAdaBTCPrice(), 30000);
+    // this.interval = setInterval(() => this.getCurrentAdaGBPPrice(), 30000);
 
   }
 
@@ -231,29 +229,44 @@ class Header extends React.Component {
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Nav navbar className="mr-2">
           <Button outline onClick={this.handleSidebarControlButton}>
-            <MdClearAll size={25} />
+            <MdClearAll size={18} />
           </Button>
         </Nav>
-        <Nav navbar>
+        {/* <Nav navbar>
           <div>
             <p><b>ADA Price:</b>  <b>   $</b>  {this.state.adaUsdPrice} <b>  €</b> {this.state.adaEuroPrice}
               <b>  £</b> {this.state.adaGbpPrice} <b>  ₿</b> {this.state.adaBtcPrice} </p>
-
             <div>
-              <p><b>Current Epoch: {this.state.currentEpoch}</b></p>
-              {this.state.epochSecondsRemaining != 0 &&
-                <Timer
-                  initialTime={this.state.epochSecondsRemaining}
-                  direction="backward"
-                >
-                  <h6><b>Epoch Change: </b>    <Timer.Days /> <b>Days</b>   <Timer.Hours />  <b>Hours</b>  <Timer.Minutes /> <b>Mins</b> </h6>
-                </Timer>}
+              <div>
+                <h6><b>Current Epoch: {this.state.currentEpoch}</b></h6>
+                {this.state.epochSecondsRemaining != 0 &&
+                  <Timer
+                    initialTime={this.state.epochSecondsRemaining}
+                    direction="backward"
+                  >
+                    <small><b>( Epoch Remaining: </b>    <Timer.Days /> <b>Days</b>   <Timer.Hours />  <b>Hours</b>  <Timer.Minutes /> <b>Mins )</b> </small>
+                  </Timer>}
+              </div>
             </div>
-
-            {/* //<b>Sec:</b> <Timer.Seconds />< */}
-
           </div>
+        </Nav> */}
+
+        <Nav navbar>
+
+          <div>
+            <h6><b>Current Epoch: {this.state.currentEpoch}</b></h6>
+            {this.state.epochSecondsRemaining != 0 &&
+              <Timer
+                initialTime={this.state.epochSecondsRemaining}
+                direction="backward"
+              >
+                <small><b>( Epoch Remaining: </b>    <Timer.Days /> <b>Days</b>   <Timer.Hours />  <b>Hours</b>  <Timer.Minutes /> <b>Mins )</b> </small>
+              </Timer>}
+          </div>
+
         </Nav>
+
+
         {!isMobile &&
           <Nav navbar className={bem.e('nav-right')}>
             {this.state.namiEnabled == false ? <div>

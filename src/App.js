@@ -29,15 +29,17 @@ import AnetaBtcISOPools from 'pages/isopages/AnetaBtcISOPools';
 import FlicktoISOPools from 'pages/isopages/FlicktoISOPools';
 import BisonPoolsV2 from 'pages/isopages/BisonPoolsV2';
 import ArdanaISOPools from 'pages/isopages/ArdanaISOPools';
-
 import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
 import PoolMapV3 from 'pages/PoolMapV3';
-import NamiJoinPool from 'pages/tools/NamiJoinPool';
+import JoinPoolEmbed from 'pages/joinpool/JoinPoolEmbed';
+import MyWalletPage from 'pages/MyWalletPage';
 
 import ISOPage from 'pages/isopages/ISOPage';
 
 import AlliancesPage from 'pages/alliancepages/AlliancesPage';
 import AllianceDetailsPage from 'pages/alliancepages/AllianceDetailsPage';
+
+import BlocksPage from 'pages/BlocksPage';
 
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
@@ -58,11 +60,15 @@ export default class App extends React.Component {
         <GAListener>
           <Switch>
 
-          <Route exact path="/namiwalletconnect" render={(props) => <NamiJoinPool />} />
+          <Route exact path="/joinpool/:name/:poolid" render={(props) => <JoinPoolEmbed {...props}/>} />
 
             <MainLayout breakpoint={this.props.breakpoint}>
               <React.Suspense fallback={<PageSpinner />}>
                 <Route exact path="/" render={(props) => <DashboardPage />} />
+                
+                <Route exact path="/wallet" render={(props) => <MyWalletPage {...props}/>} />
+                <Route exact path="/wallet/:lookupid" render={(props) => <MyWalletPage {...props}/>} />
+
                 <Route exact path="/teampeek" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="We are the Creators of PoolPeek.com and PoolPeek Mobile!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc} />} />
                 <Route exact path="/poolsearch" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false}/>} />
                 <Route exact path="/poolsearchmap" render={(props) => <PoolMapV3 {...props}/>} />
@@ -87,7 +93,6 @@ export default class App extends React.Component {
                 
                 <Route exact path="/saturatedpools" render={(props) => <SaturatedPools {...props}/>} />
                 <Route exact path="/retiredpools" render={(props) => <RetiredPoolsV2 {...props}/>} />
-                {/* <Route exact path="/retiredpoolsv2" render={(props) => <RetiredPoolsV2 {...props}/>} /> */}
                 
                 <Route exact path="/alliances" render={(props) => <AlliancesPage {...props}/>} />
                 <Route exact path="/alliances/xspo" render={(props) => <AllianceDetailsPage {...props} title="XSPO Alliance" alliancename="xspo" url="https://raw.githubusercontent.com/xSPO-Alliance/adapools-xspo-alliance/main/xspo-alliance-members.json" />}/>
@@ -112,6 +117,8 @@ export default class App extends React.Component {
                 <Route exact path="/zeroblocks" render={(props) => <ZeroBlocksPage {...props} title="Zero Blocks Pools" query={"zeroblocks"} />} />
                 <Route exact path="/randompool" render={(props) => <RandomPoolPage {...props} title="Random Pools" query={"randompool"} />} />
                 
+                <Route exact path="/liveblocks" render={(props) => <BlocksPage {...props} title="Live Blocks" />} />
+
                 {/* <Route exact path="/fabulousnames" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Names" query={queries.funnamesquery} />} />
                 <Route exact path="/fabulousdescriptions" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Descriptions" query={queries.fundescriptionsquery} />} /> */}
 

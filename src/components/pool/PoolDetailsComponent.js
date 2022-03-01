@@ -31,7 +31,7 @@ import IconButton from '@material-ui/core/IconButton';
 import { baseUrlPoolPeekService, getPoolDelegates, getPoolDelegatesHistory, requestPoolAdvertising } from 'assets/services';
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import Chart from '../Chart';
-import JoinPool from 'components/nami/JoinPool';
+import JoinPool from 'components/wallet/JoinPool';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -360,13 +360,9 @@ export default class PoolDetailsComponent extends React.Component {
                                                     }}><h1>{ReactHtmlParser(this.props.pool.ticker)}</h1></Row>
                                                     <h1>{ReactHtmlParser(this.props.pool.name)}</h1>
 
-                                                    {this.props.pool.retired != 'Y' ?
+                                                    {this.props.pool.retired == 'Y' &&
 
-                                                        <h3>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
-                                                            defaultProtocol: 'https'
-                                                        }))}</h3>
 
-                                                        :
                                                         <div>
                                                             <h1 style={{ color: 'red' }}>THIS POOL IS RETIRED!</h1>
                                                             <h3 style={{ color: 'red' }}>If staking with this pool, move your ADA to another pool.</h3>
@@ -400,6 +396,13 @@ export default class PoolDetailsComponent extends React.Component {
                                                             <FontAwesomeIcon icon={faClipboard} />
                                                         </CopyToClipboard>
                                                     </Tooltip>
+
+                                                    <h3>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
+                                                        defaultProtocol: 'https'
+                                                    }))}</h3>
+
+
+
                                                     {this.state.favourite == false &&
                                                         <div>
                                                             <IconButton onClick={() => {
@@ -794,6 +797,14 @@ export default class PoolDetailsComponent extends React.Component {
                                                 this.requestPoolPromotion(this.props.pool.pool_id)
                                             }}
                                             >Request Promotion</Button></p>
+                                        </CardBody>
+                                    </Card>
+
+                                    <Card>
+                                        <CardHeader>
+                                            Last Updated</CardHeader>
+                                        <CardBody>
+                                            <p>{this.props.pool.last_updated}</p>
                                         </CardBody>
                                     </Card>
                                 </Col>

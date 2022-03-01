@@ -21,8 +21,14 @@ import {
   MdDateRange,
   MdMoneyOff,
   MdOutlineDashboard,
-  MdAttachMoney
+  MdAttachMoney,
+
 } from 'react-icons/md';
+import {
+  IoWalletOutline
+
+} from 'react-icons/io5';
+
 import { NavLink } from 'react-router-dom';
 import {
   Collapse,
@@ -94,7 +100,7 @@ const poolTools = [
 
 const navItems = [
   { to: '/', name: 'Dashboard', exact: true, Icon: MdOutlineDashboard },
-  // { to: '/teampeek', name: 'Team Peek', exact: true, Icon: MdBuild },
+  { to: '/wallet', name: 'MY Wallet', exact: true, Icon: IoWalletOutline },
   // { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   // { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },

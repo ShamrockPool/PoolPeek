@@ -24,7 +24,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter, faTelegram, faYoutube, faFacebook, faDiscord, faGithub, faReddit, faGitlab } from "@fortawesome/free-brands-svg-icons";
 
-import JoinPool from 'components/nami/JoinPool';
+import JoinPool from 'components/wallet/JoinPool';
 
 const override = css`
   display: block;
@@ -246,7 +246,6 @@ class SundaePools extends React.Component {
 
                   <div>
                     <h1 style={{ color: 'red' }}>THIS ISO HAS ENDED!</h1>
-                    <h3 style={{ color: 'red' }}>To continue earning Sundae you can Stake with one of these pool: <Link to={`sundaeriso`}>LINK </Link></h3>
                   </div>
 
                 </Row>

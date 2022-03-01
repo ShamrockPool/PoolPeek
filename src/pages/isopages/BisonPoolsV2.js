@@ -18,7 +18,7 @@ import { baseUrlPoolPeekService, getisopools } from 'assets/services';
 import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
 import Timer from "react-compound-timer";
-import JoinPool from 'components/nami/JoinPool';
+import JoinPool from 'components/wallet/JoinPool';
 import { FormGroup, FormControlLabel, Switch, Checkbox } from '@material-ui/core';
 
 const override = css`

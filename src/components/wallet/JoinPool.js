@@ -75,7 +75,6 @@ class JoinPool extends React.Component {
                 modal: !this.state.modal,
             });
         }
-
         this.setState({
             [`modal_${modalType}`]: !this.state[`modal_${modalType}`],
         });

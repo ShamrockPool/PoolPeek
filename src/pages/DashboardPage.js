@@ -3,7 +3,7 @@ import { IconWidget, NumberWidget } from 'components/Widget';
 import {
   teamPeekData,
 } from 'demos/dashboardPage';
-import Timer from "react-compound-timer";
+
 import React from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import {
@@ -40,7 +40,7 @@ import { red } from '@material-ui/core/colors';
 import { connect } from 'react-redux';
 import ppc from 'assets/img/PKCoin2.m4v';
 import LoadChart from 'components/LoadChart';
-
+import BlocksPage from './BlocksPage';
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -320,7 +320,11 @@ class DashboardPage extends React.Component {
       // title="Dashboard"
       // breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
-        <Row>
+        <Row style={{
+          alignContent: 'center', justifyContent: 'center',
+          alignItems: 'center',
+          textAlign: 'center',
+        }}>
           <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='primary'>
               <CardBody>
@@ -328,7 +332,7 @@ class DashboardPage extends React.Component {
                   {this.state.totalPools}
                 </CardTitle>
                 <CardText>
-                  Stake Pools
+                  <small>Stake Pools</small>
                 </CardText>
               </CardBody>
             </Card>
@@ -337,11 +341,11 @@ class DashboardPage extends React.Component {
           <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
-                <CardTitle className="text-capitalize">
+                <CardTitle>
                   {this.state.totalAdaSupply}
                 </CardTitle>
                 <CardText>
-                  ADA Supply
+                  <small>ADA Supply</small>
                 </CardText>
               </CardBody>
             </Card>
@@ -354,7 +358,7 @@ class DashboardPage extends React.Component {
                   {this.state.totalWalletsStaked}
                 </CardTitle>
                 <CardText>
-                  Staked Wallets
+                  <small>Staked Wallets</small>
                 </CardText>
               </CardBody>
             </Card>
@@ -367,7 +371,7 @@ class DashboardPage extends React.Component {
                   {this.state.liveStake}
                 </CardTitle>
                 <CardText>
-                  ADA Staked
+                  <small>ADA Staked</small>
                 </CardText>
               </CardBody>
             </Card>
@@ -380,13 +384,13 @@ class DashboardPage extends React.Component {
                   {this.state.percentageOfSupplyStaked}
                 </CardTitle>
                 <CardText>
-                  % Of ADA Staked
+                  <small>% Of ADA Staked</small>
                 </CardText>
               </CardBody>
             </Card>
           </Col>
 
-          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
+          {/* <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -397,9 +401,10 @@ class DashboardPage extends React.Component {
                 </CardText>
               </CardBody>
             </Card>
-          </Col>
+          </Col> */}
 
         </Row>
+
 
 
         {/* <Row>
@@ -468,257 +473,237 @@ class DashboardPage extends React.Component {
           :
           <Row>
 
-            <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+            <Row>
 
-              {/* <Timer
-                initialTime={this.state.epochSecondsRemaining}
-                direction="backward"
-              >
-                <Card>
-                  <CardHeader><p><h6><b>Epoch Clock</b></h6></p><small>New Epoch starts in:</small></CardHeader>
-                  <CardBody body>
-                    <div className="container-fluid" style={{ width: "100%" }}>
-                      <h6>Days: <b><Timer.Days /></b>   Hours: <b><Timer.Hours /></b>   Minutes: <b><Timer.Minutes /></b>   Seconds: <b><Timer.Seconds /></b></h6>
-                    </div>
+              <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
 
-                    <Link to={`/epochcalendar`}>
-                      <h6>
-                        <p><Button variant="outline-light" size="sm">View Epoch Calendar</Button></p>
-                      </h6>
-                    </Link>
-
-                  </CardBody>
-                </Card>
-              </Timer> 
-              <br></br>*/}
-
-
-
-              {/* {this.state.favouritepools.length > 0 && */}
-              <div>
                 <Card>
                   <CardHeader >
-                    <h6><b>Favourite Pools</b></h6><small>Click the favourite icon within pools to display here.</small>
-                    <Favorite style={{ color: red, fill: '#FF0000' }}></Favorite>
+                    <h6><b>Favourite Pools</b></h6>
+                    <Row style={{
+                      alignContent: 'center', justifyContent: 'center',
+                      alignItems: 'center',
+                      textAlign: 'center',
+                    }}><small>Click the <Favorite style={{ color: red, fill: '#FF0000' }}></Favorite> icon within pools to display here.</small>
+                    </Row>
                   </CardHeader>
                   <CardBody body >
-                    <Row>
-                      <Col>
-                        {this.state.favouritepools.map(function (item, index) {
+                    <Row style={{ margin: '1px' }}>
 
+                      {this.state.favouritepools.map(function (item, index) {
+
+                        return (
+
+                          <Link to={`/pool/${item.pool_id}`}>
+                            <h6>
+                              {checkIsImageUrl(item.url_png_logo) ? (
+                                <ReactImageFallback
+                                  src={item.url_png_logo}
+                                  width="40"
+                                  height="40"
+                                  fallbackImage={CardanoImage} />
+                              ) : (<img
+                                src={CardanoImage}
+                                className="pr-2"
+                                width="38"
+                                height="32"
+                              />)}
+                              <b>&nbsp;{item.name}</b>
+                            </h6>
+                          </Link>
+
+                        )
+                      })
+                      }
+
+                    </Row>
+                  </CardBody>
+                </Card>
+
+                <hr></hr>
+
+                <Card>
+                  <CardHeader >
+                    <p><h6><b>Pool Search</b></h6></p><small>Quick search all available pools.</small>
+                  </CardHeader>
+                  <CardBody body >
+
+                    <Input
+                      style={{
+                        fontSize: 14, alignContent: 'center', justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                      }}
+                      type="text"
+                      className="cr-search-form__input"
+                      placeholder="Search with Ticker or Pool Name"
+                      onChange={this.handleChange()}
+                      value={this.state.searchInput}
+                    />
+
+                    <br />
+                    {width < 600 ?
+                      <Row>
+                        {this.state.filteredPools.map(function (item, index) {
                           return (
-                            <div style={{ display: 'inline-block', paddingRight: '5px', paddingTop: '20px' }}>
-                              <Link to={`/pool/${item.pool_id}`}>
-                                <h6>
-                                  {checkIsImageUrl(item.url_png_logo) ? (
-                                    <ReactImageFallback
-                                      src={item.url_png_logo}
-                                      width="40"
-                                      height="40"
-                                      fallbackImage={CardanoImage} />
-                                  ) : (<img
-                                    src={CardanoImage}
-                                    className="pr-2"
-                                    width="38"
-                                    height="32"
-                                  />)}
-                                  <b>&nbsp;{item.name}</b>
-                                </h6>
-                              </Link>
-                            </div>
+                            index < 6 &&
+                            <Col lg={3} md={4} sm={4} xs={6}>
+                              <Card>
+                                <CardBody >
+                                  <CardText>
+                                    <Link to={`/pool/${item.pool_id}`}>
+                                      <h6>
+                                        <b>&nbsp;{item.ticker}</b>
+                                      </h6>
+                                    </Link>
+                                  </CardText>
+                                </CardBody>
+                              </Card>
+                            </Col>
                           )
                         })
                         }
-                      </Col>
-                    </Row>
+                      </Row>
+                      :
+                      <Row>
+                        {this.state.filteredPools.map(function (item, index) {
+
+                          return (
+                            index < 20 &&
+                            <Col lg={3} md={4} sm={4} xs={4}>
+                              <Card>
+                                <CardBody>
+                                  <CardText>
+                                    <Link to={`/pool/${item.pool_id}`}>
+                                      <h6>
+                                        <b>&nbsp;{item.ticker}</b>
+                                      </h6>
+                                    </Link>
+                                  </CardText>
+                                </CardBody>
+                              </Card>
+                            </Col>
+                          )
+                        })
+                        }
+                      </Row>
+                    }
+
                   </CardBody>
                 </Card>
-                <br></br></div>
-
-
-
-              <Card>
-                <CardHeader >
-                  <p><h6><b>Pool Search</b></h6></p><small>Quick search all available pools.</small>
-                </CardHeader>
-                <CardBody body >
-
-                  <Input
-                    style={{
-                      fontSize: 14, alignContent: 'center', justifyContent: 'center',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                    }}
-                    type="text"
-                    className="cr-search-form__input"
-                    placeholder="Search with Ticker or Pool Name"
-                    onChange={this.handleChange()}
-                    value={this.state.searchInput}
-                  />
-
-                  <br />
-                  {width < 600 ?
-
-                    <Row>
-                      {this.state.filteredPools.map(function (item, index) {
-
-                        return (
-                          index < 6 &&
-                          <Col lg={3} md={4} sm={4} xs={6}>
-                            <Card>
-                              <CardBody>
-                                <Link to={`/pool/${item.pool_id}`}>
-                                  <h6>
-                                    <b>&nbsp;{item.ticker}</b>
-                                  </h6>
-                                </Link>
-                              </CardBody>
-                            </Card>
-                          </Col>
-                        )
-                      })
-                      }
-                    </Row>
-                    :
-                    <Row>
-                      {this.state.filteredPools.map(function (item, index) {
-
-                        return (
-                          index < 24 &&
-                          <Col lg={3} md={4} sm={4} xs={4}>
-                            <Card>
-                              <CardBody>
-                                <Link to={`/pool/${item.pool_id}`}>
-                                  <h6>
-                                    <b>&nbsp;{item.ticker}</b>
-                                  </h6>
-                                </Link>
-                              </CardBody>
-                            </Card>
-                          </Col>
-                        )
-                      })
-                      }
-                    </Row>
-                  }
-
-                </CardBody>
-              </Card>
-            </Col>
-            <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
-
-              {/* {width > 700 && this.state.namiEnabled === true ?
+                <hr></hr>
                 <Card>
-                  <CardHeader><h6><b>Nami Wallet - Connected</b></h6></CardHeader>
-                  {this.state.namiPool != null && <CardBody body >
-
-                    <div style={{ display: 'inline-block', paddingRight: '10px' }}>
-                      <h6><b>Your Currently staking with</b></h6>
-                      <Link to={`/pool/${this.state.namiPool.pool_id}`}>
-                        <h6>
-                          <ReactImageFallback
-                            src={this.state.namiPool.url_png_logo}
-                            width="80"
-                            height="70"
-                            fallbackImage={CardanoImage} />
-                        </h6>
-                        <Row style={{
-                          alignContent: 'center', justifyContent: 'center',
-                          alignItems: 'center',
-                          textAlign: 'center',
-                        }}><b>&nbsp;{this.state.namiPool.name}</b></Row>
-                      </Link>
-                    </div>
-                  </CardBody>}
-                </Card>
-                :
-                <Card>
-                  <CardHeader><h6><b>Connect Nami Wallet</b></h6><small>Click Image To Connect</small></CardHeader>
-                  <CardBody body >
-                    <Row style={{
-                      alignContent: 'center', justifyContent: 'center',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                    }}>
-                      <img
-                        src={nami}
-                        width="160"
-                        height="100"
-                        onClick={() => this.connectWallet()}
-                      />
-                    </Row>
-                    <Row style={{
-                      alignContent: 'center', justifyContent: 'center',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                    }}>
-                      <Button variant="outline-light" size="sm" onClick={() => this.connectWallet()}>Connect Wallet</Button>
-                    </Row>
-                  </CardBody>
-                </Card>
-              } */}
-
-              {this.state.chainLoadData &&
-                <Card>
-                  <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days. </small></CardHeader>
+                  <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
                   <CardBody body>
-                    <LoadChart chainLoadData={this.state.chainLoadData} />
-                  </CardBody>
-                </Card>}
-              <br></br>
-              {this.state.advertisingpool != null &&
-                <Card>
-                  <CardHeader><h6><b>Pool Promo</b></h6></CardHeader>
-                  <CardBody body >
-
-                    <Row style={{
-                      fontSize: 14, alignContent: 'center', justifyContent: 'center',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                      margin: "10px"
-                    }}>
-                      <Link to={`/pool/${this.state.advertisingpool.pool_id}`}>
-                        <h6>
-
-                          {checkIsImageUrl(this.state.advertisingpool.extended_meta.url_png_logo) ? (
-                            <ReactImageFallback
-                              src={this.state.advertisingpool.extended_meta.url_png_logo}
-                              width="60"
-                              height="50"
-                              fallbackImage={CardanoImage} />
-                          ) : (<img
-                            src={CardanoImage}
-                            className="pr-2"
-                            width="60"
-                            height="60"
-                          />)}
-
-                          <Row style={{
-                            alignContent: 'center', justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                          }}><h6><b>{ReactHtmlParser(this.state.advertisingpool.name)}({this.state.advertisingpool.ticker})</b></h6></Row>
-                        </h6>
-                        <p>{ReactHtmlParser(linkifyHtml(this.state.advertisingpool.description, {
-                          defaultProtocol: 'https'
-                        }))}</p>
+                    <Row>
+                      {teamPeekData.map(
+                        ({ id, image, title, description, poolid, imgWidth, imgHeight, right }) => (
+                          //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
 
 
-                        <p><Button variant="outline-light" size="sm">More Info</Button></p>
+                          <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+                            <Link to={`/pool/${poolid}`}>
+                              <h6>
+                                <ReactImageFallback
+                                  src={image}
+                                  width="40"
+                                  height="40"
+                                  fallbackImage={null} />
 
-                      </Link>
-                      <br></br>
+                              </h6>
+                              <Row style={{
+                                alignContent: 'center', justifyContent: 'center',
+                                alignItems: 'center',
+                                textAlign: 'center',
+                              }}><b>&nbsp;{title}</b></Row>
+                              {/* <p>{item.description}</p> */}
+                            </Link>
+                          </Col>
+
+
+                        ),
+                      )}
                     </Row>
                   </CardBody>
-                </Card>}
+
+                </Card>
 
 
+              </Col>
+              <Col lg={6} md={12} sm={12} xs={12} className="mb-3">
+                <BlocksPage numberToSHow={20} />
+              </Col>
+              <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
 
-            </Col>
-            <Col lg={4} md={12} sm={12} xs={12} className="mb-3">
+                {this.state.chainLoadData &&
+                  <Card>
+                    <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days. </small></CardHeader>
+                    <CardBody body>
+                      <LoadChart chainLoadData={this.state.chainLoadData} />
+                    </CardBody>
+                  </Card>}
+                <hr></hr>
+                {this.state.advertisingpool != null &&
+                  <Card>
+                    <CardHeader><h6><b>Pool Promo</b></h6></CardHeader>
+                    <CardBody body >
+
+                      <Row style={{
+                        fontSize: 14, alignContent: 'center', justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                        margin: "10px"
+                      }}>
+                        <Link to={`/pool/${this.state.advertisingpool.pool_id}`}>
+                          <h6>
+
+                            {checkIsImageUrl(this.state.advertisingpool.extended_meta.url_png_logo) ? (
+                              <ReactImageFallback
+                                src={this.state.advertisingpool.extended_meta.url_png_logo}
+                                width="120"
+                                height="70"
+                                fallbackImage={CardanoImage} />
+                            ) : (<img
+                              src={CardanoImage}
+                              className="pr-2"
+                              width="60"
+                              height="60"
+                            />)}
+
+                            <Row style={{
+                              alignContent: 'center', justifyContent: 'center',
+                              alignItems: 'center',
+                              textAlign: 'center',
+                            }}><h6><b>{ReactHtmlParser(this.state.advertisingpool.name)}({this.state.advertisingpool.ticker})</b></h6></Row>
+                          </h6>
+                          <p>{ReactHtmlParser(linkifyHtml(this.state.advertisingpool.description, {
+                            defaultProtocol: 'https'
+                          }))}</p>
 
 
-              {/* <Card>
+                          <p><Button variant="outline-light" size="sm">More Info</Button></p>
+
+                        </Link>
+                        <br></br>
+                      </Row>
+                    </CardBody>
+                  </Card>}
+
+                <hr></hr>
+                <Card>
+                  <CardHeader><h6><b>PoolPeekCoin Pools</b></h6><small>Stake with one of the PoolPeekCoin Pools to earn PPC</small></CardHeader>
+                  <CardBody body>
+                    <Link to={`/poolpeekcoinpools`}>
+                      <h6>
+                        <p><Button variant="outline-light" size="sm">View Pools</Button></p>
+                      </h6>
+                      <video loop autoPlay muted style={{ width: "5vw" }}>
+                        <source src={ppc} type='video/mp4' />
+                      </video>
+                    </Link>
+                  </CardBody>
+                </Card>
+                {/* <Card>
                 <CardHeader><h6><b>Pool Promo</b></h6><small>Pool Promo</small></CardHeader>
                 <CardBody body >
 
@@ -765,33 +750,12 @@ class DashboardPage extends React.Component {
                 </CardBody>
               </Card> */}
 
-              <Card>
-                <CardHeader >
-                  <p><h6><b>Pool Selection Wizard</b></h6></p><small>Use the below wizard to help you find a stake pool.</small>
-                </CardHeader>
-                <CardBody body >
-                  <br></br>
-                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"><p><Button variant="outline-light" size="sm">Pool Wizard</Button></p>                   <br></br></a>
-                </CardBody>
-              </Card>
 
-              {/* <br></br>
 
-              <Card>
-                <CardHeader><h6><b>Connect Nami Wallet</b></h6><small>Click To Connect</small></CardHeader>
-                <CardBody body >
-                  <img
-                    src={nami}
-                    width="200"
-                    height="120"
-                    onClick={() => this.connectWallet()}
-                  />
-                </CardBody>
-              </Card> */}
 
-              <br></br>
+                <br></br>
 
-              {/* <Card>
+                {/* <Card>
                 <CardHeader><h6><b>Random Pools</b></h6><small>A randomising pool list</small></CardHeader>
                 <CardBody body >
 
@@ -840,58 +804,14 @@ class DashboardPage extends React.Component {
                 </CardBody>
               </Card> */}
 
-              <Card>
-                <CardHeader><h6><b>PoolPeekCoin Pools</b></h6><small>Stake with one of the PoolPeekCoin Pools to earn PPC</small></CardHeader>
-                <CardBody body>
-                  <Link to={`/poolpeekcoinpools`}>
-                    <h6>
-                      <p><Button variant="outline-light" size="sm">View Pools</Button></p>
-                    </h6>
-                    <video loop autoPlay muted style={{ width: "12vw" }}>
-                      <source src={ppc} type='video/mp4' />
-                    </video>
-                  </Link>
-                </CardBody>
-              </Card>
 
-              <br></br>
-
-              <Card>
-                <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
-                <CardBody body>
-
-                  {teamPeekData.map(
-                    ({ id, image, title, description, poolid, imgWidth, imgHeight, right }) => (
-                      //https://poolpeek.com/pool/be7e2461a584b6532c972edca711fa466d7d0e8a86b6629fc0784ff6
-
-                      <div style={{ display: 'inline-block', paddingRight: '10px' }}>
-                        <Link to={`/pool/${poolid}`}>
-                          <h6>
-                            <ReactImageFallback
-                              src={image}
-                              width="80"
-                              height="70"
-                              fallbackImage={null} />
-
-                          </h6>
-                          <Row style={{
-                            alignContent: 'center', justifyContent: 'center',
-                            alignItems: 'center',
-                            textAlign: 'center',
-                          }}><b>&nbsp;{title}</b></Row>
-                          {/* <p>{item.description}</p> */}
-                        </Link>
-                      </div>
-
-                    ),
-                  )}
-
-                </CardBody>
-              </Card>
+                <br></br>
 
 
 
-              {/* <Card>
+
+
+                {/* <Card>
                 <CardHeader><h6><b>Random Quality Pools</b></h6><small>A randomising list of pools we recommend!</small></CardHeader>
                 <CardBody body style={{ minHeight: 350 }}>
 
@@ -927,8 +847,35 @@ class DashboardPage extends React.Component {
                   }
                 </CardBody>
               </Card> */}
-            </Col>
+              </Col>
 
+            </Row>
+            <Row>
+
+              {/* <Card>
+                <CardHeader >
+                  <p><h6><b>Pool Selection Wizard</b></h6></p><small>Use the below wizard to help you find a stake pool.</small>
+                </CardHeader>
+                <CardBody body >
+                  <br></br>
+                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"><p><Button variant="outline-light" size="sm">Pool Wizard</Button></p>                   <br></br></a>
+                </CardBody>
+              </Card> */}
+              {/* <Card>
+                <CardHeader><h6><b>PoolPeekCoin Pools</b></h6><small>Stake with one of the PoolPeekCoin Pools to earn PPC</small></CardHeader>
+                <CardBody body>
+                  <Link to={`/poolpeekcoinpools`}>
+                    <h6>
+                      <p><Button variant="outline-light" size="sm">View Pools</Button></p>
+                    </h6>
+                    <video loop autoPlay muted style={{ width: "12vw" }}>
+                      <source src={ppc} type='video/mp4' />
+                    </video>
+                  </Link>
+                </CardBody>
+              </Card> */}
+
+            </Row>
           </Row>
         }
       </Page >

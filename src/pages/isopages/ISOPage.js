@@ -51,27 +51,6 @@ class ISOPage extends React.Component {
           alignItems: 'center',
           textAlign: 'center',
         }}>
-          <Link to={{ pathname: '/sundaeriso' }}>
-            <div className="IsoCard" style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
-
-                <img
-                  src={sundaereverse}
-                  width="70vh" height={imageHeight}
-                />
-
-                <div className="IsoCard-body">
-                  <h2>Sundaeswap RISO</h2>
-                  <h3>Community ISO</h3>
-                  <h4>LIVE</h4>
-                </div>
-              </div>
-            </div>
-          </Link >
 
           <Link to={{ pathname: '/poolpeekcoinpools' }}>
             <div className="IsoCard" style={{
@@ -89,7 +68,7 @@ class ISOPage extends React.Component {
                 <div className="IsoCard-body">
                   <h2>PoolPeek Coin</h2>
                   <h3>Community ISO</h3>
-                  <h4>LIVE</h4>
+                  <h4>Live</h4>
                 </div>
               </div>
             </div>
@@ -111,7 +90,7 @@ class ISOPage extends React.Component {
                 <div className="IsoCard-body">
                   <h2>Hosky</h2>
                   <h3>Community ISO</h3>
-                  <h4>LIVE</h4>
+                  <h4>Live</h4>
                 </div>
               </div>
             </div>
@@ -133,7 +112,7 @@ class ISOPage extends React.Component {
                 <div className="IsoCard-body">
                   <h2>Bison</h2>
                   <h3>Community ISO</h3>
-                  <h4>LIVE</h4>
+                  <h4>Live</h4>
                 </div>
               </div>
             </div>
@@ -155,7 +134,7 @@ class ISOPage extends React.Component {
                 <div className="IsoCard-body">
                   <h2>Hosky Inu</h2>
                   <h3>Community ISO</h3>
-                  <h4>LIVE</h4>
+                  <h4>Live</h4>
                 </div>
               </div>
             </div>
@@ -266,6 +245,28 @@ class ISOPage extends React.Component {
 
                 <div className="IsoCard-body">
                   <h2>Sundaeswap ISO</h2>
+                  <h3>Community ISO</h3>
+                  <h4>Ended</h4>
+                </div>
+              </div>
+            </div>
+          </Link >
+
+          <Link to={{ pathname: '/sundaeriso' }}>
+            <div className="IsoCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+
+                <img
+                  src={sundaereverse}
+                  width="70vh" height={imageHeight}
+                />
+
+                <div className="IsoCard-body">
+                  <h2>Sundaeswap RISO</h2>
                   <h3>Community ISO</h3>
                   <h4>Ended</h4>
                 </div>
