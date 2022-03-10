@@ -16,9 +16,7 @@ import CircleLoader
 import { css } from "@emotion/core";
 import { baseUrlPoolPeekService, getPoolByStakeAddress, baseUrl, getPoolsRetiringAcrossEpoch } from '../assets/services';
 import "../styles/styles.css";
-import { makeStyles } from '@material-ui/styles';
 import { Link } from 'react-router-dom';
-import MyPoolRewardsChart from 'components/pool/MyPoolRewardsChart';
 import { connect } from 'react-redux';
 import { getWallet } from 'components/wallet/walletutil.js';
 
@@ -54,7 +52,11 @@ class MyWalletPage extends React.Component {
     wallet: null,
     pool: null,
     walletBalance: 0,
-    assetsInformationArray: []
+    assetsInformationArray: [],
+    utxos: 0,
+    tokens: 0,
+    rewards: 0,
+    rewardAddress: ""
   };
 
   useEffect() {
@@ -110,7 +112,9 @@ class MyWalletPage extends React.Component {
     const valueCBOR = await connectedWallet.getBalance()
     const value = Loader.Value.from_bytes(Buffer.from(valueCBOR, "hex"))
 
-    const utxos = await connectedWallet.getUtxos()
+    const utxos = await connectedWallet.getUtxos();
+    this.setState({ utxos: utxos.length });
+
     const parsedUtxos = utxos.map((utxo) => Loader.TransactionUnspentOutput.from_bytes(Buffer.from(utxo, "hex")))
 
     let countedValue = Loader.Value.new(Loader.BigNum.from_str("0"))
@@ -154,7 +158,7 @@ class MyWalletPage extends React.Component {
 
     var balance = lovelace / 1000000
     this.setState({ walletBalance: balance });
-
+    this.setState({ tokens: assets.length });
 
     //Get Assets
     var assetsInformationArray = [];
@@ -190,30 +194,31 @@ class MyWalletPage extends React.Component {
       //get image
       try {
         image = assetInformation[0].minting_tx_metadata.json[assetInformation[0].policy_id][assetInformation[0].asset_name_ascii].image;
-        image = image.replace("ipfs://", "");
-        image = image.replace("ipfs/", "");
-        
+        image = this.linkToSrc(image);
+        console.log(image)
       } catch (error) {
       }
       if (!name) {
         try {
           image = assetInformation[0].minting_tx_metadata.json[assetInformation[0].policy_id][assetInformation[0].asset_name].image;
-          image = image.replace("ipfs://", "");
-          image = image.replace("ipfs/", "");
+          image = this.linkToSrc(image);
+          console.log(image)
         } catch (error) {
         }
       }
-      if (!name) {
+      if (!image) {
         try {
           image = assetInformation[0].minting_tx_metadata.json[assetInformation[0].policy_id][assetInformation[0].asset_name].icon;
-          image = image.replace("ipfs://", "");
-          image = image.replace("ipfs/", "");
+          image = this.linkToSrc(image);
+          console.log(image)
         } catch (error) {
         }
       }
       if (!image) {
         try {
           image = assetInformation[0].minting_tx_metadata.json.asset.ipfs;
+          image = this.linkToSrc(image);
+          console.log(image)
         } catch (error) {
         }
       }
@@ -235,6 +240,28 @@ class MyWalletPage extends React.Component {
     this.setState({ assetsInformationArray: assetsInformationArray });
   };
 
+  linkToSrc = (link, base64 = false) => {
+    var ipfsUrl = "https://cloudflare-ipfs.com/ipfs";
+    const base64regex =
+      /^([0-9a-zA-Z+/]{4})*(([0-9a-zA-Z+/]{2}==)|([0-9a-zA-Z+/]{3}=))?$/;
+    if (link.startsWith('https://')) return link;
+    else if (link.startsWith('ipfs://'))
+      return (
+        ipfsUrl +
+        '/' +
+        link.split('ipfs://')[1].split('ipfs/').slice(-1)[0]
+      );
+    else if (
+      (link.startsWith('Qm') && link.length === 46) ||
+      (link.startsWith('baf') && link.length === 59)
+    ) {
+      return ipfsUrl + '/' + link;
+    } else if (base64 && base64regex.test(link))
+      return 'data:image/png;base64,' + link;
+    else if (link.startsWith('data:image')) return link;
+    return null;
+  };
+
   async getStakePool(connectedWallet) {
     const Loader = await import('@emurgo/cardano-serialization-lib-browser');
     try {
@@ -247,7 +274,7 @@ class MyWalletPage extends React.Component {
       );
       var addressFromBytes = Loader.Address.from_bytes(walletAddressHex);
       var rewardAddress = Loader.RewardAddress.from_address(addressFromBytes)?.to_address().to_bech32();
-
+      this.setState({ rewardAddress: rewardAddress });
       var response = await fetch(baseUrlPoolPeekService + getPoolByStakeAddress + rewardAddress);
       var data = await response.json();
       var pool = data.pools[0];
@@ -275,7 +302,7 @@ class MyWalletPage extends React.Component {
     return (
       <Page
         className="MyWalletPage"
-        title="View Your Wallet Contents"
+        title="My Wallet"
       >
         {this.state.pool == null ? <Col style={{
           justifyContent: 'center',
@@ -305,7 +332,7 @@ class MyWalletPage extends React.Component {
                         alignItems: 'center',
                         textAlign: 'center',
                       }}>
-                        <h2>Balance</h2>
+                        <h3>Wallet</h3>
                       </Row>
 
                       <Row style={{
@@ -331,8 +358,12 @@ class MyWalletPage extends React.Component {
                           }}>
                             <small><b>TOKENS</b></small>
                           </Row>
-                          <Row>
-
+                          <Row style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                          }}>
+                            {this.state.tokens}
                           </Row>
                         </Col>
 
@@ -349,7 +380,26 @@ class MyWalletPage extends React.Component {
                             alignItems: 'center',
                             textAlign: 'center',
                           }}>
+                            {this.state.utxos}
+                          </Row>
+                        </Col>
 
+                        <Col>
+                          <Row style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                          }}>
+                            <small><b>STAKE POOL</b></small>
+                          </Row>
+                          <Row style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            textAlign: 'center',
+                          }}>
+                            <Link to={`/pool/${this.state.pool.pool_id}`} target="_blank" rel="noopener noreferrer">
+                              {this.state.pool.name}
+                            </Link>
                           </Row>
                         </Col>
 
@@ -366,49 +416,29 @@ class MyWalletPage extends React.Component {
                             alignItems: 'center',
                             textAlign: 'center',
                           }}>
-
+                            {this.state.rewards}
                           </Row>
                         </Col>
+
+
                       </Row>
-
+                      <Col>
+                        <Row style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                        }}>
+                          <small><b>ADDRESS</b></small>
+                        </Row>
+                        <Row style={{
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                          textAlign: 'center',
+                        }}>
+                          {this.state.rewardAddress}
+                        </Row>
+                      </Col>
                     </Col>
-                  </Row>
-
-                </Col>
-
-                <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
-                  <hr></hr>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                    <h2>Staking</h2>
-                  </Row>
-
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}><h3><b>{this.state.pool.name}</b></h3></Row>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                    <Link to={`/pool/${this.state.pool.pool_id}`} target="_blank" rel="noopener noreferrer">
-                      <p><Button variant="outline-light" size="sm">View</Button></p>
-                    </Link>
-                  </Row>
-
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-                    {width > 800 && this.state.retiringData &&
-                      <MyPoolRewardsChart retiringData={this.state.retiringData.poolRetire} />
-                    }
                   </Row>
 
                 </Col>
@@ -422,7 +452,7 @@ class MyWalletPage extends React.Component {
                     alignItems: 'center',
                     textAlign: 'center',
                   }}>
-                    <h2>Assets</h2>
+                    <h3>Assets</h3>
                   </Row>
 
                   <Row style={{
@@ -432,10 +462,10 @@ class MyWalletPage extends React.Component {
                   }}>
                     {this.state.assetsInformationArray.map(function (item, index) {
                       return (
-                        <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
-                      
-                          
-                          <img src={"https://cloudflare-ipfs.com/ipfs/" + item.image} width="70" height="70" />
+                        <Col lg={2} md={12} sm={12} xs={12} className="mb-3">
+
+
+                          <img src={item.image} width="70" height="70" />
                           <p>{item.quantity}</p>
                           <p>{item.name}</p>
                           <br></br>

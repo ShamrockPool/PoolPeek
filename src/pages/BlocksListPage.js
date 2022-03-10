@@ -16,9 +16,7 @@ import CircleLoader
 import { css } from "@emotion/core";
 import { baseUrlPoolPeekService, getRetiredPools, baseUrl, getPoolsRetiringAcrossEpoch } from '../assets/services';
 import "../styles/styles.css";
-import { makeStyles } from '@material-ui/styles';
-import { Link } from 'react-router-dom';
-import MyPoolRewardsChart from 'components/pool/MyPoolRewardsChart';
+import BlocksPage from 'pages/BlocksPage';
 
 const override = css`
   display: block;
@@ -29,7 +27,7 @@ const override = css`
 const width = window.innerWidth;
 
 
-class MyWalletPage extends React.Component {
+class BlocksListPage extends React.Component {
   state = {
     pools: null,
     loading: true,
@@ -49,27 +47,11 @@ class MyWalletPage extends React.Component {
   };
 
   async componentDidMount() {
-
     if (width < 600) {
       this.setState({ smallScreen: true });
     }
-
-
-    this.getRetiringData();
-
-
     window.scrollTo(0, 0);
   }
-
-  async getRetiringData() {
-    var response = await fetch(baseUrl + getPoolsRetiringAcrossEpoch);
-    var data = await response.json();
-    this.setState({ retiringData: data });
-  }
-
-
-
-
 
   addCommas(nStr) {
     nStr += '';
@@ -94,126 +76,22 @@ class MyWalletPage extends React.Component {
         pool.ticker.toLowerCase().includes(input.toLowerCase()));
       this.setState({ retiredPools: poolsToDisplay, searchInput: input });
     }
-
   }
-
-
-
 
   render() {
 
     return (
       <Page
-        className="MyWalletPage"
-        title="View Your Wallet Contents"
+        className="BlocksListPage"
+        title="Blocks Minted In the Last 4 hours."
       >
-        {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
-          :
-          <Row>
-            <Col xl={12} lg={12} md={12} sm={12} >
-
-              <Row style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-              }}>
-                <Col xl={8} lg={10} md={12} sm={12} >
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}><h1>SHA</h1></Row>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}><h1>100000 ₳</h1></Row>
-                  <Row style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                  }}>
-
-                    <Col style={{
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      textAlign: 'center',
-                    }}>
-                      <Row style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                      }}>
-                        <small>TOKENS</small>
-                      </Row>
-                      <Row>
-
-                      </Row>
-                    </Col>
-
-                    <Col>
-                      <Row style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                      }}>
-                        <small>UTXOs</small>
-                      </Row>
-                      <Row style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                      }}>
-
-                      </Row>
-                    </Col>
-
-                    <Col>
-                      <Row style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                      }}>
-                        <small>REWARDS</small>
-                      </Row>
-                      <Row style={{
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                      }}>
-
-                      </Row>
-                    </Col>
-                  </Row>
-
-                </Col>
-              </Row>
-
-            </Col>
-
-
-            <Col lg={12} md={12} sm={12} xs={12} className="mb-3">
-              <Row>
-                <Col lg={5} md={12} sm={12} xs={12} className="mb-3">
-                  <Card>
-                    <CardBody body>
-                    <h6><b>Your Stake Pool</b></h6>
-                    </CardBody>
-                  </Card>
-                </Col>
-
-                <Col lg={7} md={12} sm={12} xs={12} className="mb-3">
-                  {width > 800 && this.state.retiringData &&
-                    <MyPoolRewardsChart retiringData={this.state.retiringData.poolRetire} />
-                  }
-                </Col>
-              </Row>
-            </Col>
-
-          </Row>
-        }
+        <Row>
+          <Col xl={12} lg={12} md={12} sm={12} >
+            <BlocksPage numberToSHow={1000} />
+          </Col>
+        </Row>
       </Page>
     );
   }
 }
-export default MyWalletPage;
+export default BlocksListPage;

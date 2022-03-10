@@ -92,11 +92,16 @@ class Header extends React.Component {
   }
 
   async getCurrentEpoch() {
-    let response = await
-      fetch('https://api.koios.rest/api/v0/tip');
-    let data = await response.json();
-    var epoch = data[0].epoch;
-    this.setState({ currentEpoch: epoch });
+    try {
+      let response = await
+        fetch('https://api.koios.rest/api/v0/tip');
+      let data = await response.json();
+      var epoch = data[0].epoch;
+      this.setState({ currentEpoch: epoch });
+    } catch (error) {
+      console.error(error)
+    }
+
   }
 
   async componentDidMount() {

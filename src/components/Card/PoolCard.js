@@ -39,10 +39,10 @@ export default class PoolCard extends React.Component {
         var x2 = x.length > 1 ? '.' + x[1] : '';
         var rgx = /(\d+)(\d{3})/;
         while (rgx.test(x1)) {
-          x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            x1 = x1.replace(rgx, '$1' + ',' + '$2');
         }
         return x1 + x2;
-      }
+    }
 
     render() {
         return (
@@ -77,15 +77,17 @@ export default class PoolCard extends React.Component {
                                     <h3><b>{this.addCommas(this.props.pool.live_stake)} ₳</b></h3>
                                 </Col>
 
-                                <Col xl={4} lg={4} md={12} sm={12} >
-                                    <h3>Delegates</h3>
-                                    <h3><b>{this.addCommas(this.props.pool.live_stake_delegator_count)}</b></h3>
-                                </Col>
+                                {this.props.pool.live_stake_delegator_count &&
+                                    <Col xl={4} lg={4} md={12} sm={12} >
+                                        <h3>Delegates</h3>
+                                        <h3><b>{this.addCommas(this.props.pool.live_stake_delegator_count)}</b></h3>
+                                    </Col>}
                             </Row>
 
-                            <h4>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
-                                defaultProtocol: 'https'
-                            }))}</h4>
+                            {this.props.pool.description &&
+                                <h4>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
+                                    defaultProtocol: 'https'
+                                }))}</h4>}
                         </div>
                     </div>
                 </div>

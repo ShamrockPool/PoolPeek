@@ -4,6 +4,7 @@ import { CardBody, Button, Row, Card, CardHeader } from 'reactstrap';
 import Select from 'react-select';
 import { Link, Redirect } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faHatWizard, faMagic } from '@fortawesome/free-solid-svg-icons';
 
 class PoolSearchWizard extends React.Component {

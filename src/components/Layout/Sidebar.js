@@ -26,8 +26,11 @@ import {
 } from 'react-icons/md';
 import {
   IoWalletOutline
-
 } from 'react-icons/io5';
+import {
+  GiStoneBlock
+} from 'react-icons/gi';
+
 
 import { NavLink } from 'react-router-dom';
 import {
@@ -100,8 +103,8 @@ const poolTools = [
 
 const navItems = [
   { to: '/', name: 'Dashboard', exact: true, Icon: MdOutlineDashboard },
-  { to: '/wallet', name: 'MY Wallet', exact: true, Icon: IoWalletOutline },
-  // { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
+  // { to: '/wallet', name: 'MY Wallet', exact: true, Icon: IoWalletOutline },
+  { to: '/blocks', name: 'Blocks', exact: true, Icon: GiStoneBlock },
   // { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
   // { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },

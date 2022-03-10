@@ -80,8 +80,9 @@ class BlocksPage extends React.Component {
               <Timer.Seconds />
             </Timer>}</small>
         </CardHeader>
-        {this.state.loading ?  <CardBody body><div>loading...</div></CardBody>
+        {this.state.loading ? <CardBody body><div>loading...</div></CardBody>
           :
+          this.state.blocks &&
           <CardBody body>
             <Row>
               {this.state.blocks.map(function (item, i) {
@@ -96,8 +97,7 @@ class BlocksPage extends React.Component {
                           <h6><b>{item.ticker}</b></h6>
                         </CardHeader>
                         <CardText>
-                          {/* <b>&nbsp;{item.abs_slot}</b><br></br> */}
-                          <b>&nbsp;{(Number(item.size) / 80000 * 100).toFixed(0)}% size</b><br></br>
+                          <b>&nbsp;{(Number(item.block_size) / Number(80000) * Number(100)).toFixed(0)}% size</b><br></br>
                           <b>&nbsp;{item.tx_count} txs</b><br></br>
                           <b>&nbsp;{(Math.floor(((new Date().getTime() - item.block_time_ms) / 1000) % 3600 / 60))} Mins Ago</b><br></br>
                           <small>&nbsp;{item.block_time.replace('T', ' ')} UTC</small><br></br>

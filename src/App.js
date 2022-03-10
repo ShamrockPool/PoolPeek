@@ -40,6 +40,7 @@ import AlliancesPage from 'pages/alliancepages/AlliancesPage';
 import AllianceDetailsPage from 'pages/alliancepages/AllianceDetailsPage';
 
 import BlocksPage from 'pages/BlocksPage';
+import BlocksListPage from 'pages/BlocksListPage';
 
 import GA4React from "ga-4-react";
 const ga4react = new GA4React("UA-201777163-1");
@@ -68,6 +69,8 @@ export default class App extends React.Component {
                 
                 <Route exact path="/wallet" render={(props) => <MyWalletPage {...props}/>} />
                 <Route exact path="/wallet/:lookupid" render={(props) => <MyWalletPage {...props}/>} />
+
+                <Route exact path="/blocks" render={(props) => <BlocksListPage {...props}/>} />            
 
                 <Route exact path="/teampeek" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="We are the Creators of PoolPeek.com and PoolPeek Mobile!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc} />} />
                 <Route exact path="/poolsearch" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false}/>} />
@@ -117,7 +120,7 @@ export default class App extends React.Component {
                 <Route exact path="/zeroblocks" render={(props) => <ZeroBlocksPage {...props} title="Zero Blocks Pools" query={"zeroblocks"} />} />
                 <Route exact path="/randompool" render={(props) => <RandomPoolPage {...props} title="Random Pools" query={"randompool"} />} />
                 
-                <Route exact path="/liveblocks" render={(props) => <BlocksPage {...props} title="Live Blocks" />} />
+                {/* <Route exact path="/liveblocks" render={(props) => <BlocksPage {...props} title="Live Blocks" />} /> */}
 
                 {/* <Route exact path="/fabulousnames" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Names" query={queries.funnamesquery} />} />
                 <Route exact path="/fabulousdescriptions" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Descriptions" query={queries.fundescriptionsquery} />} /> */}
