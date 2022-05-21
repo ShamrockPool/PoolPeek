@@ -103,7 +103,7 @@ const poolTools = [
 
 const navItems = [
   { to: '/', name: 'Dashboard', exact: true, Icon: MdOutlineDashboard },
-  // { to: '/wallet', name: 'MY Wallet', exact: true, Icon: IoWalletOutline },
+  // { to: '/wallet', name: 'My Wallet', exact: true, Icon: IoWalletOutline },
   { to: '/blocks', name: 'Blocks', exact: true, Icon: GiStoneBlock },
   // { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },

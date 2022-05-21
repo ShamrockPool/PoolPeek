@@ -215,15 +215,18 @@ class FlicktoISOPools extends React.Component {
         {this.state.loading ? <div><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={180} /></div>
           : <Col>
 
-            <Row style={{
-              justifyContent: 'center',
+
+<div>
+                <h1 style={{ color: 'red',               justifyContent: 'center',
               alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <p>Auto refresh data: <FormControlLabel style={{ align: "center", display: 'inline-block' }} value="all"
-                control={<Switch size="small" checked={this.state.autorefresh} onChange={e => this.handleAdvancedClick()}
-                />}
-              /></p></Row>
+              textAlign: 'center', }}>THIS ISO HAS ENDED! </h1>
+              </div>
+
+              <div>
+                <h2 style={{ color: 'red',               justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center', }}>We recommend you stake you ADA to other pools.</h2>
+              </div>
 
             {this.state.timerReset != null && this.state.autorefresh &&
               <Row style={{
@@ -344,7 +347,7 @@ class FlicktoISOPools extends React.Component {
                               <tbody>
 
                                 <tr style={
-                                  this.getRowStyle(item.pct_saturated)
+      tableRowStyleBad
                                 }>
 
 
@@ -360,7 +363,7 @@ class FlicktoISOPools extends React.Component {
                                   <Row><Link to={`/pool/${item.pool_id}`} target="_blank" rel="noopener noreferrer">
                                     <p><Button variant="outline-light" size="sm">View</Button></p>
                                   </Link>
-                                    {Number(item.pct_saturated) < 100 && <JoinPool pool={item} />}
+
                                   </Row>
                                 </tr>
 
@@ -382,14 +385,10 @@ class FlicktoISOPools extends React.Component {
                             </thead>
 
                             {this.state.filterAblePools.map((item) => (
-                              item.retired == 'N' &&
+    
                               <tbody>
 
-                                <tr style={
-                                  Number(item.pct_saturated) > 100
-                                    ? tableRowStyleBad
-                                    : tableRowStyle
-                                } onClick={() => this.handleRowClick(item)}>
+                                <tr style={tableRowStyleBad } onClick={() => this.handleRowClick(item)}>
                                   <td scope="row" ><p>{item.name}<br />({item.ticker})</p></td>
                                   {/* <td style={tableRowStyle} scope="row"><p>{item.ticker}</p></td> */}
                                   <td scope="row"><p>{this.addCommas(item.live_stake)}</p></td>

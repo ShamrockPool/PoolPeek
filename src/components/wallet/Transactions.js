@@ -98,11 +98,12 @@ export const getProtocolParameters = async () => {
   const tipResponse = await fetch("https://api.koios.rest/api/v0/tip");
   const tipData = await tipResponse.json();
 
-  var epochNo = tipData[0].epoch;
+  var epochNo = tipData[0].epoch_no;
 
-  const epochResponse = await fetch("https://api.koios.rest/api/v0/epoch_params?_epoch_no" + epochNo);
+  const epochResponse = await fetch("https://api.koios.rest/api/v0/epoch_params?_epoch_no=" + epochNo);
+
   const epochData = await epochResponse.json();
-
+  console.log(epochData)
   return {
     linearFee: {
       minFeeA: epochData[0].min_fee_a.toString(),
@@ -130,11 +131,11 @@ export const txBuilder = async (Loader, { PaymentAddress, Utxos, Outputs, Protoc
     ProtocolParameter.linearFee.minFeeB.toString(),
     ProtocolParameter.maxTxSize.toString()
   )
-
+  console.log("before randomImproce")
   const selection = await CoinSelection.randomImprove(
     Utxos,
     Outputs,
-    20 + totalAssets
+    50
   )
   console.log(selection)
   const inputs = selection.input;

@@ -19,7 +19,7 @@ import "../styles/styles.css";
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getWallet } from 'components/wallet/walletutil.js';
-
+import JPGLogo from 'assets/img/wallet/JPGLogo.png';
 import AssetFingerprint from '@emurgo/cip14-js';
 
 const override = css`
@@ -428,7 +428,7 @@ class MyWalletPage extends React.Component {
                           alignItems: 'center',
                           textAlign: 'center',
                         }}>
-                          <small><b>ADDRESS</b></small>
+                          <small><b>STAKE ADDRESS</b></small>
                         </Row>
                         <Row style={{
                           justifyContent: 'center',
@@ -468,6 +468,10 @@ class MyWalletPage extends React.Component {
                           <img src={item.image} width="70" height="70" />
                           <p>{item.quantity}</p>
                           <p>{item.name}</p>
+                          <a href={"https://www.jpg.store/collection/" + item.policy} target="_blank" rel="noreferrer">
+                            <img
+                              src={JPGLogo} width="50vh" height="50vh" 
+                            /> </a> 
                           <br></br>
                         </Col>
                       )

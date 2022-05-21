@@ -229,6 +229,8 @@ class JoinPool extends React.Component {
                 )
             )
 
+            console.log(outputs)
+
             //transaction
             let transaction = await txBuilder(Loader, {
                 PaymentAddress,
@@ -244,8 +246,9 @@ class JoinPool extends React.Component {
                 MetadataLabel: '721'
             });
 
-            //submit trx
+            console.log(transaction)
 
+            //submit trx
             let response = await signSubmitTx(wallet, Loader, transaction);
 
             this.setState({ joinPoolResponse: response, loading: false });

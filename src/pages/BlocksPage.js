@@ -9,7 +9,7 @@ import {
   CardText
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import { baseUrlPoolPeekService, blocksFeed } from 'assets/services';
+import { baseUrlPoolPeekService, blocksFeed, blockfeeddashboard } from 'assets/services';
 import Timer from "react-compound-timer";
 
 class BlocksPage extends React.Component {
@@ -37,7 +37,14 @@ class BlocksPage extends React.Component {
 
   async getBlocks() {
     this.setState({ timerReset: null })
-    var response = await fetch(baseUrlPoolPeekService + blocksFeed);
+
+    var response = null;
+    if(this.props.numberToSHow < 60){
+      response = await fetch(baseUrlPoolPeekService + blockfeeddashboard);
+    }else{
+      response = await fetch(baseUrlPoolPeekService + blocksFeed);
+    }
+
     var data = await response.json();
     this.setState({ blocks: data, loading: false });
     this.setState({ timerReset: this.state.refreshAmount });
@@ -97,7 +104,7 @@ class BlocksPage extends React.Component {
                           <h6><b>{item.ticker}</b></h6>
                         </CardHeader>
                         <CardText>
-                          <b>&nbsp;{(Number(item.block_size) / Number(80000) * Number(100)).toFixed(0)}% size</b><br></br>
+                          <b>&nbsp;{(Number(item.block_size) / Number(88000) * Number(100)).toFixed(0)}% size</b><br></br>
                           <b>&nbsp;{item.tx_count} txs</b><br></br>
                           <b>&nbsp;{(Math.floor(((new Date().getTime() - item.block_time_ms) / 1000) % 3600 / 60))} Mins Ago</b><br></br>
                           <small>&nbsp;{item.block_time.replace('T', ' ')} UTC</small><br></br>

@@ -14,7 +14,7 @@ import ppc from 'assets/img/iso/ppc.png';
 import geniusyieldiso from 'assets/img/iso/geniusyieldisov2.png';
 import aneta from 'assets/img/iso/aneta.svg';
 import flick from 'assets/img/iso/flick.jpg_small';
-
+import flac from 'assets/img/iso/flac.png';
 const imageHeight = "150vh";
 
 
@@ -67,6 +67,50 @@ class ISOPage extends React.Component {
 
                 <div className="IsoCard-body">
                   <h2>PoolPeek Coin</h2>
+                  <h3>Community ISO</h3>
+                  <h4>Live</h4>
+                </div>
+              </div>
+            </div>
+          </Link >
+
+          <Link to={{ pathname: '/flaciso' }}>
+            <div className="IsoCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+
+                <img
+                  src={flac}
+                  width="70vh" height={imageHeight}
+                />
+
+                <div className="IsoCard-body">
+                  <h2>Flac Finance ISO</h2>
+                  <h3>Project Funding ISO</h3>
+                  <h4>Live</h4>
+                </div>
+              </div>
+            </div>
+          </Link >
+
+          <Link to={{ pathname: '/ardanaiso' }}>
+            <div className="IsoCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+
+                <img
+                  src={ardanoiso}
+                  width="70vh" height={imageHeight}
+                />
+
+                <div className="IsoCard-body">
+                  <h2>Ardana ISO</h2>
                   <h3>Community ISO</h3>
                   <h4>Live</h4>
                 </div>
@@ -200,7 +244,7 @@ class ISOPage extends React.Component {
                 <div className="IsoCard-body">
                   <h2>Flickto</h2>
                   <h3>Project Funding ISO</h3>
-                  <h4>Live</h4>
+                  <h4>Ended</h4>
                 </div>
               </div>
             </div>
@@ -208,27 +252,7 @@ class ISOPage extends React.Component {
 
           
 
-          <Link to={{ pathname: '/ardanaiso' }}>
-            <div className="IsoCard" style={{
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
 
-                <img
-                  src={ardanoiso}
-                  width="70vh" height={imageHeight}
-                />
-
-                <div className="IsoCard-body">
-                  <h2>Ardana ISO</h2>
-                  <h3>Community ISO</h3>
-                  <h4>Coming Soon</h4>
-                </div>
-              </div>
-            </div>
-          </Link >
 
           <Link to={{ pathname: '/sundaeiso' }}>
             <div className="IsoCard" style={{

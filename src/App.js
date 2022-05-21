@@ -33,6 +33,7 @@ import RetiredPoolsV2 from 'pages/RetiredPoolsV2';
 import PoolMapV3 from 'pages/PoolMapV3';
 import JoinPoolEmbed from 'pages/joinpool/JoinPoolEmbed';
 import MyWalletPage from 'pages/MyWalletPage';
+import FlacISOPools from 'pages/isopages/FlacISOPools';
 
 import ISOPage from 'pages/isopages/ISOPage';
 
@@ -91,6 +92,8 @@ export default class App extends React.Component {
                 <Route exact path="/geniusyieldiso" render={(props) => <GeniusYieldISOPools {...props}/>} />
                 <Route exact path="/anetabtciso" render={(props) => <AnetaBtcISOPools {...props}/>} />
                 <Route exact path="/flicktoiso" render={(props) => <FlicktoISOPools {...props}/>} />
+                <Route exact path="/flaciso" render={(props) => <FlacISOPools {...props}/>} />
+                
                  
                 <Route exact path="/isos" render={(props) => <ISOPage {...props}/>} />
                 

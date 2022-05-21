@@ -47,6 +47,8 @@ export const chainLoadData = "/chainload/website";
 //Blocks
 
 export const blocksFeed = "/blocks/blockfeed";
+export const blockfeeddashboard = "/blocks/blockfeeddashboard";
+
 
 
 

@@ -7,7 +7,8 @@ import Loader from "./Loader";
 const BigInt = typeof window !== "undefined" && window.BigInt;
 /**
  * BerryPool implementation of the __Random-Improve__ coin selection algorithm.
- *
+ *https://github.com/Berry-Pool/spacebudz/blob/05c3a7ae533e95c6699ddc02b94c44d2c369e79b/src/cardano/market/coinSelectionALTERNATIVE.js#L330
+ https://github.com/Berry-Pool/spacebudz/tree/main/src/cardano/market
  * = Overview
  *
  * The __Random-Improve__ coin selection algorithm works in __two phases__, by
@@ -223,16 +224,26 @@ const CoinSelection = {
    * @param {int} limit - A limit on the number of inputs that can be selected.
    * @return {SelectionResult} - Coin Selection algorithm return
    */
-  randomImprove: async (inputs, outputs, limit) => {
+  randomImprove: async (inputs, outputs, limit, preset = []) => {
     if (!protocolParameters)
       throw new Error(
         "Protocol parameters not set. Use setProtocolParameters()."
       );
 
     await Loader.load();
+    try {
+  
+      console.log(outputs.len())
+console.log(protocolParameters.minUTxO)
 
-    const _minUTxOValue =
-      BigInt(outputs.len()) * BigInt(protocolParameters.minUTxO);
+    // const _minUTxOValue =
+    //   BigInt(outputs.len()) * BigInt(protocolParameters.minUTxO);
+
+    var _minUTxOValue = BigInt(outputs.len()) * BigInt("1000000");
+
+    _minUTxOValue = protocolParameters.minUTxO;
+
+      console.log(_minUTxOValue)
 
     /** @type {UTxOSelection} */
     let utxoSelection = {
@@ -248,30 +259,42 @@ const CoinSelection = {
     let splitOutputsAmounts = splitAmounts(mergedOutputsAmounts);
 
     // Phase 1: RandomSelect
-    splitOutputsAmounts.forEach((output) => {
-      createSubSet(utxoSelection, output); // Narrow down for NatToken UTxO
+    // splitOutputsAmounts.forEach((output) => {
+    //   createSubSet(utxoSelection, output); // Narrow down for NatToken UTxO
 
-      try {
-        utxoSelection = randomSelect(
-          cloneUTxOSelection(utxoSelection), // Deep copy in case of fallback needed
-          output,
-          limit - utxoSelection.selection.length,
-          _minUTxOValue
-        );
-      } catch (e) {
-        if (e.message === "INPUT_LIMIT_EXCEEDED") {
-          // Limit reached : Fallback on DescOrdAlgo
-          utxoSelection = descSelect(
+    //   try {
+    //     utxoSelection = randomSelect(
+    //       cloneUTxOSelection(utxoSelection), // Deep copy in case of fallback needed
+    //       output,
+    //       limit - utxoSelection.selection.length,
+    //       _minUTxOValue
+    //     );
+    //   } catch (e) {
+    //     if (e.message === "INPUT_LIMIT_EXCEEDED") {
+    //       // Limit reached : Fallback on DescOrdAlgo
+    //       utxoSelection = descSelect(
+    //         utxoSelection,
+    //         output,
+    //         limit - utxoSelection.selection.length,
+    //         _minUTxOValue
+    //       );
+    //     } else {
+    //       throw e;
+    //     }
+    //   }
+    // });
+
+        // Phase 1: Select enough input
+        for (let i = 0; i < splitOutputsAmounts.length; i++) {
+          createSubSet(utxoSelection, splitOutputsAmounts[i]); // Narrow down for NatToken UTxO
+    
+          utxoSelection = select(
             utxoSelection,
-            output,
-            limit - utxoSelection.selection.length,
+            splitOutputsAmounts[i],
+            limit,
             _minUTxOValue
           );
-        } else {
-          throw e;
         }
-      }
-    });
 
     // Phase 2: Improve
     splitOutputsAmounts = sortAmountList(splitOutputsAmounts);
@@ -306,6 +329,13 @@ const CoinSelection = {
       amount: utxoSelection.amount,
       change: utxoSelection.amount.checked_sub(mergedOutputsAmounts),
     };
+
+
+  
+} catch (error) {
+  console.log(error)
+}
+
   },
 };
 
@@ -627,25 +657,43 @@ function isQtyFulfilled(
   let amount = outputAmount;
 
   if (minUTxOValue && BigInt(outputAmount.coin().to_str()) > 0) {
+    console.log(minUTxOValue)
+    console.log(Loader.Cardano.BigNum.from_str(minUTxOValue.toString()))
+    console.log(cumulatedAmount)
     let minAmount = Loader.Cardano.Value.new(
       Loader.Cardano.min_ada_required(
-        cumulatedAmount,
+        Loader.Cardano.BigNum.from_str(cumulatedAmount.toString()),
+        false,
         Loader.Cardano.BigNum.from_str(minUTxOValue.toString())
       )
     );
+    console.log(minAmount)
+    console.log(cumulatedAmount)
+    // // Lovelace min amount to cover assets and number of output need to be met
+    // if (cumulatedAmount.compare(minAmount) < 0) return false;
+
+    // // If requested Lovelace lower than minAmount, plan for change
+    // if (outputAmount.compare(minAmount) < 0) {
+    //   amount = minAmount.checked_add(
+    //     Loader.Cardano.Value.new(
+    //       Loader.Cardano.BigNum.from_str(protocolParameters.minUTxO)
+    //     )
+    //   );
+    // }
 
     // Lovelace min amount to cover assets and number of output need to be met
-    if (cumulatedAmount.compare(minAmount) < 0) return false;
+    if (compare(cumulatedAmount, minAmount) < 0) return false;
 
     // If requested Lovelace lower than minAmount, plan for change
-    if (outputAmount.compare(minAmount) < 0) {
+    if (compare(outputAmount, minAmount) < 0) {
       amount = minAmount.checked_add(
         Loader.Cardano.Value.new(
-          Loader.Cardano.BigNum.from_str(protocolParameters.minUTxO)
+          Loader.Cardano.BigNum.from_str(protocolParameters.coinsPerUtxoWord)
         )
       );
     }
 
+    console.log("If requested Lovelace lower than minAmount, plan for change")
     // Try covering the max fees
     if (nbFreeUTxO > 0) {
       let maxFee =
@@ -659,9 +707,74 @@ function isQtyFulfilled(
 
       amount = amount.checked_add(maxFee);
     }
+    console.log("Try covering the max fees")
   }
 
   return cumulatedAmount.compare(amount) >= 0;
+}
+
+/**
+ * Use randomSelect & descSelect algorithm to select enough UTxO to fulfill requested outputs
+ * @param {UTxOSelection} utxoSelection - The set of selected/available inputs.
+ * @param {Value} outputAmount - Single compiled output qty requested for payment.
+ * @param {int} limit - A limit on the number of inputs that can be selected.
+ * @throws INPUT_LIMIT_EXCEEDED if the number of randomly picked inputs exceed 'limit' parameter.
+ * @throws INPUTS_EXHAUSTED if all UTxO doesn't hold enough funds to pay for output.
+ * @return {UTxOSelection} - Successful random utxo selection.
+ */
+ function select(utxoSelection, outputAmount, limit) {
+  try {
+    utxoSelection = randomSelect(
+      cloneUTxOSelection(utxoSelection), // Deep copy in case of fallback needed
+      outputAmount,
+      limit - utxoSelection.selection.length
+    );
+  } catch (e) {
+    if (e.message === "INPUT_LIMIT_EXCEEDED") {
+      // Limit reached : Fallback on DescOrdAlgo
+      utxoSelection = descSelect(utxoSelection, outputAmount);
+    } else {
+      throw e;
+    }
+  }
+
+  return utxoSelection;
+}
+
+/**
+ * Compare a candidate value to the one in a group if present
+ * @param {Value} group
+ * @param {Value} candidate
+ * @return {int} - -1 group lower, 0 equal, 1 group higher, undefined if no match
+ */
+ function compare(group, candidate) {
+  let gQty = BigInt(group.coin().to_str());
+  let cQty = BigInt(candidate.coin().to_str());
+
+  if (candidate.multiasset()) {
+    let cScriptHash = candidate.multiasset().keys().get(0);
+    let cAssetName = candidate.multiasset().get(cScriptHash).keys().get(0);
+
+    if (group.multiasset() && group.multiasset().len()) {
+      if (
+        group.multiasset().get(cScriptHash) &&
+        group.multiasset().get(cScriptHash).get(cAssetName)
+      ) {
+        gQty = BigInt(
+          group.multiasset().get(cScriptHash).get(cAssetName).to_str()
+        );
+        cQty = BigInt(
+          candidate.multiasset().get(cScriptHash).get(cAssetName).to_str()
+        );
+      } else {
+        return undefined;
+      }
+    } else {
+      return undefined;
+    }
+  }
+
+  return gQty >= cQty ? (gQty === cQty ? 0 : 1) : -1;
 }
 
 /**

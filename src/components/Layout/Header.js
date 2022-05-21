@@ -96,8 +96,9 @@ class Header extends React.Component {
       let response = await
         fetch('https://api.koios.rest/api/v0/tip');
       let data = await response.json();
-      var epoch = data[0].epoch;
+      var epoch = data[0].epoch_no;
       this.setState({ currentEpoch: epoch });
+      this.state.currentEpoch = epoch;
     } catch (error) {
       console.error(error)
     }
@@ -106,8 +107,9 @@ class Header extends React.Component {
 
   async componentDidMount() {
     window.scrollTo(0, 0);
-    await this.generateEpochEvents();
     await this.getCurrentEpoch();
+    await this.generateEpochEvents();
+
 
     // this.getCurrentAdaUSDPrice();
     // this.getCurrentAdaEuroPrice();
@@ -259,13 +261,13 @@ class Header extends React.Component {
         <Nav navbar>
 
           <div>
-            <h6><b>Current Epoch: {this.state.currentEpoch}</b></h6>
+            {/* <h6><b>Current Epoch: {this.state.currentEpoch}</b></h6> */}
             {this.state.epochSecondsRemaining != 0 &&
               <Timer
                 initialTime={this.state.epochSecondsRemaining}
                 direction="backward"
               >
-                <small><b>( Epoch Remaining: </b>    <Timer.Days /> <b>Days</b>   <Timer.Hours />  <b>Hours</b>  <Timer.Minutes /> <b>Mins )</b> </small>
+                <b>Current Epoch: {this.state.currentEpoch}</b> <small><b>  ( Epoch Remaining: </b>    <Timer.Days /> <b>Days</b>   <Timer.Hours />  <b>Hours</b>  <Timer.Minutes /> <b>Mins )</b> </small>
               </Timer>}
           </div>
 
@@ -300,6 +302,10 @@ class Header extends React.Component {
                 {this.state.connectedWallet === 'gero' &&
                   <Col>
                     <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Gero Connected</Button></Row>
+                  </Col>}
+                  {this.state.connectedWallet === 'yoroi' &&
+                  <Col>
+                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Yoroi Connected</Button></Row>
                   </Col>}
               </div>
             }
@@ -342,11 +348,12 @@ class Header extends React.Component {
               <img
                 src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
               />
-              {/* <img
+              <img
                 src={yoroi} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
-              /> */}
+              />
               <img
                 src={gero} width="100vh" height="100vh" onClick={() => this.connectWallet("gero")}
+                
               />
             </Row>
 
