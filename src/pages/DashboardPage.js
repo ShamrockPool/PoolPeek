@@ -97,7 +97,8 @@ class DashboardPage extends React.Component {
     namiEnabled: false,
     namiPool: null,
     advertisingpool: null,
-    chainLoadData: null
+    chainLoadData: null,
+    dashdataobtained: false
   };
 
   toggle = modalType => () => {
@@ -244,19 +245,27 @@ class DashboardPage extends React.Component {
       const data = await response.json();
       //console.log(data);
 
-      this.setState({
-        liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply,
-        totalPools: data.totalPools, averageStakePerPool: data.averageStakePerPool
-      });
-      this.state.liveStake = data.liveStake;
-      this.state.totalAdaSupply = data.totalAdaSupply;
+      if (data != null) {
+        this.setState({
+          liveStake: data.liveStake, totalWalletsStaked: data.totalWalletsStaked, totalAdaSupply: data.totalAdaSupply,
+          totalPools: data.totalPools, averageStakePerPool: data.averageStakePerPool
+        });
+        this.state.liveStake = data.liveStake;
+        this.state.totalAdaSupply = data.totalAdaSupply;
 
-      var adaSupply = parseFloat(data.liveStake.replace(/,/g, ''));
-      var liveStake = parseFloat(data.totalAdaSupply.replace(/,/g, ''));
-      var percentage = ((adaSupply / liveStake) * 100).toFixed(2)
-      this.setState({
-        percentageOfSupplyStaked: percentage
-      });
+        var adaSupply = parseFloat(data.liveStake.replace(/,/g, ''));
+        var liveStake = parseFloat(data.totalAdaSupply.replace(/,/g, ''));
+        var percentage = ((adaSupply / liveStake) * 100).toFixed(2)
+        this.setState({
+          percentageOfSupplyStaked: percentage
+        });
+
+        this.setState({
+          dashdataobtained: true
+        });
+      }
+
+
     } catch (error) {
 
     }
@@ -320,77 +329,78 @@ class DashboardPage extends React.Component {
       // title="Dashboard"
       // breadcrumbs={[{ name: 'Dashboard', active: true }]}
       >
-        <Row style={{
-          alignContent: 'center', justifyContent: 'center',
-          alignItems: 'center',
-          textAlign: 'center',
-        }}>
-          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
-            <Card inverse color='primary'>
-              <CardBody>
-                <CardTitle className="text-capitalize">
-                  {this.state.totalPools}
-                </CardTitle>
-                <CardText>
-                  <small>Stake Pools</small>
-                </CardText>
-              </CardBody>
-            </Card>
-          </Col>
+        {this.state.dashdataobtained &&
+          <Row style={{
+            alignContent: 'center', justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+          }}>
+            <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
+              <Card inverse color='primary'>
+                <CardBody>
+                  <CardTitle className="text-capitalize">
+                    {this.state.totalPools}
+                  </CardTitle>
+                  <CardText>
+                    <small>Stake Pools</small>
+                  </CardText>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
-            <Card inverse color='secondary'>
-              <CardBody>
-                <CardTitle>
-                  {this.state.totalAdaSupply}
-                </CardTitle>
-                <CardText>
-                  <small>ADA Supply</small>
-                </CardText>
-              </CardBody>
-            </Card>
-          </Col>
+            <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
+              <Card inverse color='secondary'>
+                <CardBody>
+                  <CardTitle>
+                    {this.state.totalAdaSupply}
+                  </CardTitle>
+                  <CardText>
+                    <small>ADA Supply</small>
+                  </CardText>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
-            <Card inverse color='primary'>
-              <CardBody>
-                <CardTitle className="text-capitalize">
-                  {this.state.totalWalletsStaked}
-                </CardTitle>
-                <CardText>
-                  <small>Staked Wallets</small>
-                </CardText>
-              </CardBody>
-            </Card>
-          </Col>
+            <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
+              <Card inverse color='primary'>
+                <CardBody>
+                  <CardTitle className="text-capitalize">
+                    {this.state.totalWalletsStaked}
+                  </CardTitle>
+                  <CardText>
+                    <small>Staked Wallets</small>
+                  </CardText>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
-            <Card inverse color='secondary'>
-              <CardBody>
-                <CardTitle className="text-capitalize">
-                  {this.state.liveStake}
-                </CardTitle>
-                <CardText>
-                  <small>ADA Staked</small>
-                </CardText>
-              </CardBody>
-            </Card>
-          </Col>
+            <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
+              <Card inverse color='secondary'>
+                <CardBody>
+                  <CardTitle className="text-capitalize">
+                    {this.state.liveStake}
+                  </CardTitle>
+                  <CardText>
+                    <small>ADA Staked</small>
+                  </CardText>
+                </CardBody>
+              </Card>
+            </Col>
 
-          <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
-            <Card inverse color='primary'>
-              <CardBody body>
-                <CardTitle className="text-capitalize">
-                  {this.state.percentageOfSupplyStaked}
-                </CardTitle>
-                <CardText>
-                  <small>% Of ADA Staked</small>
-                </CardText>
-              </CardBody>
-            </Card>
-          </Col>
+            <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
+              <Card inverse color='primary'>
+                <CardBody body>
+                  <CardTitle className="text-capitalize">
+                    {this.state.percentageOfSupplyStaked}
+                  </CardTitle>
+                  <CardText>
+                    <small>% Of ADA Staked</small>
+                  </CardText>
+                </CardBody>
+              </Card>
+            </Col>
 
-          {/* <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
+            {/* <Col lg={2} md={6} sm={6} xs={6} className="mb-3">
             <Card inverse color='secondary'>
               <CardBody>
                 <CardTitle className="text-capitalize">
@@ -403,8 +413,8 @@ class DashboardPage extends React.Component {
             </Card>
           </Col> */}
 
-        </Row>
-
+          </Row>
+        }
 
 
         {/* <Row>

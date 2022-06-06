@@ -84,8 +84,8 @@ class StakingRewards extends React.Component {
 
   async getStakingRewards() {
     if (!isEmpty(this.state.stakingAddress)) {
-      this.setState({ startLoader: true });
-      const response = await fetch(baseUrl + '/rewards/stakeaddress/' + this.state.stakingAddress);
+      this.setState({ startLoader: true, stakingRewardsList: null });
+      const response = await fetch(baseUrl + '/rewards/multipleinputs/' + this.state.stakingAddress);
       const data = await response.json();
       this.setState({ stakingRewardsList: data, loading: false, startLoader: false });
       return data;
@@ -109,22 +109,15 @@ class StakingRewards extends React.Component {
 
             <br></br>
 
-            <h7>Enter your stake address in the below input, if using Daedalus follow the instructions if not follow Pool Search.</h7>
-
-            <br></br>
-            <h4><b>Stake Address:</b></h4>
-            <h7>You will need your Stake Address, here is how to find it. </h7>
-            <h7><b>Daedalus:</b> Open Daedalus > Click Delegation Center > Rewards > Copy Stake Address</h7>
-            <h7><b>Yoroi:</b> Click <a href={"https://poolpeek.com/#/poolsearch"} target="_blank" rel="noreferrer">POOL SEARCH</a> > Enter pool ticker > Click Delegates > Search for your wallet Amount > Click the Stake Address</h7>
-
-
+            <h4><b>Input</b></h4>
+            <h7>Receiving Address - or - Stake Address</h7>
 
             <br></br>
             <Input
               style={{ fontSize: 14 }}
               type="text"
               className="cr-search-form__input"
-              placeholder="Enter Stake Address."
+              placeholder="Enter Address."
               value={this.state.stakingAddress}
               onChange={this.handleChange()}
             />
