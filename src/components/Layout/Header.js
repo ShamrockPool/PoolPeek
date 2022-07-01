@@ -24,7 +24,7 @@ import { isMobile } from 'react-device-detect';
 import { Provider, connect } from 'react-redux';
 import nami from 'assets/img/wallet/nami.svg';
 import flint from 'assets/img/wallet/flint2.png';
-import ccvault from 'assets/img/wallet/ccvault.png';
+import eternl from 'assets/img/wallet/eternl.png';
 import typhon from 'assets/img/wallet/typhon.png';
 import yoroi from 'assets/img/wallet/yoroi.png';
 import gero from 'assets/img/wallet/gerowallet.ico';
@@ -136,7 +136,6 @@ class Header extends React.Component {
 
       if (today > epochDate && today < epochEndDate) {
         var timeInEpoch = epochEndDate.getTime() - new Date(Date.now() + (new Date().getTimezoneOffset() * 60000)).getTime();
-        //  this.state.epochSecondsRemaining = timeInEpoch;
         this.setState({ epochSecondsRemaining: timeInEpoch });
         this.state.epochSecondsRemaining = timeInEpoch;
       }
@@ -167,9 +166,9 @@ class Header extends React.Component {
           this.toggle()
         }
       }
-      else if (wallet === "ccvault") {
-        console.log("ccvault")
-        walletEnabled = await cardano.ccvault.enable();
+      else if (wallet === "eternl") {
+        console.log("eternl")
+        walletEnabled = await cardano.eternl.enable();
         console.log(walletEnabled)
         if (walletEnabled != null) {
           this.props.setWallet(wallet, walletEnabled);
@@ -291,9 +290,9 @@ class Header extends React.Component {
                   <Col>
                     <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Flint Connected</Button></Row>
                   </Col>}
-                {this.state.connectedWallet === 'ccvault' &&
+                {this.state.connectedWallet === 'eternl' &&
                   <Col>
-                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>CCVault Connected</Button></Row>
+                    <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Eternl Connected</Button></Row>
                   </Col>}
                 {this.state.connectedWallet === 'typhon' &&
                   <Col>
@@ -336,7 +335,7 @@ class Header extends React.Component {
               />
               <p></p>
               <img
-                src={ccvault} width="100vh" height="100vh" onClick={() => this.connectWallet("ccvault")}
+                src={eternl} width="100vh" height="100vh" onClick={() => this.connectWallet("eternl")}
               />
             </Row>
             <br></br>
@@ -348,9 +347,9 @@ class Header extends React.Component {
               <img
                 src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
               />
-              <img
+              {/* <img
                 src={yoroi} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
-              />
+              /> */}
               <img
                 src={gero} width="100vh" height="100vh" onClick={() => this.connectWallet("gero")}
                 
@@ -364,11 +363,6 @@ class Header extends React.Component {
             }}>
               {this.state.connectedWallet !== '' && <p>Wallet enabled: <b>{this.state.connectedWallet}</b></p>}
             </Row>
-            {/* <Button variant="outline-light" size="sm" onClick={() => this.connectWallet("ccvault")}>CCVault</Button> */}
-            {/* <p></p>
-            <img
-                  src={window.cardano.yoroi.icon} onClick={() => this.connectWallet("yoroi")}
-                /> */}
           </ModalBody>
           <ModalFooter>
             {' '}

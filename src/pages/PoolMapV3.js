@@ -107,5 +107,5 @@ export default PoolMapV3;
 //   this.state.isShown = true;
 
 //   var host = window.location.protocol + "//" + window.location.host;
-//   this.openInNewTab(host + '/#/poolsearch/' + locationSelected);
+//   this.openInNewTab(host + '/poolsearch/' + locationSelected);
 // }

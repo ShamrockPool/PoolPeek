@@ -4,8 +4,8 @@ const countReducer = function (state = "", action) {
       return "nami";
     case "flint":
       return "flint";
-    case "ccvault":
-      return "ccvault";
+    case "eternl":
+      return "eternl";
     case "typhon":
       return "typhon";
     case "yoroi":

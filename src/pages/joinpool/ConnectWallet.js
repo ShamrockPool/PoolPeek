@@ -24,7 +24,7 @@ import { isMobile } from 'react-device-detect';
 import { Provider, connect } from 'react-redux';
 import nami from 'assets/img/wallet/nami.svg';
 import flint from 'assets/img/wallet/flint2.png';
-import ccvault from 'assets/img/wallet/ccvault.png';
+import eternl from 'assets/img/wallet/eternl.png';
 import typhon from 'assets/img/wallet/typhon.png';
 import yoroi from 'assets/img/wallet/yoroi.png';
 import gero from 'assets/img/wallet/gerowallet.ico';
@@ -100,9 +100,9 @@ class ConnectWallet extends React.Component {
                     this.toggle()
                 }
             }
-            else if (wallet === "ccvault") {
-                console.log("ccvault")
-                walletEnabled = await cardano.ccvault.enable();
+            else if (wallet === "eternl") {
+                console.log("eternl")
+                walletEnabled = await cardano.eternl.enable();
                 console.log(walletEnabled)
                 if (walletEnabled != null) {
                     this.props.setWallet(wallet, walletEnabled);
@@ -205,13 +205,13 @@ class ConnectWallet extends React.Component {
                                     textAlign: 'center',
                                 }}><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Flint Connected</Button></Row>
                             </Col>}
-                        {this.state.connectedWallet === 'ccvault' &&
+                        {this.state.connectedWallet === 'eternl' &&
                             <Col>
                                 <Row style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     textAlign: 'center',
-                                }}><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>CCVault Connected</Button></Row>
+                                }}><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Eternl Connected</Button></Row>
                             </Col>}
                         {this.state.connectedWallet === 'typhon' &&
                             <Col>
@@ -258,7 +258,7 @@ class ConnectWallet extends React.Component {
                             />
                             <p></p>
                             <img
-                                src={ccvault} width="100vh" height="100vh" onClick={() => this.connectWallet("ccvault")}
+                                src={eternl} width="100vh" height="100vh" onClick={() => this.connectWallet("eternl")}
                             />
                         </Row>
                         <br></br>

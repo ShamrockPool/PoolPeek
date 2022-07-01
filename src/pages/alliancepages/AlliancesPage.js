@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import xspo from 'assets/img/alliance/xspo.png';
 import cspa from 'assets/img/alliance/cspa.png';
 import mdp from 'assets/img/alliance/mdp.jpg';
+import armada from 'assets/img/alliance/armada.jpg';
 const imageHeight = "150vh";
 
 
@@ -58,7 +59,7 @@ class AlliancesPage extends React.Component {
 
                 <div className="IsoCard-body">
                   <h2>XSPO Alliance</h2>
-                  <h3>Extra Small Stake Pool Operators Alliance</h3>                  
+                  <h3>Extra Small Stake Pool Operators</h3>                  
                 </div>
               </div>
             </div>
@@ -79,7 +80,7 @@ class AlliancesPage extends React.Component {
 
                 <div className="IsoCard-body">
                   <h2>CSPA Alliance</h2>
-                  <h3>Cardano Single Pool Alliance.</h3>                  
+                  <h3>Cardano Single Pool.</h3>                  
                 </div>
               </div>
             </div>
@@ -100,12 +101,32 @@ class AlliancesPage extends React.Component {
 
                 <div className="IsoCard-body">
                   <h2>MDP Alliance</h2>
-                  <h3>Mission Driven Pools Alliance.</h3>                  
+                  <h3>Mission Driven Pools.</h3>                  
                 </div>
               </div>
             </div>
           </Link >
 
+          <Link to={{ pathname: '/alliances/armada' }}>
+            <div className="IsoCard" style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              textAlign: 'center',
+            }}>
+              <div style={{ paddingTop: 15, alignSelf: 'flex-start' }}>
+
+                <img
+                  src={armada}
+                  width="70vh" height={imageHeight}
+                />
+
+                <div className="IsoCard-body">
+                  <h2>Armada Alliance</h2>
+                  <h3>Mission Driven Pools.</h3>                  
+                </div>
+              </div>
+            </div>
+          </Link >
 
         </Row>
       </Page>

@@ -41,6 +41,10 @@ import { connect } from 'react-redux';
 import ppc from 'assets/img/PKCoin2.m4v';
 import LoadChart from 'components/LoadChart';
 import BlocksPage from './BlocksPage';
+
+import Timer from "react-compound-timer";
+
+
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -98,7 +102,8 @@ class DashboardPage extends React.Component {
     namiPool: null,
     advertisingpool: null,
     chainLoadData: null,
-    dashdataobtained: false
+    dashdataobtained: false,
+    hardforkseconds: 0
   };
 
   toggle = modalType => () => {
@@ -147,8 +152,9 @@ class DashboardPage extends React.Component {
 
     this.teamPeekData = teamPeekData;//shuffle(teamPeekData);
 
-
-
+    var timeuntilhf = new Date(2022, 5, 29, 21, 45, 1).getTime() 
+          - new Date(Date.now() + (new Date().getTimezoneOffset() * 60000)).getTime();
+    this.setState({ hardforkseconds: timeuntilhf });
   }
 
   // async getNamiPool() {
@@ -177,7 +183,10 @@ class DashboardPage extends React.Component {
   async getChainLoadData() {
     var response = await fetch(baseUrl + chainLoadData);
     var data = await response.json();
-    this.setState({ chainLoadData: data });
+
+    if (data.fiveDay > 0 && data.fourDay > 0 && data.threeDay > 0 && data.twoDay > 0 && data.oneDay > 0) {
+      this.setState({ chainLoadData: data });
+    }
   }
 
   async getDashboardData() {
@@ -417,6 +426,37 @@ class DashboardPage extends React.Component {
         }
 
 
+
+
+        {/* {this.state.hardforkseconds > 0 &&
+
+          <Row style={{
+            alignContent: 'center', justifyContent: 'center',
+            alignItems: 'center',
+            textAlign: 'center',
+          }}>
+            <Col lg={4} md={6} sm={6} xs={6} className="mb-3">
+
+              <Card style={{
+                display: 'block'
+              }}>
+                <CardHeader><h3><b>Next Cardano Update</b></h3>
+                  <small>Vasil Hard Fork Countdown Timer</small>
+                </CardHeader>
+                <CardBody body>
+
+                  <Timer
+                    initialTime={this.state.hardforkseconds}
+                    direction="backward"
+                  >
+                    <h3><Timer.Days /> <b>Days</b>   <Timer.Hours />  <b>Hours</b>  <Timer.Minutes /> <b>Mins</b></h3>
+                  </Timer>
+                </CardBody>
+              </Card>
+            </Col>
+
+          </Row>} */}
+
         {/* <Row>
           <Col lg={4} md={12} sm={12} xs={4} className="mb-3">
             <IconWidget
@@ -646,13 +686,16 @@ class DashboardPage extends React.Component {
               <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
 
                 {this.state.chainLoadData &&
-                  <Card>
-                    <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days. </small></CardHeader>
-                    <CardBody body>
-                      <LoadChart chainLoadData={this.state.chainLoadData} />
-                    </CardBody>
-                  </Card>}
-                <hr></hr>
+                  <div>
+                    <Card>
+                      <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days. </small></CardHeader>
+                      <CardBody body>
+                        <LoadChart chainLoadData={this.state.chainLoadData} />
+                      </CardBody>
+                    </Card>
+                    <hr></hr>
+                  </div>}
+
                 {this.state.advertisingpool != null &&
                   <Card>
                     <CardHeader><h6><b>Pool Promo</b></h6></CardHeader>
@@ -868,7 +911,7 @@ class DashboardPage extends React.Component {
                 </CardHeader>
                 <CardBody body >
                   <br></br>
-                  <a href="https://pool-peek.web.app/#/wizard" target="_blank" rel="noreferrer"><p><Button variant="outline-light" size="sm">Pool Wizard</Button></p>                   <br></br></a>
+                  <a href="https://pool-peek.web.app/wizard" target="_blank" rel="noreferrer"><p><Button variant="outline-light" size="sm">Pool Wizard</Button></p>                   <br></br></a>
                 </CardBody>
               </Card> */}
               {/* <Card>

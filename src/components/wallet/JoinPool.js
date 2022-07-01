@@ -120,16 +120,16 @@ class JoinPool extends React.Component {
     async getWallet() {
         console.log('Wallet selected: ' + this.props.wallet)
         if (this.props.wallet === "nami") {
-            console.log("ccvault")
+            console.log("eternl")
             return await window.cardano.nami.enable();
 
         } else if (this.props.wallet === "flint") {
             console.log("flint")
             return await window.cardano.flint.enable();
         }
-        else if (this.props.wallet === "ccvault") {
-            console.log("ccvault")
-            return await window.cardano.ccvault.enable();
+        else if (this.props.wallet === "eternl") {
+            console.log("eternl")
+            return await window.cardano.eternl.enable();
         }
         else if (this.props.wallet === "typhon") {
             console.log("typhon")

@@ -83,6 +83,7 @@ export default class PoolDetailsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            pool: null,
             copied: false,
             selectedTab: 0,
             loading: true,
@@ -110,7 +111,12 @@ export default class PoolDetailsComponent extends React.Component {
         });
     };
 
+    async componentWillMount() {
+
+    }
+
     async componentDidMount() {
+
         this.getTwitterName();
         this.getDelegates();
         //this.loopingDelegateHistory();
@@ -328,229 +334,230 @@ export default class PoolDetailsComponent extends React.Component {
     render() {
         return (
             < div >
+                {this.props.pool != null &&
+                    < Page
+                        className="PoolDetailsComponent"
+                        title=""
+                    // breadcrumbs={[{ name: 'Project Details' + ' / ' + this.props.match.params.projectname, active: true }]}
+                    >
 
-                <Page
-                    className="PoolDetailsComponent"
-                    title=""
-                // breadcrumbs={[{ name: 'Project Details' + ' / ' + this.props.match.params.projectname, active: true }]}
-                >
-                    <Row>
-                        <Col xl={9} lg={9} md={12} sm={12} >
-                            <Row>
-                                <Col xl={12} lg={12} md={12} sm={12} >
+                        <Row>
+                            <Col xl={9} lg={9} md={12} sm={12} >
+                                <Row>
+                                    <Col xl={12} lg={12} md={12} sm={12} >
+                                        <Card>
+                                            <CardBody style={{
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                textAlign: 'center',
+                                            }}>
+                                                <Row>
+                                                    <Col xl={2} lg={2} md={12} sm={12} >
+                                                        <ReactImageFallback
+                                                            src={this.props.pool.extended_meta.url_png_logo}
+                                                            width="140"
+                                                            height="140"
+                                                            fallbackImage={CardanoImage} />
+                                                    </Col>
+                                                    <Col xl={8} lg={10} md={12} sm={12} >
+                                                        <Row style={{
+                                                            justifyContent: 'center',
+                                                            alignItems: 'center',
+                                                            textAlign: 'center',
+                                                        }}><h1>{ReactHtmlParser(this.props.pool.ticker)}</h1></Row>
+                                                        <h1>{ReactHtmlParser(this.props.pool.name)}</h1>
+
+                                                        {this.props.pool.retired == 'Y' &&
+
+
+                                                            <div>
+                                                                <h1 style={{ color: 'red' }}>THIS POOL IS RETIRED!</h1>
+                                                                <h3 style={{ color: 'red' }}>If staking with this pool, move your ADA to another pool.</h3>
+                                                            </div>
+                                                        }
+
+                                                        {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}> */}
+
+                                                        <h1>{this.addCommas(this.props.pool.live_stake)}₳</h1>
+                                                        {/* </div> */}
+                                                        <small><b>PoolID:</b>  {this.props.pool.pool_id}          </small>
+                                                        <Tooltip
+                                                            title="Copy Pool ID"
+                                                            placement="left"
+                                                        >
+                                                            <CopyToClipboard text={this.props.pool.pool_id}
+                                                                onCopy={() => this.setState({ copied: true })}
+                                                            >
+                                                                <FontAwesomeIcon icon={faClipboard} />
+                                                            </CopyToClipboard>
+                                                        </Tooltip>
+                                                        <br></br>
+                                                        <small><b>PoolView: </b> {this.props.pool.pool_view}          </small>
+                                                        <Tooltip
+                                                            title="Copy Pool View"
+                                                            placement="left"
+                                                        >
+                                                            <CopyToClipboard text={this.props.pool.pool_view}
+                                                                onCopy={() => this.setState({ copied: true })}
+                                                            >
+                                                                <FontAwesomeIcon icon={faClipboard} />
+                                                            </CopyToClipboard>
+                                                        </Tooltip>
+
+                                                        <h3>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
+                                                            defaultProtocol: 'https'
+                                                        }))}</h3>
+
+
+
+                                                        {this.state.favourite == false &&
+                                                            <div>
+                                                                <IconButton onClick={() => {
+                                                                    this.handleFavourite(true)
+                                                                }} aria-label="delete" color="primary">
+                                                                    <FavoriteBorderIcon></FavoriteBorderIcon>
+                                                                </IconButton>
+                                                            </div>
+
+                                                        }
+                                                        {this.state.favourite &&
+                                                            <div>
+                                                                <IconButton onClick={() => { this.handleFavourite(false) }} aria-label="delete" color="secondary">
+                                                                    <Favorite></Favorite>
+                                                                </IconButton>
+                                                                <small>Favourite pool</small>
+                                                            </div>
+                                                        }
+                                                        {this.props.pool.retired != 'Y' && <JoinPool pool={this.props.pool} />}
+                                                    </Col>
+                                                    <Col xl={2} lg={2} md={12} sm={12} >
+                                                        <ReactImageFallback
+                                                            src={this.props.pool.extended_meta.url_png_logo}
+                                                            width="140"
+                                                            height="140"
+                                                            fallbackImage={CardanoImage} />
+                                                    </Col>
+                                                </Row>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                </Row>
+
+
+                                <Tabs
+                                    selectedIndex={this.state.selectedTab}
+                                    onSelect={(selectedTab) => this.setState({ selectedTab: selectedTab })}
+                                >
                                     <Card>
-                                        <CardBody style={{
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                            textAlign: 'center',
-                                        }}>
-                                            <Row>
-                                                <Col xl={2} lg={2} md={12} sm={12} >
-                                                    <ReactImageFallback
-                                                        src={this.props.pool.extended_meta.url_png_logo}
-                                                        width="140"
-                                                        height="140"
-                                                        fallbackImage={CardanoImage} />
-                                                </Col>
-                                                <Col xl={8} lg={10} md={12} sm={12} >
-                                                    <Row style={{
-                                                        justifyContent: 'center',
-                                                        alignItems: 'center',
-                                                        textAlign: 'center',
-                                                    }}><h1>{ReactHtmlParser(this.props.pool.ticker)}</h1></Row>
-                                                    <h1>{ReactHtmlParser(this.props.pool.name)}</h1>
-
-                                                    {this.props.pool.retired == 'Y' &&
-
-
-                                                        <div>
-                                                            <h1 style={{ color: 'red' }}>THIS POOL IS RETIRED!</h1>
-                                                            <h3 style={{ color: 'red' }}>If staking with this pool, move your ADA to another pool.</h3>
-                                                        </div>
-                                                    }
-
-                                                    {/* <div style={{ display: 'flex', justifyContent: 'flex-end' }}> */}
-
-                                                    <h1>{this.addCommas(this.props.pool.live_stake)}₳</h1>
-                                                    {/* </div> */}
-                                                    <small><b>PoolID:</b>  {this.props.pool.pool_id}          </small>
-                                                    <Tooltip
-                                                        title="Copy Pool ID"
-                                                        placement="left"
-                                                    >
-                                                        <CopyToClipboard text={this.props.pool.pool_id}
-                                                            onCopy={() => this.setState({ copied: true })}
-                                                        >
-                                                            <FontAwesomeIcon icon={faClipboard} />
-                                                        </CopyToClipboard>
-                                                    </Tooltip>
-                                                    <br></br>
-                                                    <small><b>PoolView: </b> {this.props.pool.pool_view}          </small>
-                                                    <Tooltip
-                                                        title="Copy Pool View"
-                                                        placement="left"
-                                                    >
-                                                        <CopyToClipboard text={this.props.pool.pool_view}
-                                                            onCopy={() => this.setState({ copied: true })}
-                                                        >
-                                                            <FontAwesomeIcon icon={faClipboard} />
-                                                        </CopyToClipboard>
-                                                    </Tooltip>
-
-                                                    <h3>{ReactHtmlParser(linkifyHtml(this.props.pool.description, {
-                                                        defaultProtocol: 'https'
-                                                    }))}</h3>
-
-
-
-                                                    {this.state.favourite == false &&
-                                                        <div>
-                                                            <IconButton onClick={() => {
-                                                                this.handleFavourite(true)
-                                                            }} aria-label="delete" color="primary">
-                                                                <FavoriteBorderIcon></FavoriteBorderIcon>
-                                                            </IconButton>
-                                                        </div>
-
-                                                    }
-                                                    {this.state.favourite &&
-                                                        <div>
-                                                            <IconButton onClick={() => { this.handleFavourite(false) }} aria-label="delete" color="secondary">
-                                                                <Favorite></Favorite>
-                                                            </IconButton>
-                                                            <small>Favourite pool</small>
-                                                        </div>
-                                                    }
-                                                    {this.props.pool.retired != 'Y' && <JoinPool pool={this.props.pool} />}
-                                                </Col>
-                                                <Col xl={2} lg={2} md={12} sm={12} >
-                                                    <ReactImageFallback
-                                                        src={this.props.pool.extended_meta.url_png_logo}
-                                                        width="140"
-                                                        height="140"
-                                                        fallbackImage={CardanoImage} />
-                                                </Col>
-                                            </Row>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-
-
-                            <Tabs
-                                selectedIndex={this.state.selectedTab}
-                                onSelect={(selectedTab) => this.setState({ selectedTab: selectedTab })}
-                            >
-                                <Card>
-                                    <CardHeader>
-                                        <TabList>
-                                            <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
-                                            {/* <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab> */}
-                                            {width > 700 && <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>}
-                                            <Tab><FontAwesomeIcon icon={faDollarSign} /> Costs History</Tab>
-                                            <Tab><FontAwesomeIcon icon={faCube} /> Block History</Tab>
-                                            {width > 700 && <Tab><FontAwesomeIcon icon={faHistory} /> Stake History</Tab>}
-                                            <Tab><FontAwesomeIcon icon={faAward} /> Badges</Tab>
-                                        </TabList>
-                                    </CardHeader>
-                                    <CardBody>
-                                        <TabPanel>
-                                            {/* START INFO */}
-                                            <div>
-                                                <Row>
-                                                    <Col xl={4} lg={4} md={12} sm={12}>
-                                                        <Card>
-                                                            <CardHeader>Pool Cost - Margin</CardHeader>
-                                                            <CardBody>
-                                                                <h2>{this.props.pool.margin_pct}%</h2>
-                                                                <small>Pool Margin is the % of extra fee's a pool withdraws from block production rewards. The lower the better for delegates.</small>
-                                                            </CardBody>
-
-                                                        </Card>
-                                                    </Col>
-                                                    <Col xl={4} lg={4} md={12} sm={12}>
-                                                        <Card>
-                                                            <CardHeader>Fixed Fee</CardHeader>
-                                                            <CardBody>
-                                                                <h2>{this.props.pool.cost_per_epoch}₳</h2>
-                                                                <small>Fixed fee is the minimum amount of ADA a pool subtracts from block production rewards. The minimum is 340₳.</small>
-                                                            </CardBody>
-
-                                                        </Card>
-                                                    </Col>
-
-                                                    <Col xl={4} lg={4} md={12} sm={12}>
-                                                        <Card>
-                                                            <CardHeader>Pledge</CardHeader>
-                                                            <CardBody>
-                                                                <h2>{this.props.pool.pledge}₳</h2>
-                                                                <small>The amount of ADA the pool owner has pledged to the pool.</small>
-                                                            </CardBody>
-
-                                                        </Card>
-                                                    </Col>
-
-                                                </Row>
-
-                                                <Row>
-                                                    <Col xl={4} lg={4} md={12} sm={12}>
-                                                        <Card>
-                                                            <CardHeader>Active Stake - Epoch {this.props.pool.active_stake_epoch}</CardHeader>
-                                                            <CardBody >
-
-                                                                <h2>{this.addCommas(this.props.pool.active_stake)}₳</h2>
-                                                                <small>Amount of ADA staked to the pool this epoch.</small>
-
-                                                            </CardBody>
-
-                                                        </Card>
-                                                    </Col>
-                                                    <Col xl={4} lg={4} md={12} sm={12}>
-                                                        <Card>
-                                                            <CardHeader>Live Stake</CardHeader>
-                                                            <CardBody>
-
-                                                                <h2>{this.addCommas(this.props.pool.live_stake)}₳</h2>
-                                                                <small>Live amount of ADA staked to the pool.</small>
-
-                                                            </CardBody>
-                                                        </Card>
-                                                    </Col>
-
-                                                    <Col xl={4} lg={4} md={12} sm={12}>
-                                                        <Card>
-                                                            <CardHeader>Live Delegates</CardHeader>
-                                                            <CardBody>
-                                                                <h2>{this.props.pool.live_stake_delegator_count}</h2>
-                                                                <small>Total amount of wallets staking to this pool.</small>
-                                                            </CardBody>
-                                                        </Card>
-                                                    </Col>
-                                                </Row>
-                                                {this.props.pool.block_history != null && this.props.pool.block_history.length > 0 &&
+                                        <CardHeader>
+                                            <TabList>
+                                                <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
+                                                {/* <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab> */}
+                                                {width > 700 && <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>}
+                                                <Tab><FontAwesomeIcon icon={faDollarSign} /> Costs History</Tab>
+                                                <Tab><FontAwesomeIcon icon={faCube} /> Block History</Tab>
+                                                {width > 700 && <Tab><FontAwesomeIcon icon={faHistory} /> Stake History</Tab>}
+                                                <Tab><FontAwesomeIcon icon={faAward} /> Badges</Tab>
+                                            </TabList>
+                                        </CardHeader>
+                                        <CardBody>
+                                            <TabPanel>
+                                                {/* START INFO */}
+                                                <div>
                                                     <Row>
-                                                        {this.calculateLuck() != null &&
-                                                            <Col xl={4} lg={4} md={12} sm={12}>
-                                                                <Card>
-                                                                    <CardHeader>Luck Last Epoch</CardHeader>
-                                                                    <CardBody>
-                                                                        <h2>{"" + this.calculateLuck()}%</h2>
-                                                                        <small>This is the amount of luck this pool received last Epoch.</small>
-                                                                    </CardBody>
-                                                                </Card>
-                                                            </Col>}
-
                                                         <Col xl={4} lg={4} md={12} sm={12}>
                                                             <Card>
-                                                                <CardHeader>Blocks This Epoch</CardHeader>
-                                                                <CardBody >
-                                                                    <h2>{this.props.pool.block_history[0].blocks}</h2>
-                                                                    <small>Blocks produced by the pool in current Epoch, potential for more blocks.</small>
+                                                                <CardHeader>Pool Cost - Margin</CardHeader>
+                                                                <CardBody>
+                                                                    <h2>{this.props.pool.margin_pct}%</h2>
+                                                                    <small>Pool Margin is the % of extra fee's a pool withdraws from block production rewards. The lower the better for delegates.</small>
                                                                 </CardBody>
+
                                                             </Card>
                                                         </Col>
                                                         <Col xl={4} lg={4} md={12} sm={12}>
-                                                            {/* <Card>
+                                                            <Card>
+                                                                <CardHeader>Fixed Fee</CardHeader>
+                                                                <CardBody>
+                                                                    <h2>{this.props.pool.cost_per_epoch}₳</h2>
+                                                                    <small>Fixed fee is the minimum amount of ADA a pool subtracts from block production rewards. The minimum is 340₳.</small>
+                                                                </CardBody>
+
+                                                            </Card>
+                                                        </Col>
+
+                                                        <Col xl={4} lg={4} md={12} sm={12}>
+                                                            <Card>
+                                                                <CardHeader>Pledge</CardHeader>
+                                                                <CardBody>
+                                                                    <h2>{this.props.pool.pledge}₳</h2>
+                                                                    <small>The amount of ADA the pool owner has pledged to the pool.</small>
+                                                                </CardBody>
+
+                                                            </Card>
+                                                        </Col>
+
+                                                    </Row>
+
+                                                    <Row>
+                                                        <Col xl={4} lg={4} md={12} sm={12}>
+                                                            <Card>
+                                                                <CardHeader>Active Stake - Epoch {this.props.pool.active_stake_epoch}</CardHeader>
+                                                                <CardBody >
+
+                                                                    <h2>{this.addCommas(this.props.pool.active_stake)}₳</h2>
+                                                                    <small>Amount of ADA staked to the pool this epoch.</small>
+
+                                                                </CardBody>
+
+                                                            </Card>
+                                                        </Col>
+                                                        <Col xl={4} lg={4} md={12} sm={12}>
+                                                            <Card>
+                                                                <CardHeader>Live Stake</CardHeader>
+                                                                <CardBody>
+
+                                                                    <h2>{this.addCommas(this.props.pool.live_stake)}₳</h2>
+                                                                    <small>Live amount of ADA staked to the pool.</small>
+
+                                                                </CardBody>
+                                                            </Card>
+                                                        </Col>
+
+                                                        <Col xl={4} lg={4} md={12} sm={12}>
+                                                            <Card>
+                                                                <CardHeader>Live Delegates</CardHeader>
+                                                                <CardBody>
+                                                                    <h2>{this.props.pool.live_stake_delegator_count}</h2>
+                                                                    <small>Total amount of wallets staking to this pool.</small>
+                                                                </CardBody>
+                                                            </Card>
+                                                        </Col>
+                                                    </Row>
+                                                    {this.props.pool.block_history != null && this.props.pool.block_history.length > 0 &&
+                                                        <Row>
+                                                            {this.calculateLuck() != null &&
+                                                                <Col xl={4} lg={4} md={12} sm={12}>
+                                                                    <Card>
+                                                                        <CardHeader>Luck Last Epoch</CardHeader>
+                                                                        <CardBody>
+                                                                            <h2>{"" + this.calculateLuck()}%</h2>
+                                                                            <small>This is the amount of luck this pool received last Epoch.</small>
+                                                                        </CardBody>
+                                                                    </Card>
+                                                                </Col>}
+
+                                                            <Col xl={4} lg={4} md={12} sm={12}>
+                                                                <Card>
+                                                                    <CardHeader>Blocks This Epoch</CardHeader>
+                                                                    <CardBody >
+                                                                        <h2>{this.props.pool.block_history[0].blocks}</h2>
+                                                                        <small>Blocks produced by the pool in current Epoch, potential for more blocks.</small>
+                                                                    </CardBody>
+                                                                </Card>
+                                                            </Col>
+                                                            <Col xl={4} lg={4} md={12} sm={12}>
+                                                                {/* <Card>
                                                                 <CardHeader>Lifetime Blocks</CardHeader>
                                                                 <CardBody >
                                                                     <Row>
@@ -561,15 +568,15 @@ export default class PoolDetailsComponent extends React.Component {
                                                                     </Row>
                                                                 </CardBody>
                                                             </Card> */}
-                                                            <Card>
-                                                                <CardHeader><b></b>Lifetime Blocks</CardHeader>
-                                                                <CardBody >
-                                                                    <h2>{this.props.pool.blocks}</h2>
-                                                                    <small>Amount of blocks this pool has minted.</small>
-                                                                </CardBody>
-                                                            </Card>
-                                                        </Col>
-                                                        {/* <Col xl={4} lg={4} md={12} sm={12}>
+                                                                <Card>
+                                                                    <CardHeader><b></b>Lifetime Blocks</CardHeader>
+                                                                    <CardBody >
+                                                                        <h2>{this.props.pool.blocks}</h2>
+                                                                        <small>Amount of blocks this pool has minted.</small>
+                                                                    </CardBody>
+                                                                </Card>
+                                                            </Col>
+                                                            {/* <Col xl={4} lg={4} md={12} sm={12}>
                                                             <Card style={{
                                                                 justifyContent: 'center',
                                                                 alignItems: 'center',
@@ -590,101 +597,101 @@ export default class PoolDetailsComponent extends React.Component {
                                                                 </CardBody>
                                                             </Card>
                                                         </Col> */}
-                                                    </Row>}
-                                            </div>
-                                            {/* END INFO */}
-                                        </TabPanel>
-                                        {width > 700 && <TabPanel>
-                                            {/* START DELEGATES */}
-                                            {this.props.pool &&
-                                                <div>
-                                                    <PoolDelagates pool={this.props.pool} delegatesList={this.state.delegatesList} />
-                                                </div>}
-                                            {/* END DELEGATES */}
-                                        </TabPanel>}
-                                        <TabPanel>
-                                            {/* Start Costs history */}
-                                            <Card>
-                                                < CardHeader>Costs History
-                                                    <br></br>
-                                                    <small>Cost history keeps a track of the margin and fixed cost of a pool</small><br></br>
-                                                    <small>Margin is the % amount a stake pool takes from the rewards - the lower the better</small>
-                                                    <br></br>
-                                                    <small>Fixed Cost is the minimum amount a pool owner earns - 340 is the minimum</small>
-                                                    <br></br>
-                                                    <br></br>
-                                                    <small>Honest and well run pools shouldnt change very often, unless they have stated otherwise.</small>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    {this.props.pool && <PoolCosts pool={this.props.pool} />}
-                                                </CardBody>
-
-                                            </Card>
-                                            {/* End Costs history */}
-                                        </TabPanel>
-                                        <TabPanel>
-                                            {/* Start Block history */}
-                                            <Card>
-                                                < CardHeader>Blocks
-                                                    <br></br>
-                                                    <small>* Current Epoch, potential for more blocks.</small><br></br>
-                                                    <small>After epoch transition the * Current Epoch will look invalid as we process.</small>
-                                                </CardHeader>
-                                                <CardBody>
-                                                    {this.props.pool && <PoolBlocks pool={this.props.pool} />}
-                                                    {/* <p>Currently under construction!</p> */}
-                                                </CardBody>
-
-                                            </Card>
-                                            {/* End Block history */}
-                                        </TabPanel>
-                                        {width > 700 && <TabPanel>
-                                            {/* Start Stake history */}
-                                            <Card>
-                                                <CardHeader>Active Stake - History<br></br><small>We are aware of a small bug on this data with missing stake.</small></CardHeader>
-                                                <CardBody>
-                                                    {(width > 600 && this.props.pool.active_stake_history != null && this.props.pool.active_stake_history.length > 0) &&
-                                                        <Chart data={this.props.pool.active_stake_history} currentEpoch={this.props.pool.active_stake_epoch} currentActiveStake={this.props.pool.active_stake} />
-                                                    }
-                                                </CardBody>
-
-                                            </Card>
-                                            {/* End Stake history */}
-                                        </TabPanel>}
-
-                                        <TabPanel>
-                                            {/* Start Badges */}
-                                            <Card>
-                                                <CardHeader>Badges earned by the pool.</CardHeader>
-                                                <CardBody>
-                                                    <PoolBadges poolBlocksTotal={this.props.pool.blocks} />
-                                                </CardBody>
-
-                                            </Card>
-                                            {/* End Badges */}
-                                        </TabPanel>
-                                    </CardBody>
-                                </Card>
-                            </Tabs>
-
-                        </Col>
-                        <Col xl={3} lg={3} md={12} sm={12}>
-                            <Row>
-                                <Col>
-                                    <Card>
-                                        <CardHeader>Pool Links</CardHeader>
-                                        <CardBody>
-                                            {!isEmpty(this.props.pool.homepage) && (
-                                                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-                                                    <Button variant="outline-light"><a href={this.props.pool.homepage} target="_blank" rel="noreferrer">Website</a></Button>
-                                                    <br /><br />
+                                                        </Row>}
                                                 </div>
-                                            )}
-                                            <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />
+                                                {/* END INFO */}
+                                            </TabPanel>
+                                            {width > 700 && <TabPanel>
+                                                {/* START DELEGATES */}
+                                                {this.props.pool &&
+                                                    <div>
+                                                        <PoolDelagates pool={this.props.pool} delegatesList={this.state.delegatesList} />
+                                                    </div>}
+                                                {/* END DELEGATES */}
+                                            </TabPanel>}
+                                            <TabPanel>
+                                                {/* Start Costs history */}
+                                                <Card>
+                                                    < CardHeader>Costs History
+                                                        <br></br>
+                                                        <small>Cost history keeps a track of the margin and fixed cost of a pool</small><br></br>
+                                                        <small>Margin is the % amount a stake pool takes from the rewards - the lower the better</small>
+                                                        <br></br>
+                                                        <small>Fixed Cost is the minimum amount a pool owner earns - 340 is the minimum</small>
+                                                        <br></br>
+                                                        <br></br>
+                                                        <small>Honest and well run pools shouldnt change very often, unless they have stated otherwise.</small>
+                                                    </CardHeader>
+                                                    <CardBody>
+                                                        {this.props.pool && <PoolCosts pool={this.props.pool} />}
+                                                    </CardBody>
+
+                                                </Card>
+                                                {/* End Costs history */}
+                                            </TabPanel>
+                                            <TabPanel>
+                                                {/* Start Block history */}
+                                                <Card>
+                                                    < CardHeader>Blocks
+                                                        <br></br>
+                                                        <small>* Current Epoch, potential for more blocks.</small><br></br>
+                                                        <small>After epoch transition the * Current Epoch will look invalid as we process.</small>
+                                                    </CardHeader>
+                                                    <CardBody>
+                                                        {this.props.pool && <PoolBlocks pool={this.props.pool} />}
+                                                        {/* <p>Currently under construction!</p> */}
+                                                    </CardBody>
+
+                                                </Card>
+                                                {/* End Block history */}
+                                            </TabPanel>
+                                            {width > 700 && <TabPanel>
+                                                {/* Start Stake history */}
+                                                <Card>
+                                                    <CardHeader>Active Stake - History<br></br><small>We are aware of a small bug on this data with missing stake.</small></CardHeader>
+                                                    <CardBody>
+                                                        {(width > 600 && this.props.pool.active_stake_history != null && this.props.pool.active_stake_history.length > 0) &&
+                                                            <Chart data={this.props.pool.active_stake_history} currentEpoch={this.props.pool.active_stake_epoch} currentActiveStake={this.props.pool.active_stake} />
+                                                        }
+                                                    </CardBody>
+
+                                                </Card>
+                                                {/* End Stake history */}
+                                            </TabPanel>}
+
+                                            <TabPanel>
+                                                {/* Start Badges */}
+                                                <Card>
+                                                    <CardHeader>Badges earned by the pool.</CardHeader>
+                                                    <CardBody>
+                                                        <PoolBadges poolBlocksTotal={this.props.pool.blocks} />
+                                                    </CardBody>
+
+                                                </Card>
+                                                {/* End Badges */}
+                                            </TabPanel>
                                         </CardBody>
                                     </Card>
+                                </Tabs>
 
-                                    {/* {this.state.delegateHistory != null &&
+                            </Col>
+                            <Col xl={3} lg={3} md={12} sm={12}>
+                                <Row>
+                                    <Col>
+                                        <Card>
+                                            <CardHeader>Pool Links</CardHeader>
+                                            <CardBody>
+                                                {!isEmpty(this.props.pool.homepage) && (
+                                                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                                                        <Button variant="outline-light"><a href={this.props.pool.homepage} target="_blank" rel="noreferrer">Website</a></Button>
+                                                        <br /><br />
+                                                    </div>
+                                                )}
+                                                <SocialMedia extendedmeta={this.props.pool.extended_meta} item={this.props.pool} />
+                                            </CardBody>
+                                        </Card>
+
+                                        {/* {this.state.delegateHistory != null &&
                                         <Card>
                                             <CardHeader>
                                                 <h6>Stake Feed</h6><small>Tracking delegate changes, currently in Beta</small></CardHeader>
@@ -746,18 +753,18 @@ export default class PoolDetailsComponent extends React.Component {
                                         </Card>} */}
 
 
-                                    {!isEmpty(this.props.pool.extended_meta.twitter_handle) &&
-                                        <Card>
-                                            <CardHeader>
-                                                Twitter Feed</CardHeader>
-                                            <CardBody style={{
-                                                height: 350,
-                                                overflow: 'auto'
-                                            }}>
+                                        {!isEmpty(this.props.pool.extended_meta.twitter_handle) &&
+                                            <Card>
+                                                <CardHeader>
+                                                    Twitter Feed</CardHeader>
+                                                <CardBody style={{
+                                                    height: 350,
+                                                    overflow: 'auto'
+                                                }}>
 
-                                                {/* <a class="twitter-timeline" href={this.state.twitterUrl}></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> */}
+                                                    {/* <a class="twitter-timeline" href={this.state.twitterUrl}></a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> */}
 
-                                                {/* <Timeline
+                                                    {/* <Timeline
                                                 dataSource={{
                                                     sourceType: 'profile',
                                                     screenName: 'TwitterDev'
@@ -767,53 +774,53 @@ export default class PoolDetailsComponent extends React.Component {
                                                 }}/> */}
 
 
-                                                <TwitterTimelineEmbed
-                                                    sourceType="profile"
-                                                    screenName={this.state.twitterUrl}
-                                                    // screenName="PoolShamrock"
-                                                    options={{ height: 400 }}
-                                                />
+                                                    <TwitterTimelineEmbed
+                                                        sourceType="profile"
+                                                        screenName={this.state.twitterUrl}
+                                                        // screenName="PoolShamrock"
+                                                        options={{ height: 400 }}
+                                                    />
 
-                                            </CardBody>
-                                        </Card>}
+                                                </CardBody>
+                                            </Card>}
 
 
 
-                                    {!isEmpty(this.props.pool.extended_meta.location) &&
+                                        {!isEmpty(this.props.pool.extended_meta.location) &&
+                                            <Card>
+                                                <CardHeader>
+                                                    Pool Owner Location</CardHeader>
+                                                <CardBody>
+                                                    <h2>{this.props.pool.extended_meta.location}</h2>
+                                                </CardBody>
+                                            </Card>}
+
                                         <Card>
                                             <CardHeader>
-                                                Pool Owner Location</CardHeader>
+                                                Share Pool</CardHeader>
                                             <CardBody>
-                                                <h2>{this.props.pool.extended_meta.location}</h2>
+                                                <ShareProject name={this.props.pool.pool_id} />
+                                                <p><Button variant="outline-light" size="sm" onClick={() => {
+                                                    this.requestPoolPromotion(this.props.pool.pool_id)
+                                                }}
+                                                >Request Promotion</Button></p>
                                             </CardBody>
-                                        </Card>}
+                                        </Card>
 
-                                    <Card>
-                                        <CardHeader>
-                                            Share Pool</CardHeader>
-                                        <CardBody>
-                                            <ShareProject name={this.props.pool.pool_id} />
-                                            <p><Button variant="outline-light" size="sm" onClick={() => {
-                                                this.requestPoolPromotion(this.props.pool.pool_id)
-                                            }}
-                                            >Request Promotion</Button></p>
-                                        </CardBody>
-                                    </Card>
-
-                                    <Card>
-                                        <CardHeader>
-                                            Last Updated</CardHeader>
-                                        <CardBody>
-                                            <p>{this.props.pool.last_updated}</p>
-                                        </CardBody>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
+                                        <Card>
+                                            <CardHeader>
+                                                Last Updated</CardHeader>
+                                            <CardBody>
+                                                <p>{this.props.pool.last_updated}</p>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
 
 
-                    {/* <Row>
+                        {/* <Row>
                             <Col>
                                 {this.state.project.relatedProjects != null && this.state.project.relatedProjects.length > 0 &&
                                     <Card>
@@ -848,38 +855,38 @@ export default class PoolDetailsComponent extends React.Component {
                             </Col>
                         </Row> */}
 
-                    <Modal
-                        isOpen={this.state.modal}
-                        toggle={false}
-                    >
-                        <ModalHeader toggle={() => this.toggle()}>Request Pool Promotion</ModalHeader>
-                        <ModalBody>
-                            <Row>
-                                <p>Hello {this.props.pool.ticker} thanks for your request for promotion.</p>
-                            </Row>
+                        <Modal
+                            isOpen={this.state.modal}
+                            toggle={false}
+                        >
+                            <ModalHeader toggle={() => this.toggle()}>Request Pool Promotion</ModalHeader>
+                            <ModalBody>
+                                <Row>
+                                    <p>Hello {this.props.pool.ticker} thanks for your request for promotion.</p>
+                                </Row>
 
-                            <Row>
-                                {this.state.requestpromotion_status == 200 ?
-                                    <div>
-                                        <p>Your request has been <b>successful</b> your advert is in the queue.</p>
-                                        <p><b>Start Time:</b> {this.state.requestpromotion_start} UTC</p>
-                                        <p><b>End Time:</b> {this.state.requestpromotion_end} UTC</p>
+                                <Row>
+                                    {this.state.requestpromotion_status == 200 ?
+                                        <div>
+                                            <p>Your request has been <b>successful</b> your advert is in the queue.</p>
+                                            <p><b>Start Time:</b> {this.state.requestpromotion_start} UTC</p>
+                                            <p><b>End Time:</b> {this.state.requestpromotion_end} UTC</p>
 
-                                        {/* {this.props.pool.live_stake < 10000000 &&
+                                            {/* {this.props.pool.live_stake < 10000000 &&
                                             <p>As your live stake is lower than 10Mil we will add your to our twitter promotion lottery where we randomly select 3 pools to promote.</p>
                                         } */}
-                                        <br></br>
-                                    </div>
-                                    :
-                                    <p>Your request has been <b>unsuccessful</b>, its likely your already in the queue.</p>
-                                }
-                            </Row>
+                                            <br></br>
+                                        </div>
+                                        :
+                                        <p>Your request has been <b>unsuccessful</b>, its likely your already in the queue.</p>
+                                    }
+                                </Row>
 
-                        </ModalBody>
+                            </ModalBody>
 
-                    </Modal>
+                        </Modal>
 
-                </Page >
+                    </Page >}
 
             </div >
         );

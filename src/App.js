@@ -4,7 +4,7 @@ import { MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import React from 'react';
 // import componentQueries from 'react-component-queries';
-import { BrowserRouter, Redirect, Route, Switch, HashRouter } from 'react-router-dom';
+import { BrowserRouter as Router, Redirect, Route, Routes } from 'react-router-dom';
 
 import DashboardPage from 'pages/DashboardPage';
 import PoolSearchPage from 'pages/PoolSearchPage';
@@ -54,98 +54,102 @@ const getBasename = () => {
 };
 
 export default class App extends React.Component {
-  
+
   render() {
     console.log("props = " + this.props);
     return (
-      <HashRouter basename={getBasename()}>
+      <Router basename={getBasename()}>
         <GAListener>
-          <Switch>
+          <MainLayout breakpoint={this.props.breakpoint}>
+            <Routes>
+              <Route exact path="/joinpool/:name/:poolid" element={<JoinPoolEmbed props />} />
 
-          <Route exact path="/joinpool/:name/:poolid" render={(props) => <JoinPoolEmbed {...props}/>} />
+              <Route exact path="/" element={<DashboardPage />} />
 
-            <MainLayout breakpoint={this.props.breakpoint}>
-              <React.Suspense fallback={<PageSpinner />}>
-                <Route exact path="/" render={(props) => <DashboardPage />} />
-                
-                <Route exact path="/wallet" render={(props) => <MyWalletPage {...props}/>} />
-                <Route exact path="/wallet/:lookupid" render={(props) => <MyWalletPage {...props}/>} />
+              <Route exact path="/wallet" element={<MyWalletPage props />} />
+              <Route exact path="/wallet/:lookupid" element={<MyWalletPage props />} />
 
-                <Route exact path="/blocks" render={(props) => <BlocksListPage {...props}/>} />            
+              <Route exact path="/blocks" element={<BlocksListPage props />} />
 
-                <Route exact path="/teampeek" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="We are the Creators of PoolPeek.com and PoolPeek Mobile!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc} />} />
-                <Route exact path="/poolsearch" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false}/>} />
-                <Route exact path="/poolsearchmap" render={(props) => <PoolMapV3 {...props}/>} />
+              <Route exact path="/teampeek" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="We are the Creators of PoolPeek.com and PoolPeek Mobile!" query={queries.poolpeekquery} multiPoolOperators={true} pageDescription={queries.dynamicduopoolsqueryDesc} />} />
+              <Route exact path="/poolsearch" element={<PoolSearchPage props key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
+              <Route exact path="/poolsearchmap" element={<PoolMapV3 props />} />
 
-                <Route exact path="/epochcalendar" render={(props) => <EpochCalendar />} />
-                <Route exact path="/stakingrewards" render={(props) => <StakingRewards />} />
-                <Route exact path="/stakingcalculator" render={(props) => <StakingCalculator />} />
-                <Route exact path="/aboutus" render={(props) => <AboutUsPage />} />
+              <Route exact path="/epochcalendar" element={<EpochCalendar />} />
+              <Route exact path="/stakingrewards" element={<StakingRewards />} />
+              <Route exact path="/stakingcalculator" element={<StakingCalculator />} />
+              <Route exact path="/aboutus" element={<AboutUsPage />} />
 
-                <Route exact path="/poolpeekcoinpools" render={(props) => <PoolPeekCoinPoolsV2 {...props}/>} />
-                <Route exact path="/sundaeiso" render={(props) => <SundaePools {...props}/>} />
-                <Route exact path="/sundaeriso" render={(props) => <SundaePoolsReverse {...props}/>} />
-                <Route exact path="/hoskypools" render={(props) => <HoskyPoolsV2 {...props}/>} />
-                <Route exact path="/hoskyinupools" render={(props) => <HoskyInuPoolsV2 {...props}/>} />
-                <Route exact path="/bisonpools" render={(props) => <BisonPoolsV2 {...props}/>} />
-                <Route exact path="/ardanaiso" render={(props) => <ArdanaISOPools {...props}/>} />
-                <Route exact path="/geniusyieldiso" render={(props) => <GeniusYieldISOPools {...props}/>} />
-                <Route exact path="/anetabtciso" render={(props) => <AnetaBtcISOPools {...props}/>} />
-                <Route exact path="/flicktoiso" render={(props) => <FlicktoISOPools {...props}/>} />
-                <Route exact path="/flaciso" render={(props) => <FlacISOPools {...props}/>} />
-                
-                 
-                <Route exact path="/isos" render={(props) => <ISOPage {...props}/>} />
-                
-                <Route exact path="/saturatedpools" render={(props) => <SaturatedPools {...props}/>} />
-                <Route exact path="/retiredpools" render={(props) => <RetiredPoolsV2 {...props}/>} />
-                
-                <Route exact path="/alliances" render={(props) => <AlliancesPage {...props}/>} />
-                <Route exact path="/alliances/xspo" render={(props) => <AllianceDetailsPage {...props} title="XSPO Alliance" alliancename="xspo" url="https://raw.githubusercontent.com/xSPO-Alliance/adapools-xspo-alliance/main/xspo-alliance-members.json" />}/>
-                <Route exact path="/alliances/cspa" render={(props) => <AllianceDetailsPage {...props} title="CSPA Alliance" alliancename="cspa" url="https://raw.githubusercontent.com/SinglePoolAlliance/Registration/master/adapools.json" />}/>
-                <Route exact path="/alliances/mdp" render={(props) => <AllianceDetailsPage {...props} title="MDP Alliance" alliancename="mdp" url="https://raw.githubusercontent.com/CardanoMDP/CardanoMDP-adapools-org-alliance/main/cardano-mdp.json" />}/>
+              <Route exact path="/poolpeekcoinpools" element={<PoolPeekCoinPoolsV2 props />} />
+              <Route exact path="/sundaeiso" element={<SundaePools props />} />
+              <Route exact path="/sundaeriso" element={<SundaePoolsReverse props />} />
+              <Route exact path="/hoskypools" element={<HoskyPoolsV2 props />} />
+              <Route exact path="/hoskyinupools" element={<HoskyInuPoolsV2 props />} />
+              <Route exact path="/bisonpools" element={<BisonPoolsV2 props />} />
+              <Route exact path="/ardanaiso" element={<ArdanaISOPools props />} />
+              <Route exact path="/geniusyieldiso" element={<GeniusYieldISOPools props />} />
+              <Route exact path="/anetabtciso" element={<AnetaBtcISOPools props />} />
+              <Route exact path="/flicktoiso" element={<FlicktoISOPools props />} />
+              <Route exact path="/flaciso" element={<FlacISOPools props />} />
 
-                <Route exact path="/baremetalpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} multiPoolOperators={true} pageDescription={queries.baremetalpoolsqueryDesc} />} />
-                <Route exact path="/educationpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Education" query={queries.educationquery} multiPoolOperators={true} pageDescription={queries.educationpoolsqueryDesc} />} />
-                <Route exact path="/charitypools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Charity" query={queries.charityquery} multiPoolOperators={true} pageDescription={queries.charitypoolsqueryDesc} />} />
 
-                <Route exact path="/zeroblockpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Zero Block Small Pools" query={queries.zeroblockpoolsquery} multiPoolOperators={true} pageDescription={queries.zeroblockpoolsqueryDesc} />} />
-                <Route exact path="/onetotenblockpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="One to Ten Block Small Pools" query={queries.onetotenpoolsquery} multiPoolOperators={true} pageDescription={queries.onetotenblockpoolsqueryDesc} />} />
-                <Route exact path="/likelytoproduceblocks" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Small Pools Likely to Produce Blocks" query={queries.smallproduceblocksquery} multiPoolOperators={true} pageDescription={queries.smallproduceblocksDesc} />} />
+              <Route exact path="/isos" element={<ISOPage props />} />
 
-                {/* <Route exact path="/retiringpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Soon Retiring" query={queries.retiringpoolsquery} multiPoolOperators={false} pageDescription={queries.soonretiringpoolsqueryDesc} />} />
-                <Route exact path="/retiredpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Retired" query={queries.retiredpoolsquery} multiPoolOperators={false} pageDescription={queries.retiredpoolsqueryDesc} />} /> */}
-                {/* <Route exact path="/marchsaturatedpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="March Saturated" query={queries.marchsaturatedpoolsquery}  multiPoolOperators={false}  pageDescription={queries.marchsaturatedpoolsqueryDesc} />} /> */}
+              <Route exact path="/saturatedpools" element={<SaturatedPools props />} />
+              <Route exact path="/retiredpools" element={<RetiredPoolsV2 props />} />
 
-                <Route exact path="/adafolio" render={(props) => <AdaFoliosPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="adafolio Portfolio" query="" />} />
+              <Route exact path="/alliances" element={<AlliancesPage props />} />
+              <Route exact path="/alliances/xspo" element={<AllianceDetailsPage props title="XSPO Alliance" alliancename="xspo" url="https://raw.githubusercontent.com/xSPO-Alliance/adapools-xspo-alliance/main/xspo-alliance-members.json" />} />
+              <Route exact path="/alliances/cspa" element={<AllianceDetailsPage props title="CSPA Alliance" alliancename="cspa" url="https://raw.githubusercontent.com/SinglePoolAlliance/Registration/master/adapools.json" />} />
+              <Route exact path="/alliances/mdp" element={<AllianceDetailsPage props title="MDP Alliance" alliancename="mdp" url="https://raw.githubusercontent.com/CardanoMDP/CardanoMDP-adapools-org-alliance/main/cardano-mdp.json" />} />
+              <Route exact path="/alliances/armada" element={<AllianceDetailsPage props title="Armada Alliance" alliancename="armada" url="https://raw.githubusercontent.com/armada-alliance/armada-alliance/main/adapools.json" />} />
 
-                <Route exact path="/tickers" render={(props) => <TickerPage {...props} title="Pool Tickers" query={"tickers"} />} />
-                <Route exact path="/zeroblocks" render={(props) => <ZeroBlocksPage {...props} title="Zero Blocks Pools" query={"zeroblocks"} />} />
-                <Route exact path="/randompool" render={(props) => <RandomPoolPage {...props} title="Random Pools" query={"randompool"} />} />
-                
-                {/* <Route exact path="/liveblocks" render={(props) => <BlocksPage {...props} title="Live Blocks" />} /> */}
 
-                {/* <Route exact path="/fabulousnames" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Names" query={queries.funnamesquery} />} />
-                <Route exact path="/fabulousdescriptions" render={(props) => <FunDumpPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Descriptions" query={queries.fundescriptionsquery} />} /> */}
+              <Route exact path="/baremetalpools" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Bare Metal" query={queries.baremetalquery} multiPoolOperators={true} pageDescription={queries.baremetalpoolsqueryDesc} />} />
+              <Route exact path="/educationpools" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Education" query={queries.educationquery} multiPoolOperators={true} pageDescription={queries.educationpoolsqueryDesc} />} />
+              <Route exact path="/charitypools" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Charity" query={queries.charityquery} multiPoolOperators={true} pageDescription={queries.charitypoolsqueryDesc} />} />
 
-                <Route exact path="/twitterpools" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="Small Pools w/Twitter Handles" query={queries.twitterpoolsquery} multiPoolOperators={true} pageDescription={queries.twitterpoolsqueryDesc} />} />
+              <Route exact path="/zeroblockpools" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Zero Block Small Pools" query={queries.zeroblockpoolsquery} multiPoolOperators={true} pageDescription={queries.zeroblockpoolsqueryDesc} />} />
+              <Route exact path="/onetotenblockpools" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="One to Ten Block Small Pools" query={queries.onetotenpoolsquery} multiPoolOperators={true} pageDescription={queries.onetotenblockpoolsqueryDesc} />} />
+              <Route exact path="/likelytoproduceblocks" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Small Pools Likely to Produce Blocks" query={queries.smallproduceblocksquery} multiPoolOperators={true} pageDescription={queries.smallproduceblocksDesc} />} />
 
-                <Route exact path="/64milorgreater" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="64M or greater represent pools that are saturated and are incurring a rewards penalty." query={queries.qry64milorgreater} multiPoolOperators={false}  pageDescription={queries.desc64milorgreater}  />} />
-                <Route exact path="/32milto64mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="32M to < 64M" query={queries.qry32milto64mil} multiPoolOperators={false}  pageDescription={queries.desc32milto64mil}  />} />
-                <Route exact path="/16milto32mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="16M to < 32M" query={queries.qry16milto32mil} multiPoolOperators={false}  pageDescription={queries.desc16milto32mil}  />} />
-                <Route exact path="/8milto16mil" render={(props) => <QuickQueriesPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} title="8M to < 16M" query={queries.qry8milto16mil} multiPoolOperators={false}  pageDescription={queries.desc8milto16mil}  />} />
+              {/* <Route exact path="/retiringpools" render={ <QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Soon Retiring" query={queries.retiringpoolsquery} multiPoolOperators={false} pageDescription={queries.soonretiringpoolsqueryDesc} />} />
+                <Route exact path="/retiredpools" render={ <QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Retired" query={queries.retiredpoolsquery} multiPoolOperators={false} pageDescription={queries.retiredpoolsqueryDesc} />} /> */}
+              {/* <Route exact path="/marchsaturatedpools" render={ <QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="March Saturated" query={queries.marchsaturatedpoolsquery}  multiPoolOperators={false}  pageDescription={queries.marchsaturatedpoolsqueryDesc} />} /> */}
 
-                <Route exact path="/pool/:poolid" render={(props) => <PoolDetailsPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
-                <Route exact path="/poolsearch/:location" render={(props) => <PoolSearchPage {...props} key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
-                <Route exact path="/stakingrewards/:stakeAddress" render={(props) => <StakingRewards  {...props}/>} />
+              <Route exact path="/adafolio" element={<AdaFoliosPage props key={Math.floor(Math.random() * 100) + Date.now()} title="adafolio Portfolio" query="" />} />
 
-              </React.Suspense>
-            </MainLayout>
-            <Redirect to="/" />
-          </Switch>
+              <Route exact path="/tickers" element={<TickerPage props title="Pool Tickers" query={"tickers"} />} />
+              <Route exact path="/zeroblocks" element={<ZeroBlocksPage props title="Zero Blocks Pools" query={"zeroblocks"} />} />
+              <Route exact path="/randompool" element={<RandomPoolPage props title="Random Pools" query={"randompool"} />} />
 
+              {/* <Route exact path="/liveblocks" render={ <BlocksPage props title="Live Blocks" />} /> */}
+
+              {/* <Route exact path="/fabulousnames" render={ <FunDumpPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Names" query={queries.funnamesquery} />} />
+                <Route exact path="/fabulousdescriptions" render={ <FunDumpPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Fabulous Descriptions" query={queries.fundescriptionsquery} />} /> */}
+
+              <Route exact path="/twitterpools" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="Small Pools w/Twitter Handles" query={queries.twitterpoolsquery} multiPoolOperators={true} pageDescription={queries.twitterpoolsqueryDesc} />} />
+
+              <Route exact path="/64milorgreater" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="64M or greater represent pools that are saturated and are incurring a rewards penalty." query={queries.qry64milorgreater} multiPoolOperators={false} pageDescription={queries.desc64milorgreater} />} />
+              <Route exact path="/32milto64mil" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="32M to < 64M" query={queries.qry32milto64mil} multiPoolOperators={false} pageDescription={queries.desc32milto64mil} />} />
+              <Route exact path="/16milto32mil" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="16M to < 32M" query={queries.qry16milto32mil} multiPoolOperators={false} pageDescription={queries.desc16milto32mil} />} />
+              <Route exact path="/8milto16mil" element={<QuickQueriesPage props key={Math.floor(Math.random() * 100) + Date.now()} title="8M to < 16M" query={queries.qry8milto16mil} multiPoolOperators={false} pageDescription={queries.desc8milto16mil} />} />
+
+              <Route path="pool">
+                <Route path=":poolid"
+                  element={(
+                    <PoolDetailsPage />
+                  )} />
+              </Route>
+
+
+
+              <Route exact path="/poolsearch/:location" element={<PoolSearchPage props key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
+              <Route exact path="/stakingrewards/:stakeAddress" element={<StakingRewards props />} />
+            </Routes>
+          </MainLayout>
         </GAListener>
-      </HashRouter>
+      </Router>
     );
   }
 }

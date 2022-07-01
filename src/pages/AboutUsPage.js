@@ -66,12 +66,12 @@ We have devoted many hours developing and maintaining PoolPeek.com, If you like 
 please consider tipping us:
 <br /><br />
 
-          <a href={"https://poolpeek.com/#/pool/BE7E2461A584B6532C972EDCA711FA466D7D0E8A86B6629FC0784FF6"}
+          <a href={"https://poolpeek.com/pool/BE7E2461A584B6532C972EDCA711FA466D7D0E8A86B6629FC0784FF6"}
             target="_blank" rel="noreferrer"><p>SHA:</p></a>
 addr1q8ds9zyklmzphd6us528kqlcjmhq874ase5tk8qfc7a7p5fxh64unn46g3scmqzdym6epgkmmzv9uzvymqgdndtwh2psmwddeg
 <br /><br />
 
-<a href={"https://poolpeek.com/#/pool/2cdc5cef88f1c15e19c33fd8f47d9bd89c3d7ee4fa09512fbd44a126"}
+<a href={"https://poolpeek.com/pool/2cdc5cef88f1c15e19c33fd8f47d9bd89c3d7ee4fa09512fbd44a126"}
             target="_blank" rel="noreferrer"><p>EAGLE:</p></a>
 addr1qxmmr5crp2929u64z8pzxjsdca7u6p6d80spdvzg0h8wz4qryl3a8chygwx7jykj6fmhd4q46s5qeuet9f4ku03krwmq8u2nvx
 <br /><br />

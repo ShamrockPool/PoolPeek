@@ -108,6 +108,9 @@ class MyWalletPage extends React.Component {
   }
 
   async getBalance(connectedWallet) {
+
+    console.log(connectedWallet)
+
     const Loader = await import('@emurgo/cardano-serialization-lib-browser');
     const valueCBOR = await connectedWallet.getBalance()
     const value = Loader.Value.from_bytes(Buffer.from(valueCBOR, "hex"))
@@ -122,8 +125,13 @@ class MyWalletPage extends React.Component {
 
     const availableAda = countedValue.coin();
     const lovelace = availableAda.to_str();
+    var balance = lovelace / 1000000
+    this.setState({ walletBalance: balance });
+
     const assets = [];
     if (value.multiasset()) {
+
+
 
       const multiAssets = value.multiasset().keys();
       for (let j = 0; j < multiAssets.len(); j++) {
@@ -156,8 +164,8 @@ class MyWalletPage extends React.Component {
       }
     }
 
-    var balance = lovelace / 1000000
-    this.setState({ walletBalance: balance });
+    console.log(assets)
+
     this.setState({ tokens: assets.length });
 
     //Get Assets
@@ -198,7 +206,7 @@ class MyWalletPage extends React.Component {
         console.log(image)
       } catch (error) {
       }
-      if (!name) {
+      if (!image) {
         try {
           image = assetInformation[0].minting_tx_metadata.json[assetInformation[0].policy_id][assetInformation[0].asset_name].image;
           image = this.linkToSrc(image);
@@ -262,11 +270,13 @@ class MyWalletPage extends React.Component {
     return null;
   };
 
+
+
   async getStakePool(connectedWallet) {
     const Loader = await import('@emurgo/cardano-serialization-lib-browser');
     try {
       const walletAddress = await connectedWallet.getRewardAddresses();
-      console.log(walletAddress);
+      // console.log(walletAddress);
 
       var walletAddressHex = Buffer.from(
         walletAddress[0],
@@ -468,10 +478,10 @@ class MyWalletPage extends React.Component {
                           <img src={item.image} width="70" height="70" />
                           <p>{item.quantity}</p>
                           <p>{item.name}</p>
-                          <a href={"https://www.jpg.store/collection/" + item.policy} target="_blank" rel="noreferrer">
+                          {/* <a href={"https://www.jpg.store/collection/" + item.policy} target="_blank" rel="noreferrer">
                             <img
-                              src={JPGLogo} width="50vh" height="50vh" 
-                            /> </a> 
+                              src={JPGLogo} width="50vh" height="50vh"
+                            /> </a> */}
                           <br></br>
                         </Col>
                       )

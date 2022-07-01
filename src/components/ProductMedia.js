@@ -8,7 +8,7 @@ import ReactImageFallback from "react-image-fallback";
 
 const ProductMedia = ({ image, title, description, poolid, right, imgWidth, imgHeight,  ...restProps }) => {
   return (
-    // <a href={`https://poolpeek.com/#/pool/${poolid}`} target="_blank" rel="noreferrer">
+    // <a href={`https://poolpeek.com/pool/${poolid}`} target="_blank" rel="noreferrer">
     <Link to={`/pool/${poolid}`}>
       {/* <Media {...restProps}> */}
       {/* <Media center> */}

@@ -8,9 +8,9 @@ export async function getWallet(wallet) {
         console.log("flint")
         return await window.cardano.flint.enable();
     }
-    else if (wallet === "ccvault") {
-        console.log("ccvault")
-        return await window.cardano.ccvault.enable();
+    else if (wallet === "eternl") {
+        console.log("eternl")
+        return await window.cardano.eternl.enable();
     }
     else if (wallet === "typhon") {
         console.log("typhon")

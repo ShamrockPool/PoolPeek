@@ -80,7 +80,7 @@ class JoinPoolEmbed extends React.Component {
             <ConnectWallet />
             <JoinPool pool_id={this.state.poolId} name={this.state.name} />
           </Col>}
-        <Row><p>Functionality brought to you by <a href="https://poolpeek.com/#/" target="_blank">PoolPeek.com</a></p></Row>
+        <Row><p>Functionality brought to you by <a href="https://poolpeek.com/" target="_blank">PoolPeek.com</a></p></Row>
       </Page>
     );
   }

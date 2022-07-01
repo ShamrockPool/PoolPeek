@@ -4,8 +4,8 @@ const walletReducer = function (state = "", action) {
       return state + "nami";
     case "flint":
       return state + "flint";
-    case "ccvault":
-      return state + "ccvault";
+    case "eternl":
+      return state + "eternl";
     case "typhon":
       return state + "typhon";
     case "yoroi":
