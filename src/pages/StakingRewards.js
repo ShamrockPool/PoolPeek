@@ -143,8 +143,8 @@ class StakingRewards extends React.Component {
                         <th>USD Value</th>
                       </tr>
                     </thead>
-
-                    <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />
+{this.state.stakingRewardsList != null && 
+                    <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />}
                   </Table>
                 </div >
               }

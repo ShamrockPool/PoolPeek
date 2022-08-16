@@ -17,7 +17,7 @@ import CircleLoader
 import { css } from "@emotion/core";
 import { baseUrlPoolPeekService, getSaturatedPools, getPoolsAtRiskOfSaturation } from '../assets/services';
 import "../styles/styles.css";
-import { makeStyles } from '@material-ui/styles';
+
 import { Link } from 'react-router-dom';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -35,13 +35,7 @@ const override = css`
 
 const width = window.innerWidth;
 
-const useStyles = makeStyles({
-  root: {
-    '& .super-app-theme--header': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-  },
-});
+
 
 const tableRowStyle = {
   // borderBottom: 'solid 3px blue',

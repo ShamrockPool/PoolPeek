@@ -4,7 +4,7 @@ import { MainLayout } from 'components/Layout';
 import PageSpinner from 'components/PageSpinner';
 import React from 'react';
 // import componentQueries from 'react-component-queries';
-import { BrowserRouter as Router, Redirect, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 import DashboardPage from 'pages/DashboardPage';
 import PoolSearchPage from 'pages/PoolSearchPage';
@@ -58,13 +58,13 @@ export default class App extends React.Component {
   render() {
     console.log("props = " + this.props);
     return (
-      <Router basename={getBasename()}>
+      <Router>
         <GAListener>
           <MainLayout breakpoint={this.props.breakpoint}>
             <Routes>
-              <Route exact path="/joinpool/:name/:poolid" element={<JoinPoolEmbed props />} />
-
               <Route exact path="/" element={<DashboardPage />} />
+              <Route exact path="/#*" element={<DashboardPage />} />
+              <Route exact path="/joinpool/:name/:poolid" element={<JoinPoolEmbed props />} />
 
               <Route exact path="/wallet" element={<MyWalletPage props />} />
               <Route exact path="/wallet/:lookupid" element={<MyWalletPage props />} />

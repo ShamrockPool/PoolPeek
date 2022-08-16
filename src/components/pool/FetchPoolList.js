@@ -234,29 +234,6 @@ export default class FetchPoolList extends React.Component {
                     console.error(error);
                 }
             });
-
-
-            // poolsToDisplay = allpools.filter(function (pool) {
-            //     try {
-            //         if (!isEmpty(pool.extended_meta.location)) {
-            //             if (location.toLowerCase().includes(pool.extended_meta.location.toLowerCase())) {
-            //                 return pool;
-            //             }
-            //             else if (pool.extended_meta.location.includes(",")) {
-            //                 var locationSplit = pool.extended_meta.location.split(",");
-
-            //                 locationSplit.forEach(locationSplit => {
-            //                     if (location.toLowerCase().trim().includes(locationSplit.toLowerCase().trim())) {
-            //                         return pool;
-            //                     }
-            //                 });
-            //             }
-            //         }
-            //     } catch (error) {
-            //     }
-            // });
-
-
         }
 
         if (this.state.multiPoolOperators == true) {
@@ -267,13 +244,16 @@ export default class FetchPoolList extends React.Component {
             poolsToDisplay = poolsToDisplay.filter(pool => pool.live_stake != null && Number(pool.live_stake.replace(',', '')) <= 63786161.16);
         }
 
-        this.state.poolsToDisplay = poolsToDisplay;
-        this.setState({ pageCount: poolsToDisplay.length / 15 });
-
-        if (this.state.pageSelected != "") {
-            poolsToDisplay = poolsToDisplay.slice(this.state.pageSelected * 15);
+        if(poolsToDisplay){
+            this.state.poolsToDisplay = poolsToDisplay;
+            this.setState({ pageCount: poolsToDisplay.length / 15 });
+    
+            if (this.state.pageSelected != "") {
+                poolsToDisplay = poolsToDisplay.slice(this.state.pageSelected * 15);
+            }
+            this.setState({ poolsToDisplay: poolsToDisplay });
         }
-        this.setState({ poolsToDisplay: poolsToDisplay });
+
     }
 
     handlePageClick = (data) => {
@@ -283,10 +263,9 @@ export default class FetchPoolList extends React.Component {
     };
 
     async componentDidMount() {
-        await this.getAllPools();
-        this.setState({ allpoolsList: this.shuffle(this.state.allpoolsList) });
-
         try {
+            await this.getAllPools();
+            this.setState({ allpoolsList: this.shuffle(this.state.allpoolsList) });
             if (!isEmpty(this.props.match.params.location)) {
                 this.state.location = this.props.match.params.location;
                 this.setState({ location: this.props.match.params.location });
@@ -318,6 +297,7 @@ export default class FetchPoolList extends React.Component {
         console.log(data);
 
         this.setState({ allpoolsList: data.pools });
+        this.state.allpoolsList = data.pools;
         this.setState({ pageCount: data.pools.length / 30 });
     }
 

@@ -16,7 +16,7 @@ import CircleLoader
 import { css } from "@emotion/core";
 import { baseUrlPoolPeekService, getRetiredPools, baseUrl, getPoolsRetiringAcrossEpoch } from '../assets/services';
 import "../styles/styles.css";
-import { makeStyles } from '@material-ui/styles';
+
 import { Link } from 'react-router-dom';
 import RetiredChart from 'components/RetiredChart';
 
@@ -30,13 +30,6 @@ const override = css`
 
 const width = window.innerWidth;
 
-const useStyles = makeStyles({
-  root: {
-    '& .super-app-theme--header': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-  },
-});
 
 const tableRowStyle = {
   // borderBottom: 'solid 3px blue',

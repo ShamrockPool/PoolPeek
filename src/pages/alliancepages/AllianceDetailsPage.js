@@ -15,7 +15,7 @@ import CircleLoader
   from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
 import { baseUrlPoolPeekService, getAlliancePools } from 'assets/services';
-import { makeStyles } from '@material-ui/styles';
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTwitter, faTelegram, faYoutube, faFacebook, faDiscord } from "@fortawesome/free-brands-svg-icons";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -40,13 +40,6 @@ const override = css`
 
 const width = window.innerWidth;
 
-const useStyles = makeStyles({
-  root: {
-    '& .super-app-theme--header': {
-      backgroundColor: 'rgba(255, 7, 0, 0.55)',
-    },
-  },
-});
 
 const tableRowStyle = {
   // borderBottom: 'solid 3px blue',

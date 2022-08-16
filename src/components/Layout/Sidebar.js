@@ -69,7 +69,7 @@ const navFunQueries = [
 
 const stakeTools = [
   { to: '/stakingcalculator', name: 'Calculator', exact: true, Icon: MdAccountBalance },
-  { to: '/stakingrewards', name: 'Rewards History', exact: true, Icon: MdMoneyOff }
+  // { to: '/stakingrewards', name: 'Rewards History', exact: true, Icon: MdMoneyOff }
 ];
 
 const poolQueries = [
