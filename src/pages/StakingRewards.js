@@ -15,6 +15,8 @@ const fileType =
   "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
 const fileExtension = ".xlsx";
 
+var Loader;
+
 const cardBodyStyle = {
   borderBottom: 'solid 3px green',
   borderTop: 'solid 3px green',
@@ -56,9 +58,9 @@ class StakingRewards extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     window.scrollTo(0, 0);
-
+    Loader = await import('@emurgo/cardano-serialization-lib-browser');
 
 
     if (!isEmpty(this.props.match)) {
@@ -85,7 +87,29 @@ class StakingRewards extends React.Component {
   async getStakingRewards() {
     if (!isEmpty(this.state.stakingAddress)) {
       this.setState({ startLoader: true, stakingRewardsList: null });
-      const response = await fetch(baseUrl + '/rewards/multipleinputs/' + this.state.stakingAddress);
+
+      var inputAddress = this.state.stakingAddress;
+
+      if(!inputAddress.startsWith('stake')){
+        var bech32Address = Loader.Address.from_bech32(this.state.stakingAddress);
+        var base_addr = Loader.BaseAddress.from_address(bech32Address);
+  
+  
+        // Extract stake credential               
+        let stake_cred = base_addr.stake_cred()
+        console.log(Buffer.from(stake_cred.to_keyhash().to_bytes().buffer).toString("hex"))
+  
+        // Build reward address (add 0xe1 prefix to 28 last bytes of stake credential one) 
+        let reward_addr_bytes = new Uint8Array(29)                                          
+        reward_addr_bytes.set([0xe1], 0)                                                
+        reward_addr_bytes.set(stake_cred.to_bytes().slice(4, 32), 1)             
+        let reward_addr = Loader.RewardAddress.from_address(Loader.Address.from_bytes(reward_addr_bytes))
+  
+        inputAddress = reward_addr.to_address().to_bech32();
+      }
+
+
+      const response = await fetch(baseUrl + '/rewards/multipleinputs/' + inputAddress);
       const data = await response.json();
       this.setState({ stakingRewardsList: data, loading: false, startLoader: false });
       return data;
@@ -125,33 +149,33 @@ class StakingRewards extends React.Component {
             <Button color="primary" onClick={() => { this.getStakingRewards() }}>Submit</Button>
 
             {this.state.startLoader == true && <div><br></br><CircleLoader color={'#45b649'} loading={this.state.loading} css={override} size={100} />
-            <br></br><p><b>Fetching Data, this can take a few seconds as we retrieve ADA prices.</b></p></div>}
+              <br></br><p><b>Fetching Data, this can take a few seconds as we retrieve ADA prices.</b></p></div>}
 
-              {this.state.stakingRewardsList != null &&
-                <div style={{ width: "100%", alignItems: "left" }}>
-                  <br></br>
-                  <Button color="primary" onClick={() => this.exportToCSV(this.state.stakingRewardsList, 'StakingRewards')} style={{ width: "100%", alignItems: "right" }}>Download Excel</Button>
-                  <Table {...{ ['striped']: true }}>
-                    <thead>
-                      <tr>
-                        <th>Epoch</th>
-                        <th>Pool</th>
-                        <th>Reward</th>
-                        <th>Reward_Date</th>
-                        <th>Paid_Date</th>
-                        <th>ADA Price</th>
-                        <th>USD Value</th>
-                      </tr>
-                    </thead>
-{this.state.stakingRewardsList != null && 
+            {this.state.stakingRewardsList != null &&
+              <div style={{ width: "100%", alignItems: "left" }}>
+                <br></br>
+                <Button color="primary" onClick={() => this.exportToCSV(this.state.stakingRewardsList, 'StakingRewards')} style={{ width: "100%", alignItems: "right" }}>Download Excel</Button>
+                <Table {...{ ['striped']: true }}>
+                  <thead>
+                    <tr>
+                      <th>Epoch</th>
+                      <th>Pool</th>
+                      <th>Reward</th>
+                      <th>Reward_Date</th>
+                      <th>Paid_Date</th>
+                      <th>ADA Price</th>
+                      <th>USD Value</th>
+                    </tr>
+                  </thead>
+                  {this.state.stakingRewardsList != null &&
                     <StakingRewardsList stakingRewardsList={this.state.stakingRewardsList} />}
-                  </Table>
-                </div >
-              }
+                </Table>
+              </div >
+            }
           </Card>
         </div>
       </Page>
-        );
+    );
   }
 }
-        export default StakingRewards;
+export default StakingRewards;
