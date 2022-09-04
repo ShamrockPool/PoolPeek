@@ -5,7 +5,7 @@ import React from 'react';
 import CircleLoader from "react-spinners/CircleLoader";
 import { css } from "@emotion/core";
 import { baseUrlPoolPeekService, getPoolById } from 'assets/services';
-
+import { Provider, connect } from 'react-redux';
 
 import {useParams} from 'react-router-dom';
 
@@ -43,6 +43,12 @@ class PoolDetailsPage extends React.Component {
     this.getPool();
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { todos } = nextProps;
+  
+    console.log('I recieved new todos', todos);
+  }
+
   async getPool() {
     var response = await fetch(baseUrlPoolPeekService + getPoolById + this.props.params.poolid);
     var data = await response.json();
@@ -62,4 +68,10 @@ class PoolDetailsPage extends React.Component {
   }
 }
 
-export default withRouter(PoolDetailsPage);
+const mapStateToProps = state => {
+  return {
+    wallet: state
+  };
+};
+
+export default connect(mapStateToProps, null)(withRouter(PoolDetailsPage));

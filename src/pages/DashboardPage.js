@@ -130,7 +130,7 @@ class DashboardPage extends React.Component {
     window.scrollTo(0, 0);
 
     await this.getDashboardData();
-    await this.getChainLoadData();
+    //await this.getChainLoadData();
 
     try {
       var namiEnabled = await cardano.nami.isEnabled()
@@ -152,8 +152,8 @@ class DashboardPage extends React.Component {
 
     this.teamPeekData = teamPeekData;//shuffle(teamPeekData);
 
-    var timeuntilhf = new Date(2022, 5, 29, 21, 45, 1).getTime() 
-          - new Date(Date.now() + (new Date().getTimezoneOffset() * 60000)).getTime();
+    var timeuntilhf = new Date(2022, 5, 29, 21, 45, 1).getTime()
+      - new Date(Date.now() + (new Date().getTimezoneOffset() * 60000)).getTime();
     this.setState({ hardforkseconds: timeuntilhf });
   }
 
@@ -569,78 +569,6 @@ class DashboardPage extends React.Component {
                     </Row>
                   </CardBody>
                 </Card>
-
-                <hr></hr>
-
-                <Card>
-                  <CardHeader >
-                    <p><h6><b>Pool Search</b></h6></p><small>Quick search all available pools.</small>
-                  </CardHeader>
-                  <CardBody body >
-
-                    <Input
-                      style={{
-                        fontSize: 14, alignContent: 'center', justifyContent: 'center',
-                        alignItems: 'center',
-                        textAlign: 'center',
-                      }}
-                      type="text"
-                      className="cr-search-form__input"
-                      placeholder="Search with Ticker or Pool Name"
-                      onChange={this.handleChange()}
-                      value={this.state.searchInput}
-                    />
-
-                    <br />
-                    {width < 600 ?
-                      <Row>
-                        {this.state.filteredPools.map(function (item, index) {
-                          return (
-                            index < 6 &&
-                            <Col lg={3} md={4} sm={4} xs={6}>
-                              <Card>
-                                <CardBody >
-                                  <CardText>
-                                    <Link to={`/pool/${item.pool_id}`}>
-                                      <h6>
-                                        <b>&nbsp;{item.ticker}</b>
-                                      </h6>
-                                    </Link>
-                                  </CardText>
-                                </CardBody>
-                              </Card>
-                            </Col>
-                          )
-                        })
-                        }
-                      </Row>
-                      :
-                      <Row>
-                        {this.state.filteredPools.map(function (item, index) {
-
-                          return (
-                            index < 20 &&
-                            <Col lg={3} md={4} sm={4} xs={4}>
-                              <Card>
-                                <CardBody>
-                                  <CardText>
-                                    <Link to={`/pool/${item.pool_id}`}>
-                                      <h6>
-                                        <b>&nbsp;{item.ticker}</b>
-                                      </h6>
-                                    </Link>
-                                  </CardText>
-                                </CardBody>
-                              </Card>
-                            </Col>
-                          )
-                        })
-                        }
-                      </Row>
-                    }
-
-                  </CardBody>
-                </Card>
                 <hr></hr>
                 <Card>
                   <CardHeader><h6><b>Team Peek</b></h6><small>Support PoolPeek by staking with us.</small></CardHeader>
@@ -656,8 +584,8 @@ class DashboardPage extends React.Component {
                               <h6>
                                 <ReactImageFallback
                                   src={image}
-                                  width="40"
-                                  height="40"
+                                  width="70"
+                                  height="70"
                                   fallbackImage={null} />
 
                               </h6>
@@ -680,12 +608,90 @@ class DashboardPage extends React.Component {
 
 
               </Col>
+
               <Col lg={6} md={12} sm={12} xs={12} className="mb-3">
-                <BlocksPage numberToSHow={20} />
+                <Card>
+                  <CardHeader >
+                    <p><h6><b>Pool Search</b></h6></p><small>Quick search all available pools.</small>
+                  </CardHeader>
+                  <CardBody body >
+                    <br></br>
+                    <Input
+                      style={{
+                        fontSize: 19, alignContent: 'center', justifyContent: 'center',
+                        alignItems: 'center',
+                        textAlign: 'center',
+                      }}
+                      type="text"
+                      className="cr-search-form__input"
+                      placeholder="Search with Ticker or Pool Name"
+
+                      onChange={this.handleChange()}
+                      value={this.state.searchInput}
+                    />
+
+                    <br />
+                    {width < 600 ?
+                      <Row>
+                        {this.state.filteredPools.map(function (item, index) {
+                          return (
+                            index < 6 &&
+                            <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
+                              <Card>
+                                <CardBody >
+                                  <CardText>
+                                    <Link to={`/pool/${item.pool_id}`}>
+                                      <h6>
+                                        <b>&nbsp;{item.ticker}</b>
+                                      </h6>
+                                    </Link>
+                                  </CardText>
+                                </CardBody>
+                              </Card>
+                            </Col>
+                          )
+                        })
+                        }
+                      </Row>
+                      :
+                      <Row lg={3}>
+                        {this.state.filteredPools.map(function (item, index) {
+                          return (
+                            index < 20 &&
+                            <Col lg={3} md={12} sm={12} xs={12} className="mb-3" style={{
+                              justifyContent: 'center',
+                              alignItems: 'center',
+                              textAlign: 'center',
+                            }}>
+                              <Card>
+                                <CardBody>
+                                  <CardText>
+                                    <Link to={`/pool/${item.pool_id}`}>
+                                      <h6>
+                                        <b>&nbsp;{item.name}</b>
+                                      </h6>
+                                      <h6>
+                                        &nbsp;{item.ticker}
+                                      </h6>
+                                    </Link>
+                                  </CardText>
+                                </CardBody>
+                              </Card>
+                            </Col>
+                          )
+                        })
+                        }
+
+                      </Row>
+                    }
+
+                  </CardBody>
+                </Card>
               </Col>
+
               <Col lg={3} md={12} sm={12} xs={12} className="mb-3">
 
-                {this.state.chainLoadData &&
+                {/* {this.state.chainLoadData &&
                   <div>
                     <Card>
                       <CardHeader><h6><b>Chain Load</b></h6><small>Cardano chain load last 7 days. </small></CardHeader>
@@ -694,11 +700,11 @@ class DashboardPage extends React.Component {
                       </CardBody>
                     </Card>
                     <hr></hr>
-                  </div>}
+                  </div>} */}
 
                 {this.state.advertisingpool != null &&
                   <Card>
-                    <CardHeader><h6><b>Pool Promo</b></h6></CardHeader>
+                    <CardHeader><h6><b>Pool Promo</b></h6><small>Connect Wallet To Join Pool</small></CardHeader>
                     <CardBody body >
 
                       <Row style={{

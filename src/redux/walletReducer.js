@@ -1,19 +1,13 @@
-const walletReducer = function (state = "", action) {
+const walletReducer = (state = "", action) => {
+  console.log(action)
   switch (action.type) {
-    case "nami":
-      return state + "nami";
-    case "flint":
-      return state + "flint";
-    case "eternl":
-      return state + "eternl";
-    case "typhon":
-      return state + "typhon";
-    case "yoroi":
-      return state + "yoroi";
-    case "gero":
-      return state + "gero";
+    case "Select_wallet":
+      return action.wallet;
+    case "Remove_wallet":
+      return null;
     default:
       return state;
   }
-};
+}
+
 export default walletReducer;

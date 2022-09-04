@@ -78,16 +78,6 @@ const poolQueries = [
 
 ];
 
-const isos = [
-  { to: '/poolpeekcoinpools', name: 'PoolPeek Coin', exact: true, Icon: MdSearch },
-  { to: '/hoskyinupools', name: 'Hosky Inu', exact: true, Icon: MdSearch },
-  { to: '/sundaeiso', name: 'SundaeSwap', exact: true, Icon: MdSearch },
-  { to: '/sundaeriso', name: 'Reverse SundaeSwap', exact: true, Icon: MdSearch },
-  { to: '/hoskypools', name: 'Hosky', exact: true, Icon: MdSearch },
-  { to: '/bisonpools', name: 'Bison', exact: true, Icon: MdSearch },
-  // { to: '/ardanaiso', name: 'Ardana', exact: true, Icon: MdSearch },
-];
-
 const poolSearch = [
   { to: '/poolsearch', name: 'Pool Search', exact: true, Icon: MdSearch },
   { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
@@ -105,10 +95,8 @@ const navItems = [
   { to: '/', name: 'Dashboard', exact: true, Icon: MdOutlineDashboard },
   // { to: '/wallet', name: 'My Wallet', exact: true, Icon: IoWalletOutline },
   { to: '/blocks', name: 'Blocks', exact: true, Icon: GiStoneBlock },
-  // { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
+  { to: '/poolsearchmap', name: 'Map Search', exact: true, Icon: MdLocationOn },
   { to: '/epochcalendar', name: 'Epoch Calendar', exact: true, Icon: MdDateRange },
-  // { to: '/stakingcalculator', name: 'Staking Calculator', exact: true, Icon: MdAccountBalance },
-  // { to: '/stakingrewards', name: 'Staking Rewards', exact: true, Icon: MdMoneyOff }
   // { to: '/aboutus', name: 'About Us', exact: true, Icon: MdMood }
 
 ];

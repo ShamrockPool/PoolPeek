@@ -21,6 +21,8 @@ import { connect } from 'react-redux';
 import { getWallet } from 'components/wallet/walletutil.js';
 import JPGLogo from 'assets/img/wallet/JPGLogo.png';
 import AssetFingerprint from '@emurgo/cip14-js';
+import { isEmpty } from 'utils/stringutil.js';
+import {useParams} from 'react-router-dom';
 
 const override = css`
   display: block;
@@ -30,7 +32,16 @@ const override = css`
 
 const width = window.innerWidth;
 
-//const AssetFingerprint = require('@emurgo/cip14-js');
+/* This is a higher order component that 
+*  inject a special prop   to our component.
+*/ 
+function withRouter(Component) {
+  function ComponentWithRouter(props) {
+    let params = useParams()
+    return <Component {...props} params={params} />
+  }
+  return ComponentWithRouter
+}
 
 class MyWalletPage extends React.Component {
   state = {
@@ -56,7 +67,8 @@ class MyWalletPage extends React.Component {
     utxos: 0,
     tokens: 0,
     rewards: 0,
-    rewardAddress: ""
+    rewardAddress: "",
+    incomingProps: null
   };
 
   useEffect() {
@@ -69,22 +81,31 @@ class MyWalletPage extends React.Component {
     if (width < 600) {
       this.setState({ smallScreen: true });
     }
-
     var wallet = this.props.wallet;
-    this.setState({ wallet: wallet });
-    await this.connectWalletAndPullData(wallet);
+    if(!isEmpty(wallet)){
+      await this.connectWalletAndPullData(wallet);
+      this.getRetiringData();
+    }
+  }
 
-    this.getRetiringData();
-
-
-
+  componentDidUpdate(prevProps, prevState) {
+    console.log("prevState:" + prevState)
+    if (prevState.count !== this.state.count) {
+      // Do something here
+      console.log("prevState:" + prevState)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     try {
-      var wallet = nextProps.wallet;
-      this.setState({ wallet: wallet });
-      this.connectWalletAndPullData(wallet);
+      console.log("nextProps:" + nextProps)
+      if(this.state.incomingProps == null && this.state.incomingProps != nextProps){
+        this.setState({ incomingProps: nextProps });
+        var wallet = nextProps.wallet;
+        console.log("Connected wallet:" + wallet)
+        this.setState({ wallet: wallet });
+        this.connectWalletAndPullData(wallet);
+      }
     } catch (error) {
     }
   }
@@ -497,16 +518,12 @@ class MyWalletPage extends React.Component {
     );
   }
 }
-
 const mapStateToProps = state => {
   return {
     wallet: state
   };
 };
-const mapDispatchToProps = dispatch => {
-  return {
-    setWallet: (walletType, wallet) => dispatch({ type: walletType, wallet: wallet }),
-  }
-};
-export default connect(mapStateToProps, mapDispatchToProps)(MyWalletPage);
+
+export default connect(mapStateToProps, null)(withRouter(MyWalletPage));
+
 

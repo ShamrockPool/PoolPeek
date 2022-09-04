@@ -14,26 +14,13 @@ import CircleLoader
 import { css } from "@emotion/core";
 import { connect } from 'react-redux';
 
-const renderer = ({ hours, minutes, seconds, completed }) => {
-    return <span>{minutes} Minutes {seconds} Seconds</span>;
-};
+import { getWallet } from '../wallet/walletutil'
 
 const override = css`
   display: block;
   margin: 0 auto;
   border-color: red;
 `;
-
-// Helper functions
-const hexToAscii = (hex) => {
-    // connverts hex to ascii string
-    var _hex = hex.toString();
-    var str = "";
-    for (var i = 0; i < _hex.length && _hex.substr(i, 2) !== "00"; i += 2)
-        str += String.fromCharCode(parseInt(_hex.substr(i, 2), 16));
-    return str;
-};
-
 var Loader;
 var protocolParameter;
 var delegation;
@@ -42,31 +29,38 @@ var stakeKeyHash;
 
 class JoinPool extends React.Component {
     // https://github.com/Felippo001/nami-wallet-api
-    state = {
-        loading: true,
-        walletAddress: "thisisthewalletaddress",
-        price: 0,
-        paymentReceived: false,
-        nftReserved: null,
-        planetName: null,
-        refreshedScreen: false,
-        joinPoolResponse: "",
-        modal: false,
-        modal_backdrop: false,
-        modal_nested_parent: false,
-        modal_nested: false,
 
-        wallet: "",
-    };
+    constructor(props){
+        super(props);
+        this.state = {
+            loading: true,
+            walletAddress: "thisisthewalletaddress",
+            price: 0,
+            paymentReceived: false,
+            nftReserved: null,
+            planetName: null,
+            refreshedScreen: false,
+            joinPoolResponse: "",
+            modal: false,
+            modal_backdrop: false,
+            modal_nested_parent: false,
+            modal_nested: false,
+        };
+      }
+    
 
     async componentDidMount() {
         window.scrollTo(0, 0);
 
         try {
             var wallet = this.props.wallet;
-            this.setState({ wallet: wallet });
+            console.log(wallet)
         } catch (error) {
         }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
     }
 
     toggle = modalType => () => {
@@ -117,37 +111,9 @@ class JoinPool extends React.Component {
         return value;
     };
 
-    async getWallet() {
-        console.log('Wallet selected: ' + this.props.wallet)
-        if (this.props.wallet === "nami") {
-            console.log("eternl")
-            return await window.cardano.nami.enable();
-
-        } else if (this.props.wallet === "flint") {
-            console.log("flint")
-            return await window.cardano.flint.enable();
-        }
-        else if (this.props.wallet === "eternl") {
-            console.log("eternl")
-            return await window.cardano.eternl.enable();
-        }
-        else if (this.props.wallet === "typhon") {
-            console.log("typhon")
-            return await window.cardano.typhon.enable();
-        }
-        else if (this.props.wallet === "gero") {
-            console.log("gero")
-            return await window.cardano.gerowallet.enable();
-        }
-        else if (this.props.wallet === "yoroi") {
-            console.log("yoroi")
-            return await window.cardano.yoroi.enable();
-        }
-    }
 
 
-
-    async joinPool(wallet) {
+    async joinPool() {
         console.log('Wallet selected: ' + this.props.wallet)
 
         if (this.props.wallet === "typhon") {
@@ -175,7 +141,7 @@ class JoinPool extends React.Component {
             Loader = await import('@emurgo/cardano-serialization-lib-browser');
             // Loader = await import('@emurgo/cardano-serialization-lib-asmjs');
 
-            var wallet = await this.getWallet();
+            var wallet = await getWallet(this.props.wallet);
             console.log(wallet);
 
             user = await wallet.getUsedAddresses();
@@ -300,6 +266,8 @@ class JoinPool extends React.Component {
 }
 
 const mapStateToProps = state => {
+    console.log("mapStateToProps:" + state)
+    console.log(state)
     return {
         wallet: state
     };

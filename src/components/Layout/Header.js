@@ -28,6 +28,9 @@ import eternl from 'assets/img/wallet/eternl.png';
 import typhon from 'assets/img/wallet/typhon.png';
 import yoroi from 'assets/img/wallet/yoroi.png';
 import gero from 'assets/img/wallet/gerowallet.ico';
+
+import { getWallet } from '../wallet/walletutil'
+
 const bem = bn.create('header');
 
 class Header extends React.Component {
@@ -45,7 +48,7 @@ class Header extends React.Component {
       modal_nested_parent: false,
       modal_nested: false,
       connectedWallet: "",
-      namiEnabled: false
+      walletEnabled: false
     };
   }
 
@@ -146,80 +149,32 @@ class Header extends React.Component {
 
   async connectWallet(wallet) {
     try {
+
+      wallet = wallet.toLowerCase();
       console.log("Connecting wallet")
       var walletEnabled = null;
       var cardano = window.cardano;
-      if (wallet === "nami") {
-        walletEnabled = await cardano.nami.enable();
-        if (walletEnabled != null) {
-          this.props.setWallet(wallet, walletEnabled);
-          this.setState({ namiEnabled: true, connectedWallet: wallet });
-          this.toggle()
-        }
-      } else if (wallet === "flint") {
-        console.log("flint")
-        walletEnabled = await cardano.flint.enable();
-        console.log(walletEnabled)
-        if (walletEnabled != null) {
-          this.props.setWallet(wallet, walletEnabled);
-          this.setState({ namiEnabled: true, connectedWallet: wallet });
-          this.toggle()
-        }
-      }
-      else if (wallet === "eternl") {
-        console.log("eternl")
-        walletEnabled = await cardano.eternl.enable();
-        console.log(walletEnabled)
-        if (walletEnabled != null) {
-          this.props.setWallet(wallet, walletEnabled);
-          this.toggle()
-          this.setState({ namiEnabled: true, connectedWallet: wallet });
-        }
-      }
-      else if (wallet === "typhon") {
-        console.log("typhon")
-        walletEnabled = await cardano.typhon.enable();
 
-        if (walletEnabled !== null) {
-          console.log(walletEnabled)
-          this.props.setWallet(wallet, walletEnabled);
-          this.toggle()
-          this.setState({ namiEnabled: true, connectedWallet: wallet });
-        }
-      }
-      else if (wallet === "gero") {
-        console.log("gero")
-        walletEnabled = await cardano.gerowallet.enable();
-        console.log(walletEnabled)
-        console.log("gero enabled")
-        if (walletEnabled !== null) {
-          console.log(walletEnabled)
-          this.props.setWallet(wallet, walletEnabled);
-          this.toggle()
-          this.setState({ namiEnabled: true, connectedWallet: wallet });
-        }
-      }
-      else if (wallet === "yoroi") {
-        console.log("yoroi")
-        walletEnabled = await cardano.yoroi.enable();
-        console.log(walletEnabled)
-        console.log("yoroi enabled")
-        if (walletEnabled !== null) {
-          console.log(walletEnabled)
-          this.props.setWallet(wallet, walletEnabled);
-          this.toggle()
-          this.setState({ namiEnabled: true, connectedWallet: wallet });
-        }
-      }
+      walletEnabled = getWallet(wallet);
 
+      if (walletEnabled !== null) {
+        console.log("Wallet Enabled: " + wallet)
+        this.props.setWallet(wallet);
+        this.setState({ walletEnabled: true, connectedWallet: wallet });
+        this.toggle();
+      }
     } catch (error) {
       console.log(error)
     }
-
   };
 
-  toggle = modalType => () => {
-    console.log("Connect Wallet")
+  async removeWallet() {
+    this.props.setWallet(null);
+    this.setState({ walletEnabled: false });
+    this.toggle();
+  }
+
+  async toggle() {
     return this.setState({
       modal: !this.state.modal,
     });
@@ -258,9 +213,7 @@ class Header extends React.Component {
         </Nav> */}
 
         <Nav navbar>
-
           <div>
-            {/* <h6><b>Current Epoch: {this.state.currentEpoch}</b></h6> */}
             {this.state.epochSecondsRemaining != 0 &&
               <Timer
                 initialTime={this.state.epochSecondsRemaining}
@@ -275,7 +228,7 @@ class Header extends React.Component {
 
         {!isMobile &&
           <Nav navbar className={bem.e('nav-right')}>
-            {this.state.namiEnabled == false ? <div>
+            {this.state.walletEnabled == false ? <div>
               <Col>
                 <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Connect Wallet</Button></Row>
               </Col>
@@ -302,7 +255,7 @@ class Header extends React.Component {
                   <Col>
                     <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Gero Connected</Button></Row>
                   </Col>}
-                  {this.state.connectedWallet === 'yoroi' &&
+                {this.state.connectedWallet === 'yoroi' &&
                   <Col>
                     <Row><Button variant="outline-light" size="sm" onClick={() => this.setState({ modal: true })}>Yoroi Connected</Button></Row>
                   </Col>}
@@ -315,58 +268,161 @@ class Header extends React.Component {
           isOpen={this.state.modal}
           toggle={false}
         >
-          <ModalHeader toggle={this.toggle()}>Select Wallet Type</ModalHeader>
+          <ModalHeader toggle={() => this.toggle()}>Select Wallet Type</ModalHeader>
           <ModalBody style={{
             alignContent: 'center', justifyContent: 'center',
             alignItems: 'center',
             textAlign: 'center',
           }}>
-            <Row style={{
-              alignContent: 'center', justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <img
-                src={nami} width="100vh" height="100vh" onClick={() => this.connectWallet("nami")}
-              />
-              <p></p>
-              <img
-                src={flint} width="100vh" height="100vh" onClick={() => this.connectWallet("flint")}
-              />
-              <p></p>
-              <img
-                src={eternl} width="100vh" height="100vh" onClick={() => this.connectWallet("eternl")}
-              />
-            </Row>
-            <br></br>
-            <Row style={{
-              alignContent: 'center', justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              <img
-                src={typhon} width="100vh" height="100vh" onClick={() => this.connectWallet("typhon")}
-              />
-              {/* <img
-                src={yoroi} width="100vh" height="100vh" onClick={() => this.connectWallet("yoroi")}
-              /> */}
-              <img
-                src={gero} width="100vh" height="100vh" onClick={() => this.connectWallet("gero")}
-                
-              />
-            </Row>
 
-            <Row style={{
-              alignContent: 'center', justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-            }}>
-              {this.state.connectedWallet !== '' && <p>Wallet enabled: <b>{this.state.connectedWallet}</b></p>}
-            </Row>
+
+            <span className="box-url" onClick={() => this.connectWallet("Eternl")}>
+              <div>
+                <div className="row">
+                  <div className="col-lg-2">
+                    <img src={eternl} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                  <div className="col-lg-8 ">
+                    <h6 aria-hidden="true" >Eternl</h6>
+                  </div>
+                  <div className="col-lg-2">
+                    <img src={eternl} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                </div>
+              </div>
+            </span>
+
+
+
+            <span className="box-url" onClick={() => this.connectWallet("Nami")}>
+              <div>
+                <div className="row">
+                  <div className="col-lg-2">
+                    <img src={nami} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                  <div className="col-lg-8 ">
+                    <h6 aria-hidden="true" >Nami</h6>
+                  </div>
+                  <div className="col-lg-2">
+                    <img src={nami} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                </div>
+              </div>
+            </span>
+
+            <span className="box-url" onClick={() => this.connectWallet("Flint")}>
+              <div>
+                <div className="row">
+                  <div className="col-lg-2">
+                    <img src={flint} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                  <div className="col-lg-8 ">
+                    <h6 aria-hidden="true" >Flint</h6>
+                  </div>
+                  <div className="col-lg-2">
+                    <img src={flint} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                </div>
+              </div>
+            </span>
+
+
+            <span className="box-url" onClick={() => this.connectWallet("Gero")}>
+              <div>
+                <div className="row">
+                  <div className="col-lg-2">
+                    <img src={gero} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                  <div className="col-lg-8 ">
+                    <h6 aria-hidden="true" >Gero</h6>
+                  </div>
+                  <div className="col-lg-2">
+                    <img src={gero} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                </div>
+              </div>
+            </span>
+
+            <span className="box-url" onClick={() => this.connectWallet("Typhon")}>
+              <div>
+                <div className="row">
+                  <div className="col-lg-2">
+                    <img src={typhon} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                  <div className="col-lg-8 ">
+                    <h6 aria-hidden="true" >Typhon</h6>
+                  </div>
+                  <div className="col-lg-2">
+                    <img src={typhon} width={30} height={30} style={{
+                      justifyContent: 'left',
+                      alignItems: 'left'
+                    }} />
+                  </div>
+                </div>
+              </div>
+            </span>
+
+
+            {/* <div className="col-lg-8" >
+              <span className="box-url" onClick={() => this.connectWallet("CardWallet")}>
+                <div>
+                  <div className="row">
+                    <div className="col-lg-2">
+                      <img src={cardwallet} width={30} height={30} style={{
+                        justifyContent: 'left',
+                        alignItems: 'left'
+                      }} />
+                    </div>
+                    <div className="col-lg-8 ">
+                      <h6 aria-hidden="true" >Card Wallet</h6>
+                    </div>
+                    <div className="col-lg-2">
+                      <img src={cardwallet} width={30} height={30} style={{
+                        justifyContent: 'left',
+                        alignItems: 'left'
+                      }} />
+                    </div>
+                  </div>
+                </div>
+              </span>
+            </div> */}
+
+
           </ModalBody>
           <ModalFooter>
             {' '}
-            <Button color="secondary" onClick={this.toggle()}>
+            {this.state.walletEnabled && 
+            <Button color="secondary" onClick={() => this.removeWallet()}>
+              Disconnect Wallet
+            </Button>}
+            <Button color="secondary" onClick={() => this.toggle()}>
               Close
             </Button>
           </ModalFooter>
@@ -376,16 +432,9 @@ class Header extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapDispatchToProps = (dispatch) => {
   return {
-    count: state
-  };
-};
-const mapDispatchToProps = dispatch => {
-  return {
-    setWallet: (walletType, wallet) => dispatch({ type: walletType, wallet: wallet }),
+    setWallet: (walletType) => dispatch({ type: "Select_wallet", wallet: walletType })
   }
 };
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(null, mapDispatchToProps)(Header);

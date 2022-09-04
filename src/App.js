@@ -63,7 +63,6 @@ export default class App extends React.Component {
           <MainLayout breakpoint={this.props.breakpoint}>
             <Routes>
               <Route exact path="/" element={<DashboardPage />} />
-              <Route exact path="/#*" element={<DashboardPage />} />
               <Route exact path="/joinpool/:name/:poolid" element={<JoinPoolEmbed props />} />
 
               <Route exact path="/wallet" element={<MyWalletPage props />} />
@@ -141,8 +140,6 @@ export default class App extends React.Component {
                     <PoolDetailsPage />
                   )} />
               </Route>
-
-
 
               <Route exact path="/poolsearch/:location" element={<PoolSearchPage props key={Math.floor(Math.random() * 100) + Date.now()} query={'&excluderetired=1'} multiPoolOperators={false} />} />
               <Route exact path="/stakingrewards/:stakeAddress" element={<StakingRewards props />} />

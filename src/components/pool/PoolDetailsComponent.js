@@ -32,6 +32,10 @@ import { baseUrlPoolPeekService, getPoolDelegates, getPoolDelegatesHistory, requ
 import { TwitterTimelineEmbed } from 'react-twitter-embed';
 import Chart from '../Chart';
 import JoinPool from 'components/wallet/JoinPool';
+
+import { Provider, connect } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
 var linkify = require('linkifyjs');
 require('linkifyjs/plugins/hashtag')(linkify); // optional
 var linkifyHtml = require('linkifyjs/html');
@@ -67,19 +71,10 @@ const cardBodyStyle = {
     paddingRight: 10
 };
 
-function checkIsImageUrl(url) {
-    if (isEmpty(url)) {
-        return false;
-    }
-    if (url.startsWith("https") && (url.endsWith(".png") || url.endsWith(".jpeg"))) {
-        return true;
-    }
-    return false;
-}
 
 const cardano = window.cardano;
 
-export default class PoolDetailsComponent extends React.Component {
+class PoolDetailsComponent extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -111,11 +106,19 @@ export default class PoolDetailsComponent extends React.Component {
         });
     };
 
-    async componentWillMount() {
+
+    componentDidUpdate() {
+        console.log("update")
+    }
+
+    componentWillReceiveProps(nextProps) {
+        console.log(nextProps)
 
     }
 
     async componentDidMount() {
+
+        console.log(this.props.wallet)
 
         this.getTwitterName();
         this.getDelegates();
@@ -130,6 +133,7 @@ export default class PoolDetailsComponent extends React.Component {
 
         }
     }
+
 
     async getDelegates() {
         const response = await fetch(baseUrlPoolPeekService + getPoolDelegates + this.props.pool.pool_id);
@@ -430,13 +434,16 @@ export default class PoolDetailsComponent extends React.Component {
                                                         }
                                                         {this.props.pool.retired != 'Y' && <JoinPool pool={this.props.pool} />}
                                                     </Col>
-                                                    <Col xl={2} lg={2} md={12} sm={12} >
-                                                        <ReactImageFallback
-                                                            src={this.props.pool.extended_meta.url_png_logo}
-                                                            width="140"
-                                                            height="140"
-                                                            fallbackImage={CardanoImage} />
-                                                    </Col>
+
+                                                    {width > 800 &&
+
+                                                        <Col xl={2} lg={2} md={12} sm={12} >
+                                                            <ReactImageFallback
+                                                                src={this.props.pool.extended_meta.url_png_logo}
+                                                                width="140"
+                                                                height="140"
+                                                                fallbackImage={CardanoImage} />
+                                                        </Col>}
                                                 </Row>
                                             </CardBody>
                                         </Card>
@@ -451,13 +458,13 @@ export default class PoolDetailsComponent extends React.Component {
                                     <Card>
                                         <CardHeader>
                                             <TabList>
-                                                <Tab><FontAwesomeIcon icon={faInfo} /> Info</Tab>
+                                                <Tab><h4><FontAwesomeIcon icon={faInfo} /> Info</h4></Tab>
                                                 {/* <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab> */}
-                                                {width > 700 && <Tab><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</Tab>}
-                                                <Tab><FontAwesomeIcon icon={faDollarSign} /> Costs History</Tab>
-                                                <Tab><FontAwesomeIcon icon={faCube} /> Block History</Tab>
-                                                {width > 700 && <Tab><FontAwesomeIcon icon={faHistory} /> Stake History</Tab>}
-                                                <Tab><FontAwesomeIcon icon={faAward} /> Badges</Tab>
+                                                {width > 700 && <Tab><h4><FontAwesomeIcon icon={faPeopleCarry} /> Delegates</h4></Tab>}
+                                                <Tab><h4><FontAwesomeIcon icon={faDollarSign} /> Costs History</h4></Tab>
+                                                <Tab><h4><FontAwesomeIcon icon={faCube} /> Block History</h4></Tab>
+                                                {width > 700 && <Tab><h4><FontAwesomeIcon icon={faHistory} /> Stake History</h4></Tab>}
+                                                <Tab><h4><FontAwesomeIcon icon={faAward} /> Badges</h4></Tab>
                                             </TabList>
                                         </CardHeader>
                                         <CardBody>
@@ -892,4 +899,9 @@ export default class PoolDetailsComponent extends React.Component {
         );
     }
 };
-
+const mapStateToProps = state => {
+    return {
+        wallet: state
+    };
+};
+export default connect(mapStateToProps, null)(PoolDetailsComponent);

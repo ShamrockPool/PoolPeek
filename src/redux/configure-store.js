@@ -1,7 +1,6 @@
 import { createStore } from 'redux';
-import rootReducer  from 'redux/reducer';
-import countReducer from './countReducer';
+import walletReducer from './walletReducer';
 
-const store = createStore(countReducer );
+const store = createStore(walletReducer);
 
 export default store;
